@@ -1,0 +1,267 @@
+/* 
+$altura-menu-fijo: 75px !default;
+$borde-general: 12px !default;
+$padding-horizontal: 2.5rem !default;
+$padding-vertical: 2.5rem !default; */
+/* 
+// -------- RESPONSIVE --------
+$altura-menu-fijo-mobile: 67px !default;
+$padding-horizontal-mobile: 0.5rem !default;
+$padding-vertical-mobile: 2rem !default;
+
+// Las media query se generan dinamicamente !
+// En base al siguiente mapa:
+$mq-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px
+) !default;
+
+$mq-breakpoints-subtract: 0.02px !default;  // Hack para evitar error logico en las condiciones de las media queries */
+/* Colores del proyecto */
+/* -------- CSS Custom properties -------- */
+:root {
+  font-size: 21px;
+  /* Tipografias */
+  --font-family-general: "Roboto", sans-serif;
+  --font-family-espersonal: "Caesar Dressing", cursive;
+  --font-family-copyright: "Satisfy", cursive;
+  /* General */
+  --altura-completa: 100vh;
+  /* Colores del sitio */
+  --color-logo: #0D0D0D;
+  --color-textos: #484848;
+  --color-primario: #BE0B0B;
+  --color-secundario: #866B47;
+  --color-fondo: #FFFFFF;
+  --color-icono-fondo: #787878;
+}
+
+/* -------- GENERAL -------- */
+/* a {
+    color: var(--color-queso);
+    text-decoration: none;
+
+    &:active {
+        color: var(--color-tomate);
+    }
+
+    &:hover {
+        color: var(--color-blanco);
+    }
+
+    &:visited {
+        color: var(--color-rojo-intenso);
+    }
+}*/
+body {
+  background-color: var(--color-gris);
+  color: var(--color-blanco);
+  font-family: var(--font-family-general);
+  font-size: 1rem;
+  padding-top: var(--altura-menu-fijo);
+}
+
+/*
+
+em {
+    text-decoration: underline;
+}
+
+figure {
+    margin: 0;
+}
+
+h1 {
+    color: var(--color-gris);
+    font-family: var(--font-family-ipizza);
+    font-size: 2.2rem;
+    margin-bottom: 1.67rem;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+h3 { font-size: 1rem; }
+*/
+/*
+i { font-size: 2rem; }
+
+section {
+    padding: var(--padding-vertical) 0;
+    position: relative;
+}
+*/
+small {
+  font-size: 0.7rem;
+  user-select: none;
+}
+
+/*strong {
+    color: var(--color-queso);
+    font-family: var(--font-family-ipizza);
+
+    &:hover {
+        color: var(--color-blanco);
+    }
+} */
+small.datos-de-acceso {
+  color: var(--color-icono-fondo);
+  font-style: italic;
+}
+
+small .desarrollador {
+  display: inline;
+  font-family: var(--font-family-copyright);
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 0.3rem;
+}
+
+/* @import 'layout/header';*/
+/* -------- LOGO -------- */
+.logo {
+  color: var(--color-logo);
+  font-family: var(--font-family-espersonal);
+  font-size: 2.3rem;
+  user-select: none;
+}
+.logo div:last-child {
+  color: var(--color-secundario);
+  font-size: 0.9rem;
+}
+.logo div:last-child :visited,
+.logo div:last-child :active {
+  color: var(--color-secundario);
+}
+.logo:visited, .logo:active {
+  color: var(--color-logo);
+}
+
+/* -------- index.html -------- */
+section.video-marketing {
+  height: var(--altura-completa);
+}
+section.video-marketing video {
+  height: 100%;
+  object-fit: cover;
+}
+
+section.login {
+  background: linear-gradient(to left, #ece9e6, #ffffff);
+  padding-top: 30px;
+  height: var(--altura-completa);
+}
+
+/* @import 'views/pedidos';
+@import 'views/nosotros';
+@import 'views/contacto';
+@import 'views/armala';
+
+@import 'layout/footer';
+*/
+/* -------- FLEX Login -------- */
+section.login,
+section.login .logo {
+  flex-direction: column;
+}
+
+section.login {
+  justify-content: space-around;
+}
+
+section.login .logo {
+  display: flex;
+  align-items: center;
+}
+
+/* -------- GRID General -------- */
+.row {
+  margin-bottom: 12px;
+}
+
+/*@import 'components/menu';
+@import 'components/menu-mobile';
+@import 'components/tarjetas';
+@import 'components/carousel';*/
+/* -------- MODALES -------- */
+.modal-content i.material-icons {
+  font-size: 3rem;
+}
+
+/* -------- BOTONES -------- */
+.btn,
+.btn-flat {
+  font-size: 0.8rem;
+}
+
+/* -------- FORMULARIOS -------- */
+form {
+  user-select: none;
+}
+
+.input-field {
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+/* label color */
+.input-field label {
+  color: var(--color-textos);
+  font-family: var(--font-family-general);
+}
+
+/* label focus color */
+.input-field input[type=text]:focus + label,
+.input-field input[type=password]:focus + label {
+  font-weight: bold;
+  color: var(--color-secundario) !important;
+}
+
+/* label underline focus color */
+.input-field input[type=text]:focus,
+.input-field input[type=password]:focus {
+  border-bottom: 1px solid var(--color-secundario) !important;
+  box-shadow: 0 1px 0 0 var(--color-secundario) !important;
+}
+
+/*@import 'components/animaciones';
+@import 'components/browser'; */
+/* -------- CSS Tricks -------- */
+.wrap-animation {
+  overflow: hidden;
+}
+
+.h-visible {
+  height: var(--altura-visible);
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+.m-0 {
+  margin: 0 !important;
+}
+
+.row-v-align {
+  /* Mi propio hack, para trabajar con h-visible */
+  align-items: center;
+  height: 100%;
+}
+
+:target::before {
+  /* Solucion a exceso de desplazamiento de links internos por menu fijo */
+  content: "";
+  display: block;
+  height: var(--altura-menu-fijo);
+  margin-top: calc(0px - var(--altura-menu-fijo));
+}
+
+/*# sourceMappingURL=style.css.map */
