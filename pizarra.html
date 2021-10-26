@@ -25,9 +25,25 @@
     <title>Pizarra - Panel del usuario</title>
 </head>
 <body>
-    <!-- Navegacion -->
-    <section class="navegacion hoverable h-visible">
-        <ul class="sidenav">
+    <!-- Header mobile -->
+    <div class="navbar-fixed hide-on-large-only">
+        <nav class="brown z-depth-4">
+            <div class="nav-wrapper">
+                <a class="logo brand-logo" href="index.html" title="logo de espesonal">
+                    <div>ESPERSONAL !</div>
+                </a>
+                <ul class="left">
+                    <li>
+                        <a href="!#" data-target="navegacion" class="btn-menu-mobile pulse waves-effect waves-red sidenav-trigger"><i class="large material-icons right">menu</i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Navegacion [Barra lateral izquierda] -->
+    <section class="navegacion">
+        <ul id="navegacion" class="sidenav sidenav-fixed hoverable h-visible">
             <div>
                 <li>
                     <div class="header">
@@ -39,13 +55,13 @@
                 </li>
                 
                 <li><a class="subheader">MENÚ</a></li>
-                <li><a href="pizarra.html" class="waves-effect waves-red"><i class="material-icons left">dashboard_customize</i>Pizarra</a></li>
+                <li><a class="waves-effect waves-red" href="pizarra.html"><i class="material-icons left">dashboard_customize</i>Pizarra</a></li>
                 <li><a href="#!" class="waves-effect waves-red"><i class="material-icons left">donut_large</i>Gráfico</a></li>
                 <li><a href="#!" class="waves-effect waves-red"><i class="material-icons left">category</i>Categorías</a></li>
             </div>
             <div>
                 <li><a href="#!" class="subheader"><i class="material-icons left">account_circle</i><strong id="usuario-logeado">coder</strong></a></li>
-                <li><a href="#!" class="waves-effect"><i class="material-icons left">settings</i>Configuracion</a></li>
+                <li><a class="waves-effect modal-trigger" href="#modal-configuracion"><i class="material-icons left">settings</i>Configuracion</a></li>
                 
                 <li><div class="divider"></div></li>
                 
@@ -58,40 +74,48 @@
     <section class="pizarra">
         <div class="row">
             <!-- Nombre de pizarra -->
-            <div class="col s12 valign-wrapper">
+            <div class="col s10 l12 valign-wrapper">
                 <h1><div id="nombre-pizarra">2021 - Octubre</div></h1>
-                <i class="medium material-icons right">today</i>
+                <i class="small material-icons">today</i>
             </div>
 
             <!-- Info de pizarra -->
             <div class="col s12">
                 <section class="detalle-pizarra">
-                    <div class="col s3">
+                    <div class="col s6 m3 d-flex">
                         <i class="small material-icons left">flag</i>
-                        Total de items
-                        <div id="total-de-items">14</div>
+                        <div>
+                            Total de items
+                            <div id="total-de-items">14</div>
+                        </div>
                     </div>
-                    <div class="col s3">
+                    <div class="col s6 m3 d-flex">
                         <i class="small material-icons left">north_east</i>
-                        Total Ingresos
-                        <div id="total-ingresos">$33.000</div>
+                        <div>
+                            Total Ingresos
+                            <div id="total-ingresos">$33.000</div>
+                        </div>
                     </div>
-                    <div class="col s3">
+                    <div class="col s6 m3 d-flex">
                         <i class="small material-icons left">south_west</i>
-                        Total Egresos
-                        <div id="total-egresos">$28.000</div>
+                        <div>
+                            Total Egresos
+                            <div id="total-egresos">$28.000</div>
+                        </div>
                     </div>
-                    <div class="col s3">
+                    <div class="col s6 m3 d-flex">
                         <i class="small material-icons left">account_balance</i>
-                        Balance
-                        <div id="balance">+ $5.000</div>
+                        <div>
+                            Balance
+                            <div id="balance">+ $5.000</div>
+                        </div>
                     </div>
                 </section>
             </div>
 
             <!-- Pizarra correspondiente a la fecha -->
             <div class="col s12">
-                <table class="highlight responsive-table">
+                <table class="highlight">
                     <thead>
                       <tr>
                           <th>Tipo</th>
@@ -104,112 +128,112 @@
             
                     <tbody>
                       <tr>
-                        <td><i class="material-icons left green-text">north_east</i></td>
+                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
                         <td>Eclair</td>
                         <td>Eclair</td>
                         <th>
-                            <i class="btn-delete material-icons right">delete_forever</i>
-                            <i class="btn-edit material-icons right">edit</i>
+                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
                         </th>
                         <td>+ $0.87</td>
                       </tr>
                       <tr>
-                        <td><i class="material-icons left red-text">south_west</i></td>
+                        <td><i class="material-icons left red-text text-darken-2">south_west</i></td>
                         <td>Jellybean</td>
                         <td>Jellybean</td>
                         <th>
-                            <i class="btn-delete material-icons right">delete_forever</i>
-                            <i class="btn-edit material-icons right">edit</i>
+                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
                         </th>
                         <td>- $3.76</td>
                       </tr>
                       <tr>
-                        <td><i class="material-icons left green-text">north_east</i></td>
+                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
                         <td>Lollipop</td>
                         <td>Lollipop</td>
                         <th>
-                            <i class="btn-delete material-icons right">delete_forever</i>
-                            <i class="btn-edit material-icons right">edit</i>
+                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
                         </th>
                         <td>+ $7.00</td>
                       </tr>
                       <tr>
-                        <td><i class="material-icons left green-text">north_east</i></td>
+                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
                         <td>Lollipop</td>
                         <td>Lollipop</td>
                         <th>
-                            <i class="btn-delete material-icons right">delete_forever</i>
-                            <i class="btn-edit material-icons right">edit</i>
+                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
                         </th>
                         <td>+ $7.00</td>
                       </tr>
                       <tr>
-                        <td><i class="material-icons left green-text">north_east</i></td>
+                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
                         <td>Lollipop</td>
                         <td>Lollipop</td>
                         <th>
-                            <i class="btn-delete material-icons right">delete_forever</i>
-                            <i class="btn-edit material-icons right">edit</i>
+                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
                         </th>
                         <td>+ $7.00</td>
                       </tr>
                       <tr>
-                        <td><i class="material-icons left green-text">north_east</i></td>
+                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
                         <td>Lollipop</td>
                         <td>Lollipop</td>
                         <th>
-                            <i class="btn-delete material-icons right">delete_forever</i>
-                            <i class="btn-edit material-icons right">edit</i>
+                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
                         </th>
                         <td>+ $7.00</td>
                       </tr>
                       <tr>
-                        <td><i class="material-icons left green-text">north_east</i></td>
+                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
                         <td>Lollipop</td>
                         <td>Lollipop</td>
                         <th>
-                            <i class="btn-delete material-icons right">delete_forever</i>
-                            <i class="btn-edit material-icons right">edit</i>
+                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
                         </th>
                         <td>+ $7.00</td>
                       </tr>
                       <tr>
-                        <td><i class="material-icons left green-text">north_east</i></td>
+                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
                         <td>Lollipop</td>
                         <td>Lollipop</td>
                         <th>
-                            <i class="btn-delete material-icons right">delete_forever</i>
-                            <i class="btn-edit material-icons right">edit</i>
+                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
                         </th>
                         <td>+ $7.00</td>
                       </tr>
                       <tr>
-                        <td><i class="material-icons left green-text">north_east</i></td>
+                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
                         <td>Lollipop</td>
                         <td>Lollipop</td>
                         <th>
-                            <i class="btn-delete material-icons right">delete_forever</i>
-                            <i class="btn-edit material-icons right">edit</i>
+                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
                         </th>
                         <td>+ $7.00</td>
                       </tr>
                       <tr>
-                        <td><i class="material-icons left green-text">north_east</i></td>
+                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
                         <td>Lollipop</td>
                         <td>Lollipop</td>
                         <th>
-                            <i class="btn-delete material-icons right">delete_forever</i>
-                            <i class="btn-edit material-icons right">edit</i>
+                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
                         </th>
                         <td>+ $7.00</td>
                       </tr>
                       <tr>
-                        <td><i class="material-icons left green-text">north_east</i></td>
+                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
                         <td>Lollipop</td>
                         <td>Lollipop</td>
                         <th>
-                            <i class="btn-delete material-icons right">delete_forever</i>
-                            <i class="btn-edit material-icons right">edit</i>
+                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
                         </th>
                         <td>+ $7.00</td>
                       </tr>
@@ -225,7 +249,7 @@
     </div>
 
     <!-- Modal :: Formulario de agregar item -->
-    <div id="modal-agregar-item" class="modal">
+    <div id="modal-agregar-item" class="modal modal-fixed-footer">
         <div class="modal-content">
             <h4>Agregar Item<i class="medium material-icons right">add</i></h4>
             <div class="row">
@@ -251,7 +275,7 @@
                 
                 <div class="input-field col s12">
                     <select>
-                        <option value="" disabled selected>Seleccione una categoria</option>
+                        <option value="" disabled selected>Seleccione una categoría</option>
                         <option value="1">Ropa</option>
                         <option value="2">Restaurante</option>
                         <option value="3">Hogar</option>
@@ -271,6 +295,47 @@
         </div>
     </div>
 
+    <!-- Modal :: Formulario de Configuración -->
+    <div id="modal-configuracion" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Configuración<i class="medium material-icons right">settings</i></h4>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <select>
+                        <option value="" disabled selected>Seleccione el año</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                    </select>
+                </div>
+            
+                <div class="input-field col s12 m6">
+                    <select>
+                        <option value="" disabled selected>Seleccione el mes</option>
+                        <option value="1">Enero</option>
+                        <option value="2">Febrero</option>
+                        <option value="3">Marzo</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Mayo</option>
+                        <option value="6">Junio</option>
+                        <option value="7">Julio</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn waves-effect waves-red brown" type="submit" name="action">Guardar</button>
+            <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
+        </div>
+    </div>
+
+    
     <!-- JS Materialize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>

@@ -27,7 +27,7 @@
 <body>
     <div class="row m-0">
         <!-- Acceso de usuario -->
-        <div class="col s7 p-0">
+        <div class="col s12 l7 p-0">
             <section class="login h-visible valign-wrapper">
                 <div class="container">
                     <!-- Logo -->
@@ -67,38 +67,15 @@
                 </div>
                 
                 <!-- Copyright -->
-                <small>
+                <small class="copyright">
                     esPersonal ! <span>&copy;</span> 2021 <span>|</span> Desarrollado por <h2 class="desarrollador">Ignacio Gutierrez</h2>
                 </small>
-                
-            </section>
-        </div>
 
-        <!-- Modal :: Formulario de registro -->
-        <div id="modal-form-registrarse" class="modal">
-            <div class="modal-content">
-                <h4>REGISTRO<i class="medium material-icons right">app_registration</i></h4>
-                <div class="row">
-                    <div class="input-field col s6">
-                    <input id="usuario" type="text">
-                    <label for="usuario">Usuario</label>
-                    </div>
-                
-                
-                    <div class="input-field col s6">
-                        <input id="contrasena" type="password">
-                        <label for="contrasena">Contraseña</label>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn waves-effect waves-red brown" type="submit" name="action">Registrarme</button>
-                <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
-            </div>
+            </section>
         </div>
         
         <!-- Video marketing -->
-        <div class="col s5 p-0">
+        <div class="col l5 hide-on-med-and-down p-0">
             <section class="video-marketing h-visible">
                 <video class="responsive-video" title="Video de hombre gritando eufóricamente: ESTO ESPERSONAL !" autoplay loop muted preload="auto" loading="eager">
                     <!-- <source src="video/esto-espersonal.webm" type="video/webm"> -->
@@ -108,7 +85,30 @@
         </div>
     </div>
 
+    <!-- Modal :: Formulario de registro -->
+    <div id="modal-form-registrarse" class="modal">
+        <div class="modal-content">
+            <h4>REGISTRO<i class="medium material-icons right">app_registration</i></h4>
+            <div class="row">
+                <div class="input-field col s6">
+                <input id="usuario" type="text">
+                <label for="usuario">Usuario</label>
+                </div>
+            
+            
+                <div class="input-field col s6">
+                    <input id="contrasena" type="password">
+                    <label for="contrasena">Contraseña</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn waves-effect waves-red brown" type="submit" name="action">Registrarme</button>
+            <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
+        </div>
+    </div>
 
+    
     <!-- JS Materialize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>

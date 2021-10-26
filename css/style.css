@@ -81,7 +81,7 @@ figure {
 h1 {
   color: var(--color-logo);
   font-family: var(--font-family-espersonal);
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   line-height: unset;
   margin: unset;
 }
@@ -115,19 +115,6 @@ small {
         color: var(--color-blanco);
     }
 } */
-small.datos-de-acceso {
-  color: var(--color-icono-fondo);
-  font-style: italic;
-}
-
-small .desarrollador {
-  display: inline;
-  font-family: var(--font-family-copyright);
-  font-size: 1rem;
-  font-weight: bold;
-  margin-left: 0.3rem;
-}
-
 /* -------- HEADER -------- */
 .header {
   position: relative;
@@ -160,48 +147,48 @@ small .desarrollador {
 }
 
 .header .logo {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 .header .logo .eslogan {
-  font-size: 0.7rem;
+  font-size: 0.6rem;
 }
 
 /* -------- index.html -------- */
-section.video-marketing video {
-  height: 100%;
-  object-fit: cover;
-}
-
 section.login {
   background: linear-gradient(to left, #ece9e6, #ffffff);
   padding-top: 30px;
 }
 
-/* -------- pizarra.html -------- */
-#usuario-logeado {
-  text-transform: uppercase;
+section.video-marketing video {
+  height: 100%;
+  object-fit: cover;
 }
 
-section.navegacion {
-  display: inline-block;
-  position: fixed;
-  left: 0;
-  width: 20%;
+small.copyright {
+  text-align: center;
 }
+small.datos-de-acceso {
+  color: var(--color-icono-fondo);
+  font-style: italic;
+}
+small .desarrollador {
+  display: inline;
+  font-family: var(--font-family-copyright);
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 0.3rem;
+}
+
+/* -------- pizarra.html -------- */
 section.navegacion .sidenav {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: inherit;
-  margin: 0;
-  -webkit-transform: translateX(0%);
-  transform: translateX(0%);
-  height: inherit;
   padding-bottom: 10px;
-  background-color: #fff;
-  will-change: transform;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
+  width: 20%;
+}
+section.navegacion .sidenav #usuario-logeado {
+  text-transform: uppercase;
 }
 
 section.pizarra {
@@ -235,13 +222,52 @@ section.detalle-pizarra #balance {
 }
 section.detalle-pizarra > .col {
   border-left: 1px solid var(--color-icono-fondo);
-  padding: 0.4rem 1.5rem;
+  padding: 0.4rem 1rem;
 }
 section.detalle-pizarra > .col:first-child {
   border-left: unset;
-  padding: 0.4rem 0;
+  padding: 0.4rem 1rem 0.4rem 0;
 }
 
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  section.navegacion .sidenav {
+    width: 25%;
+  }
+
+  section.pizarra {
+    margin-left: 25%;
+    width: 75%;
+  }
+}
+@media only screen and (max-width: 992px) {
+  section.navegacion .sidenav {
+    width: 280px;
+  }
+
+  section.pizarra {
+    margin-left: 0;
+    padding: 0.4rem;
+    width: 100%;
+  }
+  section.pizarra .btn-edit,
+section.pizarra .btn-delete {
+    visibility: visible;
+  }
+
+  section.detalle-pizarra > .col {
+    border-left: unset;
+    padding: 0.4rem 0.5rem 0.4rem 0;
+  }
+  section.detalle-pizarra > .col:first-child {
+    border-left: unset;
+    padding: 0.4rem 0.5rem 0.4rem 0;
+  }
+}
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+  .d-flex {
+    flex-direction: column;
+  }
+}
 /* @import 'views/pedidos';
 @import 'views/nosotros';
 @import 'views/contacto';
@@ -305,6 +331,10 @@ h1 + i.material-icons {
   padding-top: 15px;
   margin-bottom: 0;
   z-index: 997;
+}
+
+.btn-menu-mobile i.right {
+  margin-left: 0;
 }
 
 /* -------- FORMULARIOS -------- */
@@ -390,6 +420,10 @@ form {
 
 .m-0 {
   margin: 0 !important;
+}
+
+.d-flex {
+  display: flex;
 }
 
 .row-v-align {
