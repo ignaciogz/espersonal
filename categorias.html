@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fuentes externas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Roboto&family=Satisfy&display=swap" rel="stylesheet">
+
+    <!-- Iconos - Google Icon Font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- CSS Materialize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- CSS -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- JS -->
+    <script defer src="js/main2.js"></script>
+
+    <title>Categorías - Panel del usuario</title>
+</head>
+<body>
+    <!-- Header mobile -->
+    <div class="navbar-fixed hide-on-large-only">
+        <nav class="brown z-depth-4">
+            <div class="nav-wrapper">
+                <a class="logo brand-logo" href="index.html" title="logo de espesonal">
+                    <div>ESPERSONAL !</div>
+                </a>
+                <ul class="left">
+                    <li>
+                        <a href="!#" data-target="navegacion" class="btn-menu-mobile pulse waves-effect waves-red sidenav-trigger"><i class="large material-icons right">menu</i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Navegacion [Barra lateral izquierda] -->
+    <section class="navegacion">
+        <ul id="navegacion" class="sidenav sidenav-fixed hoverable h-visible">
+            <div>
+                <li>
+                    <div class="header">
+                        <a class="logo" href="index.html" title="logo de espesonal">
+                            <div>ESPERSONAL !</div>
+                            <div class="eslogan">Finanzas personales más grosas</div>
+                        </a>    
+                    </div>
+                </li>
+                
+                <li><a class="subheader">MENÚ</a></li>
+                <li><a class="waves-effect waves-red" href="pizarra.html"><i class="material-icons left">dashboard_customize</i>Pizarra</a></li>
+                <li><a href="#!" class="waves-effect waves-red"><i class="material-icons left">donut_large</i>Gráfico</a></li>
+                <li><a class="waves-effect waves-red" href="categorias.html"><i class="material-icons left">category</i>Categorías</a></li>
+            </div>
+            <div>
+                <li><a href="#!" class="subheader"><i class="material-icons left">account_circle</i><strong id="usuario-logeado">coder</strong></a></li>
+                <li><a class="waves-effect modal-trigger" href="#modal-configuracion"><i class="material-icons left">settings</i>Configuracion</a></li>
+                
+                <li><div class="divider"></div></li>
+                
+                <li><a href="index.html" class="waves-effect"><i class="material-icons left">logout</i>Salir</a></li>
+            </div>
+        </ul>
+    </section>
+
+    <!-- Pizarra -->
+    <main>
+        <section class="categorias">
+            <div class="row">
+                <!-- Nombre de pizarra -->
+                <div class="col s10 l12 valign-wrapper">
+                    <h1>Categorías</h1>
+                    <i class="small material-icons">category</i>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Btn flotante de la pizarra -->
+    <div class="btn-flotante">
+        <a id="menu" class="waves-effect waves-red btn-large btn-floating pulse brown modal-trigger" href="#modal-agregar-item"><i class="material-icons">add</i></a>
+    </div>
+
+    
+    <!-- JS Materialize -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

@@ -57,7 +57,7 @@
                 <li><a class="subheader">MENÚ</a></li>
                 <li><a class="waves-effect waves-red" href="pizarra.html"><i class="material-icons left">dashboard_customize</i>Pizarra</a></li>
                 <li><a href="#!" class="waves-effect waves-red"><i class="material-icons left">donut_large</i>Gráfico</a></li>
-                <li><a href="#!" class="waves-effect waves-red"><i class="material-icons left">category</i>Categorías</a></li>
+                <li><a class="waves-effect waves-red" href="categorias.html"><i class="material-icons left">category</i>Categorías</a></li>
             </div>
             <div>
                 <li><a href="#!" class="subheader"><i class="material-icons left">account_circle</i><strong id="usuario-logeado">coder</strong></a></li>
@@ -71,177 +71,179 @@
     </section>
 
     <!-- Pizarra -->
-    <section class="pizarra">
-        <div class="row">
-            <!-- Nombre de pizarra -->
-            <div class="col s10 l12 valign-wrapper">
-                <h1><div id="nombre-pizarra">2021 - Octubre</div></h1>
-                <i class="small material-icons">today</i>
-            </div>
+    <main>
+        <section class="pizarra">
+            <div class="row">
+                <!-- Nombre de pizarra -->
+                <div class="col s10 l12 valign-wrapper">
+                    <h1><div id="nombre-pizarra">2021 - Octubre</div></h1>
+                    <i class="small material-icons">today</i>
+                </div>
 
-            <!-- Info de pizarra -->
-            <div class="col s12">
-                <section class="detalle-pizarra">
-                    <div class="col s6 m3 d-flex">
-                        <i class="small material-icons left">flag</i>
-                        <div>
-                            Total de items
-                            <div id="total-de-items">14</div>
+                <!-- Info de pizarra -->
+                <div class="col s12">
+                    <section class="detalle-pizarra">
+                        <div class="col s6 m3 d-flex">
+                            <i class="small material-icons left">flag</i>
+                            <div>
+                                Total de items
+                                <div id="total-de-items">14</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col s6 m3 d-flex">
-                        <i class="small material-icons left">north_east</i>
-                        <div>
-                            Total Ingresos
-                            <div id="total-ingresos">$33.000</div>
+                        <div class="col s6 m3 d-flex">
+                            <i class="small material-icons left">north_east</i>
+                            <div>
+                                Total Ingresos
+                                <div id="total-ingresos">$33.000</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col s6 m3 d-flex">
-                        <i class="small material-icons left">south_west</i>
-                        <div>
-                            Total Egresos
-                            <div id="total-egresos">$28.000</div>
+                        <div class="col s6 m3 d-flex">
+                            <i class="small material-icons left">south_west</i>
+                            <div>
+                                Total Egresos
+                                <div id="total-egresos">$28.000</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col s6 m3 d-flex">
-                        <i class="small material-icons left">account_balance</i>
-                        <div>
-                            Balance
-                            <div id="balance">+ $5.000</div>
+                        <div class="col s6 m3 d-flex">
+                            <i class="small material-icons left">account_balance</i>
+                            <div>
+                                Balance
+                                <div id="balance">+ $5.000</div>
+                            </div>
                         </div>
-                    </div>
-                </section>
-            </div>
+                    </section>
+                </div>
 
-            <!-- Pizarra correspondiente a la fecha -->
-            <div class="col s12">
-                <table class="highlight">
-                    <thead>
-                      <tr>
-                          <th>Tipo</th>
-                          <th>Categoria</th>
-                          <th>Nombre</th>
-                          <th></th>
-                          <th>Monto</th>
-                      </tr>
-                    </thead>
-            
-                    <tbody>
-                      <tr>
-                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
-                        <td>Eclair</td>
-                        <td>Eclair</td>
-                        <th>
-                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
-                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
-                        </th>
-                        <td>+ $0.87</td>
-                      </tr>
-                      <tr>
-                        <td><i class="material-icons left red-text text-darken-2">south_west</i></td>
-                        <td>Jellybean</td>
-                        <td>Jellybean</td>
-                        <th>
-                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
-                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
-                        </th>
-                        <td>- $3.76</td>
-                      </tr>
-                      <tr>
-                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
-                        <td>Lollipop</td>
-                        <td>Lollipop</td>
-                        <th>
-                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
-                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
-                        </th>
-                        <td>+ $7.00</td>
-                      </tr>
-                      <tr>
-                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
-                        <td>Lollipop</td>
-                        <td>Lollipop</td>
-                        <th>
-                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
-                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
-                        </th>
-                        <td>+ $7.00</td>
-                      </tr>
-                      <tr>
-                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
-                        <td>Lollipop</td>
-                        <td>Lollipop</td>
-                        <th>
-                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
-                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
-                        </th>
-                        <td>+ $7.00</td>
-                      </tr>
-                      <tr>
-                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
-                        <td>Lollipop</td>
-                        <td>Lollipop</td>
-                        <th>
-                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
-                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
-                        </th>
-                        <td>+ $7.00</td>
-                      </tr>
-                      <tr>
-                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
-                        <td>Lollipop</td>
-                        <td>Lollipop</td>
-                        <th>
-                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
-                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
-                        </th>
-                        <td>+ $7.00</td>
-                      </tr>
-                      <tr>
-                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
-                        <td>Lollipop</td>
-                        <td>Lollipop</td>
-                        <th>
-                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
-                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
-                        </th>
-                        <td>+ $7.00</td>
-                      </tr>
-                      <tr>
-                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
-                        <td>Lollipop</td>
-                        <td>Lollipop</td>
-                        <th>
-                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
-                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
-                        </th>
-                        <td>+ $7.00</td>
-                      </tr>
-                      <tr>
-                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
-                        <td>Lollipop</td>
-                        <td>Lollipop</td>
-                        <th>
-                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
-                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
-                        </th>
-                        <td>+ $7.00</td>
-                      </tr>
-                      <tr>
-                        <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
-                        <td>Lollipop</td>
-                        <td>Lollipop</td>
-                        <th>
-                            <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
-                            <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
-                        </th>
-                        <td>+ $7.00</td>
-                      </tr>
-                    </tbody>
-                </table>
+                <!-- Pizarra correspondiente a la fecha -->
+                <div class="col s12">
+                    <table class="highlight">
+                        <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Categoria</th>
+                            <th>Nombre</th>
+                            <th></th>
+                            <th>Monto</th>
+                        </tr>
+                        </thead>
+                
+                        <tbody>
+                        <tr>
+                            <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
+                            <td>Eclair</td>
+                            <td>Eclair</td>
+                            <th>
+                                <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                                <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                            </th>
+                            <td>+ $0.87</td>
+                        </tr>
+                        <tr>
+                            <td><i class="material-icons left red-text text-darken-2">south_west</i></td>
+                            <td>Jellybean</td>
+                            <td>Jellybean</td>
+                            <th>
+                                <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                                <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                            </th>
+                            <td>- $3.76</td>
+                        </tr>
+                        <tr>
+                            <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
+                            <td>Lollipop</td>
+                            <td>Lollipop</td>
+                            <th>
+                                <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                                <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                            </th>
+                            <td>+ $7.00</td>
+                        </tr>
+                        <tr>
+                            <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
+                            <td>Lollipop</td>
+                            <td>Lollipop</td>
+                            <th>
+                                <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                                <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                            </th>
+                            <td>+ $7.00</td>
+                        </tr>
+                        <tr>
+                            <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
+                            <td>Lollipop</td>
+                            <td>Lollipop</td>
+                            <th>
+                                <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                                <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                            </th>
+                            <td>+ $7.00</td>
+                        </tr>
+                        <tr>
+                            <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
+                            <td>Lollipop</td>
+                            <td>Lollipop</td>
+                            <th>
+                                <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                                <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                            </th>
+                            <td>+ $7.00</td>
+                        </tr>
+                        <tr>
+                            <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
+                            <td>Lollipop</td>
+                            <td>Lollipop</td>
+                            <th>
+                                <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                                <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                            </th>
+                            <td>+ $7.00</td>
+                        </tr>
+                        <tr>
+                            <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
+                            <td>Lollipop</td>
+                            <td>Lollipop</td>
+                            <th>
+                                <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                                <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                            </th>
+                            <td>+ $7.00</td>
+                        </tr>
+                        <tr>
+                            <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
+                            <td>Lollipop</td>
+                            <td>Lollipop</td>
+                            <th>
+                                <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                                <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                            </th>
+                            <td>+ $7.00</td>
+                        </tr>
+                        <tr>
+                            <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
+                            <td>Lollipop</td>
+                            <td>Lollipop</td>
+                            <th>
+                                <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                                <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                            </th>
+                            <td>+ $7.00</td>
+                        </tr>
+                        <tr>
+                            <td><i class="material-icons left green-text text-darken-2">north_east</i></td>
+                            <td>Lollipop</td>
+                            <td>Lollipop</td>
+                            <th>
+                                <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                                <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                            </th>
+                            <td>+ $7.00</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Btn flotante de la pizarra -->
     <div class="btn-flotante">

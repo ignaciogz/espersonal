@@ -102,6 +102,13 @@ section {
     position: relative;
 }
 */
+main {
+  background: linear-gradient(to left, #ece9e6, #ffffff);
+  margin-left: 20%;
+  padding: 32px;
+  width: 80%;
+}
+
 small {
   font-size: 0.7rem;
   user-select: none;
@@ -115,6 +122,10 @@ small {
         color: var(--color-blanco);
     }
 } */
+.sidenav li > a:hover {
+  font-weight: bolder;
+}
+
 /* -------- HEADER -------- */
 .header {
   position: relative;
@@ -191,13 +202,6 @@ section.navegacion .sidenav #usuario-logeado {
   text-transform: uppercase;
 }
 
-section.pizarra {
-  background: linear-gradient(to left, #ece9e6, #ffffff);
-  display: inline-block;
-  margin-left: 20%;
-  padding: 32px;
-  width: 80%;
-}
 section.pizarra div.s12 {
   margin-bottom: 20px;
 }
@@ -234,7 +238,7 @@ section.detalle-pizarra > .col:first-child {
     width: 25%;
   }
 
-  section.pizarra {
+  main {
     margin-left: 25%;
     width: 75%;
   }
@@ -244,11 +248,12 @@ section.detalle-pizarra > .col:first-child {
     width: 280px;
   }
 
-  section.pizarra {
+  main {
     margin-left: 0;
     padding: 0.4rem;
     width: 100%;
   }
+
   section.pizarra .btn-edit,
 section.pizarra .btn-delete {
     visibility: visible;
