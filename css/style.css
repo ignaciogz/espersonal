@@ -62,7 +62,7 @@ body {
   color: var(--color-textos);
   font-family: var(--font-family-general);
   /* line-height: 22px; */
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 strong {
@@ -77,16 +77,16 @@ em {
 
 figure {
     margin: 0;
-}
-
+}*/
 h1 {
-    color: var(--color-gris);
-    font-family: var(--font-family-ipizza);
-    font-size: 2.2rem;
-    margin-bottom: 1.67rem;
-    text-align: center;
+  color: var(--color-logo);
+  font-family: var(--font-family-espersonal);
+  font-size: 1.8rem;
+  line-height: unset;
+  margin: unset;
 }
 
+/*
 h2 {
     font-size: 1.6rem;
     font-weight: bold;
@@ -178,7 +178,7 @@ section.login {
 }
 
 /* -------- pizarra.html -------- */
-.usuario-logeado {
+#usuario-logeado {
   text-transform: uppercase;
 }
 
@@ -188,19 +188,7 @@ section.navegacion {
   left: 0;
   width: 20%;
 }
-
-section.pizarra {
-  background: linear-gradient(to left, #ece9e6, #ffffff);
-  display: inline-block;
-  margin-left: 20%;
-  width: 80%;
-}
-section.pizarra table {
-  width: 95%;
-  margin: 0 auto;
-}
-
-.sidenav {
+section.navegacion .sidenav {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -216,32 +204,42 @@ section.pizarra table {
   backface-visibility: hidden;
 }
 
-.table-wrapper {
-  position: relative;
+section.pizarra {
+  background: linear-gradient(to left, #ece9e6, #ffffff);
+  display: inline-block;
+  margin-left: 20%;
+  padding: 32px;
+  width: 80%;
+}
+section.pizarra div.s12 {
+  margin-bottom: 20px;
+}
+section.pizarra .btn-edit,
+section.pizarra .btn-delete {
+  visibility: hidden;
+}
+section.pizarra table.highlight > tbody > tr:hover {
+  color: var(--color-logo);
+  font-weight: bolder;
+}
+section.pizarra table.highlight > tbody > tr:hover .btn-edit,
+section.pizarra table.highlight > tbody > tr:hover .btn-delete {
+  visibility: visible;
 }
 
-.table-scroll {
-  height: 150px;
-  overflow: auto;
-  margin-top: 20px;
+section.detalle-pizarra #total-de-items,
+section.detalle-pizarra #total-ingresos,
+section.detalle-pizarra #total-egresos,
+section.detalle-pizarra #balance {
+  font-weight: bolder;
 }
-
-.table-wrapper table {
-  width: 100%;
+section.detalle-pizarra > .col {
+  border-left: 1px solid var(--color-icono-fondo);
+  padding: 0.4rem 1.5rem;
 }
-
-.table-wrapper table * {
-  background: yellow;
-  color: black;
-}
-
-.table-wrapper table thead th .text {
-  position: absolute;
-  top: -20px;
-  z-index: 2;
-  height: 20px;
-  width: 35%;
-  border: 1px solid red;
+section.detalle-pizarra > .col:first-child {
+  border-left: unset;
+  padding: 0.4rem 0;
 }
 
 /* @import 'views/pedidos';
@@ -275,9 +273,23 @@ section.login .logo {
 /*@import 'components/menu-mobile';
 @import 'components/tarjetas';
 @import 'components/carousel';*/
-/* -------- MODALES -------- */
-.modal-content i.material-icons {
+/* -------- ICONOS -------- */
+i.medium {
   font-size: 3rem;
+}
+
+i.material-icons {
+  user-select: none;
+}
+
+h1 + i.material-icons {
+  color: var(--color-logo);
+  margin-left: 1rem;
+}
+
+/* -------- MODALES -------- */
+.modal {
+  max-height: 80%;
 }
 
 /* -------- BOTONES -------- */
@@ -323,6 +335,23 @@ form {
 .input-field input[type=password]:focus {
   border-bottom: 1px solid var(--color-secundario) !important;
   box-shadow: 0 1px 0 0 var(--color-secundario) !important;
+}
+
+[type=radio]:checked + span:after, [type=radio].with-gap:checked + span:before, [type=radio].with-gap:checked + span:after {
+  border: 2px solid #866B47;
+}
+
+[type=radio]:checked + span:after, [type=radio].with-gap:checked + span:after {
+  background-color: #866B47;
+}
+
+.tipo-de-item {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+  color: var(--color-textos);
 }
 
 /*@import 'components/animaciones'; */
