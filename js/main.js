@@ -1,23 +1,29 @@
 document.addEventListener('DOMContentLoaded', init);
 
-function existeEnDOM(node) {
-    return (node === document.body) ? false : document.body.contains(node);
-}
-
 function init() {
     /* Inicializo componentes del framework */
     M.AutoInit();
+
+    /* Inicializo objetos globales de mi app */
     const manejadorDOM = new ManejadorDOM();
+    const manejadorEventos = new ManejadorEventos();
     const categorias = new Categorias();
+    const usuario = new Usuario();
 
     /* Controlador frontal basico */
     const paginaActual = location.pathname.split("/").pop();
     switch (paginaActual) {
         case "index.html": 
                 // Reduciendo velocidad de reproducción del video
-                $videoMarketing = document.querySelector('.video-marketing video');    
-                if (existeEnDOM($videoMarketing)) {
+                const $videoMarketing = document.querySelector('.video-marketing video');    
+                if (manejadorDOM.existeEnDOM($videoMarketing)) {
                     $videoMarketing.playbackRate = 0.5;
+                }
+
+                // Asociando eventos a formularios
+                const $formAcceso = document.getElementById('form-acceso');
+                if (manejadorDOM.existeEnDOM($formAcceso)) {
+                    $formAcceso.addEventListener('submit', manejadorEventos.validarFormAcceso());
                 }
             break;
         case "pizarra.html":
@@ -26,14 +32,16 @@ function init() {
             break;
         case "categorias.html":
                 // Mostrando categorias
-                const $cardsCategorias = document.getElementById("contenedor-cards-categorias");
-        
-                if (existeEnDOM($cardsCategorias)) {
+                const $cardsCategorias = document.getElementById('contenedor-cards-categorias');
+                const fragmento = manejadorDOM.crearFragmento();
+
+                if (manejadorDOM.existeEnDOM($cardsCategorias)) {
                     for (const categoria of categorias.obtenerCategorias()) {
-                        // let $cardCategoria = manejadorDOM.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
-                        let $cardCategoria = manejadorDOM.crearCardCategoriaLiteral(categoria.nombre, categoria.descripcion, categoria.icono);
-                        manejadorDOM.insertarEnContenedor($cardsCategorias, $cardCategoria);
+                        // let cardCategoria = manejadorDOM.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
+                        let cardCategoria = manejadorDOM.crearCardCategoriaLiteral(categoria.nombre, categoria.descripcion, categoria.icono);
+                        manejadorDOM.agregar(fragmento, cardCategoria);
                     }
+                    manejadorDOM.agregar($cardsCategorias, fragmento);
                 }
             break;
     }
@@ -146,7 +154,28 @@ class ManejadorDOM {
         return $divColumna;
     }
 
-    insertarEnContenedor(contenedor, elemento) {
+    crearFragmento() {
+        return document.createDocumentFragment();
+    }
+
+    existeEnDOM(nodo) {
+        return (nodo === document.body) ? false : document.body.contains(nodo);
+    }
+
+    agregar(contenedor, elemento) {
         contenedor.appendChild(elemento);
+    }
+}
+
+class ManejadorEventos {
+    validarFormAcceso() {
+        return function(e) {
+            e.preventDefault();
+
+            const formulario = e.target;
+            const datoUsuario = formulario.usuario.value;
+            const datoContrasena = formulario.contrasena.value;
+            
+        }
     }
 }

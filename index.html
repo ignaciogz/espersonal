@@ -40,25 +40,28 @@
                         </div>
                     </div>
                     <!-- Formulario de acceso -->
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="usuario" type="text">
-                            <label for="usuario">Usuario</label>
+                    <form id="form-acceso">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="usuario" type="text" required>
+                                <label for="usuario">Usuario</label>
+                            </div>
+                        
+                            <div class="input-field col s12">
+                                <input id="contrasena" type="password" required>
+                                <label for="contrasena">Contraseña</label>
+                            </div>
                         </div>
-                    
-                        <div class="input-field col s12">
-                            <input id="contrasena" type="password">
-                            <label for="contrasena">Contraseña</label>
+                        <div class="row">
+                            <div class="col s12">
+                                <button class="btn waves-effect waves-red brown" type="submit" name="action">INGRESAR
+                                    <i class="material-icons left">login</i>
+                                </button>
+                                <a class="waves-effect btn-flat modal-trigger" href="#modal-form-registrarse">Registrarse</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12">
-                            <button class="btn waves-effect waves-red brown" type="submit" name="action">INGRESAR
-                                <i class="material-icons left">login</i>
-                            </button>
-                            <a class="waves-effect btn-flat modal-trigger" href="#modal-form-registrarse">Registrarse</a>
-                        </div>
-                    </div>
+                    </form>
+
                     <div class="row">
                         <div class="col s12">
                             <small class="datos-de-acceso">* Usuario: coder - Contraseña: house</small>
@@ -87,24 +90,26 @@
 
     <!-- Modal :: Formulario de registro -->
     <div id="modal-form-registrarse" class="modal">
-        <div class="modal-content">
-            <h4>REGISTRO<i class="medium material-icons right">app_registration</i></h4>
-            <div class="row">
-                <div class="input-field col s6">
-                <input id="form-registrarse-usuario" type="text" required>
-                <label for="form-registrarse-usuario">Usuario</label>
-                </div>
-            
-                <div class="input-field col s6">
-                    <input id="form-registrarse-contrasena" type="password" required>
-                    <label for="form-registrarse-contrasena">Contraseña</label>
+        <form id="form-registrarse">
+            <div class="modal-content">
+                <h4>REGISTRO<i class="medium material-icons right">app_registration</i></h4>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="registrarse-usuario" type="text" required>
+                        <label for="registrarse-usuario">Usuario</label>
+                    </div>
+                
+                    <div class="input-field col s6">
+                        <input id="registrarse-contrasena" type="password" required>
+                        <label for="registrarse-contrasena">Contraseña</label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn waves-effect waves-red brown" type="submit" name="action">Registrarme</button>
-            <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
-        </div>
+            <div class="modal-footer">
+                <button class="btn waves-effect waves-red brown" type="submit" name="action">Registrarme</button>
+                <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
+            </div>
+        </form>
     </div>
 
     
