@@ -23,7 +23,7 @@ function init() {
                 // Asociando eventos a formularios
                 const $formAcceso = document.getElementById('form-acceso');
                 if (manejadorDOM.existeEnDOM($formAcceso)) {
-                    $formAcceso.addEventListener('submit', manejadorEventos.validarFormAcceso());
+                    $formAcceso.addEventListener('submit', manejadorEventos.validarFormAcceso(usuario));
                 }
             break;
         case "pizarra.html":
@@ -37,8 +37,8 @@ function init() {
 
                 if (manejadorDOM.existeEnDOM($cardsCategorias)) {
                     for (const categoria of categorias.obtenerCategorias()) {
-                        // let cardCategoria = manejadorDOM.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
                         let cardCategoria = manejadorDOM.crearCardCategoriaLiteral(categoria.nombre, categoria.descripcion, categoria.icono);
+                        // let cardCategoria = manejadorDOM.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
                         manejadorDOM.agregar(fragmento, cardCategoria);
                     }
                     manejadorDOM.agregar($cardsCategorias, fragmento);
@@ -91,6 +91,45 @@ class Categorias {
 
     obtenerCategorias() {
         return this.listado;
+    }
+}
+
+class Usuario {
+    constructor() {
+        this.nombre = "visitante";
+        this.nombreDeUsuario = null;
+        this.contrasenaDeUsuario = null;
+        this.tipo = "invitado";
+    }
+
+    // Metodos privados
+    validarUsuario() {
+        return this.verificarNombreDeUsuario() && this.verificarContrasenaDeUsuario();
+    }
+
+    verificarNombreDeUsuario() {
+        return (this.nombreDeUsuario != "") && (this.nombreDeUsuario== "coder");
+    }
+    verificarContrasenaDeUsuario() {
+        return (this.contrasenaDeUsuario != "") && (this.contrasenaDeUsuario == "house");
+    }
+
+    // Metodos publicos
+    logearUsuario() {
+        if(this.validarUsuario()) {
+            this.nombre = this.nombreDeUsuario;
+            this.contrasena = null;
+            this.tipo = "registrado";
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    solicitarDatosDeUsuario(datoUsuario, datoContrasena) {
+        this.nombreDeUsuario = datoUsuario;
+        this.contrasenaDeUsuario = datoContrasena;
     }
 }
 
@@ -168,14 +207,23 @@ class ManejadorDOM {
 }
 
 class ManejadorEventos {
-    validarFormAcceso() {
-        return function(e) {
+    validarFormAcceso(usuario) {
+        return function (e) {
             e.preventDefault();
-
             const formulario = e.target;
-            const datoUsuario = formulario.usuario.value;
-            const datoContrasena = formulario.contrasena.value;
+
+            const datoUsuario = formulario.accesoUsuario.value;
+            const datoContrasena = formulario.accesoContrasena.value;
             
+            usuario.solicitarDatosDeUsuario(datoUsuario, datoContrasena);
+            if (usuario.logearUsuario()) {
+                alert("Bienvenido ! " + usuario.nombre);
+                this.reset();
+                setTimeout( function() { location = "pizarra.html"; }, 1000 );
+            } else {
+                alert("Error:\nDatos de ingreso incorrectos");
+                this.reset();
+            }
         }
     }
 }
