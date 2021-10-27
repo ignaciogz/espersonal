@@ -58,7 +58,7 @@ $mq-breakpoints-subtract: 0.02px !default;  // Hack para evitar error logico en 
     }
 }*/
 body {
-  background-color: var(--color-gris);
+  background: linear-gradient(to left, #ece9e6 20%, #ffffff 80%);
   color: var(--color-textos);
   font-family: var(--font-family-general);
   /* line-height: 22px; */
@@ -86,12 +86,13 @@ h1 {
   margin: unset;
 }
 
-/*
 h2 {
-    font-size: 1.6rem;
-    font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
 }
 
+/*
 h3 { font-size: 1rem; }
 */
 /*
@@ -103,7 +104,6 @@ section {
 }
 */
 main {
-  background: linear-gradient(to left, #ece9e6, #ffffff);
   margin-left: 20%;
   padding: 32px;
   width: 80%;
@@ -127,15 +127,23 @@ small {
 }
 
 /* -------- HEADER -------- */
-.header {
+.sidenav .header {
   position: relative;
   padding: 32px 32px 0;
   margin-bottom: 8px;
+  user-select: none;
+}
+.sidenav .subheader {
+  user-select: none;
 }
 
-.header,
-.subheader {
-  user-select: none;
+.card-header {
+  padding: 32px 10px 0;
+  margin-bottom: 8px;
+}
+
+.card i.material-icons {
+  padding-top: 20px;
 }
 
 /* -------- LOGO -------- */
@@ -202,6 +210,9 @@ section.navegacion .sidenav #usuario-logeado {
   text-transform: uppercase;
 }
 
+section.pizarra div.d-flex:hover {
+  color: #795548;
+}
 section.pizarra div.s12 {
   margin-bottom: 20px;
 }

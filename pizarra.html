@@ -29,7 +29,7 @@
     <div class="navbar-fixed hide-on-large-only">
         <nav class="brown z-depth-4">
             <div class="nav-wrapper">
-                <a class="logo brand-logo" href="index.html" title="logo de espesonal">
+                <a class="logo brand-logo white-text" href="index.html" title="logo de espesonal">
                     <div>ESPERSONAL !</div>
                 </a>
                 <ul class="left">
@@ -256,14 +256,17 @@
             <h4>Agregar Item<i class="medium material-icons right">add</i></h4>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="nombre" type="text">
+                    <input id="nombre" type="text" required>
                     <label for="nombre">Nombre</label>
                 </div>
 
                 <div class="input-field col 12">
+                    <p>
+                        Seleccione tipo de item:
+                    </p>
                     <p class="tipo-de-item">
                         <label>
-                            <input class="with-gap" name="group1" type="radio" />
+                            <input class="with-gap" name="group1" type="radio" checked />
                             <span>Ingreso</span>
                         </label>
                     </p>
@@ -276,7 +279,7 @@
                 </div>
                 
                 <div class="input-field col s12">
-                    <select>
+                    <select required>
                         <option value="" disabled selected>Seleccione una categoría</option>
                         <option value="1">Ropa</option>
                         <option value="2">Restaurante</option>
@@ -286,7 +289,7 @@
             
             
                 <div class="input-field col s12">
-                    <input id="monto" type="text">
+                    <input id="monto" type="text" required>
                     <label for="monto">Monto</label>
                 </div>
             </div>
@@ -303,7 +306,7 @@
             <h4>Configuración<i class="medium material-icons right">settings</i></h4>
             <div class="row">
                 <div class="input-field col s12 m6">
-                    <select>
+                    <select required>
                         <option value="" disabled selected>Seleccione el año</option>
                         <option value="2021">2021</option>
                         <option value="2022">2022</option>
@@ -313,7 +316,7 @@
                 </div>
             
                 <div class="input-field col s12 m6">
-                    <select>
+                    <select required>
                         <option value="" disabled selected>Seleccione el mes</option>
                         <option value="1">Enero</option>
                         <option value="2">Febrero</option>
