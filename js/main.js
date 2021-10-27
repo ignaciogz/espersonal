@@ -5,10 +5,10 @@ function init() {
     M.AutoInit();
 
     /* Inicializo objetos globales de mi app */
-    const manejadorDOM = new ManejadorDOM();
-    const manejadorEventos = new ManejadorEventos();
-    const categorias = new Categorias();
-    const usuario = new Usuario();
+    this.manejadorDOM = new ManejadorDOM();
+    this.manejadorEventos = new ManejadorEventos();
+    this.categorias = new Categorias();
+    this.usuario = new Usuario();
 
     /* Controlador frontal basico */
     const paginaActual = location.pathname.split("/").pop();
@@ -16,14 +16,14 @@ function init() {
         case "index.html": 
                 // Reduciendo velocidad de reproducción del video
                 const $videoMarketing = document.querySelector('.video-marketing video');    
-                if (manejadorDOM.existeEnDOM($videoMarketing)) {
+                if (this.manejadorDOM.existeEnDOM($videoMarketing)) {
                     $videoMarketing.playbackRate = 0.5;
                 }
 
                 // Asociando eventos a formularios
                 const $formAcceso = document.getElementById('form-acceso');
-                if (manejadorDOM.existeEnDOM($formAcceso)) {
-                    $formAcceso.addEventListener('submit', manejadorEventos.validarFormAcceso(usuario));
+                if (this.manejadorDOM.existeEnDOM($formAcceso)) {
+                    $formAcceso.addEventListener('submit', this.manejadorEventos.validarFormAcceso().bind(this));
                 }
             break;
         case "pizarra.html":
@@ -33,15 +33,15 @@ function init() {
         case "categorias.html":
                 // Mostrando categorias
                 const $cardsCategorias = document.getElementById('contenedor-cards-categorias');
-                const fragmento = manejadorDOM.crearFragmento();
+                const fragmento = this.manejadorDOM.crearFragmento();
 
-                if (manejadorDOM.existeEnDOM($cardsCategorias)) {
-                    for (const categoria of categorias.obtenerCategorias()) {
-                        let cardCategoria = manejadorDOM.crearCardCategoriaLiteral(categoria.nombre, categoria.descripcion, categoria.icono);
-                        // let cardCategoria = manejadorDOM.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
-                        manejadorDOM.agregar(fragmento, cardCategoria);
+                if (this.manejadorDOM.existeEnDOM($cardsCategorias)) {
+                    for (const categoria of this.categorias.obtenerCategorias()) {
+                        let cardCategoria = this.manejadorDOM.crearCardCategoriaLiteral(categoria.nombre, categoria.descripcion, categoria.icono);
+                        // let cardCategoria = this.manejadorDOM.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
+                        this.manejadorDOM.agregar(fragmento, cardCategoria);
                     }
-                    manejadorDOM.agregar($cardsCategorias, fragmento);
+                    this.manejadorDOM.agregar($cardsCategorias, fragmento);
                 }
             break;
     }
@@ -207,7 +207,7 @@ class ManejadorDOM {
 }
 
 class ManejadorEventos {
-    validarFormAcceso(usuario) {
+    validarFormAcceso() {
         return function (e) {
             e.preventDefault();
             const formulario = e.target;
@@ -215,14 +215,14 @@ class ManejadorEventos {
             const datoUsuario = formulario.accesoUsuario.value;
             const datoContrasena = formulario.accesoContrasena.value;
             
-            usuario.solicitarDatosDeUsuario(datoUsuario, datoContrasena);
-            if (usuario.logearUsuario()) {
-                alert("Bienvenido ! " + usuario.nombre);
-                this.reset();
+            this.usuario.solicitarDatosDeUsuario(datoUsuario, datoContrasena);
+            if (this.usuario.logearUsuario()) {
+                alert("Bienvenido ! " + this.usuario.nombre);
+                formulario.reset();
                 setTimeout( function() { location = "pizarra.html"; }, 1000 );
             } else {
                 alert("Error:\nDatos de ingreso incorrectos");
-                this.reset();
+                formulario.reset();
             }
         }
     }
