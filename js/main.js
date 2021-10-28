@@ -10,7 +10,6 @@ function init() {
     /* Controlador frontal basico */
     switch (Navegador.paginaActual()) {
         case "index.html":
-                // Inicializo objetos globales de mi app
                 if(Navegador.usuarioEstaLogeado()) {
                     Navegador.redireccionar("pizarra.html");
                 } else {
@@ -23,7 +22,7 @@ function init() {
                         $videoMarketing.playbackRate = 0.5;
                     }
 
-                    // Asociando eventos a formularios
+                    // Asociando EVENTOS a formularios del index.html
                     const $formAcceso = document.getElementById('form-acceso');
                     if (ManejadorDOM.existeEnDOM($formAcceso)) {
                         $formAcceso.addEventListener('submit', ManejadorEventos.validarFormAcceso().bind(this));
@@ -31,23 +30,41 @@ function init() {
                 }
             break;
         case "pizarra.html":
+                if(Navegador.usuarioEstaLogeado()) {
+                        
+                } else {
+                    Navegador.redireccionar("index.html");
+                }
             break;
         case "grafico.html":
+                if(Navegador.usuarioEstaLogeado()) {
+                        
+                } else {
+                    Navegador.redireccionar("index.html");
+                }
             break;
         case "categorias.html":
-                // Mostrando categorias
-                const $cardsCategorias = document.getElementById('contenedor-cards-categorias');
-                const fragmento = ManejadorDOM.crearFragmento();
+                if(Navegador.usuarioEstaLogeado()) {
+                    // Mostrando categorias
+                    const $cardsCategorias = document.getElementById('contenedor-cards-categorias');
+                    const fragmento = ManejadorDOM.crearFragmento();
 
-                if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
-                    let cardCategoria;
+                    if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
+                        for (const categoria of this.categorias.obtenerCategorias()) {
+                            let cardCategoria = ManejadorDOM.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
+                            ManejadorDOM.agregar(fragmento, cardCategoria);
+                        }
 
-                    for (const categoria of this.categorias.obtenerCategorias()) {
-                        cardCategoria = ManejadorDOM.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
-                        ManejadorDOM.agregar(fragmento, cardCategoria);
+                        ManejadorDOM.agregar($cardsCategorias, fragmento);
                     }
 
-                    ManejadorDOM.agregar($cardsCategorias, fragmento);
+                    // Asociando EVENTO a barra lateral
+                    const $btnSalir = document.getElementById('btn-salir');
+                    if (ManejadorDOM.existeEnDOM($btnSalir)) {
+                        $btnSalir.addEventListener('click', ManejadorEventos.cerrarApp());
+                    }
+                } else {
+                    Navegador.redireccionar("index.html");
                 }
             break;
     }
@@ -272,6 +289,14 @@ class ManejadorDOM {
 }
 
 class ManejadorEventos {
+    static cerrarApp() {
+        return function (e) {
+            e.preventDefault();
+            Navegador.cerrarSesion();
+            Navegador.redireccionar("index.html");
+        }
+    }
+
     static validarFormAcceso() {
         return function (e) {
             e.preventDefault();
@@ -314,7 +339,7 @@ class Navegador {
     }
 
     static usuarioEstaLogeado() {
-        Sesion.existe("usuario_logeado");
+        return Sesion.existe("usuario_logeado");
     }
 }
 
