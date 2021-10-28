@@ -4,26 +4,26 @@ function init() {
     /* Inicializo componentes del framework */
     M.AutoInit();
 
-    /* Inicializo objetos globales de mi app */
-    this.manejadorDOM = new ManejadorDOM();
-    this.manejadorEventos = new ManejadorEventos();
-    this.categorias = new Categorias();
-    this.usuario = new Usuario();
-
     /* Controlador frontal basico */
     const paginaActual = location.pathname.split("/").pop();
     switch (paginaActual) {
-        case "index.html": 
+        case "index.html":
+                // Inicializo objetos globales de mi app
+                this.categorias = new Categorias();
+                this.usuario = new Usuario();
+
+                this.usuario.cargarUsuariosPredefinidos();
+
                 // Reduciendo velocidad de reproducción del video
                 const $videoMarketing = document.querySelector('.video-marketing video');    
-                if (this.manejadorDOM.existeEnDOM($videoMarketing)) {
+                if (ManejadorDOM.existeEnDOM($videoMarketing)) {
                     $videoMarketing.playbackRate = 0.5;
                 }
 
                 // Asociando eventos a formularios
                 const $formAcceso = document.getElementById('form-acceso');
-                if (this.manejadorDOM.existeEnDOM($formAcceso)) {
-                    $formAcceso.addEventListener('submit', this.manejadorEventos.validarFormAcceso().bind(this));
+                if (ManejadorDOM.existeEnDOM($formAcceso)) {
+                    $formAcceso.addEventListener('submit', ManejadorEventos.validarFormAcceso().bind(this));
                 }
             break;
         case "pizarra.html":
@@ -33,20 +33,100 @@ function init() {
         case "categorias.html":
                 // Mostrando categorias
                 const $cardsCategorias = document.getElementById('contenedor-cards-categorias');
-                const fragmento = this.manejadorDOM.crearFragmento();
+                const fragmento = ManejadorDOM.crearFragmento();
 
-                if (this.manejadorDOM.existeEnDOM($cardsCategorias)) {
+                if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
                     for (const categoria of this.categorias.obtenerCategorias()) {
-                        let cardCategoria = this.manejadorDOM.crearCardCategoriaLiteral(categoria.nombre, categoria.descripcion, categoria.icono);
-                        // let cardCategoria = this.manejadorDOM.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
-                        this.manejadorDOM.agregar(fragmento, cardCategoria);
+                        let cardCategoria = ManejadorDOM.crearCardCategoriaLiteral(categoria.nombre, categoria.descripcion, categoria.icono);
+                        // let cardCategoria = ManejadorDOM.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
+                        ManejadorDOM.agregar(fragmento, cardCategoria);
                     }
-                    this.manejadorDOM.agregar($cardsCategorias, fragmento);
+                    ManejadorDOM.agregar($cardsCategorias, fragmento);
                 }
             break;
     }
 }
 
+const JSON_categoriasPredefinidas = `[
+    { 
+        "nombre":"Comida",
+        "descripcion":"Descripcion - Categoria Comida",
+        "icono":"fastfood"
+    },
+    { 
+        "nombre":"Deportes",
+        "descripcion":"Descripcion - Categoria Deportes",
+        "icono":"sports_handball"
+    },
+    { 
+        "nombre":"Deudas",
+        "descripcion":"Descripcion - Categoria Deudas",
+        "icono":"receipt"
+    },
+    { 
+        "nombre":"Entretenimiento",
+        "descripcion":"Descripcion - Categoria Entretenimiento",
+        "icono":"celebration"
+    },
+    { 
+        "nombre":"Facturas",
+        "descripcion":"Descripcion - Categoria Factura",
+        "icono":"receipt_long"
+    },
+    { 
+        "nombre":"Gimnasio",
+        "descripcion":"Descripcion - Categoria Gimnasio",
+        "icono":"fitness_center"
+    },
+    { 
+        "nombre":"Hogar",
+        "descripcion":"Descripcion - Categoria Hogar",
+        "icono":"home"
+    },
+    { 
+        "nombre":"Mascotas",
+        "descripcion":"Descripcion - Categoria Mascotas",
+        "icono":"pets"
+    },
+    { 
+        "nombre":"Regalos",
+        "descripcion":"Descripcion - Categoria Regalos",
+        "icono":"card_giftcard"
+    },
+    { 
+        "nombre":"Restaurantes",
+        "descripcion":"Descripcion - Categoria Restaurantes",
+        "icono":"restaurant"
+    },
+    { 
+        "nombre":"Ropa",
+        "descripcion":"Descripcion - Categoria Ropa",
+        "icono":"shopping_bag"
+    },
+    { 
+        "nombre":"Salud",
+        "descripcion":"Descripcion - Categoria Salud",
+        "icono":"health_and_safety"
+    },
+    { 
+        "nombre":"Tarjeta de crédito",
+        "descripcion":"Descripcion - Categoria Tarjeta de credito",
+        "icono":"credit_card"
+    },
+    { 
+        "nombre":"Transporte",
+        "descripcion":"Descripcion - Categoria Transporte",
+        "icono":"commute"
+    }
+]`;
+
+const JSON_usuariosPredefinidos = `[
+    { 
+        "nombre":"coder",
+        "contrasena":"house",
+        "tipo":"super admin"
+    }
+]`;
 
 class Categoria {
     constructor(nombre, descripcion, icono) {
@@ -64,29 +144,22 @@ class Categorias {
 
     // Métodos privados
     cargarCategoriasPredefinidas() {
-        this.listado.push(new Categoria("Comida", "Descripcion - Categoria Comida", "fastfood"));
-        this.listado.push(new Categoria("Deportes", "Descripcion - Categoria Deportes", "sports_handball"));
-        this.listado.push(new Categoria("Deudas", "Descripcion - Categoria Deudas", "receipt"));
-        this.listado.push(new Categoria("Entretenimiento", "Descripcion - Categoria Entretenimiento", "celebration"));
-        this.listado.push(new Categoria("Facturas", "Descripcion - Categoria Factura", "receipt_long"));
-        this.listado.push(new Categoria("Gimnasio", "Descripcion - Categoria Gimnasio", "fitness_center"));
-        this.listado.push(new Categoria("Hogar", "Descripcion - Categoria Hogar", "home"));
-        this.listado.push(new Categoria("Mascotas", "Descripcion - Categoria Mascotas", "pets"));
-        this.listado.push(new Categoria("Regalos", "Descripcion - Categoria Regalos", "card_giftcard"));
-        this.listado.push(new Categoria("Restaurantes", "Descripcion - Categoria Restaurantes", "restaurant"));
-        this.listado.push(new Categoria("Ropa", "Descripcion - Categoria Ropa", "shopping_bag"));
-        this.listado.push(new Categoria("Salud", "Descripcion - Categoria Salud", "health_and_safety"));
-        this.listado.push(new Categoria("Tarjeta de crédito", "Descripcion - Categoria Tarjeta de credito", "credit_card"));
-        this.listado.push(new Categoria("Transporte", "Descripcion - Categoria Transporte", "commute"));
+        const categoriasPredefinidas = JSON.parse(JSON_categoriasPredefinidas);
+        
+        for (const categoria of categoriasPredefinidas) {
+            this.listado.push(
+                new Categoria(categoria.nombre, categoria.descripcion, categoria.icono)
+            );
+        }
     }
 
     // Métodos públicos
     existeCategoria(nombreDeCategoria) {
-        return this.listado.filter(elemento => elemento.nombre === nombreDeCategoria).length > 0 ? true : false;
+        return this.listado.find(elemento => elemento.nombre === nombreDeCategoria) ? true : false;
     }
 
     obtenerCategoria(nombreDeCategoria) {
-        return this.listado.filter(elemento => elemento.nombre === nombreDeCategoria).pop();
+        return this.listado.find(elemento => elemento.nombre === nombreDeCategoria);
     }
 
     obtenerCategorias() {
@@ -95,29 +168,58 @@ class Categorias {
 }
 
 class Usuario {
-    constructor() {
-        this.nombre = "visitante";
-        this.nombreDeUsuario = null;
-        this.contrasenaDeUsuario = null;
-        this.tipo = "invitado";
+    constructor(nombre = null, contrasena = null, tipo = "invitado") {
+        this.nombre = nombre;
+        this.contrasena = contrasena;
+        this.tipo = tipo;
     }
 
-    // Metodos privados
+    // Métodos privados
+    cargarUsuariosPredefinidos() {
+        const usuariosPredefinidos = JSON.parse(JSON_usuariosPredefinidos);
+        
+        for (const usuario of usuariosPredefinidos) {
+            if (!this.existeUsuario(usuario)) {
+                this.guardarUsuario(usuario);
+            }            
+        }
+    }
+
+    existeUsuario(usuario) {
+        if (Almacenamiento.existe("usuarios_registrados")) {
+            const usuariosRegistrados = Almacenamiento.obtener("usuarios_registrados");
+            
+            function nombreUsuarioBuscado(elemento) {
+                return elemento.nombre === usuario.nombre;
+            }
+
+            return usuariosRegistrados.find(nombreUsuarioBuscado) ? true : false;
+        } else {
+            return false;
+        }
+    }
+
+    guardarUsuario(usuario) {
+        const nuevoUsuario = new Usuario(usuario.nombre, usuario.contrasena, usuario.tipo);
+        Almacenamiento.guardar("usuarios_registrados", nuevoUsuario);
+    }
+
     validarUsuario() {
-        return this.verificarNombreDeUsuario() && this.verificarContrasenaDeUsuario();
+        if (Almacenamiento.existe("usuarios_registrados")) {
+            const usuariosRegistrados = Almacenamiento.obtener("usuarios_registrados");
+        
+            function datosDeUsuarioBuscado(elemento) {
+                return elemento.nombre === this.nombre && elemento.contrasena === this.contrasena;
+            }
+            return usuariosRegistrados.find(datosDeUsuarioBuscado.bind(this)) ? true : false;
+        } else {
+            return false;
+        }
     }
 
-    verificarNombreDeUsuario() {
-        return (this.nombreDeUsuario != "") && (this.nombreDeUsuario== "coder");
-    }
-    verificarContrasenaDeUsuario() {
-        return (this.contrasenaDeUsuario != "") && (this.contrasenaDeUsuario == "house");
-    }
-
-    // Metodos publicos
+    // Métodos públicos
     logearUsuario() {
         if(this.validarUsuario()) {
-            this.nombre = this.nombreDeUsuario;
             this.contrasena = null;
             this.tipo = "registrado";
 
@@ -127,14 +229,18 @@ class Usuario {
         }
     }
 
-    solicitarDatosDeUsuario(datoUsuario, datoContrasena) {
-        this.nombreDeUsuario = datoUsuario;
-        this.contrasenaDeUsuario = datoContrasena;
+    cargarDatosDeUsuario(datoUsuario, datoContrasena) {
+        this.nombre = datoUsuario;
+        this.contrasena = datoContrasena;
     }
 }
 
 class ManejadorDOM {
-    crearCardCategoria(nombre, descripcion, icono) {
+    static agregar(contenedor, elemento) {
+        contenedor.appendChild(elemento);
+    }
+
+    static crearCardCategoria(nombre, descripcion, icono) {
         let $divColumna = document.createElement("div");
             $divColumna.classList.add('col', 's6', 'm4');
     
@@ -174,7 +280,7 @@ class ManejadorDOM {
         return $divColumna;
     }
     
-    crearCardCategoriaLiteral(nombre, descripcion, icono) {
+    static crearCardCategoriaLiteral(nombre, descripcion, icono) {
         let $divColumna = document.createElement("div");
             $divColumna.classList.add('col', 's6', 'm4');
                         
@@ -193,29 +299,26 @@ class ManejadorDOM {
         return $divColumna;
     }
 
-    crearFragmento() {
+    static crearFragmento() {
         return document.createDocumentFragment();
     }
 
-    existeEnDOM(nodo) {
+    static existeEnDOM(nodo) {
         return (nodo === document.body) ? false : document.body.contains(nodo);
-    }
-
-    agregar(contenedor, elemento) {
-        contenedor.appendChild(elemento);
     }
 }
 
 class ManejadorEventos {
-    validarFormAcceso() {
+    static validarFormAcceso() {
         return function (e) {
             e.preventDefault();
             const formulario = e.target;
 
-            const datoUsuario = formulario.accesoUsuario.value;
-            const datoContrasena = formulario.accesoContrasena.value;
+            const datoUsuario = document.getElementById('acceso-usuario').value;
+            const datoContrasena = document.getElementById('acceso-contrasena').value;
             
-            this.usuario.solicitarDatosDeUsuario(datoUsuario, datoContrasena);
+            this.usuario.cargarDatosDeUsuario(datoUsuario, datoContrasena);
+
             if (this.usuario.logearUsuario()) {
                 alert("Bienvenido ! " + this.usuario.nombre);
                 formulario.reset();
@@ -226,4 +329,32 @@ class ManejadorEventos {
             }
         }
     }
+}
+
+class Almacenamiento { // La clase trabaja con array de objetos
+    static existe(clave) {
+        return localStorage.getItem(clave) !== null;
+    }
+
+    static obtener(clave) {
+        return JSON.parse(localStorage.getItem(clave))
+    }
+
+    static guardar(clave, valor) {
+        let almacenado;
+
+        if (Almacenamiento.existe(clave)) {
+            almacenado = Almacenamiento.obtener(clave);
+        } else {
+            almacenado = new Array();
+        }  
+        
+        almacenado.push(valor);
+  
+        const JSON_almacenado = JSON.stringify(almacenado);
+        localStorage.setItem(clave, JSON_almacenado);
+    }
+}
+
+class Sesion {
 }
