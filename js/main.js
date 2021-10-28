@@ -1,29 +1,33 @@
 document.addEventListener('DOMContentLoaded', init);
 
 function init() {
-    /* Inicializo componentes del framework */
+    // Inicializo componentes del framework
     M.AutoInit();
 
+    // Inicializo objetos globales de mi app
+    this.categorias = new Categorias();
+
     /* Controlador frontal basico */
-    const paginaActual = location.pathname.split("/").pop();
-    switch (paginaActual) {
+    switch (Navegador.paginaActual()) {
         case "index.html":
                 // Inicializo objetos globales de mi app
-                this.categorias = new Categorias();
-                this.usuario = new Usuario();
+                if(Navegador.usuarioEstaLogeado()) {
+                    Navegador.redireccionar("pizarra.html");
+                } else {
+                    this.usuario = new Usuario();
+                    this.usuario.cargarUsuariosPredefinidos();
 
-                this.usuario.cargarUsuariosPredefinidos();
+                    // Reduciendo velocidad de reproducción del video
+                    const $videoMarketing = document.querySelector('.video-marketing video');    
+                    if (ManejadorDOM.existeEnDOM($videoMarketing)) {
+                        $videoMarketing.playbackRate = 0.5;
+                    }
 
-                // Reduciendo velocidad de reproducción del video
-                const $videoMarketing = document.querySelector('.video-marketing video');    
-                if (ManejadorDOM.existeEnDOM($videoMarketing)) {
-                    $videoMarketing.playbackRate = 0.5;
-                }
-
-                // Asociando eventos a formularios
-                const $formAcceso = document.getElementById('form-acceso');
-                if (ManejadorDOM.existeEnDOM($formAcceso)) {
-                    $formAcceso.addEventListener('submit', ManejadorEventos.validarFormAcceso().bind(this));
+                    // Asociando eventos a formularios
+                    const $formAcceso = document.getElementById('form-acceso');
+                    if (ManejadorDOM.existeEnDOM($formAcceso)) {
+                        $formAcceso.addEventListener('submit', ManejadorEventos.validarFormAcceso().bind(this));
+                    }
                 }
             break;
         case "pizarra.html":
@@ -36,11 +40,13 @@ function init() {
                 const fragmento = ManejadorDOM.crearFragmento();
 
                 if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
+                    let cardCategoria;
+
                     for (const categoria of this.categorias.obtenerCategorias()) {
-                        let cardCategoria = ManejadorDOM.crearCardCategoriaLiteral(categoria.nombre, categoria.descripcion, categoria.icono);
-                        // let cardCategoria = ManejadorDOM.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
+                        cardCategoria = ManejadorDOM.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
                         ManejadorDOM.agregar(fragmento, cardCategoria);
                     }
+
                     ManejadorDOM.agregar($cardsCategorias, fragmento);
                 }
             break;
@@ -218,20 +224,17 @@ class Usuario {
     }
 
     // Métodos públicos
-    logearUsuario() {
-        if(this.validarUsuario()) {
-            this.contrasena = null;
-            this.tipo = "registrado";
+    cargarDatosDeUsuario(datoUsuario, datoContrasena) {
+        this.nombre = datoUsuario;
+        this.contrasena = datoContrasena;
+    }
 
+    logearUsuario() {
+        if (this.validarUsuario()) {
             return true;
         } else {
             return false;
         }
-    }
-
-    cargarDatosDeUsuario(datoUsuario, datoContrasena) {
-        this.nombre = datoUsuario;
-        this.contrasena = datoContrasena;
     }
 }
 
@@ -239,48 +242,8 @@ class ManejadorDOM {
     static agregar(contenedor, elemento) {
         contenedor.appendChild(elemento);
     }
-
+    
     static crearCardCategoria(nombre, descripcion, icono) {
-        let $divColumna = document.createElement("div");
-            $divColumna.classList.add('col', 's6', 'm4');
-    
-        let $cardH2 = document.createElement("h2");
-            $cardH2.classList.add('card-header');
-            $cardH2.innerHTML = nombre;
-    
-        let $divCardHorizontal = document.createElement("div");
-            $divCardHorizontal.classList.add('card', 'horizontal');
-    
-            let $divCardIcono = document.createElement("div");
-                $divCardIcono.classList.add('card-image');
-            
-                let $icono = document.createElement("i");
-                    $icono.classList.add('medium', 'material-icons', 'right');
-                    $icono.innerHTML = icono;
-                
-            $divCardIcono.appendChild($icono);
-    
-            let $divCardPila = document.createElement("div");
-                $divCardPila.classList.add('card-stacked');
-    
-                let $divCardContenido = document.createElement("div");
-                    $divCardContenido.classList.add('card-content');
-    
-                    let $cardDescripcion = document.createElement("p");
-                        $cardDescripcion.innerHTML = descripcion;
-        
-                $divCardContenido.appendChild($cardDescripcion);
-            $divCardPila.appendChild($divCardContenido);
-        
-        $divCardHorizontal.appendChild($divCardIcono);
-        $divCardHorizontal.appendChild($divCardPila);
-    
-        $divColumna.appendChild($cardH2);
-        $divColumna.appendChild($divCardHorizontal);
-        return $divColumna;
-    }
-    
-    static crearCardCategoriaLiteral(nombre, descripcion, icono) {
         let $divColumna = document.createElement("div");
             $divColumna.classList.add('col', 's6', 'm4');
                         
@@ -321,8 +284,9 @@ class ManejadorEventos {
 
             if (this.usuario.logearUsuario()) {
                 alert("Bienvenido ! " + this.usuario.nombre);
+                Navegador.iniciarSesion(this.usuario);
                 formulario.reset();
-                setTimeout( function() { location = "pizarra.html"; }, 1000 );
+                Navegador.redireccionar("pizarra.html");
             } else {
                 alert("Error:\nDatos de ingreso incorrectos");
                 formulario.reset();
@@ -331,13 +295,32 @@ class ManejadorEventos {
     }
 }
 
+class Navegador {
+    static cerrarSesion() {
+        Sesion.eliminar("usuario_logeado");
+    }
+
+    static iniciarSesion(usuario) {
+        const datosDeSesion = new Sesion(usuario.nombre, Fecha.getFechaFormateada());
+        Sesion.guardar("usuario_logeado", datosDeSesion);
+    }
+
+    static paginaActual() {
+        return location.pathname.split("/").pop();
+    }
+
+    static redireccionar(ubicacion) {
+        setTimeout( function() { location = ubicacion; }, 1000 );
+    }
+
+    static usuarioEstaLogeado() {
+        Sesion.existe("usuario_logeado");
+    }
+}
+
 class Almacenamiento { // La clase trabaja con array de objetos
     static existe(clave) {
         return localStorage.getItem(clave) !== null;
-    }
-
-    static obtener(clave) {
-        return JSON.parse(localStorage.getItem(clave))
     }
 
     static guardar(clave, valor) {
@@ -354,7 +337,77 @@ class Almacenamiento { // La clase trabaja con array de objetos
         const JSON_almacenado = JSON.stringify(almacenado);
         localStorage.setItem(clave, JSON_almacenado);
     }
+
+    static obtener(clave) {
+        return JSON.parse(localStorage.getItem(clave))
+    }
 }
 
 class Sesion {
+    constructor(nombre, fechaActual, fechaSeleccionada = null, pizarra = null) {
+        this.nombre = nombre;
+        this.fechaActual = fechaActual;
+        this.fechaSeleccionada = fechaSeleccionada;
+        this.pizarra = pizarra
+    }
+
+    static eliminar(clave) {
+        sessionStorage.removeItem(clave);
+    }
+
+    static existe(clave) {
+        return sessionStorage.getItem(clave) !== null;
+    }
+
+    static guardar(clave, valor) {
+        let almacenado;
+
+        if (Sesion.existe(clave)) {
+            almacenado = Sesion.obtener(clave);
+        } else {
+            almacenado = new Array();
+        }  
+        
+        almacenado.push(valor);
+  
+        const JSON_almacenado = JSON.stringify(almacenado);
+        sessionStorage.setItem(clave, JSON_almacenado);
+    }
+
+    static obtener(clave) {
+        return JSON.parse(sessionStorage.getItem(clave))
+    }
+}
+
+class Fecha {
+    // Propiedades privadas
+    static hoy = new Date();
+    static meses = [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Septiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Diciembre"
+                ];
+                
+    // Propiedades públicas
+    static anio = Fecha.hoy.getFullYear();
+    static mes = Fecha.meses[Fecha.hoy.getMonth()];
+
+    // Métodos públicos
+    static getFechaFormateada() {
+        return `${Fecha.anio} - ${Fecha.mes}`;
+    }
+
+    static setFecha(anio, mes) {
+        Fecha.anio = anio;
+        Fecha.mes = mes;
+    }
 }
