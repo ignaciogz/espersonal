@@ -302,42 +302,40 @@
 
     <!-- Modal :: Formulario de Configuración -->
     <div id="modal-configuracion" class="modal modal-fixed-footer">
-        <div class="modal-content">
-            <h4>Configuración<i class="medium material-icons right">settings</i></h4>
-            <div class="row">
-                <div class="input-field col s12 m6">
-                    <select required>
-                        <option value="" disabled selected>Seleccione el año</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                    </select>
-                </div>
-            
-                <div class="input-field col s12 m6">
-                    <select required>
-                        <option value="" disabled selected>Seleccione el mes</option>
-                        <option value="1">Enero</option>
-                        <option value="2">Febrero</option>
-                        <option value="3">Marzo</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Mayo</option>
-                        <option value="6">Junio</option>
-                        <option value="7">Julio</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Septiembre</option>
-                        <option value="10">Octubre</option>
-                        <option value="11">Noviembre</option>
-                        <option value="12">Diciembre</option>
-                    </select>
+        <form id="form-configuracion">
+            <div class="modal-content">
+                <h4>Configuración<i class="medium material-icons right">settings</i></h4>
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <select id="select-anio" required>
+                            <option value="" disabled selected>Seleccione el año</option>
+                        </select>
+                    </div>
+                
+                    <div class="input-field col s12 m6">
+                        <select required>
+                            <option value="" disabled selected>Seleccione el mes</option>
+                            <option value="Enero">Enero</option>
+                            <option value="Febrero">Febrero</option>
+                            <option value="Marzo">Marzo</option>
+                            <option value="Abril">Abril</option>
+                            <option value="Mayo">Mayo</option>
+                            <option value="Junio">Junio</option>
+                            <option value="Julio">Julio</option>
+                            <option value="Agosto">Agosto</option>
+                            <option value="Septiembre">Septiembre</option>
+                            <option value="Octubre">Octubre</option>
+                            <option value="Noviembre">Noviembre</option>
+                            <option value="Diciembre">Diciembre</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn waves-effect waves-red brown" type="submit" name="action">Guardar</button>
-            <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
-        </div>
+            <div class="modal-footer">
+                <button class="btn waves-effect waves-red brown" type="submit" name="action">Guardar</button>
+                <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
+            </div>
+        </form>
     </div>
 
     
