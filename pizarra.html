@@ -120,7 +120,7 @@
                         <thead>
                         <tr>
                             <th>Tipo</th>
-                            <th>Categoria</th>
+                            <th>Categoría</th>
                             <th>Nombre</th>
                             <th></th>
                             <th>Monto</th>
@@ -252,52 +252,48 @@
 
     <!-- Modal :: Formulario de agregar item -->
     <div id="modal-agregar-item" class="modal modal-fixed-footer">
-        <div class="modal-content">
-            <h4>Agregar Item<i class="medium material-icons right">add</i></h4>
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="nombre" type="text" required>
-                    <label for="nombre">Nombre</label>
-                </div>
-
-                <div class="input-field col 12">
-                    <p>
-                        Seleccione tipo de item:
-                    </p>
-                    <p class="tipo-de-item">
-                        <label>
-                            <input class="with-gap" name="group1" type="radio" checked />
-                            <span>Ingreso</span>
-                        </label>
-                    </p>
-                    <p class="tipo-de-item">
-                        <label>
-                            <input class="with-gap" name="group1" type="radio" />
-                            <span>Egreso</span>
-                        </label>
-                    </p>
-                </div>
+        <form id="form-agregar-item">
+            <div class="modal-content">
+                <h4>Agregar Item<i class="medium material-icons right">add</i></h4>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="item-nombre" type="text" required>
+                        <label for="item-nombre">Nombre</label>
+                    </div>
+    
+                    <div class="input-field col 12">
+                        <p>
+                            Seleccione tipo de item:
+                        </p>
+                        <p class="tipo-de-item">
+                            <label><input class="with-gap" name="item-radio-tipo" type="radio" value="Ingreso" checked /><span>Ingreso</span></label>
+                        </p>
+                        <p class="tipo-de-item">
+                            <label><input class="with-gap" name="item-radio-tipo" type="radio" value="Egreso" /><span>Egreso</span></label>
+                        </p>
+                    </div>
+                    
+                    <div class="input-field col s12">
+                        <select id="item-select-categoria" required>
+                            <option value="" disabled selected>Seleccione una categoría</option>
+                            <option value="1">Ropa</option>
+                            <option value="2">Restaurante</option>
+                            <option value="3">Hogar</option>
+                        </select>
+                    </div>
                 
-                <div class="input-field col s12">
-                    <select required>
-                        <option value="" disabled selected>Seleccione una categoría</option>
-                        <option value="1">Ropa</option>
-                        <option value="2">Restaurante</option>
-                        <option value="3">Hogar</option>
-                    </select>
-                </div>
-            
-            
-                <div class="input-field col s12">
-                    <input id="monto" type="text" required>
-                    <label for="monto">Monto</label>
+                
+                    <div class="input-field col s12">
+                        <input id="item-monto" type="text" required>
+                        <label for="item-monto">Monto</label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn waves-effect waves-red brown" type="submit" name="action">Registrarme</button>
-            <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
-        </div>
+            <div class="modal-footer">
+                <button class="btn waves-effect waves-red brown" type="submit" name="action">Agregar</button>
+                <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
+            </div>
+        </form>
     </div>
 
     <!-- Modal :: Formulario de Configuración -->

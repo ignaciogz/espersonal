@@ -1,17 +1,19 @@
 document.addEventListener('DOMContentLoaded', init);
 
 function init() {
+    // CARGANDO DATOS predefinidos
+    Usuario.cargarUsuariosPredefinidos();
+    
     // INICIALIZO objetos globales de mi app
-    this.categorias = new Categorias();
+    //this.categorias = new Categorias();
 
     /* Controlador frontal básico */
-    switch (Navegador.paginaActual()) {
+    switch (paginaActual) {
         case "index.html":
-                if(Navegador.usuarioEstaLogeado()) {
+                if(Usuario.estaLogeado()) {
                     Navegador.redireccionar("pizarra.html");
                 } else {
                     this.usuario = new Usuario();
-                    this.usuario.cargarUsuariosPredefinidos();
 
                     // REDUCIENDO velocidad de reproducción del video
                     const $videoMarketing = document.querySelector('.video-marketing video');    
@@ -32,9 +34,19 @@ function init() {
                 }
             break;
         case "pizarra.html":
-                if(Navegador.usuarioEstaLogeado()) {
-                    const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-                    // * Agregar aquí -> Lógica de pizarra seleccionada *
+                if(Usuario.estaLogeado()) {
+                    this.usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+                    Pizarra.cargarPizarrasPredefinidas();
+
+                    /* FALTA ---> Cargar/Mostrar pizarra seleccionada [Al abrir la app será por defecto la del mes actual] */
+
+                    /* FALTA ---> Cargar select categoría del formulario de agregar item */
+
+                    // ASOCIANDO EVENTO a formulario de agregar item
+                    const $formAgregarItem = document.getElementById('form-agregar-item');
+                    if (ManejadorDOM.existeEnDOM($formAgregarItem)) {
+                        $formAgregarItem.addEventListener('submit', ManejadorEventos.validarFormAgregarItem().bind(this));
+                    }
 
                     // CREANDO DINÁMICAMENTE opciones del select año del formulario de configuración
                     const $selectAnio = document.getElementById('select-anio');
@@ -42,7 +54,7 @@ function init() {
                     if (ManejadorDOM.existeEnDOM($selectAnio)) {
                         const fragmento = ManejadorDOM.crearFragmento();
 
-                        for (let anio = usuarioLogeado.anioDeRegistro; anio <= usuarioLogeado.anioDeRegistro + 3; anio++) {
+                        for (let anio = this.usuarioLogeado.anioDeRegistro; anio <= this.usuarioLogeado.anioDeRegistro + 3; anio++) {
                             let selectAnio = Formulario.crearSelectAnio(anio);
                             ManejadorDOM.agregar(fragmento, selectAnio);
                         }
@@ -51,11 +63,6 @@ function init() {
                     }
                     
                     // ASOCIANDO EVENTO a formulario de configuración
-                    const $formAcceso = document.getElementById('form-acceso');
-                    if (ManejadorDOM.existeEnDOM($formAcceso)) {
-                        $formAcceso.addEventListener('submit', ManejadorEventos.validarFormAcceso().bind(this));
-                    }
-
                     // ASOCIANDO EVENTO a barra lateral
                     const $btnSalir = document.getElementById('btn-salir');
                     if (ManejadorDOM.existeEnDOM($btnSalir)) {
@@ -66,15 +73,15 @@ function init() {
                 }
             break;
         case "grafico.html":
-                if(Navegador.usuarioEstaLogeado()) {
-                       // VEREMOS 
+                if(Usuario.estaLogeado()) {
+                       // VEREMOS si lo programo o no
                 } else {
                     Navegador.redireccionar("index.html");
                 }
             break;
         case "categorias.html":
-                if(Navegador.usuarioEstaLogeado()) {
-                    //  CREANDO DINÁMICAMENTE categorias
+                if(Usuario.estaLogeado()) {
+                    //  CREANDO DINÁMICAMENTE categorías
                     const $cardsCategorias = document.getElementById('contenedor-cards-categorias');
 
                     if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
@@ -105,12 +112,6 @@ function init() {
 
                     
                     // ASOCIANDO EVENTO a formulario de configuración
-                    const $formAcceso = document.getElementById('form-acceso');
-                    if (ManejadorDOM.existeEnDOM($formAcceso)) {
-                        $formAcceso.addEventListener('submit', ManejadorEventos.validarFormAcceso().bind(this));
-                    }
-
-
                     // ASOCIANDO EVENTO a barra lateral
                     const $btnSalir = document.getElementById('btn-salir');
                     if (ManejadorDOM.existeEnDOM($btnSalir)) {
@@ -199,12 +200,67 @@ const JSON_categoriasPredefinidas = `[
     }
 ]`;
 
+const JSON_pizarrasPredefinidas = `[
+    { 
+        "usuario":"coder",
+        "fecha":"2021 - Octubre",
+        "items":[
+            {
+                "tipo":"Ingreso",
+                "categoria":null,
+                "nombre":"Sueldo del mes",
+                "monto":45000
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Ropa",
+                "nombre":"3 Remeras de local X",
+                "monto":2800
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Salud",
+                "nombre":"Medicamentos varios",
+                "monto":1200
+            }
+        ],
+        "totalIngresos":45000,
+        "totalEgresos":4000
+    },
+    { 
+        "usuario":"coder",
+        "fecha":"2021 - Noviembre",
+        "items":[
+            {
+                "tipo":"Ingreso",
+                "categoria":null,
+                "nombre":"Sueldo del mes",
+                "monto":48000
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Comida",
+                "nombre":"Supermercado Coto",
+                "monto":15000
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Hogar",
+                "nombre":"Pinturas para el nuevo cuarto",
+                "monto":6000
+            }
+        ],
+        "totalIngresos":48000,
+        "totalEgresos":21000
+    }
+]`;
+
 const JSON_usuariosPredefinidos = `[
     { 
         "nombre":"coder",
         "contrasena":"house",
         "tipo":"super admin",
-        "anioDeRegistro":2030
+        "anioDeRegistro":2021
     }
 ]`;
 
@@ -275,16 +331,6 @@ class Usuario {
     }
 
     // Métodos privados
-    cargarUsuariosPredefinidos() {
-        const usuariosPredefinidos = JSON.parse(JSON_usuariosPredefinidos);
-        
-        for (const usuario of usuariosPredefinidos) {
-            if (!Usuario.existeUsuario(usuario)) {
-                Usuario.guardarUsuario(usuario);
-            }            
-        }
-    }
-
     validarUsuario() {
         if (Almacenamiento.existe("usuarios_registrados")) {
             const usuariosRegistrados = Almacenamiento.obtener("usuarios_registrados");
@@ -326,12 +372,25 @@ class Usuario {
         }
     }
 
+    static cargarUsuariosPredefinidos() {
+        const usuariosPredefinidos = JSON.parse(JSON_usuariosPredefinidos);
+        
+        for (const usuario of usuariosPredefinidos) {
+            if (!Usuario.existeUsuario(usuario)) {
+                Usuario.guardarUsuario(usuario);
+            }            
+        }
+    }
+
+    static estaLogeado() {
+        return Navegador.existeEnSesion("usuario_logeado");
+    }
+
     static existeUsuario(usuario) {
         return Usuario.buscarUsuario(usuario) ? true : false;
     }
 
     static guardarUsuario(usuario) {
-        console.log(usuario);
         Almacenamiento.guardar("usuarios_registrados", usuario);
     }
 
@@ -341,10 +400,7 @@ class Usuario {
 
     static obtenerUsuarioLogeado() {
         if (Sesion.existe("usuario_logeado")) {
-            let usuarioLogeado = Sesion.obtener("usuario_logeado");
-            usuarioLogeado = usuarioLogeado.pop();
-
-            return usuarioLogeado; 
+            return Sesion.obtener("usuario_logeado").pop(); 
         } else {
             return undefined;
         } 
@@ -396,9 +452,11 @@ class ManejadorEventos {
             e.preventDefault();
             const formulario = e.target;
 
+            // OBTENIENDO DATOS formulario acceso usuario
             const datoUsuario = document.getElementById('acceso-usuario').value;
             const datoContrasena = document.getElementById('acceso-contrasena').value;
             
+            // LÓGICA acceso usuario
             this.usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
 
             if (this.usuario.logearUsuario()) {
@@ -413,14 +471,45 @@ class ManejadorEventos {
         }
     }
 
+    static validarFormAgregarItem() {
+        return function (e) {
+            e.preventDefault();
+            
+            // OBTENIENDO DATOS formulario agregar item
+            const datoNombre = document.getElementById('item-nombre').value;
+            
+            const datoTipo = document.querySelector('input[name="item-radio-tipo"]:checked').value;
+            
+            const $selectCategoria = document.getElementById('item-select-categoria');
+            const indiceSeleccionado = $selectCategoria.selectedIndex;
+            const datoCategoria = $selectCategoria.options[indiceSeleccionado].text;
+
+            const datoMonto = document.getElementById('item-monto').value;
+
+            // LÓGICA agregar item
+            const nuevoItem = new Item(datoTipo, datoCategoria, datoNombre, datoMonto);
+            const pizarra = new Pizarra(this.usuarioLogeado, this.usuarioLogeado.fechaSeleccionada);
+
+            if (Pizarra.existePizarra(pizarra)) {
+                const pizarraExistente = Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha);
+                Pizarra.agregarItemPizarraExistente(pizarraExistente, nuevoItem);
+            } else {
+                pizarra.agregarItem(nuevoItem);
+                Pizarra.guardarPizarra(pizarra);
+            }
+        }   
+    }
+
     static validarFormRegistrarse() {
         return function (e) {
             e.preventDefault();
             const formulario = e.target;
 
+            // OBTENIENDO DATOS formulario registrarse usuario
             const datoUsuario = document.getElementById('registrarse-usuario').value;
             const datoContrasena = document.getElementById('registrarse-contrasena').value;
 
+            // LÓGICA registrarse usuario
             this.usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
 
             if (!Usuario.existeUsuario(this.usuario)) {
@@ -441,13 +530,19 @@ class ManejadorEventos {
 }
 
 class Navegador {
+    // Métodos públicos
     static cerrarSesion() {
         Sesion.eliminar("usuario_logeado");
+    }
+
+    static existeEnSesion(clave) {
+        return Sesion.existe(clave);
     }
 
     static iniciarSesion(usuario) {
         usuario = Usuario.buscarUsuario(usuario);
         const datosDeSesion = new Sesion(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaFormateada());
+
         Sesion.guardar("usuario_logeado", datosDeSesion);
     }
 
@@ -457,10 +552,6 @@ class Navegador {
 
     static redireccionar(ubicacion) {
         setTimeout( function() { location = ubicacion; }, 1000 );
-    }
-
-    static usuarioEstaLogeado() {
-        return Sesion.existe("usuario_logeado");
     }
 }
 
@@ -521,6 +612,10 @@ class Almacenamiento {
     static obtener(clave) {
         return JSON.parse(localStorage.getItem(clave));
     }
+
+    static eliminar(clave) {
+        localStorage.removeItem(clave);
+    }
 }
 
 class Sesion {
@@ -555,5 +650,101 @@ class Sesion {
 
     static obtener(clave) {
         return JSON.parse(sessionStorage.getItem(clave));
+    }
+}
+
+class Pizarra {
+    constructor(usuario, fecha) {
+        this.usuario = usuario.nombre;
+        this.fecha = fecha;
+        this.items = [];
+        this.totalIngresos = 0;
+        this.totalEgresos = 0;
+    }
+
+    // Métodos privados
+    static obtenerPizarras() {
+        return Almacenamiento.obtener("pizarras");
+    }
+
+    static eliminarPizarras() {
+        Almacenamiento.eliminar("pizarras");
+    }
+
+    // Métodos públicos
+    agregarItem(item){
+        this.items.push(item);
+    }
+
+    static buscarPizarra(usuario, fecha) {
+        if (Almacenamiento.existe("pizarras")) {
+            const pizarras = Almacenamiento.obtener("pizarras");
+            
+            function pizarraDeUsuarioBuscado(elemento) {
+                return elemento.usuario === usuario && elemento.fecha === fecha;
+            }
+
+            return pizarras.find(pizarraDeUsuarioBuscado);
+        } else {
+            return undefined;
+        }
+    }
+
+    static cargarPizarrasPredefinidas() {
+        const pizarrasPredefinidas = JSON.parse(JSON_pizarrasPredefinidas);
+        
+        for (const pizarra of pizarrasPredefinidas) {
+            if (!Pizarra.existePizarra(pizarra)) {
+                Pizarra.guardarPizarra(pizarra);
+            }
+        }
+    }
+
+    static getIndice(usuario, fecha) {
+        const pizarrasAlmacenadas = Pizarra.obtenerPizarras();
+
+        function pizarraDeUsuarioBuscado(elemento) {
+            return elemento.usuario === usuario && elemento.fecha === fecha;
+        }
+
+        return pizarrasAlmacenadas.findIndex(pizarraDeUsuarioBuscado);
+    }
+
+    static agregarItemPizarraExistente(pizarra, item) {
+        let pizarrasAlmacenadas = Pizarra.obtenerPizarras();
+        const indice = Pizarra.getIndice(pizarra.usuario, pizarra.fecha);
+        Pizarra.eliminarPizarras();
+
+        pizarra.items.push(item);
+        pizarrasAlmacenadas.splice(indice, 1, pizarra);
+
+        for (const pizarra of pizarrasAlmacenadas) {
+            Pizarra.guardarPizarra(pizarra);
+        }
+    }
+
+    static editarItemPizarraExistente() {
+        // Falta desarrollar
+    }
+
+    static eliminarItemPizarraExistente() {
+        // Falta desarrollar
+    }
+
+    static existePizarra(pizarra) {
+        return Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha) ? true : false;
+    }
+
+    static guardarPizarra(pizarra) {
+        Almacenamiento.guardar("pizarras", pizarra);
+    }
+}
+
+class Item {
+    constructor(tipo, categoria, nombre, monto) {
+        this.tipo = tipo;
+        this.categoria = categoria;
+        this.nombre = nombre;
+        this.monto = monto;
     }
 }
