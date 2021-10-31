@@ -1,19 +1,14 @@
 document.addEventListener('DOMContentLoaded', init);
 
 function init() {
-    // CARGANDO DATOS predefinidos
-    Usuario.cargarUsuariosPredefinidos();
-    
-    // INICIALIZO objetos globales de mi app
-    const categorias = new Categorias();
-
     /* Controlador frontal básico */
     switch (Navegador.paginaActual()) {
         case "index.html":
                 if(Usuario.estaLogeado()) {
                     Navegador.redireccionar("pizarra.html");
                 } else {
-                    this.usuario = new Usuario();
+                    // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
+                    Usuario.cargarJSON_usuariosPredefinidos();
 
                     // REDUCIENDO velocidad de reproducción del video
                     const $videoMarketing = document.querySelector('.video-marketing video');    
@@ -21,64 +16,60 @@ function init() {
                         Video.cambiarVelocidadDeReproduccion($videoMarketing, 0.5);
                     }
 
-                    // ASOCIANDO EVENTOS a formularios del index.html
+                    // ASOCIANDO EVENTOS -> A formularios del index.html
                     const $formAcceso = document.getElementById('form-acceso');
                     if (ManejadorDOM.existeEnDOM($formAcceso)) {
-                        $formAcceso.addEventListener('submit', ManejadorEventos.validarFormAcceso().bind(this));
+                        $formAcceso.addEventListener('submit', ManejadorEventos.validarFormAcceso());
                     }
 
                     const $formRegistrarse = document.getElementById('form-registrarse');
                     if (ManejadorDOM.existeEnDOM($formRegistrarse)) {
-                        $formRegistrarse.addEventListener('submit', ManejadorEventos.validarFormRegistrarse().bind(this));    
+                        $formRegistrarse.addEventListener('submit', ManejadorEventos.validarFormRegistrarse());    
                     }
                 }
             break;
         case "pizarra.html":
                 if(Usuario.estaLogeado()) {
-                    this.usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-                    Pizarra.cargarPizarrasPredefinidas();
+                    // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
+                    Pizarra.cargarJSON_pizarrasPredefinidas();
 
-                    /* MOSTRAR pizarra seleccionada [Al abrir la app será por defecto la del mes actual] */
+                    // MOSTRANDO -> Pizarra seleccionada [Al abrir la app será por defecto la del mes actual] */
                     const $pizarraSeleccionada = document.getElementById('pizarra-seleccionada');
                     if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
-                        const pizarraMostrada = Pizarra.mostrarPizarra(this.usuarioLogeado, $pizarraSeleccionada);
-                        Pizarra.mostrarInformacion(pizarraMostrada);
+                        const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+                        const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+
+                        const registrosDeItems = pizarra.crearRegistros();
+
+                        ManejadorDOM.mostrarNombrePizarra(pizarra);
+                        ManejadorDOM.mostrarInformacionPizarra(pizarra);
+                        ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
                     }
 
-                     // CREANDO DINÁMICAMENTE opciones del select categoría del formulario de agregar item
+                    // CREANDO DINÁMICAMENTE -> Opciones del select categoría del formulario de agregar item
                     const $selectCategoria = document.getElementById('agregar-item-select-categoria');
                     if (ManejadorDOM.existeEnDOM($selectCategoria)) {
-                        const fragmento = ManejadorDOM.crearFragmento();
-
-                        for (const categoria of categorias.getCategorias()) {
-                            let optionDelSelect = Formulario.crearOption(categoria.nombre);
-                            ManejadorDOM.agregar(fragmento, optionDelSelect);
-                        }
-
-                        ManejadorDOM.agregar($selectCategoria, fragmento);
+                        const categorias = Categorias.get();
+                        const selectCategoria = Formulario.crearSelectCategoria(categorias);
+                        ManejadorDOM.agregar($selectCategoria, selectCategoria);
                     }
 
-                    // ASOCIANDO EVENTO a formulario de agregar item
+                    // ASOCIANDO EVENTO -> A formulario de agregar item
                     const $formAgregarItem = document.getElementById('form-agregar-item');
                     if (ManejadorDOM.existeEnDOM($formAgregarItem)) {
-                        $formAgregarItem.addEventListener('submit', ManejadorEventos.validarFormAgregarItem().bind(this));
+                        $formAgregarItem.addEventListener('submit', ManejadorEventos.validarFormAgregarItem());
                     }
 
-                    // CREANDO DINÁMICAMENTE opciones del select año del formulario de configuración
+                    // CREANDO DINÁMICAMENTE -> Opciones del select año del formulario de configuración
                     const $selectAnio = document.getElementById('configuracion-select-anio');
                     if (ManejadorDOM.existeEnDOM($selectAnio)) {
-                        const fragmento = ManejadorDOM.crearFragmento();
-
-                        for (let anio = this.usuarioLogeado.anioDeRegistro; anio <= this.usuarioLogeado.anioDeRegistro + 3; anio++) {
-                            let optionDelSelect = Formulario.crearOption(anio);
-                            ManejadorDOM.agregar(fragmento, optionDelSelect);
-                        }
-
-                        ManejadorDOM.agregar($selectAnio, fragmento);
+                        const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+                        const selectAnio = Formulario.crearSelectAnio(usuarioLogeado);
+                        ManejadorDOM.agregar($selectAnio, selectAnio);
                     }
                     
-                    // ASOCIANDO EVENTO a formulario de configuración
-                    // ASOCIANDO EVENTO a barra lateral
+                    // ASOCIANDO EVENTO -> A formulario de configuración
+                    // ASOCIANDO EVENTO -> A barra lateral
                     const $btnSalir = document.getElementById('btn-salir');
                     if (ManejadorDOM.existeEnDOM($btnSalir)) {
                         $btnSalir.addEventListener('click', ManejadorEventos.cerrarApp());
@@ -96,36 +87,27 @@ function init() {
             break;
         case "categorias.html":
                 if(Usuario.estaLogeado()) {
-                    //  CREANDO DINÁMICAMENTE cards de categorías
+                    // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
+                    Pizarra.cargarJSON_pizarrasPredefinidas();
+                    
+                    //  CREANDO DINÁMICAMENTE -> Cards de categorías
                     const $cardsCategorias = document.getElementById('contenedor-cards-categorias');
                     if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
-                        const fragmento = ManejadorDOM.crearFragmento();
-
-                        for (const categoria of categorias.getCategorias()) {
-                            let cardCategoria = Categoria.crearCard(categoria.nombre, categoria.descripcion, categoria.icono);
-                            ManejadorDOM.agregar(fragmento, cardCategoria);
-                        }
-
-                        ManejadorDOM.agregar($cardsCategorias, fragmento);
+                        const categorias = Categorias.get();
+                        const cardsCategorias = categorias.crearCards();
+                        ManejadorDOM.agregar($cardsCategorias, cardsCategorias);
                     }
 
-
-                    // CREANDO DINÁMICAMENTE opciones del select año del formulario de configuración
+                    // CREANDO DINÁMICAMENTE -> Opciones del select año del formulario de configuración
                     const $selectAnio = document.getElementById('configuracion-select-anio');
                     if (ManejadorDOM.existeEnDOM($selectAnio)) {
-                        const fragmento = ManejadorDOM.crearFragmento();
-
-                        for (let anio = this.usuarioLogeado.anioDeRegistro; anio <= this.usuarioLogeado.anioDeRegistro + 3; anio++) {
-                            let optionDelSelect = Formulario.crearOption(anio);
-                            ManejadorDOM.agregar(fragmento, optionDelSelect);
-                        }
-
-                        ManejadorDOM.agregar($selectAnio, fragmento);
+                        const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+                        const selectAnio = Formulario.crearSelectAnio(usuarioLogeado);
+                        ManejadorDOM.agregar($selectAnio, selectAnio);
                     }
 
-                    
-                    // ASOCIANDO EVENTO a formulario de configuración
-                    // ASOCIANDO EVENTO a barra lateral
+                    // ASOCIANDO EVENTO -> A formulario de configuración
+                    // ASOCIANDO EVENTO -> A barra lateral
                     const $btnSalir = document.getElementById('btn-salir');
                     if (ManejadorDOM.existeEnDOM($btnSalir)) {
                         $btnSalir.addEventListener('click', ManejadorEventos.cerrarApp());
@@ -140,7 +122,8 @@ function init() {
     M.AutoInit();
 }
 
-/* ****************** ARCHIVOS JSON A CONSUMIR ****************** */
+
+/* ***************** ARCHIVOS JSON A CONSUMIR ***************** */
 const JSON_categoriasPredefinidas = `[
     { 
         "nombre":"Comida",
@@ -340,6 +323,117 @@ const JSON_usuariosPredefinidos = `[
 
 
 /* ******************** CLASES DE LA APP ******************** */
+class Usuario {
+    constructor(nombre = null, contrasena = null, tipo = "invitado", anioDeRegistro = null, fechaSeleccionada = null) {
+        this.nombre = nombre;
+        this.contrasena = contrasena;
+        this.tipo = tipo;
+        this.anioDeRegistro = anioDeRegistro;
+        this.fechaSeleccionada = fechaSeleccionada;
+    }
+
+    static get() {
+        if (Usuario.instancia instanceof Usuario) {
+            return Usuario.instancia;
+        }
+
+        return Usuario.instancia = new Usuario();
+    }
+
+    // Métodos privados
+    validarUsuario() {
+        if (Almacenamiento.existe("usuarios_registrados")) {
+            const usuariosRegistrados = Almacenamiento.obtener("usuarios_registrados");
+        
+            function datosDeUsuarioBuscado(elemento) {
+                return elemento.nombre === this.nombre && elemento.contrasena === this.contrasena;
+            }
+            return usuariosRegistrados.find(datosDeUsuarioBuscado.bind(this)) ? true : false;
+        } else {
+            return false;
+        }
+    }
+
+    // Métodos públicos
+    setAnioDeRegistro(anio) {
+        this.anioDeRegistro = anio;
+    }
+
+    setDatosDeUsuario(datoUsuario, datoContrasena) {
+        this.nombre = datoUsuario;
+        this.contrasena = datoContrasena;
+    }
+
+    setFechaSeleccionada(fecha) {
+        this.fechaSeleccionada = fecha;
+    }
+
+    setTipoDeUsuario(tipo) {
+        this.tipo = tipo;
+    }
+
+    static buscarUsuario(usuario) {
+        if (Almacenamiento.existe("usuarios_registrados")) {
+            const usuariosRegistrados = Almacenamiento.obtener("usuarios_registrados");
+            
+            function nombreUsuarioBuscado(elemento) {
+                return elemento.nombre === usuario.nombre;
+            }
+
+            return usuariosRegistrados.find(nombreUsuarioBuscado);
+        } else {
+            return undefined;
+        }
+    }
+
+    static cargarJSON_usuariosPredefinidos() {
+        const usuariosPredefinidos = JSON.parse(JSON_usuariosPredefinidos);
+        
+        for (const usuario of usuariosPredefinidos) {
+            if (! Usuario.existeUsuario(usuario)) {
+                Usuario.guardarUsuario(usuario);
+            }            
+        }
+    }
+
+    static estaLogeado() {
+        return Navegador.existeEnSesion("usuario_logeado");
+    }
+
+    static existeUsuario(usuario) {
+        return Usuario.buscarUsuario(usuario) ? true : false;
+    }
+
+    static guardarUsuario(usuario) {
+        Almacenamiento.guardar("usuarios_registrados", usuario);
+    }
+
+    static logearUsuario(usuario) {
+        return usuario.validarUsuario() ? true : false;
+    }
+
+    static cargarDatosAlmacenados(usuario) {
+        const datosDeAlmacenamiento = Usuario.buscarUsuario(usuario);
+        usuario.setTipoDeUsuario(datosDeAlmacenamiento.tipo);
+        usuario.setAnioDeRegistro(datosDeAlmacenamiento.anioDeRegistro);
+    }
+
+    static obtenerUsuarioLogeado() {
+        if (Navegador.existeEnSesion("usuario_logeado")) {
+            const datosDeSesion = Navegador.obtenerDeSesion("usuario_logeado");
+            
+            const usuario = Usuario.get();
+            usuario.setDatosDeUsuario(datosDeSesion.nombre, null);
+            usuario.setAnioDeRegistro(datosDeSesion.anioDeRegistro);
+            usuario.setFechaSeleccionada(datosDeSesion.fechaSeleccionada);
+
+            return usuario;
+        } else {
+            return undefined;
+        } 
+    }
+}
+
 class Categoria {
     constructor(nombre, descripcion, icono) {
         this.nombre = nombre;
@@ -370,15 +464,23 @@ class Categoria {
 class Categorias {
     constructor() {
         this.listado = [];
-        this.cargarCategoriasPredefinidas();
+        this.cargarJSON_categoriasPredefinidas();
     }
 
+    static get() {
+        if (Categorias.instancia instanceof Categorias) {
+            return Categorias.instancia;
+        }
+
+        return Categorias.instancia = new Categorias();
+    }
+    
     // Métodos privados
     setCategoria(valor) {
         this.listado.push(valor);
     }
 
-    cargarCategoriasPredefinidas() {
+    cargarJSON_categoriasPredefinidas() {
         const categoriasPredefinidas = JSON.parse(JSON_categoriasPredefinidas);
         
         for (const categoria of categoriasPredefinidas) {
@@ -388,229 +490,51 @@ class Categorias {
     }
 
     // Métodos públicos
-    getCategorias() {
+    getListado() {
         return this.listado;
     }
-}
 
-class Usuario {
-    constructor(nombre = null, contrasena = null, tipo = "invitado", anioDeRegistro = null) {
-        this.nombre = nombre;
-        this.contrasena = contrasena;
-        this.tipo = tipo;
-        this.anioDeRegistro = anioDeRegistro;
-    }
+    crearCards() {
+        const fragmento = ManejadorDOM.crearFragmento();
 
-    // Métodos privados
-    validarUsuario() {
-        if (Almacenamiento.existe("usuarios_registrados")) {
-            const usuariosRegistrados = Almacenamiento.obtener("usuarios_registrados");
-        
-            function datosDeUsuarioBuscado(elemento) {
-                return elemento.nombre === this.nombre && elemento.contrasena === this.contrasena;
-            }
-            return usuariosRegistrados.find(datosDeUsuarioBuscado.bind(this)) ? true : false;
-        } else {
-            return false;
+        for (const categoria of this.getListado()) {
+            let cardCategoria = Categoria.crearCard(categoria.nombre, categoria.descripcion, categoria.icono);
+            ManejadorDOM.agregar(fragmento, cardCategoria);
         }
-    }
 
-    // Métodos públicos
-    setAnioDeRegistro(anio) {
-        this.anioDeRegistro = anio;
-    }
-
-    setDatosDeUsuario(datoUsuario, datoContrasena) {
-        this.nombre = datoUsuario;
-        this.contrasena = datoContrasena;
-    }
-
-    setTipoDeUsuario(tipo) {
-        this.tipo = tipo;
-    }
-
-    static buscarUsuario(usuario) {
-        if (Almacenamiento.existe("usuarios_registrados")) {
-            const usuariosRegistrados = Almacenamiento.obtener("usuarios_registrados");
-            
-            function nombreUsuarioBuscado(elemento) {
-                return elemento.nombre === usuario.nombre;
-            }
-
-            return usuariosRegistrados.find(nombreUsuarioBuscado);
-        } else {
-            return undefined;
-        }
-    }
-
-    static cargarUsuariosPredefinidos() {
-        const usuariosPredefinidos = JSON.parse(JSON_usuariosPredefinidos);
-        
-        for (const usuario of usuariosPredefinidos) {
-            if (!Usuario.existeUsuario(usuario)) {
-                Usuario.guardarUsuario(usuario);
-            }            
-        }
-    }
-
-    static estaLogeado() {
-        return Navegador.existeEnSesion("usuario_logeado");
-    }
-
-    static existeUsuario(usuario) {
-        return Usuario.buscarUsuario(usuario) ? true : false;
-    }
-
-    static guardarUsuario(usuario) {
-        Almacenamiento.guardar("usuarios_registrados", usuario);
-    }
-
-    logearUsuario() {
-        return this.validarUsuario() ? true : false;
-    }
-
-    static obtenerUsuarioLogeado() {
-        if (Sesion.existe("usuario_logeado")) {
-            return Sesion.obtener("usuario_logeado").pop(); 
-        } else {
-            return undefined;
-        } 
+        return fragmento;
     }
 }
 
 class Pizarra {
-    constructor(usuario, fecha) {
+    constructor(usuario) {
         this.usuario = usuario.nombre;
-        this.fecha = fecha;
+        this.fecha = usuario.fechaSeleccionada;
         this.items = [];
         this.totalIngresos = null;
         this.totalEgresos = null;
     }
 
     // Métodos privados
-    static obtenerPizarras() {
-        return Almacenamiento.obtener("pizarras");
-    }
-
     static eliminarPizarras() {
         Almacenamiento.eliminar("pizarras");
     }
 
-    // Métodos públicos
-    agregarItem(item) {
-        this.items.push(item);
+    static obtenerPizarras() {
+        return Almacenamiento.obtener("pizarras");
     }
 
-    setItems(items) {
-        this.items = items;
+    // Métodos privados [Encargados de generar la información útil]
+    filtrarItems(propiedad, valor) {
+        return this.items.filter(elemento => elemento[propiedad] === valor);
     }
 
-    getItems() {
-        return this.items;
-    }
-
-    getTotalIngresos() {
-        return this.totalIngresos;
-    }
-
-    getTotalEgresos() {
-        return this.totalEgresos;
-    }
-
-    static buscarPizarra(usuario, fecha) {
-        if (Almacenamiento.existe("pizarras")) {
-            const pizarras = Almacenamiento.obtener("pizarras");
-            
-            function pizarraDeUsuarioBuscado(elemento) {
-                return elemento.usuario === usuario && elemento.fecha === fecha;
-            }
-
-            return pizarras.find(pizarraDeUsuarioBuscado);
-        } else {
-            return undefined;
-        }
-    }
-
-    static cargarPizarrasPredefinidas() {
-        const pizarrasPredefinidas = JSON.parse(JSON_pizarrasPredefinidas);
-        
-        for (const pizarra of pizarrasPredefinidas) {
-            if (!Pizarra.existePizarra(pizarra)) {
-                Pizarra.guardarPizarra(pizarra);
-            }
-        }
-    }
-
-    static getIndice(usuario, fecha) {
-        const pizarrasAlmacenadas = Pizarra.obtenerPizarras();
-
-        function pizarraDeUsuarioBuscado(elemento) {
-            return elemento.usuario === usuario && elemento.fecha === fecha;
-        }
-
-        return pizarrasAlmacenadas.findIndex(pizarraDeUsuarioBuscado);
-    }
-
-    static agregarItemPizarraExistente(pizarra, item) {
-        let pizarrasAlmacenadas = Pizarra.obtenerPizarras();
-        const indice = Pizarra.getIndice(pizarra.usuario, pizarra.fecha);
-        Pizarra.eliminarPizarras();
-        
-        pizarra.items.push(item);
-        pizarrasAlmacenadas.splice(indice, 1, pizarra);
-
-        for (const pizarra of pizarrasAlmacenadas) {
-            Pizarra.guardarPizarra(pizarra);
-        }
-    }
-
-    static editarItemPizarraExistente() {
-        // Falta desarrollar
-    }
-
-    static eliminarItemPizarraExistente() {
-        // Falta desarrollar
-    }
-
-    static existePizarra(pizarra) {
-        return Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha) ? true : false;
-    }
-
-    static guardarPizarra(pizarra) {
-        Almacenamiento.guardar("pizarras", pizarra);
-    }
-
-    mostrarNombrePizarra(usuarioLogeado) {
-        const $nombrePizarra = document.getElementById('pizarra-nombre');
-        $nombrePizarra.textContent = usuarioLogeado.fechaSeleccionada;
-    }
-
-    static mostrarPizarra(usuarioLogeado, $pizarraSeleccionada) {
-        const pizarra = new Pizarra(usuarioLogeado, usuarioLogeado.fechaSeleccionada);
-
-        pizarra.mostrarNombrePizarra(usuarioLogeado);
-
-        if (Pizarra.existePizarra(pizarra)) {
-            const pizarraExistente = Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha);
-            pizarra.setItems(pizarraExistente.items);
-
-            const fragmento = ManejadorDOM.crearFragmento();
-
-            for (const item of pizarra.getItems()) {
-                let registroItem = Item.crearRegistro(item);
-                ManejadorDOM.agregar(fragmento, registroItem);
-            }
-            ManejadorDOM.agregar($pizarraSeleccionada, fragmento);   
-        } else {
-            Pizarra.guardarPizarra(pizarra);
-        }
-
-        pizarra.actualizarInformacion();
-        return pizarra;
+    obtenerItemsDeCategoria(categoriaDeItem) {
+        return this.filtrarItems("categoria", categoriaDeItem);
     }
 
     obtenerItemsDeTipo(tipoDeItem) {
-        return this.items.filter(elemento => elemento.tipo === tipoDeItem);
+        return this.filtrarItems("tipo", tipoDeItem);
     }
 
     calcularTotal(coleccion) {
@@ -629,21 +553,120 @@ class Pizarra {
         return this.totalIngresos - this.totalEgresos;
     }
 
+    // Métodos públicos
+    agregarItem(item) {
+        this.items.push(item);
+    }
+
+    getItems() {
+        return this.items;
+    }
+
+    getTotalEgresos() {
+        return this.totalEgresos;
+    }
+
+    setItems(items) {
+        this.items = items;
+    }
+
+    getTotalIngresos() {
+        return this.totalIngresos;
+    }
+
+    static buscarPizarra(usuario, fecha) {
+        if (Almacenamiento.existe("pizarras")) {
+            const pizarras = Almacenamiento.obtener("pizarras");
+            
+            function pizarraDeUsuarioBuscado(elemento) {
+                return elemento.usuario === usuario && elemento.fecha === fecha;
+            }
+
+            return pizarras.find(pizarraDeUsuarioBuscado);
+        } else {
+            return undefined;
+        }
+    }
+
+    static cargarJSON_pizarrasPredefinidas() {
+        const pizarrasPredefinidas = JSON.parse(JSON_pizarrasPredefinidas);
+        
+        for (const pizarra of pizarrasPredefinidas) {
+            if (! Pizarra.existePizarra(pizarra)) {
+                Pizarra.guardarPizarra(pizarra);
+            }
+        }
+    }
+
+    static getIndice(pizarra, usuario, fecha) {
+        function pizarraDeUsuarioBuscado(elemento) {
+            return elemento.usuario === usuario && elemento.fecha === fecha;
+        }
+
+        return pizarra.findIndex(pizarraDeUsuarioBuscado);
+    }
+
+    static existenteAgregarItem(pizarra, item) {
+        let pizarrasAlmacenadas = Pizarra.obtenerPizarras();
+        const indicePizarraDesactualizada = Pizarra.getIndice(pizarrasAlmacenadas, pizarra.usuario, pizarra.fecha);
+        Pizarra.eliminarPizarras();
+        
+        pizarra.agregarItem(item);
+
+        // Reemplazo la pizarra desactualizada por la actualizada, dentro del conjunto de todas las pizarras
+        pizarrasAlmacenadas.splice(indicePizarraDesactualizada, 1, pizarra);
+
+        for (const pizarra of pizarrasAlmacenadas) {
+            Pizarra.guardarPizarra(pizarra);
+        }
+    }
+
+    static existenteEditarItem() {
+        // Falta desarrollar
+    }
+
+    static existenteEliminarItem() {
+        // Falta desarrollar
+    }
+
+    static existePizarra(pizarra) {
+        return Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha) ? true : false;
+    }
+
+    static guardarPizarra(pizarra) {
+        Almacenamiento.guardar("pizarras", pizarra);
+    }
+
     actualizarInformacion() {
         this.calcularTotalIngresos();
         this.calcularTotalEgresos();
     }
 
-    static mostrarInformacion(pizarra) {
-        const $totalDeItems = document.getElementById('total-de-items');
-        const $totalIngresos = document.getElementById('total-ingresos');
-        const $totalEgresos = document.getElementById('total-egresos');
-        const $balance = document.getElementById('balance');
+    crearRegistros() {
+        const fragmento = ManejadorDOM.crearFragmento();
 
-        $totalDeItems.textContent = pizarra.getItems().length;
-        $totalIngresos.textContent = Utilidades.formatearMonto(pizarra.getTotalIngresos());
-        $totalEgresos.textContent = Utilidades.formatearMonto(pizarra.getTotalEgresos());
-        $balance.textContent = Utilidades.formatearMonto(pizarra.calcularBalance());
+        for (const item of this.getItems()) {
+            let registroItem = Item.crearRegistro(item);
+            ManejadorDOM.agregar(fragmento, registroItem);
+        }    
+        
+        return fragmento;
+    }
+
+    static cargarDatosAlmacenados(pizarra) {
+        const datosDeAlmacenamiento = Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha);
+        pizarra.setItems(datosDeAlmacenamiento.items);
+    }
+
+    static obtenerPizarraDeUsuario(usuarioLogeado) {
+        const pizarraDelUsuario = new Pizarra(usuarioLogeado);
+
+        if (Pizarra.existePizarra(pizarraDelUsuario)) {
+            Pizarra.cargarDatosAlmacenados(pizarraDelUsuario);
+        }
+
+        pizarraDelUsuario.actualizarInformacion();
+        return pizarraDelUsuario;
     }
 }
 
@@ -691,6 +714,10 @@ class Item {
 /* ******************** SERVICIOS ******************** */
 // Las clases Almacenamiento y Sesion trabajan con array de objetos
 class Almacenamiento {
+    static eliminar(clave) {
+        localStorage.removeItem(clave);
+    }
+
     static existe(clave) {
         return localStorage.getItem(clave) !== null;
     }
@@ -712,10 +739,6 @@ class Almacenamiento {
 
     static obtener(clave) {
         return JSON.parse(localStorage.getItem(clave));
-    }
-
-    static eliminar(clave) {
-        localStorage.removeItem(clave);
     }
 }
 
@@ -763,9 +786,35 @@ class ManejadorDOM {
         return document.createDocumentFragment();
     }
 
+    static limpiarTexto(contenedor) {
+        contenedor.textContent = "";
+    }
+
     static existeEnDOM(nodo) {
         return (nodo === document.body) ? false : document.body.contains(nodo);
-    }   
+    }
+
+    static mostrarError(contenedor, msj) {
+        ManejadorDOM.agregar(contenedor, msj);
+        setTimeout( function() { ManejadorDOM.limpiarTexto(contenedor) }, 2000 );
+    }
+
+    static mostrarInformacionPizarra(pizarra) {
+        const $totalDeItems = document.getElementById('total-de-items');
+        const $totalIngresos = document.getElementById('total-ingresos');
+        const $totalEgresos = document.getElementById('total-egresos');
+        const $balance = document.getElementById('balance');
+
+        $totalDeItems.textContent = pizarra.getItems().length;
+        $totalIngresos.textContent = Utilidades.formatearMonto(pizarra.getTotalIngresos());
+        $totalEgresos.textContent = Utilidades.formatearMonto(pizarra.getTotalEgresos());
+        $balance.textContent = Utilidades.formatearMonto(pizarra.calcularBalance());
+    }
+
+    static mostrarNombrePizarra(pizarra) {
+        const $nombrePizarra = document.getElementById('pizarra-nombre');
+        $nombrePizarra.textContent = pizarra.fecha;
+    }
 }
 
 class ManejadorEventos {
@@ -782,16 +831,18 @@ class ManejadorEventos {
             e.preventDefault();
             const formulario = e.target;
 
-            // OBTENIENDO DATOS formulario acceso usuario
+            // OBTENIENDO DATOS -> Formulario acceso usuario
             const datoUsuario = document.getElementById('acceso-usuario').value;
             const datoContrasena = document.getElementById('acceso-contrasena').value;
             
-            // LÓGICA acceso usuario
-            this.usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
+            // LÓGICA -> Acceso usuario
+            const usuario = Usuario.get();
+            usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
 
-            if (this.usuario.logearUsuario()) {
-                alert("Bienvenido ! " + this.usuario.nombre);
-                Navegador.iniciarSesion(this.usuario);
+            if (Usuario.logearUsuario(usuario)) {
+                alert("Bienvenido ! " + usuario.nombre);
+                Usuario.cargarDatosAlmacenados(usuario);
+                Navegador.iniciarSesion(usuario);
                 formulario.reset();
                 Navegador.redireccionar("pizarra.html");
             } else {
@@ -806,7 +857,7 @@ class ManejadorEventos {
             e.preventDefault();
             const formulario = e.target;
             
-            // OBTENIENDO DATOS formulario agregar item
+            // OBTENIENDO DATOS -> formulario agregar item
             const datoNombre = document.getElementById('agregar-item-nombre').value;
             
             const datoTipo = document.querySelector('input[name="agregar-item-radio-tipo"]:checked').value;
@@ -817,33 +868,32 @@ class ManejadorEventos {
 
             const datoMonto = parseFloat(document.getElementById('agregar-item-monto').value);
 
-            // LÓGICA agregar item
+            // LÓGICA -> Agregar item
+            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
             const nuevoItem = new Item(datoTipo, datoCategoria, datoNombre, datoMonto);
-            const pizarra = new Pizarra(this.usuarioLogeado, this.usuarioLogeado.fechaSeleccionada);
+            const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
             if (Pizarra.existePizarra(pizarra)) {
-                const pizarraExistente = Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha);
-                pizarra.setItems(pizarraExistente.items);
-
-                Pizarra.agregarItemPizarraExistente(pizarra, nuevoItem);
+                Pizarra.existenteAgregarItem(pizarra, nuevoItem);
             } else {
                 pizarra.agregarItem(nuevoItem);
                 Pizarra.guardarPizarra(pizarra);
             }
 
-            // AGREGO El nuevo elemento a la tabla
+            pizarra.actualizarInformacion();
+
+            // AGREGO -> Nuevo elemento a la tabla
             const $pizarraSeleccionada = document.getElementById('pizarra-seleccionada');
             const registroItem = Item.crearRegistro(nuevoItem);
             ManejadorDOM.agregar($pizarraSeleccionada, registroItem);
 
-            pizarra.actualizarInformacion();
-            Pizarra.mostrarInformacion(pizarra);
+            ManejadorDOM.mostrarInformacionPizarra(pizarra);
 
-            // OCULTO modal del framework
+            // OCULTO -> Modal del framework
             Navegador.cerrarModal('modal-agregar-item');
             formulario.reset();
             Navegador.scrollear("final");
-            Navegador.scrollear("inicio", 5000);
+            Navegador.scrollear("inicio", 3000);
         }   
     }
 
@@ -852,20 +902,21 @@ class ManejadorEventos {
             e.preventDefault();
             const formulario = e.target;
 
-            // OBTENIENDO DATOS formulario registrarse usuario
+            // OBTENIENDO DATOS -> Formulario registrarse usuario
             const datoUsuario = document.getElementById('registrarse-usuario').value;
             const datoContrasena = document.getElementById('registrarse-contrasena').value;
 
-            // LÓGICA registrarse usuario
-            this.usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
+            // LÓGICA -> Registrarse usuario
+            const usuario = Usuario.get();
+            usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
 
-            if (!Usuario.existeUsuario(this.usuario)) {
-                alert("Bienvenido NUEVO Usuario!");
-                this.usuario.setTipoDeUsuario("registrado");
-                this.usuario.setAnioDeRegistro(Fecha.anio);
-                Usuario.guardarUsuario(this.usuario);
+            if (! Usuario.existeUsuario(usuario)) {
+                alert("Bienvenido NUEVO Usuario! " + usuario.nombre);
+                usuario.setTipoDeUsuario("registrado");
+                usuario.setAnioDeRegistro(Fecha.anioActual);
+                Usuario.guardarUsuario(usuario);
                 
-                Navegador.iniciarSesion(this.usuario);
+                Navegador.iniciarSesion(usuario);
                 formulario.reset();
                 Navegador.redireccionar("pizarra.html");
             } else {
@@ -893,10 +944,12 @@ class Navegador {
     }
 
     static iniciarSesion(usuario) {
-        usuario = Usuario.buscarUsuario(usuario);
-        const datosDeSesion = new Sesion(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaFormateada());
-
+        const datosDeSesion = new Sesion(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaActual());
         Sesion.guardar("usuario_logeado", datosDeSesion);
+    }
+
+    static obtenerDeSesion(clave) {
+        return Sesion.obtener(clave).pop();
     }
 
     static paginaActual() {
@@ -927,6 +980,7 @@ class Navegador {
 }
 
 class Formulario {
+    // Métodos privados
     static crearOption(valor) {
         let $option = document.createElement("option");
             $option.setAttribute("value", valor);
@@ -934,6 +988,29 @@ class Formulario {
         $option.text  = valor;
     
         return $option;
+    }
+
+    // Métodos públicos
+    static crearSelectAnio(usuarioLogeado) {
+        const fragmento = ManejadorDOM.crearFragmento();
+
+        for (let anio = usuarioLogeado.anioDeRegistro; anio <= usuarioLogeado.anioDeRegistro + 3; anio++) {
+            let optionDelSelect = Formulario.crearOption(anio);
+            ManejadorDOM.agregar(fragmento, optionDelSelect);
+        }
+
+        return fragmento;
+    }
+
+    static crearSelectCategoria(categorias) {
+        const fragmento = ManejadorDOM.crearFragmento();
+
+        for (const categoria of categorias.getListado()) {
+            let optionDelSelect = Formulario.crearOption(categoria.nombre);
+            ManejadorDOM.agregar(fragmento, optionDelSelect);
+        }
+
+        return fragmento
     }
 }
 
@@ -961,12 +1038,17 @@ class Fecha {
                     "Diciembre"
                 ];
 
-    static anio = Fecha.hoy.getFullYear();
-    static mes = Fecha.meses[Fecha.hoy.getMonth()];
+    // Propiedades públicas
+    static anioActual = Fecha.hoy.getFullYear();
+    static mesActual = Fecha.meses[Fecha.hoy.getMonth()];
 
     // Métodos públicos
-    static getFechaFormateada() {
-        return `${Fecha.anio} - ${Fecha.mes}`;
+    static getFecha() {
+        return Utilidades.formatearFecha(Fecha.anio, Fecha.mes);
+    }
+
+    static getFechaActual() {
+        return Utilidades.formatearFecha(Fecha.anioActual, Fecha.mesActual);
     }
 
     static setFecha(anio, mes) {
@@ -976,6 +1058,10 @@ class Fecha {
 }
 
 class Utilidades {
+    static formatearFecha(anio, mes) {
+        return `${anio} - ${mes}`;
+    }
+    
     static formatearMonto(monto) {
         const formatter = new Intl.NumberFormat('es-AR', {
             style: 'currency',
