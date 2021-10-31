@@ -5,10 +5,10 @@ function init() {
     Usuario.cargarUsuariosPredefinidos();
     
     // INICIALIZO objetos globales de mi app
-    //this.categorias = new Categorias();
+    const categorias = new Categorias();
 
     /* Controlador frontal básico */
-    switch (paginaActual) {
+    switch (Navegador.paginaActual()) {
         case "index.html":
                 if(Usuario.estaLogeado()) {
                     Navegador.redireccionar("pizarra.html");
@@ -38,9 +38,25 @@ function init() {
                     this.usuarioLogeado = Usuario.obtenerUsuarioLogeado();
                     Pizarra.cargarPizarrasPredefinidas();
 
-                    /* FALTA ---> Cargar/Mostrar pizarra seleccionada [Al abrir la app será por defecto la del mes actual] */
+                    /* MOSTRAR pizarra seleccionada [Al abrir la app será por defecto la del mes actual] */
+                    const $pizarraSeleccionada = document.getElementById('pizarra-seleccionada');
+                    if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
+                        const pizarraMostrada = Pizarra.mostrarPizarra(this.usuarioLogeado, $pizarraSeleccionada);
+                        Pizarra.mostrarInformacion(pizarraMostrada);
+                    }
 
-                    /* FALTA ---> Cargar select categoría del formulario de agregar item */
+                     // CREANDO DINÁMICAMENTE opciones del select categoría del formulario de agregar item
+                    const $selectCategoria = document.getElementById('agregar-item-select-categoria');
+                    if (ManejadorDOM.existeEnDOM($selectCategoria)) {
+                        const fragmento = ManejadorDOM.crearFragmento();
+
+                        for (const categoria of categorias.getCategorias()) {
+                            let optionDelSelect = Formulario.crearOption(categoria.nombre);
+                            ManejadorDOM.agregar(fragmento, optionDelSelect);
+                        }
+
+                        ManejadorDOM.agregar($selectCategoria, fragmento);
+                    }
 
                     // ASOCIANDO EVENTO a formulario de agregar item
                     const $formAgregarItem = document.getElementById('form-agregar-item');
@@ -49,14 +65,13 @@ function init() {
                     }
 
                     // CREANDO DINÁMICAMENTE opciones del select año del formulario de configuración
-                    const $selectAnio = document.getElementById('select-anio');
-
+                    const $selectAnio = document.getElementById('configuracion-select-anio');
                     if (ManejadorDOM.existeEnDOM($selectAnio)) {
                         const fragmento = ManejadorDOM.crearFragmento();
 
                         for (let anio = this.usuarioLogeado.anioDeRegistro; anio <= this.usuarioLogeado.anioDeRegistro + 3; anio++) {
-                            let selectAnio = Formulario.crearSelectAnio(anio);
-                            ManejadorDOM.agregar(fragmento, selectAnio);
+                            let optionDelSelect = Formulario.crearOption(anio);
+                            ManejadorDOM.agregar(fragmento, optionDelSelect);
                         }
 
                         ManejadorDOM.agregar($selectAnio, fragmento);
@@ -81,14 +96,13 @@ function init() {
             break;
         case "categorias.html":
                 if(Usuario.estaLogeado()) {
-                    //  CREANDO DINÁMICAMENTE categorías
+                    //  CREANDO DINÁMICAMENTE cards de categorías
                     const $cardsCategorias = document.getElementById('contenedor-cards-categorias');
-
                     if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
                         const fragmento = ManejadorDOM.crearFragmento();
 
-                        for (const categoria of this.categorias.obtenerCategorias()) {
-                            let cardCategoria = Categoria.crearCardCategoria(categoria.nombre, categoria.descripcion, categoria.icono);
+                        for (const categoria of categorias.getCategorias()) {
+                            let cardCategoria = Categoria.crearCard(categoria.nombre, categoria.descripcion, categoria.icono);
                             ManejadorDOM.agregar(fragmento, cardCategoria);
                         }
 
@@ -97,14 +111,13 @@ function init() {
 
 
                     // CREANDO DINÁMICAMENTE opciones del select año del formulario de configuración
-                    const $selectAnio = document.getElementById('select-anio');
-
+                    const $selectAnio = document.getElementById('configuracion-select-anio');
                     if (ManejadorDOM.existeEnDOM($selectAnio)) {
                         const fragmento = ManejadorDOM.crearFragmento();
 
-                        for (let anio = usuarioLogeado.anioDeRegistro; anio <= usuarioLogeado.anioDeRegistro + 3; anio++) {
-                            let selectAnio = Formulario.crearSelectAnio(anio);
-                            ManejadorDOM.agregar(fragmento, selectAnio);
+                        for (let anio = this.usuarioLogeado.anioDeRegistro; anio <= this.usuarioLogeado.anioDeRegistro + 3; anio++) {
+                            let optionDelSelect = Formulario.crearOption(anio);
+                            ManejadorDOM.agregar(fragmento, optionDelSelect);
                         }
 
                         ManejadorDOM.agregar($selectAnio, fragmento);
@@ -127,6 +140,7 @@ function init() {
     M.AutoInit();
 }
 
+/* ****************** ARCHIVOS JSON A CONSUMIR ****************** */
 const JSON_categoriasPredefinidas = `[
     { 
         "nombre":"Comida",
@@ -209,19 +223,79 @@ const JSON_pizarrasPredefinidas = `[
                 "tipo":"Ingreso",
                 "categoria":null,
                 "nombre":"Sueldo del mes",
-                "monto":45000
+                "monto":55000
             },
             {
                 "tipo":"Egreso",
                 "categoria":"Ropa",
-                "nombre":"3 Remeras de local X",
+                "nombre":"3 remeras de local X",
                 "monto":2800
             },
             {
                 "tipo":"Egreso",
                 "categoria":"Salud",
                 "nombre":"Medicamentos varios",
-                "monto":1200
+                "monto":950
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Comida",
+                "nombre":"Coto",
+                "monto":12320.70
+            },
+            {
+                "tipo":"Ingreso",
+                "categoria":null,
+                "nombre":"Trabajo freelance Pepito",
+                "monto":20000
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Transporte",
+                "nombre":"Nafta del mes",
+                "monto":5000
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Facturas",
+                "nombre":"Luz del mes",
+                "monto":1140.37
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Mascotas",
+                "nombre":"Vacunas del año",
+                "monto":3500
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Facturas",
+                "nombre":"Servicio de internet",
+                "monto":2500
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Tarjeta de crédito",
+                "nombre":"HSBC",
+                "monto":9620.54
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Comida",
+                "nombre":"Dia online",
+                "monto":2100
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Entretenimiento",
+                "nombre":"Salida al cine",
+                "monto":1400
+            },
+            {
+                "tipo":"Egreso",
+                "categoria":"Deudas",
+                "nombre":"Pago deuda a mi primo",
+                "monto":650
             }
         ],
         "totalIngresos":45000,
@@ -264,6 +338,8 @@ const JSON_usuariosPredefinidos = `[
     }
 ]`;
 
+
+/* ******************** CLASES DE LA APP ******************** */
 class Categoria {
     constructor(nombre, descripcion, icono) {
         this.nombre = nombre;
@@ -271,9 +347,9 @@ class Categoria {
         this.icono = icono;
     }
 
-    static crearCardCategoria(nombre, descripcion, icono) {
+    static crearCard(nombre, descripcion, icono) {
         let $divColumna = document.createElement("div");
-            $divColumna.classList.add('col', 's6', 'm4');
+            $divColumna.classList.add('col', 's6', 'l4');
                         
         $divColumna.innerHTML  =    `<h2 class="card-header">${nombre}</h2>
                                     <div class="card horizontal">
@@ -298,26 +374,21 @@ class Categorias {
     }
 
     // Métodos privados
+    setCategoria(valor) {
+        this.listado.push(valor);
+    }
+
     cargarCategoriasPredefinidas() {
         const categoriasPredefinidas = JSON.parse(JSON_categoriasPredefinidas);
         
         for (const categoria of categoriasPredefinidas) {
-            this.listado.push(
-                new Categoria(categoria.nombre, categoria.descripcion, categoria.icono)
-            );
+            const nuevaCategoria = new Categoria(categoria.nombre, categoria.descripcion, categoria.icono);
+            this.setCategoria(nuevaCategoria);
         }
     }
 
     // Métodos públicos
-    existeCategoria(nombreDeCategoria) {
-        return this.listado.find(elemento => elemento.nombre === nombreDeCategoria) ? true : false;
-    }
-
-    obtenerCategoria(nombreDeCategoria) {
-        return this.listado.find(elemento => elemento.nombre === nombreDeCategoria);
-    }
-
-    obtenerCategorias() {
+    getCategorias() {
         return this.listado;
     }
 }
@@ -407,187 +478,217 @@ class Usuario {
     }
 }
 
-class Formulario {
-    static crearSelectAnio(anio) {
-        let $option = document.createElement("option");
-            $option.setAttribute("value", anio);
-                        
-        $option.text  = anio;
-    
-        return $option;
-    } 
-}
-
-class Video {
-    static cambiarVelocidadDeReproduccion(video, velocidad) {
-        video.playbackRate = velocidad;
-    } 
-}
-
-class ManejadorDOM {
-    static agregar(contenedor, elemento) {
-        contenedor.appendChild(elemento);
+class Pizarra {
+    constructor(usuario, fecha) {
+        this.usuario = usuario.nombre;
+        this.fecha = fecha;
+        this.items = [];
+        this.totalIngresos = null;
+        this.totalEgresos = null;
     }
 
-    static crearFragmento() {
-        return document.createDocumentFragment();
+    // Métodos privados
+    static obtenerPizarras() {
+        return Almacenamiento.obtener("pizarras");
     }
 
-    static existeEnDOM(nodo) {
-        return (nodo === document.body) ? false : document.body.contains(nodo);
-    }   
-}
-
-class ManejadorEventos {
-    static cerrarApp() {
-        return function (e) {
-            e.preventDefault();
-            Navegador.cerrarSesion();
-            Navegador.redireccionar("index.html");
-        }
+    static eliminarPizarras() {
+        Almacenamiento.eliminar("pizarras");
     }
 
-    static validarFormAcceso() {
-        return function (e) {
-            e.preventDefault();
-            const formulario = e.target;
+    // Métodos públicos
+    agregarItem(item) {
+        this.items.push(item);
+    }
 
-            // OBTENIENDO DATOS formulario acceso usuario
-            const datoUsuario = document.getElementById('acceso-usuario').value;
-            const datoContrasena = document.getElementById('acceso-contrasena').value;
+    setItems(items) {
+        this.items = items;
+    }
+
+    getItems() {
+        return this.items;
+    }
+
+    getTotalIngresos() {
+        return this.totalIngresos;
+    }
+
+    getTotalEgresos() {
+        return this.totalEgresos;
+    }
+
+    static buscarPizarra(usuario, fecha) {
+        if (Almacenamiento.existe("pizarras")) {
+            const pizarras = Almacenamiento.obtener("pizarras");
             
-            // LÓGICA acceso usuario
-            this.usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
-
-            if (this.usuario.logearUsuario()) {
-                alert("Bienvenido ! " + this.usuario.nombre);
-                Navegador.iniciarSesion(this.usuario);
-                formulario.reset();
-                Navegador.redireccionar("pizarra.html");
-            } else {
-                alert("Error:\nDatos de ingreso incorrectos");
-                formulario.reset();
+            function pizarraDeUsuarioBuscado(elemento) {
+                return elemento.usuario === usuario && elemento.fecha === fecha;
             }
+
+            return pizarras.find(pizarraDeUsuarioBuscado);
+        } else {
+            return undefined;
         }
     }
 
-    static validarFormAgregarItem() {
-        return function (e) {
-            e.preventDefault();
-            
-            // OBTENIENDO DATOS formulario agregar item
-            const datoNombre = document.getElementById('item-nombre').value;
-            
-            const datoTipo = document.querySelector('input[name="item-radio-tipo"]:checked').value;
-            
-            const $selectCategoria = document.getElementById('item-select-categoria');
-            const indiceSeleccionado = $selectCategoria.selectedIndex;
-            const datoCategoria = $selectCategoria.options[indiceSeleccionado].text;
-
-            const datoMonto = document.getElementById('item-monto').value;
-
-            // LÓGICA agregar item
-            const nuevoItem = new Item(datoTipo, datoCategoria, datoNombre, datoMonto);
-            const pizarra = new Pizarra(this.usuarioLogeado, this.usuarioLogeado.fechaSeleccionada);
-
-            if (Pizarra.existePizarra(pizarra)) {
-                const pizarraExistente = Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha);
-                Pizarra.agregarItemPizarraExistente(pizarraExistente, nuevoItem);
-            } else {
-                pizarra.agregarItem(nuevoItem);
+    static cargarPizarrasPredefinidas() {
+        const pizarrasPredefinidas = JSON.parse(JSON_pizarrasPredefinidas);
+        
+        for (const pizarra of pizarrasPredefinidas) {
+            if (!Pizarra.existePizarra(pizarra)) {
                 Pizarra.guardarPizarra(pizarra);
             }
-        }   
-    }
-
-    static validarFormRegistrarse() {
-        return function (e) {
-            e.preventDefault();
-            const formulario = e.target;
-
-            // OBTENIENDO DATOS formulario registrarse usuario
-            const datoUsuario = document.getElementById('registrarse-usuario').value;
-            const datoContrasena = document.getElementById('registrarse-contrasena').value;
-
-            // LÓGICA registrarse usuario
-            this.usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
-
-            if (!Usuario.existeUsuario(this.usuario)) {
-                alert("Bienvenido NUEVO Usuario!");
-                this.usuario.setTipoDeUsuario("registrado");
-                this.usuario.setAnioDeRegistro(Fecha.anio);
-                Usuario.guardarUsuario(this.usuario);
-                
-                Navegador.iniciarSesion(this.usuario);
-                formulario.reset();
-                Navegador.redireccionar("pizarra.html");
-            } else {
-                alert("Error:\nNombre de usuario NO disponible");
-                formulario.reset();
-            }
         }
     }
+
+    static getIndice(usuario, fecha) {
+        const pizarrasAlmacenadas = Pizarra.obtenerPizarras();
+
+        function pizarraDeUsuarioBuscado(elemento) {
+            return elemento.usuario === usuario && elemento.fecha === fecha;
+        }
+
+        return pizarrasAlmacenadas.findIndex(pizarraDeUsuarioBuscado);
+    }
+
+    static agregarItemPizarraExistente(pizarra, item) {
+        let pizarrasAlmacenadas = Pizarra.obtenerPizarras();
+        const indice = Pizarra.getIndice(pizarra.usuario, pizarra.fecha);
+        Pizarra.eliminarPizarras();
+        
+        pizarra.items.push(item);
+        pizarrasAlmacenadas.splice(indice, 1, pizarra);
+
+        for (const pizarra of pizarrasAlmacenadas) {
+            Pizarra.guardarPizarra(pizarra);
+        }
+    }
+
+    static editarItemPizarraExistente() {
+        // Falta desarrollar
+    }
+
+    static eliminarItemPizarraExistente() {
+        // Falta desarrollar
+    }
+
+    static existePizarra(pizarra) {
+        return Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha) ? true : false;
+    }
+
+    static guardarPizarra(pizarra) {
+        Almacenamiento.guardar("pizarras", pizarra);
+    }
+
+    mostrarNombrePizarra(usuarioLogeado) {
+        const $nombrePizarra = document.getElementById('pizarra-nombre');
+        $nombrePizarra.textContent = usuarioLogeado.fechaSeleccionada;
+    }
+
+    static mostrarPizarra(usuarioLogeado, $pizarraSeleccionada) {
+        const pizarra = new Pizarra(usuarioLogeado, usuarioLogeado.fechaSeleccionada);
+
+        pizarra.mostrarNombrePizarra(usuarioLogeado);
+
+        if (Pizarra.existePizarra(pizarra)) {
+            const pizarraExistente = Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha);
+            pizarra.setItems(pizarraExistente.items);
+
+            const fragmento = ManejadorDOM.crearFragmento();
+
+            for (const item of pizarra.getItems()) {
+                let registroItem = Item.crearRegistro(item);
+                ManejadorDOM.agregar(fragmento, registroItem);
+            }
+            ManejadorDOM.agregar($pizarraSeleccionada, fragmento);   
+        } else {
+            Pizarra.guardarPizarra(pizarra);
+        }
+
+        pizarra.actualizarInformacion();
+        return pizarra;
+    }
+
+    obtenerItemsDeTipo(tipoDeItem) {
+        return this.items.filter(elemento => elemento.tipo === tipoDeItem);
+    }
+
+    calcularTotal(coleccion) {
+        return coleccion.reduce((a, b) => a + b.monto, 0);
+    }
+
+    calcularTotalIngresos() {
+        this.totalIngresos = this.calcularTotal(this.obtenerItemsDeTipo("Ingreso"));
+    }
+
+    calcularTotalEgresos() {
+        this.totalEgresos = this.calcularTotal( this.obtenerItemsDeTipo("Egreso"));
+    }
+
+    calcularBalance() {
+        return this.totalIngresos - this.totalEgresos;
+    }
+
+    actualizarInformacion() {
+        this.calcularTotalIngresos();
+        this.calcularTotalEgresos();
+    }
+
+    static mostrarInformacion(pizarra) {
+        const $totalDeItems = document.getElementById('total-de-items');
+        const $totalIngresos = document.getElementById('total-ingresos');
+        const $totalEgresos = document.getElementById('total-egresos');
+        const $balance = document.getElementById('balance');
+
+        $totalDeItems.textContent = pizarra.getItems().length;
+        $totalIngresos.textContent = Utilidades.formatearMonto(pizarra.getTotalIngresos());
+        $totalEgresos.textContent = Utilidades.formatearMonto(pizarra.getTotalEgresos());
+        $balance.textContent = Utilidades.formatearMonto(pizarra.calcularBalance());
+    }
 }
 
-class Navegador {
-    // Métodos públicos
-    static cerrarSesion() {
-        Sesion.eliminar("usuario_logeado");
+class Item {
+    constructor(tipo, categoria, nombre, monto) {
+        this.tipo = tipo;
+        this.categoria = categoria;
+        this.nombre = nombre;
+        this.monto = monto;
     }
 
-    static existeEnSesion(clave) {
-        return Sesion.existe(clave);
-    }
+    static crearRegistro(item) {
+        let $registroItem = document.createElement("tr");
+        let estiloTipoDeItem;
+        let iconoTipoDeItem;
+        let estiloDeMonto;
+    
+        if(item.tipo === "Ingreso") {
+            estiloTipoDeItem = "green-text";
+            iconoTipoDeItem = "north_east";
+            estiloDeMonto = "positivo";
+            item.categoria = "----------";
+        } else {
+            estiloTipoDeItem = "red-text";
+            iconoTipoDeItem = "south_west";
+            estiloDeMonto = "negativo";
+        }
 
-    static iniciarSesion(usuario) {
-        usuario = Usuario.buscarUsuario(usuario);
-        const datosDeSesion = new Sesion(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaFormateada());
-
-        Sesion.guardar("usuario_logeado", datosDeSesion);
-    }
-
-    static paginaActual() {
-        return location.pathname.split("/").pop();
-    }
-
-    static redireccionar(ubicacion) {
-        setTimeout( function() { location = ubicacion; }, 1000 );
-    }
-}
-
-class Fecha {
-    // Propiedades privadas
-    static hoy = new Date();
-    static meses = [
-                    "Enero",
-                    "Febrero",
-                    "Marzo",
-                    "Abril",
-                    "Mayo",
-                    "Junio",
-                    "Julio",
-                    "Agosto",
-                    "Septiembre",
-                    "Octubre",
-                    "Noviembre",
-                    "Diciembre"
-                ];
-                
-    // Propiedades públicas
-    static anio = Fecha.hoy.getFullYear();
-    static mes = Fecha.meses[Fecha.hoy.getMonth()];
-
-    // Métodos públicos
-    static getFechaFormateada() {
-        return `${Fecha.anio} - ${Fecha.mes}`;
-    }
-
-    static setFecha(anio, mes) {
-        Fecha.anio = anio;
-        Fecha.mes = mes;
+        $registroItem.innerHTML  =  `<td>
+                                        <i class="material-icons left ${estiloTipoDeItem} text-darken-2">${iconoTipoDeItem}</i>
+                                    </td>
+                                    <td>${item.categoria}</td>
+                                    <td>${item.nombre}</td>
+                                    <td>
+                                        <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
+                                        <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                                    </td>
+                                    <td class="valor-${estiloDeMonto}">${Utilidades.formatearMonto(item.monto)}</td>`;
+    
+        return $registroItem;
     }
 }
 
+
+/* ******************** SERVICIOS ******************** */
 // Las clases Almacenamiento y Sesion trabajan con array de objetos
 class Almacenamiento {
     static existe(clave) {
@@ -653,98 +754,242 @@ class Sesion {
     }
 }
 
-class Pizarra {
-    constructor(usuario, fecha) {
-        this.usuario = usuario.nombre;
-        this.fecha = fecha;
-        this.items = [];
-        this.totalIngresos = 0;
-        this.totalEgresos = 0;
+class ManejadorDOM {
+    static agregar(contenedor, elemento) {
+        contenedor.appendChild(elemento);
     }
 
-    // Métodos privados
-    static obtenerPizarras() {
-        return Almacenamiento.obtener("pizarras");
+    static crearFragmento() {
+        return document.createDocumentFragment();
     }
 
-    static eliminarPizarras() {
-        Almacenamiento.eliminar("pizarras");
-    }
+    static existeEnDOM(nodo) {
+        return (nodo === document.body) ? false : document.body.contains(nodo);
+    }   
+}
 
-    // Métodos públicos
-    agregarItem(item){
-        this.items.push(item);
-    }
-
-    static buscarPizarra(usuario, fecha) {
-        if (Almacenamiento.existe("pizarras")) {
-            const pizarras = Almacenamiento.obtener("pizarras");
-            
-            function pizarraDeUsuarioBuscado(elemento) {
-                return elemento.usuario === usuario && elemento.fecha === fecha;
-            }
-
-            return pizarras.find(pizarraDeUsuarioBuscado);
-        } else {
-            return undefined;
+class ManejadorEventos {
+    static cerrarApp() {
+        return function (e) {
+            e.preventDefault();
+            Navegador.cerrarSesion();
+            Navegador.redireccionar("index.html");
         }
     }
 
-    static cargarPizarrasPredefinidas() {
-        const pizarrasPredefinidas = JSON.parse(JSON_pizarrasPredefinidas);
-        
-        for (const pizarra of pizarrasPredefinidas) {
-            if (!Pizarra.existePizarra(pizarra)) {
+    static validarFormAcceso() {
+        return function(e) {
+            e.preventDefault();
+            const formulario = e.target;
+
+            // OBTENIENDO DATOS formulario acceso usuario
+            const datoUsuario = document.getElementById('acceso-usuario').value;
+            const datoContrasena = document.getElementById('acceso-contrasena').value;
+            
+            // LÓGICA acceso usuario
+            this.usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
+
+            if (this.usuario.logearUsuario()) {
+                alert("Bienvenido ! " + this.usuario.nombre);
+                Navegador.iniciarSesion(this.usuario);
+                formulario.reset();
+                Navegador.redireccionar("pizarra.html");
+            } else {
+                alert("Error:\nDatos de ingreso incorrectos");
+                formulario.reset();
+            }
+        }
+    }
+
+    static validarFormAgregarItem() {
+        return function(e) {
+            e.preventDefault();
+            const formulario = e.target;
+            
+            // OBTENIENDO DATOS formulario agregar item
+            const datoNombre = document.getElementById('agregar-item-nombre').value;
+            
+            const datoTipo = document.querySelector('input[name="agregar-item-radio-tipo"]:checked').value;
+            
+            const $selectCategoria = document.getElementById('agregar-item-select-categoria');
+            const indiceSeleccionado = $selectCategoria.selectedIndex;
+            const datoCategoria = $selectCategoria.options[indiceSeleccionado].value;
+
+            const datoMonto = parseFloat(document.getElementById('agregar-item-monto').value);
+
+            // LÓGICA agregar item
+            const nuevoItem = new Item(datoTipo, datoCategoria, datoNombre, datoMonto);
+            const pizarra = new Pizarra(this.usuarioLogeado, this.usuarioLogeado.fechaSeleccionada);
+
+            if (Pizarra.existePizarra(pizarra)) {
+                const pizarraExistente = Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha);
+                pizarra.setItems(pizarraExistente.items);
+
+                Pizarra.agregarItemPizarraExistente(pizarra, nuevoItem);
+            } else {
+                pizarra.agregarItem(nuevoItem);
                 Pizarra.guardarPizarra(pizarra);
             }
+
+            // AGREGO El nuevo elemento a la tabla
+            const $pizarraSeleccionada = document.getElementById('pizarra-seleccionada');
+            const registroItem = Item.crearRegistro(nuevoItem);
+            ManejadorDOM.agregar($pizarraSeleccionada, registroItem);
+
+            pizarra.actualizarInformacion();
+            Pizarra.mostrarInformacion(pizarra);
+
+            // OCULTO modal del framework
+            Navegador.cerrarModal('modal-agregar-item');
+            formulario.reset();
+            Navegador.scrollear("final");
+            Navegador.scrollear("inicio", 5000);
+        }   
+    }
+
+    static validarFormRegistrarse() {
+        return function(e) {
+            e.preventDefault();
+            const formulario = e.target;
+
+            // OBTENIENDO DATOS formulario registrarse usuario
+            const datoUsuario = document.getElementById('registrarse-usuario').value;
+            const datoContrasena = document.getElementById('registrarse-contrasena').value;
+
+            // LÓGICA registrarse usuario
+            this.usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
+
+            if (!Usuario.existeUsuario(this.usuario)) {
+                alert("Bienvenido NUEVO Usuario!");
+                this.usuario.setTipoDeUsuario("registrado");
+                this.usuario.setAnioDeRegistro(Fecha.anio);
+                Usuario.guardarUsuario(this.usuario);
+                
+                Navegador.iniciarSesion(this.usuario);
+                formulario.reset();
+                Navegador.redireccionar("pizarra.html");
+            } else {
+                alert("Error:\nNombre de usuario NO disponible");
+                formulario.reset();
+            }
         }
-    }
-
-    static getIndice(usuario, fecha) {
-        const pizarrasAlmacenadas = Pizarra.obtenerPizarras();
-
-        function pizarraDeUsuarioBuscado(elemento) {
-            return elemento.usuario === usuario && elemento.fecha === fecha;
-        }
-
-        return pizarrasAlmacenadas.findIndex(pizarraDeUsuarioBuscado);
-    }
-
-    static agregarItemPizarraExistente(pizarra, item) {
-        let pizarrasAlmacenadas = Pizarra.obtenerPizarras();
-        const indice = Pizarra.getIndice(pizarra.usuario, pizarra.fecha);
-        Pizarra.eliminarPizarras();
-
-        pizarra.items.push(item);
-        pizarrasAlmacenadas.splice(indice, 1, pizarra);
-
-        for (const pizarra of pizarrasAlmacenadas) {
-            Pizarra.guardarPizarra(pizarra);
-        }
-    }
-
-    static editarItemPizarraExistente() {
-        // Falta desarrollar
-    }
-
-    static eliminarItemPizarraExistente() {
-        // Falta desarrollar
-    }
-
-    static existePizarra(pizarra) {
-        return Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha) ? true : false;
-    }
-
-    static guardarPizarra(pizarra) {
-        Almacenamiento.guardar("pizarras", pizarra);
     }
 }
 
-class Item {
-    constructor(tipo, categoria, nombre, monto) {
-        this.tipo = tipo;
-        this.categoria = categoria;
-        this.nombre = nombre;
-        this.monto = monto;
+class Navegador {
+    // Métodos públicos
+    static cerrarModal(idModal) {
+        const $modalAgregarItem = document.getElementById(idModal);
+        const modal = M.Modal.getInstance($modalAgregarItem);
+        modal.close();
+    }
+
+    static cerrarSesion() {
+        Sesion.eliminar("usuario_logeado");
+    }
+
+    static existeEnSesion(clave) {
+        return Sesion.existe(clave);
+    }
+
+    static iniciarSesion(usuario) {
+        usuario = Usuario.buscarUsuario(usuario);
+        const datosDeSesion = new Sesion(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaFormateada());
+
+        Sesion.guardar("usuario_logeado", datosDeSesion);
+    }
+
+    static paginaActual() {
+        return location.pathname.split("/").pop();
+    }
+
+    static redireccionar(ubicacion) {
+        setTimeout( function() { location = ubicacion; }, 1000 );
+    }
+
+    static scrollear(ubicacion, tiempo = 0) {
+        let posicion;
+        switch (ubicacion) {
+            case "final":
+                posicion = document.body.scrollHeight;
+                break;
+            default:
+                posicion = 0;
+                break;
+        }
+
+        setTimeout( function() { window.scroll({
+                top: posicion,
+                behavior: "smooth"
+            }); 
+        }, tiempo );
+    }
+}
+
+class Formulario {
+    static crearOption(valor) {
+        let $option = document.createElement("option");
+            $option.setAttribute("value", valor);
+                        
+        $option.text  = valor;
+    
+        return $option;
+    }
+}
+
+class Video {
+    static cambiarVelocidadDeReproduccion(video, velocidad) {
+        video.playbackRate = velocidad;
+    } 
+}
+
+class Fecha {
+    // Propiedades privadas
+    static hoy = new Date();
+    static meses = [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Septiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Diciembre"
+                ];
+
+    static anio = Fecha.hoy.getFullYear();
+    static mes = Fecha.meses[Fecha.hoy.getMonth()];
+
+    // Métodos públicos
+    static getFechaFormateada() {
+        return `${Fecha.anio} - ${Fecha.mes}`;
+    }
+
+    static setFecha(anio, mes) {
+        Fecha.anio = anio;
+        Fecha.mes = mes;
+    }
+}
+
+class Utilidades {
+    static formatearMonto(monto) {
+        const formatter = new Intl.NumberFormat('es-AR', {
+            style: 'currency',
+            currency: 'ARS',
+        });
+
+        return formatter.format(monto);
+    }
+
+    static desformatearMonto(monto) {
+        let montoDesformateado = monto.replace('$ ','');
+        montoDesformateado = montoDesformateado.replace('.','');
+        montoDesformateado = montoDesformateado.replace(',','.');
+
+        return montoDesformateado;
     }
 }

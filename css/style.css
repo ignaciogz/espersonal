@@ -216,6 +216,12 @@ section.pizarra div.d-flex:hover {
 section.pizarra div.s12 {
   margin-bottom: 20px;
 }
+section.pizarra #pizarra-seleccionada td.valor-positivo::before {
+  content: "+ ";
+}
+section.pizarra #pizarra-seleccionada td.valor-negativo::before {
+  content: "- ";
+}
 section.pizarra .btn-edit,
 section.pizarra .btn-delete {
   visibility: hidden;
@@ -229,17 +235,17 @@ section.pizarra table.highlight > tbody > tr:hover .btn-delete {
   visibility: visible;
 }
 
-section.detalle-pizarra #total-de-items,
-section.detalle-pizarra #total-ingresos,
-section.detalle-pizarra #total-egresos,
-section.detalle-pizarra #balance {
+section.pizarra-informacion #total-de-items,
+section.pizarra-informacion #total-ingresos,
+section.pizarra-informacion #total-egresos,
+section.pizarra-informacion #balance {
   font-weight: bolder;
 }
-section.detalle-pizarra > .col {
+section.pizarra-informacion > .col {
   border-left: 1px solid var(--color-icono-fondo);
   padding: 0.4rem 1rem;
 }
-section.detalle-pizarra > .col:first-child {
+section.pizarra-informacion > .col:first-child {
   border-left: unset;
   padding: 0.4rem 1rem 0.4rem 0;
 }
@@ -270,11 +276,11 @@ section.pizarra .btn-delete {
     visibility: visible;
   }
 
-  section.detalle-pizarra > .col {
+  section.pizarra-informacion > .col {
     border-left: unset;
     padding: 0.4rem 0.5rem 0.4rem 0;
   }
-  section.detalle-pizarra > .col:first-child {
+  section.pizarra-informacion > .col:first-child {
     border-left: unset;
     padding: 0.4rem 0.5rem 0.4rem 0;
   }
