@@ -799,8 +799,8 @@ class ManejadorDOM {
     }
 
     static mostrarError(contenedor, msj) {
-        ManejadorDOM.agregar(contenedor, msj);
-        setTimeout( function() { ManejadorDOM.limpiarTexto(contenedor) }, 2000 );
+        contenedor.textContent = "ERROR -> " + msj;
+        setTimeout( function() { ManejadorDOM.limpiarTexto(contenedor) }, 8000 );
     }
 
     static mostrarInformacionPizarra(pizarra) {
@@ -853,13 +853,13 @@ class ManejadorEventos {
             usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
 
             if (Usuario.logearUsuario(usuario)) {
-                alert("Bienvenido ! " + usuario.nombre);
                 Usuario.cargarDatosAlmacenados(usuario);
                 Navegador.iniciarSesion(usuario);
                 formulario.reset();
                 Navegador.redireccionar("pizarra.html");
             } else {
-                alert("Error:\nDatos de ingreso incorrectos");
+                const $error = document.getElementById('error-acceso')
+                ManejadorDOM.mostrarError($error, "Datos de ingreso incorrectos");
                 formulario.reset();
             }
         }
@@ -920,7 +920,6 @@ class ManejadorEventos {
             usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
 
             if (! Usuario.existeUsuario(usuario)) {
-                alert("Bienvenido NUEVO Usuario! " + usuario.nombre);
                 usuario.setTipoDeUsuario("registrado");
                 usuario.setAnioDeRegistro(Fecha.anioActual);
                 Usuario.guardarUsuario(usuario);
@@ -929,7 +928,8 @@ class ManejadorEventos {
                 formulario.reset();
                 Navegador.redireccionar("pizarra.html");
             } else {
-                alert("Error:\nNombre de usuario NO disponible");
+                const $error = document.getElementById('error-registrarse')
+                ManejadorDOM.mostrarError($error, "Nombre de usuario NO disponible");
                 formulario.reset();
             }
         }

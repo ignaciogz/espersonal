@@ -198,6 +198,12 @@ small .desarrollador {
   margin-left: 0.3rem;
 }
 
+.error {
+  font-size: 0.7rem;
+  font-weight: bolder;
+  height: 1rem;
+}
+
 /* -------- pizarra.html -------- */
 section.navegacion .sidenav {
   display: flex;
