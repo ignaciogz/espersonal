@@ -33,21 +33,27 @@ function init() {
                     // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
                     Pizarra.cargarJSON_pizarrasPredefinidas();
 
+                    // MOSTRANDO -> Nombre de usuario
+                    const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+                    ManejadorDOM.mostrarNombreDeUsuario(usuarioLogeado);
+                    
                     // [Al abrir la app la pizarra seleccionada será por defecto la del mes actual]
                     const $pizarraSeleccionada = document.getElementById('pizarra-seleccionada');
                     if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
-                        // OBSERVANDO -> Cuando se agrega un nuevo item a la pizarra seleccionada
-                        const observador_nuevoItemAgregado = new MutationObserver(ManejadorEventos.actualizarInformacionPizarra());
-                        observador_nuevoItemAgregado.observe($pizarraSeleccionada, { childList: true, subtree: true });
-
                         // MOSTRANDO -> La pizarra selecionada
-                        const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
                         const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
                         const registrosDeItems = pizarra.crearRegistros();
 
                         ManejadorDOM.mostrarNombrePizarra(pizarra);
                         ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
+
+                        pizarra.actualizarInformacion();
+                        ManejadorDOM.mostrarInformacionPizarra(pizarra);
+
+                        // OBSERVANDO -> Cuando se agrega un nuevo item a la pizarra seleccionada
+                        const observador_nuevoItemAgregado = new MutationObserver(ManejadorEventos.actualizarInformacionPizarra());
+                        observador_nuevoItemAgregado.observe($pizarraSeleccionada, { childList: true, subtree: true });
                     }
 
                     // CREANDO DINÁMICAMENTE -> Opciones del select categoría del formulario de agregar item
@@ -94,6 +100,10 @@ function init() {
                     // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
                     Pizarra.cargarJSON_pizarrasPredefinidas();
                     
+                    // MOSTRANDO -> Nombre de usuario
+                    const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+                    ManejadorDOM.mostrarNombreDeUsuario(usuarioLogeado);
+                    
                     //  CREANDO DINÁMICAMENTE -> Cards de categorías
                     const $cardsCategorias = document.getElementById('contenedor-cards-categorias');
                     if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
@@ -105,7 +115,6 @@ function init() {
                     // CREANDO DINÁMICAMENTE -> Opciones del select año del formulario de configuración
                     const $selectAnio = document.getElementById('configuracion-select-anio');
                     if (ManejadorDOM.existeEnDOM($selectAnio)) {
-                        const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
                         const selectAnio = Formulario.crearSelectAnio(usuarioLogeado);
                         ManejadorDOM.agregar($selectAnio, selectAnio);
                     }
@@ -204,7 +213,7 @@ const JSON_categoriasPredefinidas = `[
 const JSON_pizarrasPredefinidas = `[
     { 
         "usuario":"coder",
-        "fecha":"2021 - Octubre",
+        "fecha":"2021 - Noviembre",
         "items":[
             {
                 "tipo":"Ingreso",
@@ -290,7 +299,7 @@ const JSON_pizarrasPredefinidas = `[
     },
     { 
         "usuario":"coder",
-        "fecha":"2021 - Noviembre",
+        "fecha":"2021 - Diciembre",
         "items":[
             {
                 "tipo":"Ingreso",
@@ -815,6 +824,11 @@ class ManejadorDOM {
         $balance.textContent = Utilidades.formatearMonto(pizarra.calcularBalance());
     }
 
+    static mostrarNombreDeUsuario(usuario) {
+        const $usuarioLogeado = document.getElementById('usuario-logeado');
+        $usuarioLogeado.textContent = usuario.nombre;
+    }
+
     static mostrarNombrePizarra(pizarra) {
         const $nombrePizarra = document.getElementById('pizarra-nombre');
         $nombrePizarra.textContent = pizarra.fecha;
@@ -912,7 +926,7 @@ class ManejadorEventos {
             const formulario = e.target;
 
             // OBTENIENDO DATOS -> Formulario registrarse usuario
-            const datoUsuario = document.getElementById('registrarse-usuario').value;
+            const datoUsuario = document.getElementById('registrarse-usuario').value.toLowerCase();
             const datoContrasena = document.getElementById('registrarse-contrasena').value;
 
             // LÓGICA -> Registrarse usuario
