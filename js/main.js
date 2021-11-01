@@ -33,16 +33,20 @@ function init() {
                     // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
                     Pizarra.cargarJSON_pizarrasPredefinidas();
 
-                    // MOSTRANDO -> Pizarra seleccionada [Al abrir la app será por defecto la del mes actual] */
+                    // [Al abrir la app la pizarra seleccionada será por defecto la del mes actual]
                     const $pizarraSeleccionada = document.getElementById('pizarra-seleccionada');
                     if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
+                        // OBSERVANDO -> Cuando se agrega un nuevo item a la pizarra seleccionada
+                        const observador_nuevoItemAgregado = new MutationObserver(ManejadorEventos.actualizarInformacionPizarra());
+                        observador_nuevoItemAgregado.observe($pizarraSeleccionada, { childList: true, subtree: true });
+
+                        // MOSTRANDO -> La pizarra selecionada
                         const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
                         const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
                         const registrosDeItems = pizarra.crearRegistros();
 
                         ManejadorDOM.mostrarNombrePizarra(pizarra);
-                        ManejadorDOM.mostrarInformacionPizarra(pizarra);
                         ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
                     }
 
@@ -819,10 +823,19 @@ class ManejadorDOM {
 
 class ManejadorEventos {
     static cerrarApp() {
-        return function (e) {
+        return function(e) {
             e.preventDefault();
             Navegador.cerrarSesion();
             Navegador.redireccionar("index.html");
+        }
+    }
+
+    static actualizarInformacionPizarra() {
+        return function() {
+            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+            const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+            pizarra.actualizarInformacion();
+            ManejadorDOM.mostrarInformacionPizarra(pizarra);
         }
     }
 
@@ -880,16 +893,12 @@ class ManejadorEventos {
                 Pizarra.guardarPizarra(pizarra);
             }
 
-            pizarra.actualizarInformacion();
-
-            // AGREGO -> Nuevo elemento a la tabla
+            // MOSTRANDO -> El nuevo item al usuario
             const $pizarraSeleccionada = document.getElementById('pizarra-seleccionada');
             const registroItem = Item.crearRegistro(nuevoItem);
             ManejadorDOM.agregar($pizarraSeleccionada, registroItem);
 
-            ManejadorDOM.mostrarInformacionPizarra(pizarra);
-
-            // OCULTO -> Modal del framework
+            // Procedimiento de finalización
             Navegador.cerrarModal('modal-agregar-item');
             formulario.reset();
             Navegador.scrollear("final");
