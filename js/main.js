@@ -1,142 +1,32 @@
+/* ******************** ARCHIVO PRINCIPAL ******************** */
 document.addEventListener('DOMContentLoaded', init);
 
 function init() {
+    const pagina = Navegador.paginaActual;
+
     /* Controlador frontal básico */
-    switch (Navegador.paginaActual()) {
-        case "index.html":
-                if(Usuario.estaLogeado()) {
-                    Navegador.redireccionar("pizarra.html");
-                } else {
-                    // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
-                    Usuario.cargarJSON_usuariosPredefinidos();
-
-                    // REDUCIENDO velocidad de reproducción del video
-                    const $videoMarketing = document.querySelector('.video-marketing video');    
-                    if (ManejadorDOM.existeEnDOM($videoMarketing)) {
-                        Video.cambiarVelocidadDeReproduccion($videoMarketing, 0.5);
-                    }
-
-                    // ASOCIANDO EVENTOS -> A formularios del index.html
-                    const $formAcceso = document.getElementById('form-acceso');
-                    if (ManejadorDOM.existeEnDOM($formAcceso)) {
-                        $formAcceso.addEventListener('submit', ManejadorEventos.validarFormAcceso());
-                    }
-
-                    const $formRegistrarse = document.getElementById('form-registrarse');
-                    if (ManejadorDOM.existeEnDOM($formRegistrarse)) {
-                        $formRegistrarse.addEventListener('submit', ManejadorEventos.validarFormRegistrarse());    
-                    }
-                }
-            break;
-        case "pizarra.html":
-                if(Usuario.estaLogeado()) {
-                    // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
-                    Pizarra.cargarJSON_pizarrasPredefinidas();
-
-                    // MOSTRANDO -> Nombre de usuario
-                    const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-                    ManejadorDOM.mostrarNombreDeUsuario(usuarioLogeado);
-                    
-                    // [Al abrir la app la pizarra seleccionada será por defecto la del mes actual]
-                    const $pizarraSeleccionada = document.getElementById('pizarra-seleccionada');
-                    if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
-                        // MOSTRANDO -> La pizarra selecionada
-                        const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
-
-                        const registrosDeItems = pizarra.crearRegistros();
-
-                        ManejadorDOM.mostrarNombrePizarra(pizarra);
-                        ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
-
-                        pizarra.actualizarInformacion();
-                        ManejadorDOM.mostrarInformacionPizarra(pizarra);
-
-                        // OBSERVANDO -> Cuando se agrega un nuevo item a la pizarra seleccionada
-                        const observador_nuevoItemAgregado = new MutationObserver(ManejadorEventos.actualizarInformacionPizarra());
-                        observador_nuevoItemAgregado.observe($pizarraSeleccionada, { childList: true, subtree: true });
-                    }
-
-                    // CREANDO DINÁMICAMENTE -> Opciones del select categoría del formulario de agregar item
-                    const $selectCategoria = document.getElementById('agregar-item-select-categoria');
-                    if (ManejadorDOM.existeEnDOM($selectCategoria)) {
-                        const categorias = Categorias.get();
-                        const selectCategoria = Formulario.crearSelectCategoria(categorias);
-                        ManejadorDOM.agregar($selectCategoria, selectCategoria);
-                    }
-
-                    // ASOCIANDO EVENTO -> A formulario de agregar item
-                    const $formAgregarItem = document.getElementById('form-agregar-item');
-                    if (ManejadorDOM.existeEnDOM($formAgregarItem)) {
-                        $formAgregarItem.addEventListener('submit', ManejadorEventos.validarFormAgregarItem());
-                    }
-
-                    // CREANDO DINÁMICAMENTE -> Opciones del select año del formulario de configuración
-                    const $selectAnio = document.getElementById('configuracion-select-anio');
-                    if (ManejadorDOM.existeEnDOM($selectAnio)) {
-                        const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-                        const selectAnio = Formulario.crearSelectAnio(usuarioLogeado);
-                        ManejadorDOM.agregar($selectAnio, selectAnio);
-                    }
-                    
-                    // ASOCIANDO EVENTO -> A formulario de configuración
-                    // ASOCIANDO EVENTO -> A barra lateral
-                    const $btnSalir = document.getElementById('btn-salir');
-                    if (ManejadorDOM.existeEnDOM($btnSalir)) {
-                        $btnSalir.addEventListener('click', ManejadorEventos.cerrarApp());
-                    }
-                } else {
-                    Navegador.redireccionar("index.html");
-                }
-            break;
-        case "grafico.html":
-                if(Usuario.estaLogeado()) {
-                       // VEREMOS si lo programo o no
-                } else {
-                    Navegador.redireccionar("index.html");
-                }
-            break;
-        case "categorias.html":
-                if(Usuario.estaLogeado()) {
-                    // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
-                    Pizarra.cargarJSON_pizarrasPredefinidas();
-                    
-                    // MOSTRANDO -> Nombre de usuario
-                    const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-                    ManejadorDOM.mostrarNombreDeUsuario(usuarioLogeado);
-                    
-                    //  CREANDO DINÁMICAMENTE -> Cards de categorías
-                    const $cardsCategorias = document.getElementById('contenedor-cards-categorias');
-                    if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
-                        const categorias = Categorias.get();
-                        const cardsCategorias = categorias.crearCards();
-                        ManejadorDOM.agregar($cardsCategorias, cardsCategorias);
-                    }
-
-                    // CREANDO DINÁMICAMENTE -> Opciones del select año del formulario de configuración
-                    const $selectAnio = document.getElementById('configuracion-select-anio');
-                    if (ManejadorDOM.existeEnDOM($selectAnio)) {
-                        const selectAnio = Formulario.crearSelectAnio(usuarioLogeado);
-                        ManejadorDOM.agregar($selectAnio, selectAnio);
-                    }
-
-                    // ASOCIANDO EVENTO -> A formulario de configuración
-                    // ASOCIANDO EVENTO -> A barra lateral
-                    const $btnSalir = document.getElementById('btn-salir');
-                    if (ManejadorDOM.existeEnDOM($btnSalir)) {
-                        $btnSalir.addEventListener('click', ManejadorEventos.cerrarApp());
-                    }
-                } else {
-                    Navegador.redireccionar("index.html");
-                }
-            break;
+    if (Ruteador.existe(pagina)) {
+        const controlador = Ruteador.getControlador(pagina);
+        App.ejecutarControlador(controlador);
+    }
+    else {
+        // Mostrar 404.html
     }
 
-    // INICIALIZO componentes del framework
+    // INICIALIZO componentes de Materialize
     M.AutoInit();
 }
 
-
 /* ***************** ARCHIVOS JSON A CONSUMIR ***************** */
+const JSON_rutas = `[
+    {
+        "index.html":"ControladorIndex",
+        "pizarra.html":"ControladorPizarra",
+        "grafico.html":"ControladorGrafico",
+        "categorias.html":"ControladorCategorias"
+    }
+]`;
+
 const JSON_categoriasPredefinidas = `[
     { 
         "nombre":"Comida",
@@ -334,8 +224,145 @@ const JSON_usuariosPredefinidos = `[
     }
 ]`;
 
-
 /* ******************** CLASES DE LA APP ******************** */
+class ControladorIndex {
+    static ejecutar() {
+        if(Usuario.estaLogeado()) {
+            Navegador.redireccionar("pizarra.html");
+        } else {
+            // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
+            Usuario.cargarJSON_usuariosPredefinidos();
+
+            // REDUCIENDO velocidad de reproducción del video
+            const $videoMarketing = document.querySelector('.video-marketing video');    
+            if (ManejadorDOM.existeEnDOM($videoMarketing)) {
+                Video.cambiarVelocidadDeReproduccion($videoMarketing, 0.5);
+            }
+
+            // ASOCIANDO EVENTOS -> A formularios del index.html
+            const $formAcceso = document.getElementById('form-acceso');
+            if (ManejadorDOM.existeEnDOM($formAcceso)) {
+                $formAcceso.addEventListener('submit', ManejadorEventos.validarFormAcceso());
+            }
+
+            const $formRegistrarse = document.getElementById('form-registrarse');
+            if (ManejadorDOM.existeEnDOM($formRegistrarse)) {
+                $formRegistrarse.addEventListener('submit', ManejadorEventos.validarFormRegistrarse());    
+            }
+        }
+    }
+}
+
+class ControladorPizarra {
+    static ejecutar() {
+        if(Usuario.estaLogeado()) {
+            // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
+            Pizarra.cargarJSON_pizarrasPredefinidas();
+
+            // MOSTRANDO -> Nombre de usuario
+            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+            ManejadorDOM.mostrarNombreDeUsuario(usuarioLogeado);
+            
+            // [Al abrir la app la pizarra seleccionada será por defecto la del mes actual]
+            const $pizarraSeleccionada = document.getElementById('pizarra-seleccionada');
+            if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
+                // MOSTRANDO -> La pizarra selecionada
+                const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+
+                const registrosDeItems = pizarra.crearRegistros();
+
+                ManejadorDOM.mostrarNombrePizarra(pizarra);
+                ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
+
+                pizarra.actualizarInformacion();
+                ManejadorDOM.mostrarInformacionPizarra(pizarra);
+
+                // OBSERVANDO -> Cuando se agrega un nuevo item a la pizarra seleccionada
+                const observador_nuevoItemAgregado = new MutationObserver(ManejadorEventos.actualizarInformacionPizarra());
+                observador_nuevoItemAgregado.observe($pizarraSeleccionada, { childList: true, subtree: true });
+            }
+
+            // CREANDO DINÁMICAMENTE -> Opciones del select categoría del formulario de agregar item
+            const $selectCategoria = document.getElementById('agregar-item-select-categoria');
+            if (ManejadorDOM.existeEnDOM($selectCategoria)) {
+                const categorias = Categorias.get();
+                const selectCategoria = Formulario.crearSelectCategoria(categorias);
+                ManejadorDOM.agregar($selectCategoria, selectCategoria);
+            }
+
+            // ASOCIANDO EVENTO -> A formulario de agregar item
+            const $formAgregarItem = document.getElementById('form-agregar-item');
+            if (ManejadorDOM.existeEnDOM($formAgregarItem)) {
+                $formAgregarItem.addEventListener('submit', ManejadorEventos.validarFormAgregarItem());
+            }
+
+            // CREANDO DINÁMICAMENTE -> Opciones del select año del formulario de configuración
+            const $selectAnio = document.getElementById('configuracion-select-anio');
+            if (ManejadorDOM.existeEnDOM($selectAnio)) {
+                const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+                const selectAnio = Formulario.crearSelectAnio(usuarioLogeado);
+                ManejadorDOM.agregar($selectAnio, selectAnio);
+            }
+            
+            // ASOCIANDO EVENTO -> A formulario de configuración
+            // ASOCIANDO EVENTO -> A barra lateral
+            const $btnSalir = document.getElementById('btn-salir');
+            if (ManejadorDOM.existeEnDOM($btnSalir)) {
+                $btnSalir.addEventListener('click', ManejadorEventos.cerrarApp());
+            }
+        } else {
+            Navegador.redireccionar("index.html");
+        }
+    }
+}
+
+class ControladorGrafico {
+    static ejecutar() {
+        if(Usuario.estaLogeado()) {
+            // VEREMOS si lo programo o no
+        } else {
+            Navegador.redireccionar("index.html");
+        }
+    }
+}
+
+class ControladorCategorias {
+    static ejecutar() {
+        if(Usuario.estaLogeado()) {
+            // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
+            Pizarra.cargarJSON_pizarrasPredefinidas();
+            
+            // MOSTRANDO -> Nombre de usuario
+            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+            ManejadorDOM.mostrarNombreDeUsuario(usuarioLogeado);
+            
+            //  CREANDO DINÁMICAMENTE -> Cards de categorías
+            const $cardsCategorias = document.getElementById('contenedor-cards-categorias');
+            if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
+                const categorias = Categorias.get();
+                const cardsCategorias = categorias.crearCards();
+                ManejadorDOM.agregar($cardsCategorias, cardsCategorias);
+            }
+
+            // CREANDO DINÁMICAMENTE -> Opciones del select año del formulario de configuración
+            const $selectAnio = document.getElementById('configuracion-select-anio');
+            if (ManejadorDOM.existeEnDOM($selectAnio)) {
+                const selectAnio = Formulario.crearSelectAnio(usuarioLogeado);
+                ManejadorDOM.agregar($selectAnio, selectAnio);
+            }
+
+            // ASOCIANDO EVENTO -> A formulario de configuración
+            // ASOCIANDO EVENTO -> A barra lateral
+            const $btnSalir = document.getElementById('btn-salir');
+            if (ManejadorDOM.existeEnDOM($btnSalir)) {
+                $btnSalir.addEventListener('click', ManejadorEventos.cerrarApp());
+            }
+        } else {
+            Navegador.redireccionar("index.html");
+        }
+    }
+}
+
 class Usuario {
     constructor(nombre = null, contrasena = null, tipo = "invitado", anioDeRegistro = null, fechaSeleccionada = null) {
         this.nombre = nombre;
@@ -723,9 +750,37 @@ class Item {
     }
 }
 
+class DatosSesionDeUsuario {
+    constructor(nombre, anioDeRegistro, fechaSeleccionada) {
+        this.nombre = nombre;
+        this.anioDeRegistro = anioDeRegistro;
+        this.fechaSeleccionada = fechaSeleccionada;
+    }
+}
 
-/* ******************** SERVICIOS ******************** */
+
+/* ******************** MI FRAMEWORK ******************** */
 // Las clases Almacenamiento y Sesion trabajan con array de objetos
+class App {
+    static ejecutarControlador(controlador) {
+        const codigoEjecutable = controlador + '.ejecutar()';
+        const ejecutarControlador = new Function(codigoEjecutable);
+        ejecutarControlador();
+    }
+}
+
+class Ruteador {
+    static rutas = JSON.parse(JSON_rutas).pop();
+
+    static existe(pagina) {
+        return Ruteador.rutas.hasOwnProperty(pagina);
+    }
+
+    static getControlador(pagina) {
+        return Ruteador.rutas[pagina];
+    }
+}
+
 class Almacenamiento {
     static eliminar(clave) {
         localStorage.removeItem(clave);
@@ -755,13 +810,51 @@ class Almacenamiento {
     }
 }
 
-class Sesion {
-    constructor(nombre, anioDeRegistro, fechaSeleccionada) {
-        this.nombre = nombre;
-        this.anioDeRegistro = anioDeRegistro;
-        this.fechaSeleccionada = fechaSeleccionada;
+class Navegador {
+    // Propiedad pública
+    static paginaActual = location.pathname.split("/").pop();
+
+    // Métodos públicos
+    static cerrarSesion() {
+        Sesion.eliminar("usuario_logeado");
     }
 
+    static existeEnSesion(clave) {
+        return Sesion.existe(clave);
+    }
+
+    static iniciarSesion(datosDeSesion) {
+        Sesion.guardar("usuario_logeado", datosDeSesion);
+    }
+
+    static obtenerDeSesion(clave) {
+        return Sesion.obtener(clave).pop();
+    }
+
+    static redireccionar(ubicacion) {
+        setTimeout( function() { location = ubicacion; }, 1000 );
+    }
+
+    static scrollear(ubicacion, tiempo = 0) {
+        let posicion;
+        switch (ubicacion) {
+            case "final":
+                posicion = document.body.scrollHeight;
+                break;
+            default:
+                posicion = 0;
+                break;
+        }
+
+        setTimeout( function() { window.scroll({
+                top: posicion,
+                behavior: "smooth"
+            }); 
+        }, tiempo );
+    }
+}
+
+class Sesion {
     static eliminar(clave) {
         sessionStorage.removeItem(clave);
     }
@@ -790,7 +883,7 @@ class Sesion {
     }
 }
 
-class ManejadorDOM {
+class UtilidadesDOM {
     static agregar(contenedor, elemento) {
         contenedor.appendChild(elemento);
     }
@@ -811,7 +904,88 @@ class ManejadorDOM {
         contenedor.textContent = "ERROR -> " + msj;
         setTimeout( function() { ManejadorDOM.limpiarTexto(contenedor) }, 8000 );
     }
+}
 
+class Video {
+    static cambiarVelocidadDeReproduccion(video, velocidad) {
+        video.playbackRate = velocidad;
+    } 
+}
+
+/* ******************** SERVICIOS ******************** */
+class Fecha {
+    // Propiedades privadas
+    static hoy = new Date();
+    static meses = [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Septiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Diciembre"
+                ];
+
+    // Propiedades públicas
+    static anioActual = Fecha.hoy.getFullYear();
+    static mesActual = Fecha.meses[Fecha.hoy.getMonth()];
+
+    // Métodos públicos
+    static getFecha() {
+        return Utilidades.formatearFecha(Fecha.anio, Fecha.mes);
+    }
+
+    static getFechaActual() {
+        return Utilidades.formatearFecha(Fecha.anioActual, Fecha.mesActual);
+    }
+
+    static setFecha(anio, mes) {
+        Fecha.anio = anio;
+        Fecha.mes = mes;
+    }
+}
+
+class Formulario {
+    // Métodos privados
+    static crearOption(valor) {
+        let $option = document.createElement("option");
+            $option.setAttribute("value", valor);
+                        
+        $option.text  = valor;
+    
+        return $option;
+    }
+
+    // Métodos públicos
+    static crearSelectAnio(usuarioLogeado) {
+        const fragmento = ManejadorDOM.crearFragmento();
+
+        for (let anio = usuarioLogeado.anioDeRegistro; anio <= usuarioLogeado.anioDeRegistro + 3; anio++) {
+            let optionDelSelect = Formulario.crearOption(anio);
+            ManejadorDOM.agregar(fragmento, optionDelSelect);
+        }
+
+        return fragmento;
+    }
+
+    static crearSelectCategoria(categorias) {
+        const fragmento = ManejadorDOM.crearFragmento();
+
+        for (const categoria of categorias.getListado()) {
+            let optionDelSelect = Formulario.crearOption(categoria.nombre);
+            ManejadorDOM.agregar(fragmento, optionDelSelect);
+        }
+
+        return fragmento
+    }
+}
+
+class ManejadorDOM extends UtilidadesDOM {
     static mostrarInformacionPizarra(pizarra) {
         const $totalDeItems = document.getElementById('total-de-items');
         const $totalIngresos = document.getElementById('total-ingresos');
@@ -868,7 +1042,8 @@ class ManejadorEventos {
 
             if (Usuario.logearUsuario(usuario)) {
                 Usuario.cargarDatosAlmacenados(usuario);
-                Navegador.iniciarSesion(usuario);
+                const datosDeSesion = new DatosSesionDeUsuario(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaActual());
+                Navegador.iniciarSesion(datosDeSesion);
                 formulario.reset();
                 Navegador.redireccionar("pizarra.html");
             } else {
@@ -913,8 +1088,8 @@ class ManejadorEventos {
             ManejadorDOM.agregar($pizarraSeleccionada, registroItem);
 
             // Procedimiento de finalización
-            Navegador.cerrarModal('modal-agregar-item');
             formulario.reset();
+            Modal.cerrar('modal-agregar-item');
             Navegador.scrollear("final");
             Navegador.scrollear("inicio", 3000);
         }   
@@ -938,7 +1113,8 @@ class ManejadorEventos {
                 usuario.setAnioDeRegistro(Fecha.anioActual);
                 Usuario.guardarUsuario(usuario);
                 
-                Navegador.iniciarSesion(usuario);
+                const datosDeSesion = new DatosSesionDeUsuario(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaActual());
+                Navegador.iniciarSesion(datosDeSesion);
                 formulario.reset();
                 Navegador.redireccionar("pizarra.html");
             } else {
@@ -950,133 +1126,11 @@ class ManejadorEventos {
     }
 }
 
-class Navegador {
-    // Métodos públicos
-    static cerrarModal(idModal) {
+class Modal {
+    static cerrar(idModal) {
         const $modalAgregarItem = document.getElementById(idModal);
         const modal = M.Modal.getInstance($modalAgregarItem);
         modal.close();
-    }
-
-    static cerrarSesion() {
-        Sesion.eliminar("usuario_logeado");
-    }
-
-    static existeEnSesion(clave) {
-        return Sesion.existe(clave);
-    }
-
-    static iniciarSesion(usuario) {
-        const datosDeSesion = new Sesion(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaActual());
-        Sesion.guardar("usuario_logeado", datosDeSesion);
-    }
-
-    static obtenerDeSesion(clave) {
-        return Sesion.obtener(clave).pop();
-    }
-
-    static paginaActual() {
-        return location.pathname.split("/").pop();
-    }
-
-    static redireccionar(ubicacion) {
-        setTimeout( function() { location = ubicacion; }, 1000 );
-    }
-
-    static scrollear(ubicacion, tiempo = 0) {
-        let posicion;
-        switch (ubicacion) {
-            case "final":
-                posicion = document.body.scrollHeight;
-                break;
-            default:
-                posicion = 0;
-                break;
-        }
-
-        setTimeout( function() { window.scroll({
-                top: posicion,
-                behavior: "smooth"
-            }); 
-        }, tiempo );
-    }
-}
-
-class Formulario {
-    // Métodos privados
-    static crearOption(valor) {
-        let $option = document.createElement("option");
-            $option.setAttribute("value", valor);
-                        
-        $option.text  = valor;
-    
-        return $option;
-    }
-
-    // Métodos públicos
-    static crearSelectAnio(usuarioLogeado) {
-        const fragmento = ManejadorDOM.crearFragmento();
-
-        for (let anio = usuarioLogeado.anioDeRegistro; anio <= usuarioLogeado.anioDeRegistro + 3; anio++) {
-            let optionDelSelect = Formulario.crearOption(anio);
-            ManejadorDOM.agregar(fragmento, optionDelSelect);
-        }
-
-        return fragmento;
-    }
-
-    static crearSelectCategoria(categorias) {
-        const fragmento = ManejadorDOM.crearFragmento();
-
-        for (const categoria of categorias.getListado()) {
-            let optionDelSelect = Formulario.crearOption(categoria.nombre);
-            ManejadorDOM.agregar(fragmento, optionDelSelect);
-        }
-
-        return fragmento
-    }
-}
-
-class Video {
-    static cambiarVelocidadDeReproduccion(video, velocidad) {
-        video.playbackRate = velocidad;
-    } 
-}
-
-class Fecha {
-    // Propiedades privadas
-    static hoy = new Date();
-    static meses = [
-                    "Enero",
-                    "Febrero",
-                    "Marzo",
-                    "Abril",
-                    "Mayo",
-                    "Junio",
-                    "Julio",
-                    "Agosto",
-                    "Septiembre",
-                    "Octubre",
-                    "Noviembre",
-                    "Diciembre"
-                ];
-
-    // Propiedades públicas
-    static anioActual = Fecha.hoy.getFullYear();
-    static mesActual = Fecha.meses[Fecha.hoy.getMonth()];
-
-    // Métodos públicos
-    static getFecha() {
-        return Utilidades.formatearFecha(Fecha.anio, Fecha.mes);
-    }
-
-    static getFechaActual() {
-        return Utilidades.formatearFecha(Fecha.anioActual, Fecha.mesActual);
-    }
-
-    static setFecha(anio, mes) {
-        Fecha.anio = anio;
-        Fecha.mes = mes;
     }
 }
 
