@@ -2,9 +2,8 @@
 document.addEventListener('DOMContentLoaded', init);
 
 function init() {
+    /* Controlador Frontal */
     const pagina = Navegador.paginaActual;
-
-    /* Controlador frontal básico */
     if (Ruteador.existe(pagina)) {
         const controlador = Ruteador.getControlador(pagina);
         App.ejecutarControlador(controlador);
@@ -381,14 +380,13 @@ class Usuario {
     }
 
     // Métodos privados
-    validarUsuario() {
+    static validarUsuario(usuario) {
         if (Almacenamiento.existe("usuarios_registrados")) {
-            const usuariosRegistrados = Almacenamiento.obtener("usuarios_registrados");
-        
-            function datosDeUsuarioBuscado(elemento) {
-                return elemento.nombre === this.nombre && elemento.contrasena === this.contrasena;
+            function usuarioBuscado(elemento) {
+                return elemento.nombre === usuario.nombre && elemento.contrasena === usuario.contrasena;
             }
-            return usuariosRegistrados.find(datosDeUsuarioBuscado.bind(this)) ? true : false;
+
+            return Almacenamiento.buscar("usuarios_registrados", usuarioBuscado) ? true : false;
         } else {
             return false;
         }
@@ -413,14 +411,12 @@ class Usuario {
     }
 
     static buscarUsuario(usuario) {
-        if (Almacenamiento.existe("usuarios_registrados")) {
-            const usuariosRegistrados = Almacenamiento.obtener("usuarios_registrados");
-            
+        if (Almacenamiento.existe("usuarios_registrados")) {            
             function nombreUsuarioBuscado(elemento) {
                 return elemento.nombre === usuario.nombre;
             }
 
-            return usuariosRegistrados.find(nombreUsuarioBuscado);
+            return Almacenamiento.buscar("usuarios_registrados", nombreUsuarioBuscado);
         } else {
             return undefined;
         }
@@ -449,7 +445,7 @@ class Usuario {
     }
 
     static logearUsuario(usuario) {
-        return usuario.validarUsuario() ? true : false;
+        return Usuario.validarUsuario(usuario) ? true : false;
     }
 
     static cargarDatosAlmacenados(usuario) {
@@ -616,13 +612,11 @@ class Pizarra {
 
     static buscarPizarra(usuario, fecha) {
         if (Almacenamiento.existe("pizarras")) {
-            const pizarras = Almacenamiento.obtener("pizarras");
-            
-            function pizarraDeUsuarioBuscado(elemento) {
+            function pizarraDeUsuarioBuscada(elemento) {
                 return elemento.usuario === usuario && elemento.fecha === fecha;
             }
 
-            return pizarras.find(pizarraDeUsuarioBuscado);
+            return Almacenamiento.buscar("pizarras", pizarraDeUsuarioBuscada);
         } else {
             return undefined;
         }
@@ -638,17 +632,17 @@ class Pizarra {
         }
     }
 
-    static getIndice(pizarra, usuario, fecha) {
-        function pizarraDeUsuarioBuscado(elemento) {
-            return elemento.usuario === usuario && elemento.fecha === fecha;
+    static getIndice(pizarra, pizarras) {
+        function pizarraDeUsuarioBuscada(elemento) {
+            return elemento.usuario === pizarra.usuario && elemento.fecha === pizarra.fecha;
         }
-
-        return pizarra.findIndex(pizarraDeUsuarioBuscado);
+        
+        return pizarras.findIndex(pizarraDeUsuarioBuscada);
     }
 
     static existenteAgregarItem(pizarra, item) {
         let pizarrasAlmacenadas = Pizarra.obtenerPizarras();
-        const indicePizarraDesactualizada = Pizarra.getIndice(pizarrasAlmacenadas, pizarra.usuario, pizarra.fecha);
+        const indicePizarraDesactualizada = Pizarra.getIndice(pizarra, pizarrasAlmacenadas);
         Pizarra.eliminarPizarras();
         
         pizarra.agregarItem(item);
@@ -782,6 +776,12 @@ class Ruteador {
 }
 
 class Almacenamiento {
+    static buscar(clave, fn_busqueda) {
+        const almacenado = Almacenamiento.obtener(clave);
+        
+        return almacenado.find(fn_busqueda);
+    }
+
     static eliminar(clave) {
         localStorage.removeItem(clave);
     }
@@ -821,6 +821,10 @@ class Navegador {
 
     static existeEnSesion(clave) {
         return Sesion.existe(clave);
+    }
+
+    static guardarEnSesion(clave, valor) {
+        Sesion.guardar(clave, valor);
     }
 
     static iniciarSesion(datosDeSesion) {
