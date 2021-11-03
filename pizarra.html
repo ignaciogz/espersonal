@@ -79,41 +79,43 @@
                     <h1><div id="pizarra-nombre"></div></h1>
                     <i class="small material-icons">today</i>
                 </div>
+            </div>
 
+            <div class="row">
                 <!-- Info de pizarra -->
-                <div class="col s12">
-                    <section class="pizarra-informacion">
-                        <div class="col s6 m3 d-flex">
-                            <i class="small material-icons left">flag</i>
-                            <div>
-                                Total de items
-                                <div id="total-de-items"></div>
-                            </div>
+                <section class="pizarra-informacion">
+                    <div class="col s6 m3 d-flex">
+                        <i class="small material-icons left">flag</i>
+                        <div>
+                            Total de items
+                            <div id="total-de-items"></div>
                         </div>
-                        <div class="col s6 m3 d-flex">
-                            <i class="small material-icons left">north_east</i>
-                            <div>
-                                Total Ingresos
-                                <div id="total-ingresos"></div>
-                            </div>
+                    </div>
+                    <div class="col s6 m3 d-flex">
+                        <i class="small material-icons left">north_east</i>
+                        <div>
+                            Total Ingresos
+                            <div id="total-ingresos"></div>
                         </div>
-                        <div class="col s6 m3 d-flex">
-                            <i class="small material-icons left">south_west</i>
-                            <div>
-                                Total Egresos
-                                <div id="total-egresos"></div>
-                            </div>
+                    </div>
+                    <div class="col s6 m3 d-flex">
+                        <i class="small material-icons left">south_west</i>
+                        <div>
+                            Total Egresos
+                            <div id="total-egresos"></div>
                         </div>
-                        <div class="col s6 m3 d-flex">
-                            <i class="small material-icons left">account_balance</i>
-                            <div>
-                                Balance
-                                <div id="balance"></div>
-                            </div>
+                    </div>
+                    <div class="col s6 m3 d-flex">
+                        <i class="small material-icons left">account_balance</i>
+                        <div>
+                            Balance
+                            <div id="balance"></div>
                         </div>
-                    </section>
-                </div>
+                    </div>
+                </section>
+            </div>
 
+            <div class="row">
                 <!-- Pizarra correspondiente a la fecha -->
                 <div class="col s12">
                     <table class="highlight">
@@ -156,15 +158,15 @@
                             Seleccione tipo de item:
                         </p>
                         <p class="tipo-de-item">
-                            <label><input class="with-gap" name="agregar-item-radio-tipo" type="radio" value="Ingreso" checked /><span>Ingreso</span></label>
+                            <label><input class="with-gap" name="agregar-item-radio-tipo" type="radio" value="Ingreso" required /><span>Ingreso</span></label>
                         </p>
                         <p class="tipo-de-item">
-                            <label><input class="with-gap" name="agregar-item-radio-tipo" type="radio" value="Egreso" /><span>Egreso</span></label>
+                            <label><input class="with-gap" name="agregar-item-radio-tipo" type="radio" value="Egreso" required /><span>Egreso</span></label>
                         </p>
                     </div>
                     
                     <div class="input-field col s12">
-                        <select id="agregar-item-select-categoria">
+                        <select id="agregar-item-select-categoria" required>
                             <option value="Sin categoría" disabled selected>Seleccione una categoría</option>
                         </select>
                     </div>
@@ -195,7 +197,7 @@
                     </div>
                 
                     <div class="input-field col s12 m6">
-                        <select required>
+                        <select id="configuracion-select-mes" required>
                             <option value="" disabled selected>Seleccione el mes</option>
                             <option value="Enero">Enero</option>
                             <option value="Febrero">Febrero</option>

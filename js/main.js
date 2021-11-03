@@ -9,12 +9,13 @@ function init() {
         App.ejecutarControlador(controlador);
     }
     else {
-        // Mostrar 404.html
+        throw "La página solicitada NO existe en el archivo de rutas";
     }
 
     // INICIALIZO componentes de Materialize
     M.AutoInit();
 }
+
 
 /* ***************** ARCHIVOS JSON A CONSUMIR ***************** */
 const JSON_rutas = `[
@@ -29,72 +30,72 @@ const JSON_rutas = `[
 const JSON_categoriasPredefinidas = `[
     { 
         "nombre":"Comida",
-        "descripcion":"Descripcion - Categoria Comida",
+        "descripcion":"Descripción - Categoría Comida",
         "icono":"fastfood"
     },
     { 
         "nombre":"Deportes",
-        "descripcion":"Descripcion - Categoria Deportes",
+        "descripcion":"Descripción - Categoría Deportes",
         "icono":"sports_handball"
     },
     { 
         "nombre":"Deudas",
-        "descripcion":"Descripcion - Categoria Deudas",
+        "descripcion":"Descripción - Categoría Deudas",
         "icono":"receipt"
     },
     { 
         "nombre":"Entretenimiento",
-        "descripcion":"Descripcion - Categoria Entretenimiento",
+        "descripcion":"Descripción - Categoría Entretenimiento",
         "icono":"celebration"
     },
     { 
         "nombre":"Facturas",
-        "descripcion":"Descripcion - Categoria Factura",
+        "descripcion":"Descripción - Categoría Factura",
         "icono":"receipt_long"
     },
     { 
         "nombre":"Gimnasio",
-        "descripcion":"Descripcion - Categoria Gimnasio",
+        "descripcion":"Descripción - Categoría Gimnasio",
         "icono":"fitness_center"
     },
     { 
         "nombre":"Hogar",
-        "descripcion":"Descripcion - Categoria Hogar",
+        "descripcion":"Descripción - Categoría Hogar",
         "icono":"home"
     },
     { 
         "nombre":"Mascotas",
-        "descripcion":"Descripcion - Categoria Mascotas",
+        "descripcion":"Descripción - Categoría Mascotas",
         "icono":"pets"
     },
     { 
         "nombre":"Regalos",
-        "descripcion":"Descripcion - Categoria Regalos",
+        "descripcion":"Descripción - Categoría Regalos",
         "icono":"card_giftcard"
     },
     { 
         "nombre":"Restaurantes",
-        "descripcion":"Descripcion - Categoria Restaurantes",
+        "descripcion":"Descripción - Categoría Restaurantes",
         "icono":"restaurant"
     },
     { 
         "nombre":"Ropa",
-        "descripcion":"Descripcion - Categoria Ropa",
+        "descripcion":"Descripción - Categoría Ropa",
         "icono":"shopping_bag"
     },
     { 
         "nombre":"Salud",
-        "descripcion":"Descripcion - Categoria Salud",
+        "descripcion":"Descripción - Categoría Salud",
         "icono":"health_and_safety"
     },
     { 
         "nombre":"Tarjeta de crédito",
-        "descripcion":"Descripcion - Categoria Tarjeta de credito",
+        "descripcion":"Descripción - Categoría Tarjeta de crédito",
         "icono":"credit_card"
     },
     { 
         "nombre":"Transporte",
-        "descripcion":"Descripcion - Categoria Transporte",
+        "descripcion":"Descripción - Categoría Transporte",
         "icono":"commute"
     }
 ]`;
@@ -222,6 +223,7 @@ const JSON_usuariosPredefinidos = `[
         "anioDeRegistro":2021
     }
 ]`;
+
 
 /* ******************** CLASES DE LA APP ******************** */
 class ControladorIndex {
@@ -904,9 +906,28 @@ class UtilidadesDOM {
         return (nodo === document.body) ? false : document.body.contains(nodo);
     }
 
+    static modificarTexto(selector, texto) {
+        const $elemento = document.querySelector(selector);
+        $elemento.textContent = texto;
+    }
+
     static mostrarError(contenedor, msj) {
         contenedor.textContent = "ERROR -> " + msj;
         setTimeout( function() { ManejadorDOM.limpiarTexto(contenedor) }, 8000 );
+    }
+}
+
+class UtilidadesFormulario {
+    static getOpcionDeSelectElegida(id) {
+        const $select = document.getElementById(id);
+        const indiceSeleccionado = $select.selectedIndex;
+        const opcionSeleccionada = $select.options[indiceSeleccionado].value;
+
+        return opcionSeleccionada;
+    }
+
+    static getRadioBtnElegido(name) {
+        return document.querySelector(`input[name="${name}"]:checked`).value;
     }
 }
 
@@ -954,7 +975,7 @@ class Fecha {
     }
 }
 
-class Formulario {
+class Formulario extends UtilidadesFormulario {
     // Métodos privados
     static crearOption(valor) {
         let $option = document.createElement("option");
@@ -991,25 +1012,18 @@ class Formulario {
 
 class ManejadorDOM extends UtilidadesDOM {
     static mostrarInformacionPizarra(pizarra) {
-        const $totalDeItems = document.getElementById('total-de-items');
-        const $totalIngresos = document.getElementById('total-ingresos');
-        const $totalEgresos = document.getElementById('total-egresos');
-        const $balance = document.getElementById('balance');
-
-        $totalDeItems.textContent = pizarra.getItems().length;
-        $totalIngresos.textContent = Utilidades.formatearMonto(pizarra.getTotalIngresos());
-        $totalEgresos.textContent = Utilidades.formatearMonto(pizarra.getTotalEgresos());
-        $balance.textContent = Utilidades.formatearMonto(pizarra.calcularBalance());
+        ManejadorDOM.modificarTexto( '#total-de-items', pizarra.getItems().length );
+        ManejadorDOM.modificarTexto( '#total-ingresos', Utilidades.formatearMonto(pizarra.getTotalIngresos()) );
+        ManejadorDOM.modificarTexto( '#total-egresos', Utilidades.formatearMonto(pizarra.getTotalEgresos()) );
+        ManejadorDOM.modificarTexto( '#balance', Utilidades.formatearMonto(pizarra.calcularBalance()) );
     }
 
     static mostrarNombreDeUsuario(usuario) {
-        const $usuarioLogeado = document.getElementById('usuario-logeado');
-        $usuarioLogeado.textContent = usuario.nombre;
+        ManejadorDOM.modificarTexto( '#usuario-logeado', usuario.nombre );
     }
 
     static mostrarNombrePizarra(pizarra) {
-        const $nombrePizarra = document.getElementById('pizarra-nombre');
-        $nombrePizarra.textContent = pizarra.fecha;
+        ManejadorDOM.modificarTexto( '#pizarra-nombre', pizarra.fecha );
     }
 }
 
@@ -1037,7 +1051,7 @@ class ManejadorEventos {
             const formulario = e.target;
 
             // OBTENIENDO DATOS -> Formulario acceso usuario
-            const datoUsuario = document.getElementById('acceso-usuario').value;
+            const datoUsuario = document.getElementById('acceso-usuario').value.toLowerCase();
             const datoContrasena = document.getElementById('acceso-contrasena').value;
             
             // LÓGICA -> Acceso usuario
@@ -1065,13 +1079,13 @@ class ManejadorEventos {
             
             // OBTENIENDO DATOS -> formulario agregar item
             const datoNombre = document.getElementById('agregar-item-nombre').value;
-            
-            const datoTipo = document.querySelector('input[name="agregar-item-radio-tipo"]:checked').value;
-            
-            const $selectCategoria = document.getElementById('agregar-item-select-categoria');
-            const indiceSeleccionado = $selectCategoria.selectedIndex;
-            const datoCategoria = $selectCategoria.options[indiceSeleccionado].value;
+            const datoTipo = Formulario.getRadioBtnElegido('agregar-item-radio-tipo');
 
+            let datoCategoria = null;
+            if( datoTipo === "Egreso") {
+                datoCategoria = Formulario.getOpcionDeSelectElegida('agregar-item-select-categoria');
+            }
+            
             const datoMonto = parseFloat(document.getElementById('agregar-item-monto').value);
 
             // LÓGICA -> Agregar item
