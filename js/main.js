@@ -287,8 +287,16 @@ class ControladorPizarra {
             const $selectCategoria = document.getElementById('agregar-item-select-categoria');
             if (ManejadorDOM.existeEnDOM($selectCategoria)) {
                 const categorias = Categorias.get();
-                const selectCategoria = Formulario.crearSelectCategoria(categorias);
-                ManejadorDOM.agregar($selectCategoria, selectCategoria);
+                const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
+                ManejadorDOM.agregar($selectCategoria, opcionesSelectCategoria);
+            }
+
+            // ASOCIANDO EVENTO -> A cada botón de radio del formulario de agregar item
+            const $radiosTipoDeItem = document.querySelectorAll('input[name="agregar-item-radio-tipo"]');
+            for (const $radio of $radiosTipoDeItem) {
+                if (ManejadorDOM.existeEnDOM($radio)) {
+                    $radio.addEventListener('change', ManejadorEventos.toggleDisplaySelectCategoria());
+                }
             }
 
             // ASOCIANDO EVENTO -> A formulario de agregar item
@@ -301,8 +309,8 @@ class ControladorPizarra {
             const $selectAnio = document.getElementById('configuracion-select-anio');
             if (ManejadorDOM.existeEnDOM($selectAnio)) {
                 const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-                const selectAnio = Formulario.crearSelectAnio(usuarioLogeado);
-                ManejadorDOM.agregar($selectAnio, selectAnio);
+                const opcionesSelectAnio = Formulario.crearOpcionesSelectAnio(usuarioLogeado);
+                ManejadorDOM.agregar($selectAnio, opcionesSelectAnio);
             }
             
             // ASOCIANDO EVENTO -> A formulario de configuración
@@ -348,8 +356,8 @@ class ControladorCategorias {
             // CREANDO DINÁMICAMENTE -> Opciones del select año del formulario de configuración
             const $selectAnio = document.getElementById('configuracion-select-anio');
             if (ManejadorDOM.existeEnDOM($selectAnio)) {
-                const selectAnio = Formulario.crearSelectAnio(usuarioLogeado);
-                ManejadorDOM.agregar($selectAnio, selectAnio);
+                const opcionesSelectAnio = Formulario.crearOpcionesSelectAnio(usuarioLogeado);
+                ManejadorDOM.agregar($selectAnio, opcionesSelectAnio);
             }
 
             // ASOCIANDO EVENTO -> A formulario de configuración
@@ -908,7 +916,10 @@ class UtilidadesDOM {
 
     static modificarTexto(selector, texto) {
         const $elemento = document.querySelector(selector);
-        $elemento.textContent = texto;
+        
+        if (ManejadorDOM.existeEnDOM($elemento)) {
+            $elemento.textContent = texto;
+        }
     }
 
     static mostrarError(contenedor, msj) {
@@ -918,16 +929,33 @@ class UtilidadesDOM {
 }
 
 class UtilidadesFormulario {
+    static getInput(id) {
+        const $input = document.getElementById(id);
+
+        if (ManejadorDOM.existeEnDOM($input)) {
+            return $input.value;
+        }
+    }
+
     static getOpcionDeSelectElegida(id) {
         const $select = document.getElementById(id);
-        const indiceSeleccionado = $select.selectedIndex;
-        const opcionSeleccionada = $select.options[indiceSeleccionado].value;
-
-        return opcionSeleccionada;
+        
+        if (ManejadorDOM.existeEnDOM($select)) {
+            const indiceSeleccionado = $select.selectedIndex;
+            const opcionSeleccionada = $select.options[indiceSeleccionado].value;
+            
+            return opcionSeleccionada;
+        }
     }
 
     static getRadioBtnElegido(name) {
-        return document.querySelector(`input[name="${name}"]:checked`).value;
+        const $radioSeleccionado = document.querySelector(`input[name="${name}"]:checked`);
+        
+        if (ManejadorDOM.existeEnDOM($radioSeleccionado)) {
+            const radioSeleccionado = $radioSeleccionado.value;
+        
+            return radioSeleccionado;
+        }
     }
 }
 
@@ -987,7 +1015,7 @@ class Formulario extends UtilidadesFormulario {
     }
 
     // Métodos públicos
-    static crearSelectAnio(usuarioLogeado) {
+    static crearOpcionesSelectAnio(usuarioLogeado) {
         const fragmento = ManejadorDOM.crearFragmento();
 
         for (let anio = usuarioLogeado.anioDeRegistro; anio <= usuarioLogeado.anioDeRegistro + 3; anio++) {
@@ -998,7 +1026,7 @@ class Formulario extends UtilidadesFormulario {
         return fragmento;
     }
 
-    static crearSelectCategoria(categorias) {
+    static crearOpcionesSelectCategoria(categorias) {
         const fragmento = ManejadorDOM.crearFragmento();
 
         for (const categoria of categorias.getListado()) {
@@ -1045,14 +1073,27 @@ class ManejadorEventos {
         }
     }
 
+    static toggleDisplaySelectCategoria() {
+        return function(e) {
+            const $contenedorSelectCategoria = document.getElementById('contenedor-select-categoria');
+            
+            if (this.value === "Ingreso") {
+                $contenedorSelectCategoria.style.display = 'none';
+            } else {
+                $contenedorSelectCategoria.style.display = 'block';
+            }
+            
+        }
+    }
+
     static validarFormAcceso() {
         return function(e) {
             e.preventDefault();
             const formulario = e.target;
 
             // OBTENIENDO DATOS -> Formulario acceso usuario
-            const datoUsuario = document.getElementById('acceso-usuario').value.toLowerCase();
-            const datoContrasena = document.getElementById('acceso-contrasena').value;
+            const datoUsuario = Formulario.getInput('acceso-usuario').toLowerCase();
+            const datoContrasena = Formulario.getInput('acceso-contrasena');
             
             // LÓGICA -> Acceso usuario
             const usuario = Usuario.get();
@@ -1078,15 +1119,15 @@ class ManejadorEventos {
             const formulario = e.target;
             
             // OBTENIENDO DATOS -> formulario agregar item
-            const datoNombre = document.getElementById('agregar-item-nombre').value;
+            const datoNombre = Formulario.getInput('agregar-item-nombre');
             const datoTipo = Formulario.getRadioBtnElegido('agregar-item-radio-tipo');
 
             let datoCategoria = null;
-            if( datoTipo === "Egreso") {
+            if (datoTipo === "Egreso") {
                 datoCategoria = Formulario.getOpcionDeSelectElegida('agregar-item-select-categoria');
             }
             
-            const datoMonto = parseFloat(document.getElementById('agregar-item-monto').value);
+            const datoMonto = parseFloat(Formulario.getInput('agregar-item-monto'));
 
             // LÓGICA -> Agregar item
             const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
@@ -1119,8 +1160,8 @@ class ManejadorEventos {
             const formulario = e.target;
 
             // OBTENIENDO DATOS -> Formulario registrarse usuario
-            const datoUsuario = document.getElementById('registrarse-usuario').value.toLowerCase();
-            const datoContrasena = document.getElementById('registrarse-contrasena').value;
+            const datoUsuario = Formulario.getInput('registrarse-usuario').toLowerCase();
+            const datoContrasena = Formulario.getInput('registrarse-contrasena');
 
             // LÓGICA -> Registrarse usuario
             const usuario = Usuario.get();

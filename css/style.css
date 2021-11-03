@@ -412,6 +412,10 @@ form {
   color: var(--color-textos);
 }
 
+#form-agregar-item #contenedor-select-categoria {
+  display: none;
+}
+
 /*@import 'components/animaciones'; */
 /* -------- BROWSER -------- */
 ::selection {
