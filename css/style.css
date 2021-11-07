@@ -253,7 +253,7 @@ section.pizarra-informacion > .col {
 }
 section.pizarra-informacion > .col:first-child {
   border-left: unset;
-  padding: 0.4rem 1rem 0.4rem 0;
+  padding: 0.4rem 1rem 0.4rem 0.75rem;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -284,11 +284,11 @@ section.pizarra .btn-delete {
 
   section.pizarra-informacion > .col {
     border-left: unset;
-    padding: 0.4rem 0.5rem 0.4rem 0;
+    padding: 0.4rem 0.5rem 0.4rem 0.75rem;
   }
   section.pizarra-informacion > .col:first-child {
     border-left: unset;
-    padding: 0.4rem 0.5rem 0.4rem 0;
+    padding: 0.4rem 0.5rem 0.4rem 0.75rem;
   }
 }
 @media only screen and (min-width: 600px) and (max-width: 992px) {

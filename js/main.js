@@ -926,6 +926,10 @@ class UtilidadesDOM {
         contenedor.textContent = "ERROR -> " + msj;
         setTimeout( function() { ManejadorDOM.limpiarTexto(contenedor) }, 8000 );
     }
+
+    static display(contenedor, valor = 'block') {
+        contenedor.style.display = valor;
+    }
 }
 
 class UtilidadesFormulario {
@@ -1078,9 +1082,9 @@ class ManejadorEventos {
             const $contenedorSelectCategoria = document.getElementById('contenedor-select-categoria');
             
             if (this.value === "Ingreso") {
-                $contenedorSelectCategoria.style.display = 'none';
+                ManejadorDOM.display($contenedorSelectCategoria, 'none');
             } else {
-                $contenedorSelectCategoria.style.display = 'block';
+                ManejadorDOM.display($contenedorSelectCategoria);
             }
             
         }
@@ -1145,6 +1149,10 @@ class ManejadorEventos {
             const $pizarraSeleccionada = document.getElementById('pizarra-seleccionada');
             const registroItem = Item.crearRegistro(nuevoItem);
             ManejadorDOM.agregar($pizarraSeleccionada, registroItem);
+                
+            // OCULTO -> Select categoria
+            const $contenedorSelectCategoria = document.getElementById('contenedor-select-categoria');
+            ManejadorDOM.display($contenedorSelectCategoria, 'none');
 
             // Procedimiento de finalización
             formulario.reset();
