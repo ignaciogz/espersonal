@@ -203,6 +203,9 @@ small .desarrollador {
   font-weight: bolder;
   height: 1rem;
 }
+.error > div {
+  display: none;
+}
 
 /* -------- pizarra.html -------- */
 section.navegacion .sidenav {

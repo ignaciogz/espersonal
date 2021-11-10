@@ -1,7 +1,8 @@
 import { Utilidades } from '../servicios.js';
 
 class Item {
-    constructor(tipo, categoria, nombre, monto) {
+    constructor(id, tipo, categoria, nombre, monto) {
+        this.id = id;
         this.tipo = tipo;
         this.categoria = categoria;
         this.nombre = nombre;
@@ -19,7 +20,9 @@ class Item {
             iconoTipoDeItem = "north_east";
             estiloDeMonto = "positivo";
             item.categoria = "----------";
-        } else {
+        } 
+        
+        if (item.tipo === "Egreso") {
             estiloTipoDeItem = "red-text";
             iconoTipoDeItem = "south_west";
             estiloDeMonto = "negativo";
@@ -31,8 +34,8 @@ class Item {
                                     <td>${item.categoria}</td>
                                     <td>${item.nombre}</td>
                                     <td>
-                                        <a href="!#"><i class="btn-delete material-icons brown-text right">delete_forever</i></a>
-                                        <a href="!#"><i class="btn-edit material-icons brown-text right">edit</i></a>
+                                        <i data-item-id=${item.id} class="btn-delete material-icons brown-text right">delete_forever</i>
+                                        <i data-item-id=${item.id} class="btn-edit material-icons brown-text right">edit</i>
                                     </td>
                                     <td class="valor-${estiloDeMonto}">${Utilidades.formatearMonto(item.monto)}</td>`;
 

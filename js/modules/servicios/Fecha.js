@@ -2,7 +2,9 @@ import { Utilidades } from '../servicios.js';
 
 class Fecha {
     // Propiedades privadas
-    static hoy = new Date();
+    static #hoy = new Date();
+
+    // Propiedades públicas
     static meses = [
         "Enero",
         "Febrero",
@@ -17,10 +19,8 @@ class Fecha {
         "Noviembre",
         "Diciembre"
     ];
-
-    // Propiedades públicas
-    static anioActual = Fecha.hoy.getFullYear();
-    static mesActual = Fecha.meses[Fecha.hoy.getMonth()];
+    static anioActual = Fecha.#hoy.getFullYear();
+    static mesActual = Fecha.meses[Fecha.#hoy.getMonth()];
 
     // Métodos públicos
     static getFecha() {

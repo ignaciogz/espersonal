@@ -1,4 +1,4 @@
-import { Navegador, Video } from '../igzframework.js';
+import { App, Navegador, Video } from '../igzframework.js';
 import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
 import { Usuario } from '../clases.js';
 
@@ -11,24 +11,16 @@ class ControladorIndex {
             Usuario.cargarJSON_usuariosPredefinidos();
 
             // REDUCIENDO velocidad de reproducción del video
-            const $videoMarketing = document.querySelector('.video-marketing video');
+            const $videoMarketing = $('.video-marketing video'); 
             if (ManejadorDOM.existeEnDOM($videoMarketing)) {
                 Video.cambiarVelocidadDeReproduccion($videoMarketing, 0.5);
             }
 
-            // ASOCIANDO EVENTOS -> A formularios del index.html
-            const $formAcceso = document.getElementById('form-acceso');
-            if (ManejadorDOM.existeEnDOM($formAcceso)) {
-                $formAcceso.addEventListener('submit', ManejadorEventos.validarFormAcceso());
-            }
+            // ASOCIANDO EVENTOS
+            ManejadorEventos.asociar('#form-acceso', 'submit', ManejadorEventos.getValidarFormAcceso());
+            ManejadorEventos.asociar('#form-registrarse', 'submit', ManejadorEventos.getValidarFormRegistrarse());
 
-            const $formRegistrarse = document.getElementById('form-registrarse');
-            if (ManejadorDOM.existeEnDOM($formRegistrarse)) {
-                $formRegistrarse.addEventListener('submit', ManejadorEventos.validarFormRegistrarse());
-            }
-
-            // INICIALIZO componentes de Materialize
-            M.AutoInit();
+            App.inicializarDependencia('Materialize');
         }
     }
 }

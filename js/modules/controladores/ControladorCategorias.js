@@ -1,4 +1,4 @@
-import { Navegador } from '../igzframework.js';
+import { App, Navegador } from '../igzframework.js';
 import { Formulario, ManejadorDOM, ManejadorEventos } from '../servicios.js';
 import { Categorias, Pizarra, Usuario } from '../clases.js';
 
@@ -13,7 +13,7 @@ class ControladorCategorias {
             ManejadorDOM.mostrarNombreDeUsuario(usuarioLogeado);
 
             //  CREANDO DINÁMICAMENTE -> Cards de categorías
-            const $cardsCategorias = document.getElementById('contenedor-cards-categorias');
+            const $cardsCategorias = $('#contenedor-cards-categorias');
             if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
                 const categorias = Categorias.get();
                 const cardsCategorias = categorias.crearCards();
@@ -21,21 +21,16 @@ class ControladorCategorias {
             }
 
             // CREANDO DINÁMICAMENTE -> Opciones del select año del formulario de configuración
-            const $selectAnio = document.getElementById('configuracion-select-anio');
+            const $selectAnio = $('#configuracion-select-anio');
             if (ManejadorDOM.existeEnDOM($selectAnio)) {
                 const opcionesSelectAnio = Formulario.crearOpcionesSelectAnio(usuarioLogeado);
                 ManejadorDOM.agregar($selectAnio, opcionesSelectAnio);
             }
 
-            // ASOCIANDO EVENTO -> A formulario de configuración
-            // ASOCIANDO EVENTO -> A barra lateral
-            const $btnSalir = document.getElementById('btn-salir');
-            if (ManejadorDOM.existeEnDOM($btnSalir)) {
-                $btnSalir.addEventListener('click', ManejadorEventos.cerrarApp());
-            }
+            // ASOCIANDO EVENTOS
+            ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getCerrarApp());
 
-            // INICIALIZO componentes de Materialize
-            M.AutoInit();
+            App.inicializarDependencia('Materialize');
         } else {
             Navegador.redireccionar("index.html");
         }

@@ -10,44 +10,50 @@ class Pizarra {
         this.items = [];
         this.totalIngresos = null;
         this.totalEgresos = null;
+        this.ultimoItemID = 0;
     }
 
     // Métodos privados
-    static eliminarPizarras() {
+    #generarNuevoItemID() {
+        this.ultimoItemID = this.ultimoItemID + 1;
+        return this.ultimoItemID;
+    }
+
+    #getItems() {
+        return this.items;
+    }
+
+    static #eliminarPizarras() {
         Almacenamiento.eliminar("pizarras");
     }
 
-    static obtenerPizarras() {
+    static #obtenerPizarras() {
         return Almacenamiento.obtener("pizarras");
     }
 
     // Métodos privados [Encargados de generar la información útil]
-    filtrarItems(propiedad, valor) {
+    #filtrarItems(propiedad, valor) {
         return this.items.filter(elemento => elemento[propiedad] === valor);
     }
 
-    obtenerItemsDeCategoria(categoriaDeItem) {
-        return this.filtrarItems("categoria", categoriaDeItem);
+    #obtenerItemsDeCategoria(categoriaDeItem) {
+        return this.#filtrarItems("categoria", categoriaDeItem);
     }
 
-    obtenerItemsDeTipo(tipoDeItem) {
-        return this.filtrarItems("tipo", tipoDeItem);
+    #obtenerItemsDeTipo(tipoDeItem) {
+        return this.#filtrarItems("tipo", tipoDeItem);
     }
 
-    calcularTotal(coleccion) {
+    #calcularTotal(coleccion) {
         return coleccion.reduce((a, b) => a + b.monto, 0);
     }
 
-    calcularTotalIngresos() {
-        this.totalIngresos = this.calcularTotal(this.obtenerItemsDeTipo("Ingreso"));
+    #calcularTotalIngresos() {
+        this.totalIngresos = this.#calcularTotal(this.#obtenerItemsDeTipo("Ingreso"));
     }
 
-    calcularTotalEgresos() {
-        this.totalEgresos = this.calcularTotal(this.obtenerItemsDeTipo("Egreso"));
-    }
-
-    calcularBalance() {
-        return this.totalIngresos - this.totalEgresos;
+    #calcularTotalEgresos() {
+        this.totalEgresos = this.#calcularTotal(this.#obtenerItemsDeTipo("Egreso"));
     }
 
     // Métodos públicos
@@ -55,8 +61,17 @@ class Pizarra {
         this.items.push(item);
     }
 
-    getItems() {
-        return this.items;
+    calcularBalance() {
+        return this.totalIngresos - this.totalEgresos;
+    }
+
+    getCantidadDeItems() {
+        return this.#getItems().length;
+    }
+
+    getNuevoItemID() {
+        const nuevoItemID = this.#generarNuevoItemID();
+        return nuevoItemID;
     }
 
     getTotalEgresos() {
@@ -65,6 +80,10 @@ class Pizarra {
 
     setItems(items) {
         this.items = items;
+    }
+
+    setUltimoItemID(ultimoItemID) {
+        this.ultimoItemID = ultimoItemID;
     }
 
     getTotalIngresos() {
@@ -102,11 +121,12 @@ class Pizarra {
     }
 
     static existenteAgregarItem(pizarra, item) {
-        let pizarrasAlmacenadas = Pizarra.obtenerPizarras();
+        let pizarrasAlmacenadas = Pizarra.#obtenerPizarras();
         const indicePizarraDesactualizada = Pizarra.getIndice(pizarra, pizarrasAlmacenadas);
-        Pizarra.eliminarPizarras();
+        Pizarra.#eliminarPizarras();
 
         pizarra.agregarItem(item);
+        pizarra.actualizarInformacion();
 
         // Reemplazo la pizarra desactualizada por la actualizada, dentro del conjunto de todas las pizarras
         pizarrasAlmacenadas.splice(indicePizarraDesactualizada, 1, pizarra);
@@ -133,14 +153,14 @@ class Pizarra {
     }
 
     actualizarInformacion() {
-        this.calcularTotalIngresos();
-        this.calcularTotalEgresos();
+        this.#calcularTotalIngresos();
+        this.#calcularTotalEgresos();
     }
 
     crearRegistros() {
         const fragmento = ManejadorDOM.crearFragmento();
 
-        for (const item of this.getItems()) {
+        for (const item of this.#getItems()) {
             let registroItem = Item.crearRegistro(item);
             ManejadorDOM.agregar(fragmento, registroItem);
         }
@@ -151,6 +171,7 @@ class Pizarra {
     static cargarDatosAlmacenados(pizarra) {
         const datosDeAlmacenamiento = Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha);
         pizarra.setItems(datosDeAlmacenamiento.items);
+        pizarra.setUltimoItemID(datosDeAlmacenamiento.ultimoItemID);
     }
 
     static obtenerPizarraDeUsuario(usuarioLogeado) {

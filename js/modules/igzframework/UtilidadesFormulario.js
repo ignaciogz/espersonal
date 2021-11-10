@@ -2,31 +2,39 @@ import { UtilidadesDOM } from '../igzframework.js';
 
 class UtilidadesFormulario {
     static getInput(id) {
-        const $input = document.getElementById(id);
+        const $input = $(id);
 
         if (UtilidadesDOM.existeEnDOM($input)) {
-            return $input.value;
+            return $input.val();
+        }
+        else {
+            throw `NO se pudo obtener el dato del input cuyo ID es: ${id}`;
         }
     }
 
     static getOpcionDeSelectElegida(id) {
-        const $select = document.getElementById(id);
+        const $opcionSeleccionada = $(`${id} option:selected`);
 
-        if (UtilidadesDOM.existeEnDOM($select)) {
-            const indiceSeleccionado = $select.selectedIndex;
-            const opcionSeleccionada = $select.options[indiceSeleccionado].value;
+        if (UtilidadesDOM.existeEnDOM($opcionSeleccionada)) {
+            const opcionSeleccionada = $opcionSeleccionada.val();
 
             return opcionSeleccionada;
+        }
+        else {
+            throw `NO se pudo obtener la opción seleccionada del select cuyo ID es: ${id}`;
         }
     }
 
     static getRadioBtnElegido(name) {
-        const $radioSeleccionado = document.querySelector(`input[name="${name}"]:checked`);
+        const $radioSeleccionado = $(`input[name="${name}"]:checked`);
 
         if (UtilidadesDOM.existeEnDOM($radioSeleccionado)) {
-            const radioSeleccionado = $radioSeleccionado.value;
+            const radioSeleccionado = $radioSeleccionado.val();
 
             return radioSeleccionado;
+        }
+        else {
+            throw `NO se pudo obtener el botón de radio seleccionado cuyo name es: ${name}`;
         }
     }
 }

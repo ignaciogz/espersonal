@@ -1,12 +1,10 @@
 import { App, Navegador, Ruteador } from './modules/igzframework.js';
 
 /* ******************** ARCHIVO PRINCIPAL ******************** */
-document.addEventListener('DOMContentLoaded', init);
-
-function init() {
+$(document).ready(function() {
     /* Controlador Frontal */
     const pagina = Navegador.paginaActual;
-    
+        
     if (Ruteador.existe(pagina)) {
         const controlador = Ruteador.getControlador(pagina);
         App.ejecutarControlador(controlador);
@@ -14,4 +12,4 @@ function init() {
     else {
         throw "La página solicitada NO existe en el archivo de rutas";
     }
-}
+});

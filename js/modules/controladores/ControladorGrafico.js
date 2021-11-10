@@ -1,10 +1,11 @@
+import { App, Navegador } from '../igzframework.js';
+
 class ControladorGrafico {
     static ejecutar() {
         if (Usuario.estaLogeado()) {
             // VEREMOS si lo programo o no
 
-            // INICIALIZO componentes de Materialize
-            M.AutoInit();
+            App.inicializarDependencia('Materialize');
         } else {
             Navegador.redireccionar("index.html");
         }

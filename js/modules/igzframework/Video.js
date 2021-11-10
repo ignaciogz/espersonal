@@ -1,6 +1,6 @@
 class Video {
     static cambiarVelocidadDeReproduccion(video, velocidad) {
-        video.playbackRate = velocidad;
+        video[0].playbackRate = velocidad;
     }
 }
 

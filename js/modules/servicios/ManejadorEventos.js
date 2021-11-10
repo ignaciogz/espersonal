@@ -1,46 +1,70 @@
-import { Navegador } from '../igzframework.js';
+import { Navegador, UtilidadesEvento } from '../igzframework.js';
 import { Fecha, Formulario, ManejadorDOM, Modal } from '../servicios.js';
 import { DatosSesionDeUsuario, Item, Pizarra, Usuario } from '../clases.js';
 
-class ManejadorEventos {
-    static cerrarApp() {
-        return function (e) {
+class ManejadorEventos extends UtilidadesEvento {
+    static getActualizarCambiosEnPizarra() {
+        return function ActualizarCambiosEnPizarra() {
+            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+            const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+
+            pizarra.actualizarInformacion();
+            ManejadorDOM.mostrarInformacionPizarra(pizarra);
+
+            // ASOCIANDO EVENTOS
+            ManejadorEventos.asociar('.btn-edit', 'click', ManejadorEventos.getEditarItem());
+            ManejadorEventos.asociar('.btn-delete', 'click', ManejadorEventos.getEliminarItem());
+        };
+    }
+
+    static getCerrarApp() {
+        return function cerrarApp(e) {
             e.preventDefault();
             Navegador.cerrarSesion();
             Navegador.redireccionar("index.html");
         };
     }
 
-    static actualizarInformacionPizarra() {
-        return function () {
-            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-            const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
-            pizarra.actualizarInformacion();
-            ManejadorDOM.mostrarInformacionPizarra(pizarra);
-        };
+    static getEditarItem(){
+        return function editarItem(e) {
+            e.preventDefault();
+            const itemID = this.getAttribute('data-item-id');
+            
+            console.log(`Editaremos el ID ${itemID}`);
+        }
     }
 
-    static toggleDisplaySelectCategoria() {
-        return function (e) {
-            const $contenedorSelectCategoria = document.getElementById('contenedor-select-categoria');
+    static getEliminarItem(){
+        return function eliminarItem(e) {
+            e.preventDefault();
+            const itemID = this.getAttribute('data-item-id');
 
+            console.log(`Eliminaremos el ID ${itemID}`);
+        }
+    }
+
+    static getToggleDisplaySelectCategoria() {
+        return function toggleDisplaySelectCategoria(e) {
+            const $contenedorSelectCategoria = $('#contenedor-select-categoria');
+            
             if (this.value === "Ingreso") {
-                ManejadorDOM.display($contenedorSelectCategoria, 'none');
-            } else {
-                ManejadorDOM.display($contenedorSelectCategoria);
-            }
+                $contenedorSelectCategoria.hide();
+            } 
 
+            if (this.value === "Egreso") {
+                $contenedorSelectCategoria.show();
+            }
         };
     }
 
-    static validarFormAcceso() {
-        return function (e) {
+    static getValidarFormAcceso() {
+        return function validarFormAcceso(e) {
             e.preventDefault();
             const formulario = e.target;
 
             // OBTENIENDO DATOS -> Formulario acceso usuario
-            const datoUsuario = Formulario.getInput('acceso-usuario').toLowerCase();
-            const datoContrasena = Formulario.getInput('acceso-contrasena');
+            const datoContrasena = Formulario.getInput('#acceso-contrasena');
+            const datoUsuario = Formulario.getInput('#acceso-usuario').toLowerCase();
 
             // LÓGICA -> Acceso usuario
             const usuario = Usuario.get();
@@ -53,49 +77,50 @@ class ManejadorEventos {
                 formulario.reset();
                 Navegador.redireccionar("pizarra.html");
             } else {
-                const $error = document.getElementById('error-acceso');
-                ManejadorDOM.mostrarError($error, "Datos de ingreso incorrectos");
+                ManejadorDOM.mostrarError('#error-acceso', "Datos de ingreso incorrectos");
                 formulario.reset();
             }
         };
     }
 
-    static validarFormAgregarItem() {
-        return function (e) {
+    static getValidarFormAgregarItem() {
+        return function validarFormAgregarItem(e) {
             e.preventDefault();
             const formulario = e.target;
 
             // OBTENIENDO DATOS -> formulario agregar item
-            const datoNombre = Formulario.getInput('agregar-item-nombre');
+            const datoNombre = Formulario.getInput('#agregar-item-nombre');
             const datoTipo = Formulario.getRadioBtnElegido('agregar-item-radio-tipo');
 
             let datoCategoria = null;
             if (datoTipo === "Egreso") {
-                datoCategoria = Formulario.getOpcionDeSelectElegida('agregar-item-select-categoria');
+                datoCategoria = Formulario.getOpcionDeSelectElegida('#agregar-item-select-categoria');
             }
 
-            const datoMonto = parseFloat(Formulario.getInput('agregar-item-monto'));
+            const datoMonto = parseFloat(Formulario.getInput('#agregar-item-monto'));
 
             // LÓGICA -> Agregar item
             const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-            const nuevoItem = new Item(datoTipo, datoCategoria, datoNombre, datoMonto);
             const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+            const itemID = pizarra.getNuevoItemID();
+            const nuevoItem = new Item(itemID, datoTipo, datoCategoria, datoNombre, datoMonto);
 
             if (Pizarra.existePizarra(pizarra)) {
                 Pizarra.existenteAgregarItem(pizarra, nuevoItem);
             } else {
                 pizarra.agregarItem(nuevoItem);
+                pizarra.actualizarInformacion();
                 Pizarra.guardarPizarra(pizarra);
             }
 
             // MOSTRANDO -> El nuevo item al usuario
-            const $pizarraSeleccionada = document.getElementById('pizarra-seleccionada');
+            const $pizarraSeleccionada = $('#pizarra-seleccionada');
             const registroItem = Item.crearRegistro(nuevoItem);
             ManejadorDOM.agregar($pizarraSeleccionada, registroItem);
 
             // OCULTO -> Select categoria
-            const $contenedorSelectCategoria = document.getElementById('contenedor-select-categoria');
-            ManejadorDOM.display($contenedorSelectCategoria, 'none');
+            const $contenedorSelectCategoria = $('#contenedor-select-categoria');
+            $contenedorSelectCategoria.hide();
 
             // Procedimiento de finalización
             formulario.reset();
@@ -105,14 +130,14 @@ class ManejadorEventos {
         };
     }
 
-    static validarFormRegistrarse() {
-        return function (e) {
+    static getValidarFormRegistrarse() {
+        return function validarFormRegistrarse(e) {
             e.preventDefault();
             const formulario = e.target;
 
             // OBTENIENDO DATOS -> Formulario registrarse usuario
-            const datoUsuario = Formulario.getInput('registrarse-usuario').toLowerCase();
-            const datoContrasena = Formulario.getInput('registrarse-contrasena');
+            const datoUsuario = Formulario.getInput('#registrarse-usuario').toLowerCase();
+            const datoContrasena = Formulario.getInput('#registrarse-contrasena');
 
             // LÓGICA -> Registrarse usuario
             const usuario = Usuario.get();
@@ -128,8 +153,7 @@ class ManejadorEventos {
                 formulario.reset();
                 Navegador.redireccionar("pizarra.html");
             } else {
-                const $error = document.getElementById('error-registrarse');
-                ManejadorDOM.mostrarError($error, "Nombre de usuario NO disponible");
+                ManejadorDOM.mostrarError('#error-registrarse', "Nombre de usuario NO disponible");
                 formulario.reset();
             }
         };
