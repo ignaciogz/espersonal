@@ -38,7 +38,7 @@ class UtilidadesDOM {
             });
         }    
         else {
-            throw `NO existe el contenedor de error llamado: ${selector}`;
+            throw `NO existe el contenedor de error cuyo selector es: ${selector}`;
         }
     }
 }

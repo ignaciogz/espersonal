@@ -26,6 +26,9 @@ class ControladorPizarra {
 
                 ManejadorDOM.mostrarNombrePizarra(pizarra);
                 ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
+
+                pizarra.actualizarInformacion();
+                ManejadorDOM.mostrarInformacionPizarra(pizarra);
             }
 
             // CREANDO DINÁMICAMENTE -> Opciones del select categoría del formulario de agregar item
