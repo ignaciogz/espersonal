@@ -1,5 +1,5 @@
 import { Navegador, UtilidadesEvento } from '../igzframework.js';
-import { Fecha, Formulario, ManejadorDOM, Modal } from '../servicios.js';
+import { Fecha, Formulario, ManejadorDOM, Modal, Tabla } from '../servicios.js';
 import { DatosSesionDeUsuario, Item, Pizarra, Usuario } from '../clases.js';
 
 class ManejadorEventos extends UtilidadesEvento {
@@ -25,7 +25,7 @@ class ManejadorEventos extends UtilidadesEvento {
         };
     }
 
-    static getEditarItem(){
+    static getEditarItem() {
         return function editarItem(e) {
             e.preventDefault();
             const itemID = this.getAttribute('data-item-id');
@@ -34,12 +34,39 @@ class ManejadorEventos extends UtilidadesEvento {
         }
     }
 
-    static getEliminarItem(){
+    static getEliminarItem() {
         return function eliminarItem(e) {
             e.preventDefault();
             const itemID = this.getAttribute('data-item-id');
 
             console.log(`Eliminaremos el ID ${itemID}`);
+        }
+    }
+
+    static getReordenarTabla() {
+        return function reordenarTabla() {
+            const $thDisparador = $(this);
+            const indexColumna = $thDisparador.index();
+
+            if (indexColumna !== 3) {
+                let tabla = Tabla.getTabla($thDisparador);
+                let filas = Tabla.getArrayDeFilas(tabla);
+
+                filas.sort(Tabla.fn_comparacion(indexColumna));
+                // GUARDO el orden de ordenamiento dentro del contexto, para cambiarlo cada vez que se ejecuta el manejador
+                this.asc = !this.asc;
+                if (!this.asc) {
+                    filas = filas.reverse();
+                }
+
+                // RECARGO la tabla, con las filas ordenadas
+                for (const fila of filas) {
+                    ManejadorDOM.agregar(tabla, fila);
+                }
+
+                // MUESTRO icono de ordenamiento en la columna que disparó el evento
+                Tabla.setIconoDeOrdenamiento($thDisparador, this.asc);
+            }
         }
     }
 

@@ -30,6 +30,7 @@ class ControladorCategorias {
             // ASOCIANDO EVENTOS
             ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getCerrarApp());
 
+            // INICIALIZANDO COMPONENTES DE TERCEROS
             App.inicializarDependencia('Materialize');
         } else {
             Navegador.redireccionar("index.html");

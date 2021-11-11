@@ -5,6 +5,7 @@ class ControladorGrafico {
         if (Usuario.estaLogeado()) {
             // VEREMOS si lo programo o no
 
+            // INICIALIZANDO COMPONENTES DE TERCEROS
             App.inicializarDependencia('Materialize');
         } else {
             Navegador.redireccionar("index.html");

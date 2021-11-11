@@ -20,6 +20,7 @@ class ControladorIndex {
             ManejadorEventos.asociar('#form-acceso', 'submit', ManejadorEventos.getValidarFormAcceso());
             ManejadorEventos.asociar('#form-registrarse', 'submit', ManejadorEventos.getValidarFormRegistrarse());
 
+            // INICIALIZANDO COMPONENTES DE TERCEROS
             App.inicializarDependencia('Materialize');
         }
     }

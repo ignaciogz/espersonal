@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* 
 $altura-menu-fijo: 75px !default;
 $borde-general: 12px !default;
@@ -233,6 +234,8 @@ section.pizarra #pizarra-seleccionada td.valor-negativo::before {
 }
 section.pizarra .btn-edit,
 section.pizarra .btn-delete {
+  cursor: pointer;
+  user-select: none;
   visibility: hidden;
 }
 section.pizarra table.highlight > tbody > tr:hover {
@@ -330,6 +333,27 @@ section.login .logo {
 /*@import 'components/menu-mobile';
 @import 'components/tarjetas';
 @import 'components/carousel';*/
+table tr th {
+  cursor: pointer;
+  user-select: none;
+}
+table tr th:nth-child(4) {
+  cursor: initial;
+}
+
+.asc::after,
+.desc::after {
+  margin-left: 5px;
+}
+
+.asc::after {
+  content: "↑";
+}
+
+.desc::after {
+  content: "↓";
+}
+
 /* -------- ICONOS -------- */
 i.medium {
   font-size: 3rem;

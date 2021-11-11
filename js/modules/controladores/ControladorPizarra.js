@@ -50,8 +50,10 @@ class ControladorPizarra {
             // ASOCIANDO EVENTOS
             ManejadorEventos.asociar('#form-agregar-item', 'submit', ManejadorEventos.getValidarFormAgregarItem());
             ManejadorEventos.asociar('input[name="agregar-item-radio-tipo"]', 'change', ManejadorEventos.getToggleDisplaySelectCategoria());
+            ManejadorEventos.asociar('th', 'click', ManejadorEventos.getReordenarTabla());
             ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getCerrarApp());
 
+            // INICIALIZANDO COMPONENTES DE TERCEROS
             App.inicializarDependencia('Materialize');
         } else {
             Navegador.redireccionar("index.html");

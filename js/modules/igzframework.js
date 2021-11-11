@@ -8,4 +8,5 @@ export { Sesion } from './igzframework/Sesion.js';
 export { UtilidadesDOM } from './igzframework/UtilidadesDOM.js';
 export { UtilidadesEvento } from './igzframework/UtilidadesEvento.js';
 export { UtilidadesFormulario } from './igzframework/UtilidadesFormulario.js';
+export { UtilidadesTabla } from './igzframework/UtilidadesTabla.js';
 export { Video } from './igzframework/Video.js';
