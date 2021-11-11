@@ -8,12 +8,7 @@ class ManejadorEventos extends UtilidadesEvento {
             const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
             const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
-            pizarra.actualizarInformacion();
             ManejadorDOM.mostrarInformacionPizarra(pizarra);
-
-            // ASOCIANDO EVENTOS
-            ManejadorEventos.asociar('.btn-edit', 'click', ManejadorEventos.getEditarItem());
-            ManejadorEventos.asociar('.btn-delete', 'click', ManejadorEventos.getEliminarItem());
         };
     }
 
@@ -26,20 +21,29 @@ class ManejadorEventos extends UtilidadesEvento {
     }
 
     static getEditarItem() {
-        return function editarItem(e) {
-            e.preventDefault();
-            const itemID = this.getAttribute('data-item-id');
+        return function editarItem() {
+            const $itemDisparador = $(this);
+
+            const itemID = $itemDisparador.data('item-id');
+            const fila = Tabla.getFila($itemDisparador);
             
             console.log(`Editaremos el ID ${itemID}`);
         }
     }
 
     static getEliminarItem() {
-        return function eliminarItem(e) {
-            e.preventDefault();
-            const itemID = this.getAttribute('data-item-id');
+        return function eliminarItem() {
+            const $itemDisparador = $(this);
 
-            console.log(`Eliminaremos el ID ${itemID}`);
+            const itemID = $itemDisparador.data('item-id');
+            const fila = Tabla.getFila($itemDisparador);
+
+            // LÓGICA -> Eliminar item
+            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+            const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+
+            Pizarra.existenteEliminarItem(pizarra, itemID);
+            ManejadorDOM.eliminar(fila);
         }
     }
 
@@ -144,6 +148,10 @@ class ManejadorEventos extends UtilidadesEvento {
             const $pizarraSeleccionada = $('#pizarra-seleccionada');
             const registroItem = Item.crearRegistro(nuevoItem);
             ManejadorDOM.agregar($pizarraSeleccionada, registroItem);
+
+            // ASOCIANDO EVENTOS -> Al nuevo item
+            ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getEditarItem());
+            ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getEliminarItem());
 
             // OCULTO -> Select categoria
             const $contenedorSelectCategoria = $('#contenedor-select-categoria');

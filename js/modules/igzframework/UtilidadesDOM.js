@@ -13,6 +13,10 @@ class UtilidadesDOM {
         return document.createDocumentFragment();
     }
 
+    static eliminar(elemento) {
+        elemento.remove();
+    }
+
     static existeEnDOM(elemento) {
         return $.contains(document.body, elemento[0]);
     }

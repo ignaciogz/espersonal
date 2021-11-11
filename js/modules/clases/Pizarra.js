@@ -65,6 +65,10 @@ class Pizarra {
         return this.totalIngresos - this.totalEgresos;
     }
 
+    eliminarItem(indiceItem) {
+        this.items.splice(indiceItem, 1);
+    }
+
     getCantidadDeItems() {
         return this.#getItems().length;
     }
@@ -140,8 +144,21 @@ class Pizarra {
         // Falta desarrollar
     }
 
-    static existenteEliminarItem() {
-        // Falta desarrollar
+    static existenteEliminarItem(pizarra, itemID) {
+        let pizarrasAlmacenadas = Pizarra.#obtenerPizarras();
+        const indicePizarraDesactualizada = Pizarra.getIndice(pizarra, pizarrasAlmacenadas);
+        Pizarra.#eliminarPizarras();
+
+        const indiceItem = Item.getIndice(itemID, pizarra.#getItems());
+        pizarra.eliminarItem(indiceItem);
+        pizarra.actualizarInformacion();
+
+        // Reemplazo la pizarra desactualizada por la actualizada, dentro del conjunto de todas las pizarras
+        pizarrasAlmacenadas.splice(indicePizarraDesactualizada, 1, pizarra);
+
+        for (const pizarra of pizarrasAlmacenadas) {
+            Pizarra.guardarPizarra(pizarra);
+        }
     }
 
     static existePizarra(pizarra) {

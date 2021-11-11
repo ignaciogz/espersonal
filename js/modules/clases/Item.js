@@ -41,6 +41,14 @@ class Item {
 
         return $registroItem;
     }
+
+    static getIndice(itemID, items) {
+        function itemBuscado(elemento) {
+            return elemento.id === itemID;
+        }
+
+        return items.findIndex(itemBuscado);
+    }
 }
 
 export { Item };

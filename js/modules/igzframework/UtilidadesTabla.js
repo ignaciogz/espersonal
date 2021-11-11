@@ -1,4 +1,8 @@
 class UtilidadesTabla {
+    static #getElementoPadre(elemento, etiquetaPadreBuscada) {
+        return elemento.parents(etiquetaPadreBuscada).eq(0);
+    }
+
     static comparar(valorA, valorB) {
         return $.isNumeric(valorA) && $.isNumeric(valorB) ? valorA - valorB : valorA.localeCompare(valorB);
     }
@@ -7,8 +11,12 @@ class UtilidadesTabla {
         return tabla.find('tr').slice(1).toArray();
     }
 
-    static getTabla(thDisparador) {
-        return thDisparador.parents('table').eq(0);
+    static getTabla(disparador) {
+        return UtilidadesTabla.#getElementoPadre(disparador, 'table');
+    }
+
+    static getFila(disparador) {
+        return UtilidadesTabla.#getElementoPadre(disparador, 'tr');
     }
 
     static setIconoDeOrdenamiento(elemento, asc) {

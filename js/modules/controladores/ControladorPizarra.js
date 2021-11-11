@@ -15,9 +15,9 @@ class ControladorPizarra {
             // [Al abrir la app la pizarra seleccionada será por defecto la del mes actual]
             const $pizarraSeleccionada = $('#pizarra-seleccionada');
             if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
-                // OBSERVANDO -> Cuando se agrega un nuevo item a la pizarra seleccionada
-                const observador_itemAgregado = new MutationObserver(ManejadorEventos.getActualizarCambiosEnPizarra());
-                observador_itemAgregado.observe($pizarraSeleccionada[0], { childList: true, subtree: true });
+                // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada
+                const observador_itemsDePizarra = new MutationObserver(ManejadorEventos.getActualizarCambiosEnPizarra());
+                observador_itemsDePizarra.observe($pizarraSeleccionada[0], { childList: true, subtree: true });
 
                 // MOSTRANDO -> La pizarra selecionada
                 const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
@@ -52,6 +52,10 @@ class ControladorPizarra {
             ManejadorEventos.asociar('input[name="agregar-item-radio-tipo"]', 'change', ManejadorEventos.getToggleDisplaySelectCategoria());
             ManejadorEventos.asociar('th', 'click', ManejadorEventos.getReordenarTabla());
             ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getCerrarApp());
+
+            // ASOCIANDO EVENTOS
+            ManejadorEventos.asociar('.btn-edit', 'click', ManejadorEventos.getEditarItem());
+            ManejadorEventos.asociar('.btn-delete', 'click', ManejadorEventos.getEliminarItem());
 
             // INICIALIZANDO COMPONENTES DE TERCEROS
             App.inicializarDependencia('Materialize');
