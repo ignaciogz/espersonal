@@ -17,8 +17,8 @@ class ControladorIndex {
             }
 
             // ASOCIANDO EVENTOS
-            ManejadorEventos.asociar('#form-acceso', 'submit', ManejadorEventos.getValidarFormAcceso());
-            ManejadorEventos.asociar('#form-registrarse', 'submit', ManejadorEventos.getValidarFormRegistrarse());
+            ManejadorEventos.asociar('#form-acceso', 'submit', ManejadorEventos.getHandler_formAcceso());
+            ManejadorEventos.asociar('#form-registrarse', 'submit', ManejadorEventos.getHandler_formRegistrarse());
 
             // INICIALIZANDO COMPONENTES DE TERCEROS
             App.inicializarDependencia('Materialize');

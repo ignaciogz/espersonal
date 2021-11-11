@@ -3,8 +3,8 @@ import { Fecha, Formulario, ManejadorDOM, Modal, Tabla } from '../servicios.js';
 import { DatosSesionDeUsuario, Item, Pizarra, Usuario } from '../clases.js';
 
 class ManejadorEventos extends UtilidadesEvento {
-    static getActualizarCambiosEnPizarra() {
-        return function ActualizarCambiosEnPizarra() {
+    static getHandler_actualizarCambiosEnPizarra() {
+        return function () {
             const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
             const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
@@ -12,16 +12,16 @@ class ManejadorEventos extends UtilidadesEvento {
         };
     }
 
-    static getCerrarApp() {
-        return function cerrarApp(e) {
+    static getHandler_cerrarApp() {
+        return function (e) {
             e.preventDefault();
             Navegador.cerrarSesion();
             Navegador.redireccionar("index.html");
         };
     }
 
-    static getEditarItem() {
-        return function editarItem() {
+    static getHandler_editarItem() {
+        return function () {
             const $itemDisparador = $(this);
 
             const itemID = $itemDisparador.data('item-id');
@@ -31,8 +31,8 @@ class ManejadorEventos extends UtilidadesEvento {
         }
     }
 
-    static getEliminarItem() {
-        return function eliminarItem() {
+    static getHandler_eliminarItem() {
+        return function () {
             const $itemDisparador = $(this);
 
             const itemID = $itemDisparador.data('item-id');
@@ -47,8 +47,8 @@ class ManejadorEventos extends UtilidadesEvento {
         }
     }
 
-    static getReordenarTabla() {
-        return function reordenarTabla() {
+    static getHandler_reordenarTabla() {
+        return function () {
             const $thDisparador = $(this);
             const indexColumna = $thDisparador.index();
 
@@ -74,8 +74,8 @@ class ManejadorEventos extends UtilidadesEvento {
         }
     }
 
-    static getToggleDisplaySelectCategoria() {
-        return function toggleDisplaySelectCategoria(e) {
+    static getHandler_toggleDisplaySelectCategoria() {
+        return function (e) {
             const $contenedorSelectCategoria = $('#contenedor-select-categoria');
             
             if (this.value === "Ingreso") {
@@ -88,8 +88,8 @@ class ManejadorEventos extends UtilidadesEvento {
         };
     }
 
-    static getValidarFormAcceso() {
-        return function validarFormAcceso(e) {
+    static getHandler_formAcceso() {
+        return function (e) {
             e.preventDefault();
             const formulario = e.target;
 
@@ -114,8 +114,8 @@ class ManejadorEventos extends UtilidadesEvento {
         };
     }
 
-    static getValidarFormAgregarItem() {
-        return function validarFormAgregarItem(e) {
+    static getHandler_formAgregarItem() {
+        return function (e) {
             e.preventDefault();
             const formulario = e.target;
 
@@ -150,8 +150,8 @@ class ManejadorEventos extends UtilidadesEvento {
             ManejadorDOM.agregar($pizarraSeleccionada, registroItem);
 
             // ASOCIANDO EVENTOS -> Al nuevo item
-            ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getEditarItem());
-            ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getEliminarItem());
+            ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler_editarItem());
+            ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
             // OCULTO -> Select categoria
             const $contenedorSelectCategoria = $('#contenedor-select-categoria');
@@ -165,8 +165,8 @@ class ManejadorEventos extends UtilidadesEvento {
         };
     }
 
-    static getValidarFormRegistrarse() {
-        return function validarFormRegistrarse(e) {
+    static getHandler_formRegistrarse() {
+        return function (e) {
             e.preventDefault();
             const formulario = e.target;
 

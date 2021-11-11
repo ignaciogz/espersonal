@@ -16,7 +16,7 @@ class ControladorPizarra {
             const $pizarraSeleccionada = $('#pizarra-seleccionada');
             if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
                 // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada
-                const observador_itemsDePizarra = new MutationObserver(ManejadorEventos.getActualizarCambiosEnPizarra());
+                const observador_itemsDePizarra = new MutationObserver(ManejadorEventos.getHandler_actualizarCambiosEnPizarra());
                 observador_itemsDePizarra.observe($pizarraSeleccionada[0], { childList: true, subtree: true });
 
                 // MOSTRANDO -> La pizarra selecionada
@@ -48,14 +48,13 @@ class ControladorPizarra {
             }
 
             // ASOCIANDO EVENTOS
-            ManejadorEventos.asociar('#form-agregar-item', 'submit', ManejadorEventos.getValidarFormAgregarItem());
-            ManejadorEventos.asociar('input[name="agregar-item-radio-tipo"]', 'change', ManejadorEventos.getToggleDisplaySelectCategoria());
-            ManejadorEventos.asociar('th', 'click', ManejadorEventos.getReordenarTabla());
-            ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getCerrarApp());
+            ManejadorEventos.asociar('#form-agregar-item', 'submit', ManejadorEventos.getHandler_formAgregarItem());
+            ManejadorEventos.asociar('input[name="agregar-item-radio-tipo"]', 'change', ManejadorEventos.getHandler_toggleDisplaySelectCategoria());
+            ManejadorEventos.asociar('th', 'click', ManejadorEventos.getHandler_reordenarTabla());
 
-            // ASOCIANDO EVENTOS
-            ManejadorEventos.asociar('.btn-edit', 'click', ManejadorEventos.getEditarItem());
-            ManejadorEventos.asociar('.btn-delete', 'click', ManejadorEventos.getEliminarItem());
+            ManejadorEventos.asociar('.btn-edit', 'click', ManejadorEventos.getHandler_editarItem());
+            ManejadorEventos.asociar('.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
+            ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getHandler_cerrarApp());
 
             // INICIALIZANDO COMPONENTES DE TERCEROS
             App.inicializarDependencia('Materialize');
