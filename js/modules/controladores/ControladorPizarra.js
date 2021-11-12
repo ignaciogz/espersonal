@@ -31,7 +31,7 @@ class ControladorPizarra {
                 ManejadorDOM.mostrarInformacionPizarra(pizarra);
             }
 
-            // CREANDO DINÁMICAMENTE -> Opciones del select categoría del formulario de agregar item
+            // CREANDO DINÁMICAMENTE -> Opciones del select categoría de los formularios
             const $selectCategoria = $('.select-categoria');
             if (ManejadorDOM.existeEnDOM($selectCategoria)) {
                 const categorias = Categorias.get();
@@ -39,12 +39,19 @@ class ControladorPizarra {
                 ManejadorDOM.agregar($selectCategoria, opcionesSelectCategoria);
             }
 
-            // CREANDO DINÁMICAMENTE -> Opciones del select año del formulario de configuración
+            // CREANDO DINÁMICAMENTE -> Opciones del select año, del formulario de configuración
             const $selectAnio = $('#configuracion-select-anio');
             if (ManejadorDOM.existeEnDOM($selectAnio)) {
                 const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
                 const opcionesSelectAnio = Formulario.crearOpcionesSelectAnio(usuarioLogeado);
                 ManejadorDOM.agregar($selectAnio, opcionesSelectAnio);
+            }
+
+            // CREANDO DINÁMICAMENTE -> Opciones del select fecha, del formulario de configuración
+            const $selectMes = $('#configuracion-select-mes');
+            if (ManejadorDOM.existeEnDOM($selectMes)) {
+                const opcionesSelectMes = Formulario.crearOpcionesSelectMes();
+                ManejadorDOM.agregar($selectMes, opcionesSelectMes);
             }
 
             // ASOCIANDO EVENTOS

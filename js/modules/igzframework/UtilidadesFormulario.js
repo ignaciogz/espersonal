@@ -1,6 +1,17 @@
 import { UtilidadesDOM } from '../igzframework.js';
 
 class UtilidadesFormulario {
+    // Métodos privados
+    static crearOption(valor) {
+        let $option = document.createElement("option");
+        $option.setAttribute("value", valor);
+
+        $option.text = valor;
+
+        return $option;
+    }
+
+    // Métodos públicos
     static getInput(id) {
         const $input = $(id);
 

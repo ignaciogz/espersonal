@@ -1,18 +1,7 @@
 import { UtilidadesFormulario } from '../igzframework.js';
-
-import { ManejadorDOM } from '../servicios.js';
+import { Fecha, ManejadorDOM } from '../servicios.js';
 
 class Formulario extends UtilidadesFormulario {
-    // Métodos privados
-    static crearOption(valor) {
-        let $option = document.createElement("option");
-        $option.setAttribute("value", valor);
-
-        $option.text = valor;
-
-        return $option;
-    }
-
     // Métodos públicos
     static crearOpcionesSelectAnio(usuarioLogeado) {
         const fragmento = ManejadorDOM.crearFragmento();
@@ -30,6 +19,17 @@ class Formulario extends UtilidadesFormulario {
 
         for (const categoria of categorias.getListado()) {
             let optionDelSelect = Formulario.crearOption(categoria.nombre);
+            ManejadorDOM.agregar(fragmento, optionDelSelect);
+        }
+
+        return fragmento;
+    }
+
+    static crearOpcionesSelectMes() {
+        const fragmento = ManejadorDOM.crearFragmento();
+
+        for (const mes of Fecha.meses) {
+            let optionDelSelect = Formulario.crearOption(mes);
             ManejadorDOM.agregar(fragmento, optionDelSelect);
         }
 
