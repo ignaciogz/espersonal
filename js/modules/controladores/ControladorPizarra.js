@@ -56,10 +56,7 @@ class ControladorPizarra {
             ManejadorEventos.asociar('#form-editar-item', 'submit', ManejadorEventos.getHandler_formEditarItem());
             ManejadorEventos.asociar('form .contenedor-radio-tipo input', 'change', ManejadorEventos.getHandler_toggleDisplaySelectCategoria());
             
-            ManejadorEventos.asociar('#btn-agregar', 'click', function() {
-                Formulario.ocultarSelect('form .contenedor-select-categoria');
-                Formulario.reset('#form-agregar-item');
-            });
+            ManejadorEventos.asociar('#btn-agregar', 'click', ManejadorEventos.getHandler_resetearFormAgregarItem());
             ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getHandler_cerrarApp());
 
             // INICIALIZANDO COMPONENTES DE TERCEROS

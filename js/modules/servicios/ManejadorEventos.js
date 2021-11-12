@@ -204,6 +204,13 @@ class ManejadorEventos extends UtilidadesEvento {
             }
         };
     }
+
+    static getHandler_resetearFormAgregarItem() {
+        return function () {
+            Formulario.ocultarSelect('form .contenedor-select-categoria');
+            Formulario.reset('#form-agregar-item');
+        }
+    }
 }
 
 export { ManejadorEventos };
