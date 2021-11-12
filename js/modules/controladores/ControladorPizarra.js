@@ -1,43 +1,64 @@
 import { App, Navegador } from '../igzframework.js';
 import { Formulario, ManejadorDOM, ManejadorEventos } from '../servicios.js';
-import { Categorias, Pizarra, Usuario } from '../clases.js';
+import { Categorias, Menu, Pizarra, Usuario } from '../clases.js';
 
 class ControladorPizarra {
     static ejecutar() {
         if (Usuario.estaLogeado()) {
+            // CREANDO DINÁMICAMENTE -> Opciones del menú de navegación
+            const $menu = $('#contenedor-menu');
+            if (ManejadorDOM.existeEnDOM($menu)) {
+                const menu = Menu.get();
+                const itemsDelMenu = menu.crearItems();
+                ManejadorDOM.agregar($menu, itemsDelMenu);
+            }
+
             // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
             Pizarra.cargarJSON_pizarrasPredefinidas();
 
-            // MOSTRANDO -> Nombre de usuario
-            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-            ManejadorDOM.mostrarNombreDeUsuario(usuarioLogeado);
+            /* ------------ INICIO Lógica del controlador ------------ */
+                // MOSTRANDO -> Nombre de usuario
+                const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+                ManejadorDOM.mostrarNombreDeUsuario(usuarioLogeado);
 
-            // [Al abrir la app la pizarra seleccionada será por defecto la del mes actual]
-            const $pizarraSeleccionada = $('#pizarra-seleccionada');
-            if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
-                // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada
-                const observador_itemsDePizarra = new MutationObserver(ManejadorEventos.getHandler_actualizarCambiosEnPizarra());
-                observador_itemsDePizarra.observe($pizarraSeleccionada[0], { childList: true, subtree: true });
+                // [Al abrir la app la pizarra seleccionada será por defecto la del mes actual]
+                const $pizarraSeleccionada = $('#pizarra-seleccionada');
+                if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
+                    // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada
+                    const observador_itemsDePizarra = new MutationObserver(ManejadorEventos.getHandler_actualizarCambiosEnPizarra());
+                    observador_itemsDePizarra.observe($pizarraSeleccionada[0], { childList: true, subtree: true });
 
-                // MOSTRANDO -> La pizarra selecionada
-                const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+                    // MOSTRANDO -> La pizarra selecionada
+                    const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
-                const registrosDeItems = pizarra.crearRegistros();
+                    const registrosDeItems = pizarra.crearRegistros();
 
-                ManejadorDOM.mostrarNombrePizarra(pizarra);
-                ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
+                    ManejadorDOM.mostrarNombrePizarra(pizarra);
+                    ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
 
-                pizarra.actualizarInformacion();
-                ManejadorDOM.mostrarInformacionPizarra(pizarra);
-            }
+                    pizarra.actualizarInformacion();
+                    ManejadorDOM.mostrarInformacionPizarra(pizarra);
+                }
 
-            // CREANDO DINÁMICAMENTE -> Opciones del select categoría de los formularios
-            const $selectCategoria = $('.select-categoria');
-            if (ManejadorDOM.existeEnDOM($selectCategoria)) {
-                const categorias = Categorias.get();
-                const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
-                ManejadorDOM.agregar($selectCategoria, opcionesSelectCategoria);
-            }
+                // CREANDO DINÁMICAMENTE -> Opciones del select categoría de los formularios
+                const $selectCategoria = $('.select-categoria');
+                if (ManejadorDOM.existeEnDOM($selectCategoria)) {
+                    const categorias = Categorias.get();
+                    const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
+                    ManejadorDOM.agregar($selectCategoria, opcionesSelectCategoria);
+                }
+
+                // ASOCIANDO EVENTOS
+                ManejadorEventos.asociar('#btn-agregar', 'click', ManejadorEventos.getHandler_resetearFormAgregarItem());
+
+                ManejadorEventos.asociar('table th', 'click', ManejadorEventos.getHandler_reordenarTabla());
+                ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
+                ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
+
+                ManejadorEventos.asociar('#form-agregar-item', 'submit', ManejadorEventos.getHandler_formAgregarItem());
+                ManejadorEventos.asociar('#form-editar-item', 'submit', ManejadorEventos.getHandler_formEditarItem());
+                ManejadorEventos.asociar('form .contenedor-radio-tipo input', 'change', ManejadorEventos.getHandler_toggleDisplaySelectCategoria());
+            /* ------------ FIN Lógica del controlador ------------ */
 
             // CREANDO DINÁMICAMENTE -> Opciones del select año, del formulario de configuración
             const $selectAnio = $('#configuracion-select-anio');
@@ -53,17 +74,8 @@ class ControladorPizarra {
                 const opcionesSelectMes = Formulario.crearOpcionesSelectMes();
                 ManejadorDOM.agregar($selectMes, opcionesSelectMes);
             }
-
-            // ASOCIANDO EVENTOS
-            ManejadorEventos.asociar('table th', 'click', ManejadorEventos.getHandler_reordenarTabla());
-            ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
-            ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
-
-            ManejadorEventos.asociar('#form-agregar-item', 'submit', ManejadorEventos.getHandler_formAgregarItem());
-            ManejadorEventos.asociar('#form-editar-item', 'submit', ManejadorEventos.getHandler_formEditarItem());
-            ManejadorEventos.asociar('form .contenedor-radio-tipo input', 'change', ManejadorEventos.getHandler_toggleDisplaySelectCategoria());
             
-            ManejadorEventos.asociar('#btn-agregar', 'click', ManejadorEventos.getHandler_resetearFormAgregarItem());
+            // ASOCIANDO EVENTOS
             ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getHandler_cerrarApp());
 
             // INICIALIZANDO COMPONENTES DE TERCEROS
