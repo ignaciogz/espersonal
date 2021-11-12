@@ -19,10 +19,6 @@ class Pizarra {
         return this.ultimoItemID;
     }
 
-    #getItems() {
-        return this.items;
-    }
-
     static #eliminarPizarras() {
         Almacenamiento.eliminar("pizarras");
     }
@@ -70,7 +66,11 @@ class Pizarra {
     }
 
     getCantidadDeItems() {
-        return this.#getItems().length;
+        return this.getItems().length;
+    }
+
+    getItems() {
+        return this.items;
     }
 
     getNuevoItemID() {
@@ -130,6 +130,7 @@ class Pizarra {
         Pizarra.#eliminarPizarras();
 
         pizarra.agregarItem(item);
+
         pizarra.actualizarInformacion();
 
         // Reemplazo la pizarra desactualizada por la actualizada, dentro del conjunto de todas las pizarras
@@ -140,8 +141,23 @@ class Pizarra {
         }
     }
 
-    static existenteEditarItem() {
-        // Falta desarrollar
+    static existenteEditarItem(pizarra, itemID) {
+        let pizarrasAlmacenadas = Pizarra.#obtenerPizarras();
+        const indicePizarraDesactualizada = Pizarra.getIndice(pizarra, pizarrasAlmacenadas);
+        Pizarra.#eliminarPizarras();
+
+        const indiceItem = Item.getIndice(itemID, pizarra.getItems());
+        pizarra.modificarItem(indiceItem);
+        
+
+        pizarra.actualizarInformacion();
+
+        // Reemplazo la pizarra desactualizada por la actualizada, dentro del conjunto de todas las pizarras
+        pizarrasAlmacenadas.splice(indicePizarraDesactualizada, 1, pizarra);
+
+        for (const pizarra of pizarrasAlmacenadas) {
+            Pizarra.guardarPizarra(pizarra);
+        }
     }
 
     static existenteEliminarItem(pizarra, itemID) {
@@ -149,8 +165,9 @@ class Pizarra {
         const indicePizarraDesactualizada = Pizarra.getIndice(pizarra, pizarrasAlmacenadas);
         Pizarra.#eliminarPizarras();
 
-        const indiceItem = Item.getIndice(itemID, pizarra.#getItems());
+        const indiceItem = Item.getIndice(itemID, pizarra.getItems());
         pizarra.eliminarItem(indiceItem);
+
         pizarra.actualizarInformacion();
 
         // Reemplazo la pizarra desactualizada por la actualizada, dentro del conjunto de todas las pizarras
@@ -177,7 +194,7 @@ class Pizarra {
     crearRegistros() {
         const fragmento = ManejadorDOM.crearFragmento();
 
-        for (const item of this.#getItems()) {
+        for (const item of this.getItems()) {
             let registroItem = Item.crearRegistro(item);
             ManejadorDOM.agregar(fragmento, registroItem);
         }

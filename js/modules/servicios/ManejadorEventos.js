@@ -1,5 +1,5 @@
 import { Navegador, UtilidadesEvento } from '../igzframework.js';
-import { Fecha, Formulario, ManejadorDOM, Modal, Tabla } from '../servicios.js';
+import { Fecha, Formulario, ManejadorDOM, Modal, Tabla, Utilidades } from '../servicios.js';
 import { DatosSesionDeUsuario, Item, Pizarra, Usuario } from '../clases.js';
 
 class ManejadorEventos extends UtilidadesEvento {
@@ -12,23 +12,41 @@ class ManejadorEventos extends UtilidadesEvento {
         };
     }
 
+    static getHandler_autocompletarFormEditarItem() {
+        return function () {
+            const $itemDisparador = $(this);
+            const itemID = $itemDisparador.data('item-id');
+
+            // OBTENIENDO DATOS -> Del item, a partir de su ID
+            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+            const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+            const item = Item.getItem(itemID, pizarra.getItems());
+
+            if (item.categoria === null) {
+                item.categoria = "Sin categoría";
+            }
+
+            // CARGANDO CAMPOS -> formulario editar item
+            Formulario.setInput('#editar-item-nombre', item.nombre);
+            Formulario.setRadioBtn('editar-item-radio-tipo', item.tipo);            
+            Formulario.setOpcionDeSelect('#form-editar-item .select-categoria', item.categoria);
+            Formulario.setInput('#editar-item-monto', item.monto);
+            
+            // MUESTRO u OCULTO el selector de categorias, dependiendo del tipo de item
+            Formulario.toggleDisplaySelect('.contenedor-select-categoria', item.tipo, { mostrar: "Egreso", ocultar: "Ingreso" });
+            
+            // Procedimiento de finalización
+            M.AutoInit();
+            M.updateTextFields();
+        }
+    }
+
     static getHandler_cerrarApp() {
         return function (e) {
             e.preventDefault();
             Navegador.cerrarSesion();
             Navegador.redireccionar("index.html");
         };
-    }
-
-    static getHandler_editarItem() {
-        return function () {
-            const $itemDisparador = $(this);
-
-            const itemID = $itemDisparador.data('item-id');
-            const fila = Tabla.getFila($itemDisparador);
-            
-            console.log(`Editaremos el ID ${itemID}`);
-        }
     }
 
     static getHandler_eliminarItem() {
@@ -75,16 +93,8 @@ class ManejadorEventos extends UtilidadesEvento {
     }
 
     static getHandler_toggleDisplaySelectCategoria() {
-        return function (e) {
-            const $contenedorSelectCategoria = $('#contenedor-select-categoria');
-            
-            if (this.value === "Ingreso") {
-                $contenedorSelectCategoria.hide();
-            } 
-
-            if (this.value === "Egreso") {
-                $contenedorSelectCategoria.show();
-            }
+        return function () {
+            Formulario.toggleDisplaySelect('.contenedor-select-categoria', this.value, { mostrar: "Egreso", ocultar: "Ingreso" });
         };
     }
 
@@ -125,7 +135,7 @@ class ManejadorEventos extends UtilidadesEvento {
 
             let datoCategoria = null;
             if (datoTipo === "Egreso") {
-                datoCategoria = Formulario.getOpcionDeSelectElegida('#agregar-item-select-categoria');
+                datoCategoria = Formulario.getOpcionDeSelectElegida(`#form-agregar-item .select-categoria`);
             }
 
             const datoMonto = parseFloat(Formulario.getInput('#agregar-item-monto'));
@@ -153,15 +163,16 @@ class ManejadorEventos extends UtilidadesEvento {
             ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler_editarItem());
             ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
-            // OCULTO -> Select categoria
-            const $contenedorSelectCategoria = $('#contenedor-select-categoria');
-            $contenedorSelectCategoria.hide();
-
             // Procedimiento de finalización
-            formulario.reset();
             Modal.cerrar('modal-agregar-item');
             Navegador.scrollear("final");
             Navegador.scrollear("inicio", 3000);
+        };
+    }
+
+    static getHandler_formEditarItem() {
+        return function (e) {
+            // Falta programar
         };
     }
 

@@ -35,7 +35,9 @@ class Item {
                                     <td>${item.nombre}</td>
                                     <td>
                                         <i data-item-id=${item.id} class="btn-delete material-icons brown-text right">delete_forever</i>
-                                        <i data-item-id=${item.id} class="btn-edit material-icons brown-text right">edit</i>
+                                        <a class="modal-trigger" href="#modal-editar-item">
+                                            <i data-item-id=${item.id} class="btn-edit material-icons brown-text right">edit</i>
+                                        </a>
                                     </td>
                                     <td class="valor-${estiloDeMonto}">${Utilidades.formatearMonto(item.monto)}</td>`;
 
@@ -48,6 +50,16 @@ class Item {
         }
 
         return items.findIndex(itemBuscado);
+    }
+
+    static getItem(itemID, items) {
+        function itemBuscado(elemento) {
+            return elemento.id === itemID;
+        }
+        
+        const datosDelItem = items.find(itemBuscado);
+
+        return new Item(datosDelItem.id, datosDelItem.tipo, datosDelItem.categoria, datosDelItem.nombre, datosDelItem.monto);
     }
 }
 

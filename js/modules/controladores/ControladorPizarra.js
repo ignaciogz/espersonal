@@ -32,7 +32,7 @@ class ControladorPizarra {
             }
 
             // CREANDO DINÁMICAMENTE -> Opciones del select categoría del formulario de agregar item
-            const $selectCategoria = $('#agregar-item-select-categoria');
+            const $selectCategoria = $('.select-categoria');
             if (ManejadorDOM.existeEnDOM($selectCategoria)) {
                 const categorias = Categorias.get();
                 const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
@@ -48,12 +48,18 @@ class ControladorPizarra {
             }
 
             // ASOCIANDO EVENTOS
-            ManejadorEventos.asociar('#form-agregar-item', 'submit', ManejadorEventos.getHandler_formAgregarItem());
-            ManejadorEventos.asociar('input[name="agregar-item-radio-tipo"]', 'change', ManejadorEventos.getHandler_toggleDisplaySelectCategoria());
-            ManejadorEventos.asociar('th', 'click', ManejadorEventos.getHandler_reordenarTabla());
+            ManejadorEventos.asociar('table th', 'click', ManejadorEventos.getHandler_reordenarTabla());
+            ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
+            ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
-            ManejadorEventos.asociar('.btn-edit', 'click', ManejadorEventos.getHandler_editarItem());
-            ManejadorEventos.asociar('.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
+            ManejadorEventos.asociar('#form-agregar-item', 'submit', ManejadorEventos.getHandler_formAgregarItem());
+            ManejadorEventos.asociar('#form-editar-item', 'submit', ManejadorEventos.getHandler_formEditarItem());
+            ManejadorEventos.asociar('form .contenedor-radio-tipo input', 'change', ManejadorEventos.getHandler_toggleDisplaySelectCategoria());
+            
+            ManejadorEventos.asociar('#btn-agregar', 'click', function() {
+                Formulario.ocultarSelect('form .contenedor-select-categoria');
+                Formulario.reset('#form-agregar-item');
+            });
             ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getHandler_cerrarApp());
 
             // INICIALIZANDO COMPONENTES DE TERCEROS

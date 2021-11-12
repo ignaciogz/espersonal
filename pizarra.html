@@ -138,7 +138,7 @@
     </main>
 
     <!-- Btn flotante de la pizarra -->
-    <div class="btn-flotante">
+    <div id="btn-agregar" class="btn-flotante">
         <a class="waves-effect waves-red btn-large btn-floating pulse brown modal-trigger" href="#modal-agregar-item"><i class="material-icons">add</i></a>
     </div>
 
@@ -155,18 +155,18 @@
     
                     <div class="input-field col 12">
                         <p>
-                            Seleccione tipo de item:
+                            Seleccione el tipo de item:
                         </p>
-                        <p class="tipo-de-item">
+                        <p class="contenedor-radio-tipo">
                             <label><input class="with-gap" name="agregar-item-radio-tipo" type="radio" value="Ingreso" checked required /><span>Ingreso</span></label>
                         </p>
-                        <p class="tipo-de-item">
+                        <p class="contenedor-radio-tipo">
                             <label><input class="with-gap" name="agregar-item-radio-tipo" type="radio" value="Egreso" required /><span>Egreso</span></label>
                         </p>
                     </div>
                     
-                    <div id="contenedor-select-categoria" class="input-field col s12">
-                        <select id="agregar-item-select-categoria" required>
+                    <div class="contenedor-select-categoria input-field col s12">
+                        <select class="select-categoria" required>
                             <option value="Sin categoría" disabled selected>Seleccione una categoría</option>
                         </select>
                     </div>
@@ -179,6 +179,48 @@
             </div>
             <div class="modal-footer">
                 <button class="btn waves-effect waves-red brown" type="submit" name="action">Agregar</button>
+                <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal :: Formulario de editar item -->
+    <div id="modal-editar-item" class="modal modal-fixed-footer">
+        <form id="form-editar-item">
+            <div class="modal-content">
+                <h4>Editar Item<i class="medium material-icons right">edit</i></h4>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="editar-item-nombre" type="text" required>
+                        <label class="active" for="editar-item-nombre">Nombre</label>
+                    </div>
+    
+                    <div class="input-field col 12">
+                        <p>
+                            Seleccione el tipo de item:
+                        </p>
+                        <p class="contenedor-radio-tipo">
+                            <label><input class="with-gap" name="editar-item-radio-tipo" type="radio" value="Ingreso" required /><span>Ingreso</span></label>
+                        </p>
+                        <p class="contenedor-radio-tipo">
+                            <label><input class="with-gap" name="editar-item-radio-tipo" type="radio" value="Egreso" required /><span>Egreso</span></label>
+                        </p>
+                    </div>
+                    
+                    <div class="contenedor-select-categoria input-field col s12">
+                        <select class="select-categoria" required>
+                            <option value="Sin categoría" disabled selected>Seleccione una categoría</option>
+                        </select>
+                    </div>
+                
+                    <div class="input-field col s12">
+                        <input id="editar-item-monto" type="text" required>
+                        <label class="active" for="editar-item-monto">Monto</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn waves-effect waves-red brown" type="submit" name="action">Modificar</button>
                 <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
             </div>
         </form>

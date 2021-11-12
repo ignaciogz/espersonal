@@ -430,17 +430,13 @@ form {
   background-color: #866B47;
 }
 
-.tipo-de-item {
+.contenedor-radio-tipo {
   display: inline-block;
   margin-right: 1rem;
 }
 
 .dropdown-content li > a, .dropdown-content li > span {
   color: var(--color-textos);
-}
-
-#form-agregar-item #contenedor-select-categoria {
-  display: none;
 }
 
 /*@import 'components/animaciones'; */

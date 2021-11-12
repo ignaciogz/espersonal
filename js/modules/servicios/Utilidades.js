@@ -13,11 +13,12 @@ class Utilidades {
     }
 
     static desformatearMonto(monto) {
-        let montoDesformateado = monto.replace('$&nbsp;', '');
+        let montoDesformateado = monto;
+        montoDesformateado = monto.replace('$&nbsp;', '');
         montoDesformateado = montoDesformateado.replace('.', '');
         montoDesformateado = montoDesformateado.replace(',', '.');
 
-        return montoDesformateado;
+        return parseFloat(montoDesformateado);
     }
 }
 
