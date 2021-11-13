@@ -99,7 +99,7 @@ class ManejadorEventos extends UtilidadesEvento {
             e.preventDefault();
             const formulario = e.target;
 
-            // OBTENIENDO DATOS -> formulario agregar item
+            // OBTENIENDO DATOS -> Formulario agregar item
             const datoNombre = Formulario.getInput('#agregar-item-nombre');
             const datoTipo = Formulario.getRadioBtnElegido('agregar-item-radio-tipo');
 
@@ -138,6 +138,28 @@ class ManejadorEventos extends UtilidadesEvento {
             Navegador.scrollear("final");
             Navegador.scrollear("inicio", 3000);
         };
+    }
+
+    static getHandler_formConfiguracion() {
+        return function (e) {
+            e.preventDefault();
+            const formulario = e.target;
+
+            // OBTENIENDO DATOS -> Formulario configuración
+            const datoAnio = Formulario.getOpcionDeSelectElegida('#configuracion-select-anio');
+            const datoMes = Formulario.getOpcionDeSelectElegida('#configuracion-select-mes');
+
+            // LÓGICA -> Configuración
+            Fecha.setFecha(datoAnio, datoMes);
+
+            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+            const datosDeSesion = new DatosSesionDeUsuario(usuarioLogeado.nombre, usuarioLogeado.anioDeRegistro, Fecha.getFecha());
+            Navegador.actualizarEnSesion(datosDeSesion);
+
+            // Procedimiento de finalización
+            Modal.cerrar('modal-configuracion');
+            Navegador.redireccionar("pizarra.html");
+        }
     }
 
     static getHandler_formEditarItem() {

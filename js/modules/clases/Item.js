@@ -32,7 +32,7 @@ class Item {
             item.categoria = "----------";
         }
 
-        $registroItem.innerHTML = `<td>
+        $registroItem.innerHTML =  `<td>
                                         <i class="material-icons left ${tipoDeItem.estilo_tipo} text-darken-2">${tipoDeItem.icono}</i>
                                     </td>
                                     <td>${item.categoria}</td>

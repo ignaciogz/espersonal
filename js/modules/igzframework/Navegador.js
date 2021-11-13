@@ -5,8 +5,17 @@ class Navegador {
     static paginaActual = location.pathname.split("/").pop().split(".").shift();
 
     // Métodos públicos
+    static actualizarEnSesion(datosDeSesion) {
+        Navegador.eliminarDeSesion("usuario_logeado");
+        Navegador.guardarEnSesion("usuario_logeado", datosDeSesion);
+    }
+    
     static cerrarSesion() {
-        Sesion.eliminar("usuario_logeado");
+        Navegador.eliminarDeSesion("usuario_logeado");
+    }
+
+    static eliminarDeSesion(clave) {
+        Sesion.eliminar(clave);
     }
 
     static existeEnSesion(clave) {
@@ -18,7 +27,7 @@ class Navegador {
     }
 
     static iniciarSesion(datosDeSesion) {
-        Sesion.guardar("usuario_logeado", datosDeSesion);
+        Navegador.guardarEnSesion("usuario_logeado", datosDeSesion);
     }
 
     static obtenerDeSesion(clave) {
