@@ -12,6 +12,22 @@ class ManejadorEventos extends UtilidadesEvento {
         };
     }
 
+    static getHandler_autocompletarFormConfiguracion() {
+        return function () {
+            // OBTENIENDO DATOS
+            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+            Fecha.desformatearFecha(usuarioLogeado.fechaSeleccionada);
+
+            // CARGANDO CAMPOS -> Formulario configuración
+            Formulario.setOpcionDeSelect('#configuracion-select-anio', Fecha.getAnioSeleccionado());
+            Formulario.setOpcionDeSelect('#configuracion-select-mes', Fecha.getMesSeleccionado());
+            
+            // Procedimiento de finalización
+            M.AutoInit();
+            M.updateTextFields();
+        }
+    }
+
     static getHandler_autocompletarFormEditarItem() {
         return function () {
             const $itemDisparador = $(this);
@@ -29,13 +45,13 @@ class ManejadorEventos extends UtilidadesEvento {
                 const item = Item.getItem(itemID, pizarra.getItems());
             */
             
-            // CARGANDO CAMPOS -> formulario editar item
+            // CARGANDO CAMPOS -> Formulario editar item
             Formulario.setInput('#editar-item-nombre', item.nombre);
             Formulario.setRadioBtn('editar-item-radio-tipo', item.tipo);
             Formulario.setOpcionDeSelect('#form-editar-item .select-categoria', item.categoria);
             Formulario.setInput('#editar-item-monto', item.monto);
             
-            // MUESTRO u OCULTO el selector de categorias, dependiendo del tipo de item
+            // MUESTRO u OCULTO -> El selector de categorias, dependiendo del tipo de item
             Formulario.toggleDisplaySelect('#form-editar-item .contenedor-select-categoria', item.tipo, { mostrar: "Egreso", ocultar: "Ingreso" });
             
             // Procedimiento de finalización
@@ -130,7 +146,7 @@ class ManejadorEventos extends UtilidadesEvento {
             ManejadorDOM.agregar($pizarraSeleccionada, registroItem);
 
             // ASOCIANDO EVENTOS -> Al nuevo item
-            ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler_editarItem());
+            ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
             // Procedimiento de finalización

@@ -35,6 +35,8 @@ class ControladorApp {
 
         // ASOCIANDO EVENTOS
         ManejadorEventos.asociar('#form-configuracion', 'submit', ManejadorEventos.getHandler_formConfiguracion());
+        
+        ManejadorEventos.asociar('#btn-configuracion', 'click', ManejadorEventos.getHandler_autocompletarFormConfiguracion());
         ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getHandler_cerrarApp());
 
         // INICIALIZANDO COMPONENTES DE TERCEROS

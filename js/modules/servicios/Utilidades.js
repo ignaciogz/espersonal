@@ -3,6 +3,17 @@ class Utilidades {
         return `${anio} - ${mes}`;
     }
 
+    static desformatearFecha(fecha) {
+        let fechaDesformateada = fecha;
+        fechaDesformateada = fecha.replaceAll(' ', '');
+        fechaDesformateada = fechaDesformateada.split('-');
+        
+        return {
+            anio: fechaDesformateada[0],
+            mes: fechaDesformateada[1]
+        };
+    }
+
     static formatearMonto(monto) {
         const formatter = new Intl.NumberFormat('es-AR', {
             style: 'currency',
@@ -13,11 +24,11 @@ class Utilidades {
     }
 
     static desformatearMonto(monto) {
-        let montoDesformateado = monto;
-        montoDesformateado = monto.replace('$', '');
-        montoDesformateado = montoDesformateado.replace('.', '');
+        let montoDesformateado  = monto;
+        montoDesformateado = montoDesformateado.replace('$', '');
+        montoDesformateado = montoDesformateado.replaceAll('.', '');
         montoDesformateado = montoDesformateado.replace(',', '.');
-        
+        debugger
         return parseFloat(montoDesformateado);
     }
 }

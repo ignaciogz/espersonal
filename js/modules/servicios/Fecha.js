@@ -23,12 +23,25 @@ class Fecha {
     static mesActual = Fecha.meses[Fecha.#hoy.getMonth()];
 
     // Métodos públicos
+    static getAnioSeleccionado() {
+        return Fecha.anio;
+    }
+
     static getFecha() {
         return Utilidades.formatearFecha(Fecha.anio, Fecha.mes);
     }
 
     static getFechaActual() {
         return Utilidades.formatearFecha(Fecha.anioActual, Fecha.mesActual);
+    }
+
+    static desformatearFecha(fechaFormateada) {
+        const fechaDesformateada = Utilidades.desformatearFecha(fechaFormateada);
+        Fecha.setFecha(fechaDesformateada.anio, fechaDesformateada.mes);
+    }
+
+    static getMesSeleccionado() {
+        return Fecha.mes;
     }
 
     static setFecha(anio, mes) {
