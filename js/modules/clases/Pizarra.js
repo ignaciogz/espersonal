@@ -149,7 +149,6 @@ class Pizarra {
         const indiceItem = Item.getIndice(itemID, pizarra.getItems());
         pizarra.modificarItem(indiceItem);
         
-
         pizarra.actualizarInformacion();
 
         // Reemplazo la pizarra desactualizada por la actualizada, dentro del conjunto de todas las pizarras

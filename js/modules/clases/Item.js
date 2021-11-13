@@ -9,27 +9,31 @@ class Item {
         this.monto = monto;
     }
 
+    static tiposDeItem = [
+        {
+            "nombre": "Ingreso",
+            "icono":"north_east",
+            "estilo_tipo":"green-text",
+            "estilo_monto":"positivo",
+        },
+        {
+            "nombre": "Egreso",
+            "icono":"south_west",
+            "estilo_tipo":"red-text",
+            "estilo_monto":"negativo",
+        }
+    ]
+
     static crearRegistro(item) {
         let $registroItem = document.createElement("tr");
-        let estiloTipoDeItem;
-        let iconoTipoDeItem;
-        let estiloDeMonto;
 
-        if (item.tipo === "Ingreso") {
-            estiloTipoDeItem = "green-text";
-            iconoTipoDeItem = "north_east";
-            estiloDeMonto = "positivo";
+        const tipoDeItem = Item.getTipoDeItem(item.tipo);
+        if (tipoDeItem.nombre === "Ingreso") {
             item.categoria = "----------";
-        } 
-        
-        if (item.tipo === "Egreso") {
-            estiloTipoDeItem = "red-text";
-            iconoTipoDeItem = "south_west";
-            estiloDeMonto = "negativo";
         }
 
         $registroItem.innerHTML = `<td>
-                                        <i class="material-icons left ${estiloTipoDeItem} text-darken-2">${iconoTipoDeItem}</i>
+                                        <i class="material-icons left ${tipoDeItem.estilo_tipo} text-darken-2">${tipoDeItem.icono}</i>
                                     </td>
                                     <td>${item.categoria}</td>
                                     <td>${item.nombre}</td>
@@ -39,9 +43,17 @@ class Item {
                                             <i data-item-id=${item.id} class="btn-edit material-icons brown-text right">edit</i>
                                         </a>
                                     </td>
-                                    <td class="valor-${estiloDeMonto}">${Utilidades.formatearMonto(item.monto)}</td>`;
+                                    <td class="valor-${tipoDeItem.estilo_monto}">${Utilidades.formatearMonto(item.monto)}</td>`;
 
         return $registroItem;
+    }
+
+    static getTipoDeItem(nombreTipoDeItem) {
+        function tipoDeItem(elemento) {
+            return elemento.nombre === nombreTipoDeItem;           
+        }
+        
+        return Item.tiposDeItem.find(tipoDeItem);
     }
 
     static getIndice(itemID, items) {
@@ -59,7 +71,28 @@ class Item {
         
         const datosDelItem = items.find(itemBuscado);
 
+        datosDelItem.categoria = Item.getValorDeCategoriaDeTipo(datosDelItem.tipo, datosDelItem.categoria);
+
         return new Item(datosDelItem.id, datosDelItem.tipo, datosDelItem.categoria, datosDelItem.nombre, datosDelItem.monto);
+    }
+
+    static getTipoDelIcono(icono) {
+        function buscarIconoDeTipoDeItem(elemento) {
+            return elemento.icono === icono;           
+        }
+        
+        const tipoDeItem = Item.tiposDeItem.find(buscarIconoDeTipoDeItem);
+        
+        return tipoDeItem.nombre;
+    }
+
+    static getValorDeCategoriaDeTipo(tipo, categoria) {
+        switch (tipo) {
+            case "Ingreso":
+                return "Sin categoría";
+            case "Egreso":
+                return categoria;
+        }
     }
 }
 

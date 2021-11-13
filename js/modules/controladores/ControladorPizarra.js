@@ -9,10 +9,6 @@ class ControladorPizarra {
         if (Usuario.estaLogeado()) {
             ControladorApp.inicializar();
             
-            // MOSTRANDO -> Nombre de usuario
-            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-            ManejadorDOM.mostrarNombreDeUsuario(usuarioLogeado);
-
             // [Al abrir la app la pizarra seleccionada será por defecto la del mes actual]
             const $pizarraSeleccionada = $('#pizarra-seleccionada');
             if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
@@ -21,6 +17,7 @@ class ControladorPizarra {
                 observador_itemsDePizarra.observe($pizarraSeleccionada[0], { childList: true, subtree: true });
 
                 // MOSTRANDO -> La pizarra selecionada
+                const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
                 const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
                 const registrosDeItems = pizarra.crearRegistros();

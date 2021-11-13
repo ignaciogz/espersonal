@@ -14,10 +14,10 @@ class Utilidades {
 
     static desformatearMonto(monto) {
         let montoDesformateado = monto;
-        montoDesformateado = monto.replace('$&nbsp;', '');
+        montoDesformateado = monto.replace('$', '');
         montoDesformateado = montoDesformateado.replace('.', '');
         montoDesformateado = montoDesformateado.replace(',', '.');
-
+        
         return parseFloat(montoDesformateado);
     }
 }

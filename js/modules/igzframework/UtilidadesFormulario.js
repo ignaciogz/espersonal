@@ -11,6 +11,14 @@ class UtilidadesFormulario {
         return $option;
     }
 
+    static #getElementoPadre(elemento, etiquetaPadreBuscada) {
+        return elemento.parents(etiquetaPadreBuscada).eq(0);
+    }
+    
+    static getFormulario(elemento) {
+            return UtilidadesFormulario.#getElementoPadre(elemento, 'form');
+    }
+
     // Métodos públicos
     static getInput(id) {
         const $input = $(id);
@@ -87,7 +95,7 @@ class UtilidadesFormulario {
 
     static setRadioBtn(name, tipo) {
         const $radio = $(`input[name="${name}"][value="${tipo}"]`);
-
+        
         if (UtilidadesDOM.existeEnDOM($radio)) {
             $radio.prop('checked', true);
         }

@@ -9,10 +9,6 @@ class ControladorCategorias {
         if (Usuario.estaLogeado()) {
             ControladorApp.inicializar();
             
-            // MOSTRANDO -> Nombre de usuario
-            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-            ManejadorDOM.mostrarNombreDeUsuario(usuarioLogeado);
-
             //  CREANDO DINÁMICAMENTE -> Cards de categorías
             const $cardsCategorias = $('#contenedor-cards-categorias');
             if (ManejadorDOM.existeEnDOM($cardsCategorias)) {

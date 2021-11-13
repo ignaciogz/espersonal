@@ -17,23 +17,26 @@ class ManejadorEventos extends UtilidadesEvento {
             const $itemDisparador = $(this);
             const itemID = $itemDisparador.data('item-id');
 
+            // OBTENIENDO DATOS
+            const fila = Tabla.getFila($itemDisparador);
+            const item = Tabla.getItem(fila, itemID);
+
             // OBTENIENDO DATOS -> Del item, a partir de su ID
-            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-            const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
-            const item = Item.getItem(itemID, pizarra.getItems());
-
-            if (item.categoria === null) {
-                item.categoria = "Sin categoría";
-            }
-
+            // Si existiera algún dato que NO pueda obtener del HTML visible, buscaría el item en localstorage para autocompletar:
+            /* 
+                const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+                const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+                const item = Item.getItem(itemID, pizarra.getItems());
+            */
+            
             // CARGANDO CAMPOS -> formulario editar item
             Formulario.setInput('#editar-item-nombre', item.nombre);
-            Formulario.setRadioBtn('editar-item-radio-tipo', item.tipo);            
+            Formulario.setRadioBtn('editar-item-radio-tipo', item.tipo);
             Formulario.setOpcionDeSelect('#form-editar-item .select-categoria', item.categoria);
             Formulario.setInput('#editar-item-monto', item.monto);
             
             // MUESTRO u OCULTO el selector de categorias, dependiendo del tipo de item
-            Formulario.toggleDisplaySelect('.contenedor-select-categoria', item.tipo, { mostrar: "Egreso", ocultar: "Ingreso" });
+            Formulario.toggleDisplaySelect('#form-editar-item .contenedor-select-categoria', item.tipo, { mostrar: "Egreso", ocultar: "Ingreso" });
             
             // Procedimiento de finalización
             M.AutoInit();
@@ -63,39 +66,6 @@ class ManejadorEventos extends UtilidadesEvento {
             Pizarra.existenteEliminarItem(pizarra, itemID);
             ManejadorDOM.eliminar(fila);
         }
-    }
-
-    static getHandler_reordenarTabla() {
-        return function () {
-            const $thDisparador = $(this);
-            const indexColumna = $thDisparador.index();
-
-            if (indexColumna !== 3) {
-                let tabla = Tabla.getTabla($thDisparador);
-                let filas = Tabla.getArrayDeFilas(tabla);
-
-                filas.sort(Tabla.fn_comparacion(indexColumna));
-                // GUARDO el orden de ordenamiento dentro del contexto, para cambiarlo cada vez que se ejecuta el manejador
-                this.asc = !this.asc;
-                if (!this.asc) {
-                    filas = filas.reverse();
-                }
-
-                // RECARGO la tabla, con las filas ordenadas
-                for (const fila of filas) {
-                    ManejadorDOM.agregar(tabla, fila);
-                }
-
-                // MUESTRO icono de ordenamiento en la columna que disparó el evento
-                Tabla.setIconoDeOrdenamiento($thDisparador, this.asc);
-            }
-        }
-    }
-
-    static getHandler_toggleDisplaySelectCategoria() {
-        return function () {
-            Formulario.toggleDisplaySelect('.contenedor-select-categoria', this.value, { mostrar: "Egreso", ocultar: "Ingreso" });
-        };
     }
 
     static getHandler_formAcceso() {
@@ -135,7 +105,7 @@ class ManejadorEventos extends UtilidadesEvento {
 
             let datoCategoria = null;
             if (datoTipo === "Egreso") {
-                datoCategoria = Formulario.getOpcionDeSelectElegida(`#form-agregar-item .select-categoria`);
+                datoCategoria = Formulario.getOpcionDeSelectElegida('#form-agrgar-item .select-categoria');
             }
 
             const datoMonto = parseFloat(Formulario.getInput('#agregar-item-monto'));
@@ -207,9 +177,45 @@ class ManejadorEventos extends UtilidadesEvento {
 
     static getHandler_resetearFormAgregarItem() {
         return function () {
-            Formulario.ocultarSelect('form .contenedor-select-categoria');
+            Formulario.ocultarSelect('#form-agregar-item .contenedor-select-categoria');
             Formulario.reset('#form-agregar-item');
         }
+    }
+
+    static getHandler_reordenarTabla() {
+        return function () {
+            const $thDisparador = $(this);
+            const indexColumna = $thDisparador.index();
+
+            if (indexColumna !== 3) {
+                let tabla = Tabla.getTabla($thDisparador);
+                let filas = Tabla.getArrayDeFilas(tabla);
+
+                filas.sort(Tabla.fn_comparacion(indexColumna));
+                // GUARDO el orden de ordenamiento dentro del contexto, para cambiarlo cada vez que se ejecuta el manejador
+                this.asc = !this.asc;
+                if (!this.asc) {
+                    filas = filas.reverse();
+                }
+
+                // RECARGO la tabla, con las filas ordenadas
+                for (const fila of filas) {
+                    ManejadorDOM.agregar(tabla, fila);
+                }
+
+                // MUESTRO icono de ordenamiento en la columna que disparó el evento
+                Tabla.setIconoDeOrdenamiento($thDisparador, this.asc);
+            }
+        }
+    }
+
+    static getHandler_toggleDisplaySelectCategoria() {
+        return function () {
+            const $radioInputDisparador = $(this);
+            const idFormulario = Formulario.getFormulario($radioInputDisparador).prop('id');
+            
+            Formulario.toggleDisplaySelect(`#${idFormulario} .contenedor-select-categoria`, this.value, { mostrar: "Egreso", ocultar: "Ingreso" });
+        };
     }
 }
 

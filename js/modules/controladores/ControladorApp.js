@@ -4,8 +4,6 @@ import { Menu, Pizarra, Usuario } from '../clases.js';
 
 class ControladorApp {
     static inicializar() {
-        const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-
         // CREANDO DINÁMICAMENTE -> Opciones del menú de navegación
         const $menu = $('#contenedor-menu');
         if (ManejadorDOM.existeEnDOM($menu)) {
@@ -16,6 +14,10 @@ class ControladorApp {
 
         // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
         Pizarra.cargarJSON_pizarrasPredefinidas();
+
+        // MOSTRANDO -> Nombre de usuario
+        const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+        ManejadorDOM.mostrarNombreDeUsuario(usuarioLogeado);
 
         // CREANDO DINÁMICAMENTE -> Opciones del select año, del formulario de configuración
         const $selectAnio = $('#configuracion-select-anio');
