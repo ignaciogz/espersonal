@@ -12,15 +12,15 @@ class Item {
     static tiposDeItem = [
         {
             "nombre": "Ingreso",
-            "icono":"north_east",
-            "estilo_tipo":"green-text",
-            "estilo_monto":"positivo",
+            "icono": "north_east",
+            "estilo_tipo": "green-text",
+            "estilo_monto": "positivo",
         },
         {
             "nombre": "Egreso",
-            "icono":"south_west",
-            "estilo_tipo":"red-text",
-            "estilo_monto":"negativo",
+            "icono": "south_west",
+            "estilo_tipo": "red-text",
+            "estilo_monto": "negativo",
         }
     ]
 

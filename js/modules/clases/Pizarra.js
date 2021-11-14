@@ -65,6 +65,10 @@ class Pizarra {
         this.items.splice(indiceItem, 1);
     }
 
+    reemplazarItem(indiceItem, itemModificado) {
+        this.items.splice(indiceItem, 1, itemModificado);
+    }
+
     getCantidadDeItems() {
         return this.getItems().length;
     }
@@ -125,49 +129,32 @@ class Pizarra {
     }
 
     static existenteAgregarItem(pizarra, item) {
-        let pizarrasAlmacenadas = Pizarra.#obtenerPizarras();
-        const indicePizarraDesactualizada = Pizarra.getIndice(pizarra, pizarrasAlmacenadas);
-        Pizarra.#eliminarPizarras();
-
         pizarra.agregarItem(item);
-
         pizarra.actualizarInformacion();
 
-        // Reemplazo la pizarra desactualizada por la actualizada, dentro del conjunto de todas las pizarras
-        pizarrasAlmacenadas.splice(indicePizarraDesactualizada, 1, pizarra);
-
-        for (const pizarra of pizarrasAlmacenadas) {
-            Pizarra.guardarPizarra(pizarra);
-        }
+        Pizarra.actualizarPizarra(pizarra);
     }
 
-    static existenteEditarItem(pizarra, itemID) {
-        let pizarrasAlmacenadas = Pizarra.#obtenerPizarras();
-        const indicePizarraDesactualizada = Pizarra.getIndice(pizarra, pizarrasAlmacenadas);
-        Pizarra.#eliminarPizarras();
-
+    static existenteEditarItem(pizarra, itemID, itemModificado) {
         const indiceItem = Item.getIndice(itemID, pizarra.getItems());
-        pizarra.modificarItem(indiceItem);
-        
+        pizarra.reemplazarItem(indiceItem, itemModificado);
         pizarra.actualizarInformacion();
 
-        // Reemplazo la pizarra desactualizada por la actualizada, dentro del conjunto de todas las pizarras
-        pizarrasAlmacenadas.splice(indicePizarraDesactualizada, 1, pizarra);
-
-        for (const pizarra of pizarrasAlmacenadas) {
-            Pizarra.guardarPizarra(pizarra);
-        }
+        Pizarra.actualizarPizarra(pizarra);
     }
 
     static existenteEliminarItem(pizarra, itemID) {
+        const indiceItem = Item.getIndice(itemID, pizarra.getItems());
+        pizarra.eliminarItem(indiceItem);
+        pizarra.actualizarInformacion();
+
+        Pizarra.actualizarPizarra(pizarra);
+    }
+
+    static actualizarPizarra(pizarra) {
         let pizarrasAlmacenadas = Pizarra.#obtenerPizarras();
         const indicePizarraDesactualizada = Pizarra.getIndice(pizarra, pizarrasAlmacenadas);
         Pizarra.#eliminarPizarras();
-
-        const indiceItem = Item.getIndice(itemID, pizarra.getItems());
-        pizarra.eliminarItem(indiceItem);
-
-        pizarra.actualizarInformacion();
 
         // Reemplazo la pizarra desactualizada por la actualizada, dentro del conjunto de todas las pizarras
         pizarrasAlmacenadas.splice(indicePizarraDesactualizada, 1, pizarra);

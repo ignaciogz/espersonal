@@ -45,6 +45,10 @@ class UtilidadesDOM {
             throw `NO existe el contenedor de error cuyo selector es: ${selector}`;
         }
     }
+
+    static reemplazar(elementoInicial, elemento) {
+        elementoInicial.replaceWith(elemento);
+    }
 }
 
 export { UtilidadesDOM };

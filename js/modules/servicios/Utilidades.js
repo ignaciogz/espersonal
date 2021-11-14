@@ -28,7 +28,7 @@ class Utilidades {
         montoDesformateado = montoDesformateado.replace('$', '');
         montoDesformateado = montoDesformateado.replaceAll('.', '');
         montoDesformateado = montoDesformateado.replace(',', '.');
-        debugger
+        
         return parseFloat(montoDesformateado);
     }
 }

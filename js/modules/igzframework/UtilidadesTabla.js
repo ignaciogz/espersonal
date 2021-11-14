@@ -11,12 +11,12 @@ class UtilidadesTabla {
         return tabla.find('tr').slice(1).toArray();
     }
 
-    static getTabla(elemento) {
-        return UtilidadesTabla.#getElementoPadre(elemento, 'table');
-    }
-
     static getFila(elemento) {
         return UtilidadesTabla.#getElementoPadre(elemento, 'tr');
+    }
+
+    static getTabla(elemento) {
+        return UtilidadesTabla.#getElementoPadre(elemento, 'table');
     }
 
     static setIconoDeOrdenamiento(elemento, asc) {

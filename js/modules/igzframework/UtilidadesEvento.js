@@ -9,6 +9,14 @@ class UtilidadesEvento {
         }
     }
 
+    /* static asociarAlIndice(elemento, evento, manejador, indice = 1) {
+        const $elemento = $(elemento).eq(indice-1);
+        
+        if (UtilidadesDOM.existeEnDOM($elemento)) {
+            $elemento.on(evento, manejador);
+        }
+    } */
+
     static asociarAlUltimo(elemento, evento, manejador) {
         const $ultimoElemento = $(elemento).last();
         

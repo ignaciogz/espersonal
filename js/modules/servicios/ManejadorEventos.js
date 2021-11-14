@@ -54,6 +54,10 @@ class ManejadorEventos extends UtilidadesEvento {
             // MUESTRO u OCULTO -> El selector de categorias, dependiendo del tipo de item
             Formulario.toggleDisplaySelect('#form-editar-item .contenedor-select-categoria', item.tipo, { mostrar: "Egreso", ocultar: "Ingreso" });
             
+            // ALMACENO DATO -> Guardo el ID del item dentro del formulario, para poder leerlo cuando se dispara su evento submit
+            $('#form-editar-item').data('fila', fila);
+            $('#form-editar-item').data('item-id', itemID);
+
             // Procedimiento de finalización
             M.AutoInit();
             M.updateTextFields();
@@ -113,7 +117,6 @@ class ManejadorEventos extends UtilidadesEvento {
     static getHandler_formAgregarItem() {
         return function (e) {
             e.preventDefault();
-            const formulario = e.target;
 
             // OBTENIENDO DATOS -> Formulario agregar item
             const datoNombre = Formulario.getInput('#agregar-item-nombre');
@@ -121,7 +124,7 @@ class ManejadorEventos extends UtilidadesEvento {
 
             let datoCategoria = null;
             if (datoTipo === "Egreso") {
-                datoCategoria = Formulario.getOpcionDeSelectElegida('#form-agrgar-item .select-categoria');
+                datoCategoria = Formulario.getOpcionDeSelectElegida('#form-agregar-item .select-categoria');
             }
 
             const datoMonto = parseFloat(Formulario.getInput('#agregar-item-monto'));
@@ -130,19 +133,19 @@ class ManejadorEventos extends UtilidadesEvento {
             const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
             const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
             const itemID = pizarra.getNuevoItemID();
-            const nuevoItem = new Item(itemID, datoTipo, datoCategoria, datoNombre, datoMonto);
+            const itemNuevo = new Item(itemID, datoTipo, datoCategoria, datoNombre, datoMonto);
 
             if (Pizarra.existePizarra(pizarra)) {
-                Pizarra.existenteAgregarItem(pizarra, nuevoItem);
+                Pizarra.existenteAgregarItem(pizarra, itemNuevo);
             } else {
-                pizarra.agregarItem(nuevoItem);
+                pizarra.agregarItem(itemNuevo);
                 pizarra.actualizarInformacion();
                 Pizarra.guardarPizarra(pizarra);
             }
 
             // MOSTRANDO -> El nuevo item al usuario
             const $pizarraSeleccionada = $('#pizarra-seleccionada');
-            const registroItem = Item.crearRegistro(nuevoItem);
+            const registroItem = Item.crearRegistro(itemNuevo);
             ManejadorDOM.agregar($pizarraSeleccionada, registroItem);
 
             // ASOCIANDO EVENTOS -> Al nuevo item
@@ -180,7 +183,43 @@ class ManejadorEventos extends UtilidadesEvento {
 
     static getHandler_formEditarItem() {
         return function (e) {
-            // Falta programar
+            e.preventDefault();
+
+            const formulario = $(this);
+            const itemID = formulario.data('item-id');
+            const fila = formulario.data('fila');
+
+            // OBTENIENDO DATOS
+            /* const fila = Tabla.getFila($itemDisparador); */
+
+            // OBTENIENDO DATOS -> Formulario editar item
+            const datoNombre = Formulario.getInput('#editar-item-nombre');
+            const datoTipo = Formulario.getRadioBtnElegido('editar-item-radio-tipo');
+
+            let datoCategoria = null;
+            if (datoTipo === "Egreso") {
+                datoCategoria = Formulario.getOpcionDeSelectElegida('#form-editar-item .select-categoria');
+            }
+
+            const datoMonto = parseFloat(Formulario.getInput('#editar-item-monto'));
+
+            // LÓGICA -> Editar item
+            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+            const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+            const itemModificado = new Item(itemID, datoTipo, datoCategoria, datoNombre, datoMonto);
+
+            Pizarra.existenteEditarItem(pizarra, itemID, itemModificado);
+
+            // MOSTRANDO -> El item modificado al usuario
+            const registroItem = Item.crearRegistro(itemModificado);
+            ManejadorDOM.reemplazar(fila, registroItem);
+
+            /* FALTA PROGRAMAR :( -> Asociar evento solo al editado */
+            ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
+            ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
+            
+            // Procedimiento de finalización
+            Modal.cerrar('modal-editar-item');
         };
     }
 
