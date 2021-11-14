@@ -54,7 +54,7 @@ class ManejadorEventos extends UtilidadesEvento {
             // MUESTRO u OCULTO -> El selector de categorias, dependiendo del tipo de item
             Formulario.toggleDisplaySelect('#form-editar-item .contenedor-select-categoria', item.tipo, { mostrar: "Egreso", ocultar: "Ingreso" });
             
-            // ALMACENO DATO -> Guardo el ID del item dentro del formulario, para poder leerlo cuando se dispara su evento submit
+            // ALMACENO DATO -> Guardo el ID y la fila del item dentro del formulario, para poder leerlo cuando se dispara su evento submit
             $('#form-editar-item').data('fila', fila);
             $('#form-editar-item').data('item-id', itemID);
 
@@ -84,7 +84,7 @@ class ManejadorEventos extends UtilidadesEvento {
             const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
             Pizarra.existenteEliminarItem(pizarra, itemID);
-            ManejadorDOM.eliminar(fila);
+            ManejadorDOM.eliminarFila(fila);
         }
     }
 
@@ -188,10 +188,7 @@ class ManejadorEventos extends UtilidadesEvento {
             const formulario = $(this);
             const itemID = formulario.data('item-id');
             const fila = formulario.data('fila');
-
-            // OBTENIENDO DATOS
-            /* const fila = Tabla.getFila($itemDisparador); */
-
+            
             // OBTENIENDO DATOS -> Formulario editar item
             const datoNombre = Formulario.getInput('#editar-item-nombre');
             const datoTipo = Formulario.getRadioBtnElegido('editar-item-radio-tipo');
