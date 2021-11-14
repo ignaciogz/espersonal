@@ -100,11 +100,9 @@ class Pizarra {
 
     static buscarPizarra(usuario, fecha) {
         if (Almacenamiento.existe("pizarras")) {
-            function pizarraDeUsuarioBuscada(elemento) {
-                return elemento.usuario === usuario && elemento.fecha === fecha;
-            }
+            const fn_busqueda = Pizarra.fn_pizarraDeUsuarioBuscada(usuario, fecha);
 
-            return Almacenamiento.buscar("pizarras", pizarraDeUsuarioBuscada);
+            return Almacenamiento.buscar("pizarras", fn_busqueda);
         } else {
             return undefined;
         }
@@ -121,11 +119,9 @@ class Pizarra {
     }
 
     static getIndice(pizarra, pizarras) {
-        function pizarraDeUsuarioBuscada(elemento) {
-            return elemento.usuario === pizarra.usuario && elemento.fecha === pizarra.fecha;
-        }
+        const fn_busqueda = Pizarra.fn_pizarraDeUsuarioBuscada(pizarra.usuario, pizarra.fecha);
 
-        return pizarras.findIndex(pizarraDeUsuarioBuscada);
+        return pizarras.findIndex(fn_busqueda);
     }
 
     static existenteAgregarItem(pizarra, item) {
@@ -203,6 +199,10 @@ class Pizarra {
 
         pizarraDelUsuario.actualizarInformacion();
         return pizarraDelUsuario;
+    }
+
+    static fn_pizarraDeUsuarioBuscada(usuario, fecha) {
+        return elemento => elemento.usuario === usuario && elemento.fecha === fecha;
     }
 }
 

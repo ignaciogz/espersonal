@@ -1,5 +1,5 @@
 import { Navegador, UtilidadesEvento } from '../igzframework.js';
-import { Fecha, Formulario, ManejadorDOM, Modal, Tabla, Utilidades } from '../servicios.js';
+import { Fecha, Formulario, ManejadorDOM, Modal, Tabla } from '../servicios.js';
 import { DatosSesionDeUsuario, Item, Pizarra, Usuario } from '../clases.js';
 
 class ManejadorEventos extends UtilidadesEvento {

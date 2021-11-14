@@ -21,11 +21,9 @@ class Usuario {
     // Métodos privados
     static validarUsuario(usuario) {
         if (Almacenamiento.existe("usuarios_registrados")) {
-            function usuarioBuscado(elemento) {
-                return elemento.nombre === usuario.nombre && elemento.contrasena === usuario.contrasena;
-            }
+            const fn_busqueda = Usuario.fn_usuarioBuscado(usuario.nombre, usuario.contrasena);
 
-            return Almacenamiento.buscar("usuarios_registrados", usuarioBuscado) ? true : false;
+            return Almacenamiento.buscar("usuarios_registrados", fn_busqueda) ? true : false;
         } else {
             return false;
         }
@@ -51,11 +49,9 @@ class Usuario {
 
     static buscarUsuario(usuario) {
         if (Almacenamiento.existe("usuarios_registrados")) {
-            function nombreUsuarioBuscado(elemento) {
-                return elemento.nombre === usuario.nombre;
-            }
+            const fn_busqueda = Usuario.fn_nombreUsuarioBuscado(usuario.nombre);
 
-            return Almacenamiento.buscar("usuarios_registrados", nombreUsuarioBuscado);
+            return Almacenamiento.buscar("usuarios_registrados", fn_busqueda);
         } else {
             return undefined;
         }
@@ -106,6 +102,14 @@ class Usuario {
         } else {
             return undefined;
         }
+    }
+
+    static fn_nombreUsuarioBuscado(nombre) {
+        return elemento => elemento.nombre === nombre;
+    }
+
+    static fn_usuarioBuscado(nombre, contrasena) {
+        return elemento => elemento.nombre === nombre && elemento.contrasena === contrasena;
     }
 }
 

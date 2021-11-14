@@ -29,15 +29,16 @@ class UtilidadesDOM {
         }
     }
 
-    static mostrarError(selector, msj, miliSegundos = 10000) {
+    static mostrarError(selector, msj, miliSegundos = 8000) {
         const $contenedorDeError = $(selector);
 
         if (UtilidadesDOM.existeEnDOM($contenedorDeError)) {
             $contenedorDeError.text(`ERROR -> ${msj}`);
 
-            $contenedorDeError.fadeIn("slow", function(){
+            $contenedorDeError.slideDown("slow", function(){
                 $contenedorDeError.fadeOut(miliSegundos, function() {
                     UtilidadesDOM.#limpiarTexto($contenedorDeError);
+                    $contenedorDeError.hide();
                 });
             });
         }    
