@@ -142,20 +142,21 @@ class ManejadorEventos extends UtilidadesEvento {
                 pizarra.actualizarInformacion();
                 Pizarra.guardarPizarra(pizarra);
             }
+            // FIN LÓGICA -> Agregar item
+
+            Modal.cerrar('modal-agregar-item');
+            Navegador.scrollear("final");
 
             // MOSTRANDO -> El nuevo item al usuario
             const $pizarraSeleccionada = $('#pizarra-seleccionada');
             const registroItem = Item.crearRegistro(itemNuevo);
-            ManejadorDOM.agregar($pizarraSeleccionada, registroItem);
+            ManejadorDOM.agregarFila($pizarraSeleccionada, registroItem);
 
             // ASOCIANDO EVENTOS -> Al nuevo item
             ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
-            // Procedimiento de finalización
-            Modal.cerrar('modal-agregar-item');
-            Navegador.scrollear("final");
-            Navegador.scrollear("inicio", 3000);
+            Navegador.scrollear("inicio", 5000);
         };
     }
 
@@ -184,6 +185,7 @@ class ManejadorEventos extends UtilidadesEvento {
     static getHandler_formEditarItem() {
         return function (e) {
             e.preventDefault();
+            Modal.cerrar('modal-editar-item');
 
             const formulario = $(this);
             const itemID = formulario.data('item-id');
@@ -206,17 +208,15 @@ class ManejadorEventos extends UtilidadesEvento {
             const itemModificado = new Item(itemID, datoTipo, datoCategoria, datoNombre, datoMonto);
 
             Pizarra.existenteEditarItem(pizarra, itemID, itemModificado);
+            // FIN LÓGICA -> Editar item
 
             // MOSTRANDO -> El item modificado al usuario
             const registroItem = Item.crearRegistro(itemModificado);
-            ManejadorDOM.reemplazar(fila, registroItem);
+            ManejadorDOM.reemplazarFila(fila, registroItem);
 
             /* FALTA PROGRAMAR :( -> Asociar evento solo al editado */
             ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
-            
-            // Procedimiento de finalización
-            Modal.cerrar('modal-editar-item');
         };
     }
 

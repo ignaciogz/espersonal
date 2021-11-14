@@ -4,7 +4,7 @@ import { Utilidades } from '../servicios.js';
 
 class Tabla extends UtilidadesTabla {
     static #getValorDeLaCelda(fila, indexColumna) {
-        const valor = $(fila).children('td').eq(indexColumna).text();
+        const valor = Tabla.getContenedorDato(fila, indexColumna).text();
         
         return indexColumna !== 4 ? valor.trim() : Utilidades.desformatearMonto(valor);
     }
@@ -24,8 +24,8 @@ class Tabla extends UtilidadesTabla {
 
     static fn_comparacion(indexColumna) {
         return (filaA, filaB) => {
-            let valorA = Tabla.#getValorDeLaCelda(filaA, indexColumna);
-            let valorB = Tabla.#getValorDeLaCelda(filaB, indexColumna);
+            let valorA = Tabla.#getValorDeLaCelda($(filaA), indexColumna);
+            let valorB = Tabla.#getValorDeLaCelda($(filaB), indexColumna);
 
             return Tabla.comparar(valorA, valorB);
         }

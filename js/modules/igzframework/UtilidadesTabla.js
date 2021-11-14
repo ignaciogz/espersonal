@@ -11,6 +11,10 @@ class UtilidadesTabla {
         return tabla.find('tr').slice(1).toArray();
     }
 
+    static getContenedorDato(fila, indexColumna) {
+        return fila.children('td').eq(indexColumna);
+    }
+
     static getFila(elemento) {
         return UtilidadesTabla.#getElementoPadre(elemento, 'tr');
     }
