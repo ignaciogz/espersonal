@@ -85,6 +85,8 @@ class ManejadorEventos extends UtilidadesEvento {
 
             Pizarra.existenteEliminarItem(pizarra, itemID);
             ManejadorDOM.eliminarFila(fila);
+
+            Navegador.scrollear("inicio", 5000);
         }
     }
 
@@ -138,9 +140,7 @@ class ManejadorEventos extends UtilidadesEvento {
             if (Pizarra.existePizarra(pizarra)) {
                 Pizarra.existenteAgregarItem(pizarra, itemNuevo);
             } else {
-                pizarra.agregarItem(itemNuevo);
-                pizarra.actualizarInformacion();
-                Pizarra.guardarPizarra(pizarra);
+                Pizarra.nuevaAgregarItem(pizarra, itemNuevo);
             }
             // FIN LÓGICA -> Agregar item
 
@@ -156,7 +156,7 @@ class ManejadorEventos extends UtilidadesEvento {
             ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
-            Navegador.scrollear("inicio", 4000);
+            Navegador.scrollear("inicio", 5000);
         };
     }
 
@@ -218,6 +218,8 @@ class ManejadorEventos extends UtilidadesEvento {
             /* FALTA PROGRAMAR :( -> Asociar evento solo al editado */
             ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
+
+            Navegador.scrollear("inicio", 5000);
         };
     }
 

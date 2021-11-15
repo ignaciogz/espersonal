@@ -25,7 +25,6 @@ class ControladorPizarra {
                 ManejadorDOM.mostrarNombrePizarra(pizarra);
                 ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
 
-                pizarra.actualizarInformacion();
                 ManejadorDOM.mostrarInformacionPizarra(pizarra);
             }
 

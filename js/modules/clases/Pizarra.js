@@ -28,16 +28,8 @@ class Pizarra {
     }
 
     // Métodos privados [Encargados de generar la información útil]
-    #filtrarItems(propiedad, valor) {
-        return this.items.filter(elemento => elemento[propiedad] === valor);
-    }
-
-    #obtenerItemsDeCategoria(categoriaDeItem) {
-        return this.#filtrarItems("categoria", categoriaDeItem);
-    }
-
-    #obtenerItemsDeTipo(tipoDeItem) {
-        return this.#filtrarItems("tipo", tipoDeItem);
+    #calcularBalance() {
+        return this.totalIngresos - this.totalEgresos;
     }
 
     #calcularTotal(coleccion) {
@@ -52,21 +44,45 @@ class Pizarra {
         this.totalEgresos = this.#calcularTotal(this.#obtenerItemsDeTipo("Egreso"));
     }
 
+    #filtrarItems(propiedad, valor) {
+        return this.items.filter(elemento => elemento[propiedad] === valor);
+    }
+
+    #obtenerItemsDeCategoria(categoriaDeItem) {
+        return this.#filtrarItems("categoria", categoriaDeItem);
+    }
+
+    #obtenerItemsDeTipo(tipoDeItem) {
+        return this.#filtrarItems("tipo", tipoDeItem);
+    }
+
     // Métodos públicos
+    actualizarInformacion() {
+        this.#calcularTotalIngresos();
+        this.#calcularTotalEgresos();
+    }
+
     agregarItem(item) {
         this.items.push(item);
     }
 
-    calcularBalance() {
-        return this.totalIngresos - this.totalEgresos;
+    crearRegistros() {
+        const fragmento = ManejadorDOM.crearFragmento();
+
+        for (const item of this.getItems()) {
+            let registroItem = Item.crearRegistro(item);
+            ManejadorDOM.agregar(fragmento, registroItem);
+        }
+
+        return fragmento;
     }
 
     eliminarItem(indiceItem) {
         this.items.splice(indiceItem, 1);
     }
 
-    reemplazarItem(indiceItem, itemModificado) {
-        this.items.splice(indiceItem, 1, itemModificado);
+    getBalance() {
+        return this.#calcularBalance();
     }
 
     getCantidadDeItems() {
@@ -82,8 +98,16 @@ class Pizarra {
         return nuevoItemID;
     }
 
+    getTotalIngresos() {
+        return this.totalIngresos;
+    }
+
     getTotalEgresos() {
         return this.totalEgresos;
+    }
+
+    reemplazarItem(indiceItem, itemModificado) {
+        this.items.splice(indiceItem, 1, itemModificado);
     }
 
     setItems(items) {
@@ -94,18 +118,10 @@ class Pizarra {
         this.ultimoItemID = ultimoItemID;
     }
 
-    getTotalIngresos() {
-        return this.totalIngresos;
-    }
-
-    static buscarPizarra(usuario, fecha) {
-        if (Almacenamiento.existe("pizarras")) {
-            const fn_busqueda = Pizarra.fn_pizarraDeUsuarioBuscada(usuario, fecha);
-
-            return Almacenamiento.buscar("pizarras", fn_busqueda);
-        } else {
-            return undefined;
-        }
+    static cargarDatosAlmacenados(pizarra) {
+        const datosDeAlmacenamiento = Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha);
+        pizarra.setItems(datosDeAlmacenamiento.items);
+        pizarra.setUltimoItemID(datosDeAlmacenamiento.ultimoItemID);
     }
 
     static cargarJSON_pizarrasPredefinidas() {
@@ -126,7 +142,6 @@ class Pizarra {
 
     static existenteAgregarItem(pizarra, item) {
         pizarra.agregarItem(item);
-        pizarra.actualizarInformacion();
 
         Pizarra.actualizarPizarra(pizarra);
     }
@@ -134,7 +149,6 @@ class Pizarra {
     static existenteEditarItem(pizarra, itemID, itemModificado) {
         const indiceItem = Item.getIndice(itemID, pizarra.getItems());
         pizarra.reemplazarItem(indiceItem, itemModificado);
-        pizarra.actualizarInformacion();
 
         Pizarra.actualizarPizarra(pizarra);
     }
@@ -142,52 +156,15 @@ class Pizarra {
     static existenteEliminarItem(pizarra, itemID) {
         const indiceItem = Item.getIndice(itemID, pizarra.getItems());
         pizarra.eliminarItem(indiceItem);
-        pizarra.actualizarInformacion();
 
         Pizarra.actualizarPizarra(pizarra);
     }
 
-    static actualizarPizarra(pizarra) {
-        let pizarrasAlmacenadas = Pizarra.#obtenerPizarras();
-        const indicePizarraDesactualizada = Pizarra.getIndice(pizarra, pizarrasAlmacenadas);
-        Pizarra.#eliminarPizarras();
-
-        // Reemplazo la pizarra desactualizada por la actualizada, dentro del conjunto de todas las pizarras
-        pizarrasAlmacenadas.splice(indicePizarraDesactualizada, 1, pizarra);
-
-        for (const pizarra of pizarrasAlmacenadas) {
-            Pizarra.guardarPizarra(pizarra);
-        }
-    }
-
-    static existePizarra(pizarra) {
-        return Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha) ? true : false;
-    }
-
-    static guardarPizarra(pizarra) {
-        Almacenamiento.guardar("pizarras", pizarra);
-    }
-
-    actualizarInformacion() {
-        this.#calcularTotalIngresos();
-        this.#calcularTotalEgresos();
-    }
-
-    crearRegistros() {
-        const fragmento = ManejadorDOM.crearFragmento();
-
-        for (const item of this.getItems()) {
-            let registroItem = Item.crearRegistro(item);
-            ManejadorDOM.agregar(fragmento, registroItem);
-        }
-
-        return fragmento;
-    }
-
-    static cargarDatosAlmacenados(pizarra) {
-        const datosDeAlmacenamiento = Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha);
-        pizarra.setItems(datosDeAlmacenamiento.items);
-        pizarra.setUltimoItemID(datosDeAlmacenamiento.ultimoItemID);
+    static nuevaAgregarItem(pizarra, item) {
+        pizarra.agregarItem(item);
+        pizarra.actualizarInformacion();
+        
+        Pizarra.guardarPizarra(pizarra);
     }
 
     static obtenerPizarraDeUsuario(usuarioLogeado) {
@@ -199,6 +176,39 @@ class Pizarra {
 
         pizarraDelUsuario.actualizarInformacion();
         return pizarraDelUsuario;
+    }
+
+    static actualizarPizarra(pizarra) {
+        let pizarrasAlmacenadas = Pizarra.#obtenerPizarras();
+        const indicePizarraDesactualizada = Pizarra.getIndice(pizarra, pizarrasAlmacenadas);
+        Pizarra.#eliminarPizarras();
+
+        pizarra.actualizarInformacion();
+
+        // Reemplazo la pizarra desactualizada por la actualizada, dentro del conjunto de todas las pizarras
+        pizarrasAlmacenadas.splice(indicePizarraDesactualizada, 1, pizarra);
+
+        for (const pizarra of pizarrasAlmacenadas) {
+            Pizarra.guardarPizarra(pizarra);
+        }
+    }
+
+    static buscarPizarra(usuario, fecha) {
+        if (Almacenamiento.existe("pizarras")) {
+            const fn_busqueda = Pizarra.fn_pizarraDeUsuarioBuscada(usuario, fecha);
+
+            return Almacenamiento.buscar("pizarras", fn_busqueda);
+        } else {
+            return undefined;
+        }
+    }
+
+    static existePizarra(pizarra) {
+        return Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha) ? true : false;
+    }
+
+    static guardarPizarra(pizarra) {
+        Almacenamiento.guardar("pizarras", pizarra);
     }
 
     static fn_pizarraDeUsuarioBuscada(usuario, fecha) {

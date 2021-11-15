@@ -14,7 +14,7 @@ class Tabla extends UtilidadesTabla {
             .fadeIn(duracion);
     }
 
-    static animarFilaEliminada(fila, duracion = 1400) {
+    static animarFilaEliminada(fila, fn_finalizacion, duracion = 1400) {
         fila.find('i').hide();
         fila.find('.btn-edit').hide();
         fila.find('.btn-delete').hide();
@@ -25,7 +25,7 @@ class Tabla extends UtilidadesTabla {
                 "text-decoration":"line-through",
             })
             .delay(duracion)
-            .fadeOut(duracion);
+            .fadeOut(duracion, fn_finalizacion);
     }
 
     static animarFilaReemplazada(fila, duracion = 500) {

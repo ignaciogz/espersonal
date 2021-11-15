@@ -9,19 +9,21 @@ class ManejadorDOM extends UtilidadesDOM {
     }
 
     static eliminarFila(fila) {
-        Tabla.animarFilaEliminada(fila);
-        ManejadorDOM.eliminar(fila);
+        function fn_finalizacion() {
+            ManejadorDOM.eliminar(fila);
+        }
+        Tabla.animarFilaEliminada(fila, fn_finalizacion);
+    }
+
+    static mostrarIconoDeOrdenamiento(elemento, asc) {
+        Tabla.setIconoDeOrdenamiento(elemento,asc);
     }
     
     static mostrarInformacionPizarra(pizarra) {
         ManejadorDOM.modificarTexto('#total-de-items', pizarra.getCantidadDeItems());
         ManejadorDOM.modificarTexto('#total-ingresos', Utilidades.formatearMonto(pizarra.getTotalIngresos()));
         ManejadorDOM.modificarTexto('#total-egresos', Utilidades.formatearMonto(pizarra.getTotalEgresos()));
-        ManejadorDOM.modificarTexto('#balance', Utilidades.formatearMonto(pizarra.calcularBalance()));
-    }
-
-    static mostrarIconoDeOrdenamiento(elemento, asc) {
-        Tabla.setIconoDeOrdenamiento(elemento,asc);
+        ManejadorDOM.modificarTexto('#balance', Utilidades.formatearMonto(pizarra.getBalance()));
     }
 
     static mostrarNombreDeUsuario(usuario) {
