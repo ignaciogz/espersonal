@@ -33,7 +33,7 @@ class ManejadorEventos extends UtilidadesEvento {
             const $itemDisparador = $(this);
             const itemID = $itemDisparador.data('item-id');
 
-            // OBTENIENDO DATOS
+            // OBTENIENDO DATOS -> Del item, a partir del HTML visible
             const fila = Tabla.getFila($itemDisparador);
             const item = Tabla.getItem(fila, itemID);
 
@@ -156,7 +156,7 @@ class ManejadorEventos extends UtilidadesEvento {
             ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
-            Navegador.scrollear("inicio", 5000);
+            Navegador.scrollear("inicio", 4000);
         };
     }
 
@@ -185,7 +185,6 @@ class ManejadorEventos extends UtilidadesEvento {
     static getHandler_formEditarItem() {
         return function (e) {
             e.preventDefault();
-            Modal.cerrar('modal-editar-item');
 
             const formulario = $(this);
             const itemID = formulario.data('item-id');
@@ -209,6 +208,8 @@ class ManejadorEventos extends UtilidadesEvento {
 
             Pizarra.existenteEditarItem(pizarra, itemID, itemModificado);
             // FIN LÓGICA -> Editar item
+
+            Modal.cerrar('modal-editar-item');
 
             // MOSTRANDO -> El item modificado al usuario
             const registroItem = Item.crearRegistro(itemModificado);
@@ -249,13 +250,6 @@ class ManejadorEventos extends UtilidadesEvento {
         };
     }
 
-    static getHandler_resetearFormAgregarItem() {
-        return function () {
-            Formulario.ocultarSelect('#form-agregar-item .contenedor-select-categoria');
-            Formulario.reset('#form-agregar-item');
-        }
-    }
-
     static getHandler_reordenarTabla() {
         return function () {
             const $thDisparador = $(this);
@@ -278,8 +272,15 @@ class ManejadorEventos extends UtilidadesEvento {
                 }
 
                 // MUESTRO icono de ordenamiento en la columna que disparó el evento
-                Tabla.setIconoDeOrdenamiento($thDisparador, this.asc);
+                ManejadorDOM.mostrarIconoDeOrdenamiento($thDisparador, this.asc);
             }
+        }
+    }
+
+    static getHandler_resetearFormAgregarItem() {
+        return function () {
+            Formulario.ocultarSelect('#form-agregar-item .contenedor-select-categoria');
+            Formulario.reset('#form-agregar-item');
         }
     }
 

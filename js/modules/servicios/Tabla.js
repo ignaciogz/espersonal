@@ -9,6 +9,48 @@ class Tabla extends UtilidadesTabla {
         return indexColumna !== 4 ? valor.trim() : Utilidades.desformatearMonto(valor);
     }
 
+    static animarFilaAgregada(fila, duracion = 1400) {
+        fila.hide()
+            .fadeIn(duracion);
+    }
+
+    static animarFilaEliminada(fila, duracion = 1400) {
+        fila.find('i').hide();
+        fila.find('.btn-edit').hide();
+        fila.find('.btn-delete').hide();
+
+        fila.css({ 
+                "color":"#d32f2f",
+                "font-weight":"normal",
+                "text-decoration":"line-through",
+            })
+            .delay(duracion)
+            .fadeOut(duracion);
+    }
+
+    static animarFilaReemplazada(fila, duracion = 500) {
+        const contenedorIcono = Tabla.getContenedorDato(fila, 0);
+        const contenedorCategoria = Tabla.getContenedorDato(fila, 1);
+        const contenedorNombre = Tabla.getContenedorDato(fila, 2);
+        const contenedorBotones = Tabla.getContenedorDato(fila, 3);
+        const contenedorMonto = Tabla.getContenedorDato(fila, 4);
+
+        contenedorCategoria.hide();
+        contenedorNombre.hide();
+        contenedorBotones.hide();
+        contenedorMonto.hide();
+
+        contenedorIcono.fadeIn(duracion, function () {
+            contenedorCategoria.fadeIn(duracion, function () {
+                contenedorNombre.fadeIn(duracion, function () {
+                    contenedorBotones.fadeIn(duracion, function () {
+                        contenedorMonto.fadeIn(duracion);
+                    });
+                });
+            });
+        });
+    }
+
     static getItem(fila, itemID) {
         const icono = Tabla.#getValorDeLaCelda(fila, 0);
         const datoTipo = Item.getTipoDelIcono(icono);

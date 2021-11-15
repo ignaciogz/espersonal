@@ -75,7 +75,7 @@ class UtilidadesFormulario {
         const $input = $(id);
 
         if (UtilidadesDOM.existeEnDOM($input)) {
-            return $input.val(valor);
+            $input.val(valor);
         }
         else {
             throw `NO se pudo agregar el valor al input cuyo ID es: ${id}`;
