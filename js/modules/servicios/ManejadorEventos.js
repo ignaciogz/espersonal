@@ -34,8 +34,8 @@ class ManejadorEventos extends UtilidadesEvento {
             const itemID = $itemDisparador.data('item-id');
 
             // OBTENIENDO DATOS -> Del item, a partir del HTML visible
-            const fila = Tabla.getFila($itemDisparador);
-            const item = Tabla.getItem(fila, itemID);
+            const $fila = Tabla.getFila($itemDisparador);
+            const item = Tabla.getItem($fila, itemID);
 
             // OBTENIENDO DATOS -> Del item, a partir de su ID
             // Si existiera algún dato que NO pueda obtener del HTML visible, buscaría el item en localstorage para autocompletar:
@@ -55,7 +55,7 @@ class ManejadorEventos extends UtilidadesEvento {
             Formulario.toggleDisplaySelect('#form-editar-item .contenedor-select-categoria', item.tipo, { mostrar: "Egreso", ocultar: "Ingreso" });
             
             // ALMACENO DATO -> Guardo el ID y la fila del item dentro del formulario, para poder leerlo cuando se dispara su evento submit
-            $('#form-editar-item').data('fila', fila);
+            $('#form-editar-item').data('fila', $fila);
             $('#form-editar-item').data('item-id', itemID);
 
             // Procedimiento de finalización
@@ -86,7 +86,7 @@ class ManejadorEventos extends UtilidadesEvento {
             Pizarra.existenteEliminarItem(pizarra, itemID);
             ManejadorDOM.eliminarFila(fila);
 
-            Navegador.scrollear("inicio", 5000);
+            Navegador.scrollear("inicio", 4000);
         }
     }
 
@@ -156,7 +156,7 @@ class ManejadorEventos extends UtilidadesEvento {
             ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
-            Navegador.scrollear("inicio", 5000);
+            Navegador.scrollear("inicio", 4000);
         };
     }
 
@@ -188,7 +188,7 @@ class ManejadorEventos extends UtilidadesEvento {
 
             const formulario = $(this);
             const itemID = formulario.data('item-id');
-            const fila = formulario.data('fila');
+            const $fila = formulario.data('fila');
             
             // OBTENIENDO DATOS -> Formulario editar item
             const datoNombre = Formulario.getInput('#editar-item-nombre');
@@ -213,13 +213,13 @@ class ManejadorEventos extends UtilidadesEvento {
 
             // MOSTRANDO -> El item modificado al usuario
             const registroItem = Item.crearRegistro(itemModificado);
-            ManejadorDOM.reemplazarFila(fila, registroItem);
+            ManejadorDOM.reemplazarFila($fila, registroItem);
 
             /* FALTA PROGRAMAR :( -> Asociar evento solo al editado */
             ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
-            Navegador.scrollear("inicio", 5000);
+            Navegador.scrollear("inicio", 4000);
         };
     }
 
@@ -258,8 +258,8 @@ class ManejadorEventos extends UtilidadesEvento {
             const indexColumna = $thDisparador.index();
 
             if (indexColumna !== 3) {
-                let tabla = Tabla.getTabla($thDisparador);
-                let filas = Tabla.getArrayDeFilas(tabla);
+                let $tabla = Tabla.getTabla($thDisparador);
+                let filas = Tabla.getArrayDeFilas($tabla);
 
                 filas.sort(Tabla.fn_comparacion(indexColumna));
                 // GUARDO el orden de ordenamiento dentro del contexto, para cambiarlo cada vez que se ejecuta el manejador
@@ -270,7 +270,7 @@ class ManejadorEventos extends UtilidadesEvento {
 
                 // RECARGO la tabla, con las filas ordenadas
                 for (const fila of filas) {
-                    ManejadorDOM.agregar(tabla, fila);
+                    ManejadorDOM.agregar($tabla, fila);
                 }
 
                 // MUESTRO icono de ordenamiento en la columna que disparó el evento

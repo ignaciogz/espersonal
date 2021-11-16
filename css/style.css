@@ -410,6 +410,7 @@ form {
 
 /* label focus color */
 .input-field input[type=text]:focus + label,
+.input-field input[type=number]:focus + label,
 .input-field input[type=password]:focus + label {
   font-weight: bold;
   color: var(--color-secundario) !important;
@@ -417,6 +418,7 @@ form {
 
 /* label underline focus color */
 .input-field input[type=text]:focus,
+.input-field input[type=number]:focus,
 .input-field input[type=password]:focus {
   border-bottom: 1px solid var(--color-secundario) !important;
   box-shadow: 0 1px 0 0 var(--color-secundario) !important;
@@ -430,6 +432,16 @@ form {
   background-color: #866B47;
 }
 
+/* Quitando botones de los input tipo number */
+form input[type=number] {
+  -moz-appearance: textfield;
+}
+form input[type=number]::-webkit-inner-spin-button, form input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* FIN Quitando botones de los input tipo number */
 .contenedor-radio-tipo {
   display: inline-block;
   margin-right: 1rem;

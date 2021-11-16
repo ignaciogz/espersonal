@@ -24,7 +24,7 @@ class UtilidadesFormulario {
         const $input = $(id);
 
         if (UtilidadesDOM.existeEnDOM($input)) {
-            return $input.val();
+            return $input.val().trim();
         }
         else {
             throw `NO se pudo obtener el dato del input cuyo ID es: ${id}`;

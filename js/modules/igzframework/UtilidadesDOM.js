@@ -29,14 +29,14 @@ class UtilidadesDOM {
         }
     }
 
-    static mostrarError(selector, msj, miliSegundos = 8000) {
+    static mostrarError(selector, msj, duracion = 8000) {
         const $contenedorDeError = $(selector);
 
         if (UtilidadesDOM.existeEnDOM($contenedorDeError)) {
             $contenedorDeError.text(`ERROR -> ${msj}`);
 
             $contenedorDeError.slideDown("slow", function(){
-                $contenedorDeError.fadeOut(miliSegundos, function() {
+                $contenedorDeError.fadeOut(duracion, function() {
                     UtilidadesDOM.#limpiarTexto($contenedorDeError);
                     $contenedorDeError.hide();
                 });

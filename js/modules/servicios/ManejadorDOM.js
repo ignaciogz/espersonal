@@ -2,10 +2,10 @@ import { UtilidadesDOM } from '../igzframework.js';
 import { Tabla, Utilidades } from '../servicios.js';
 
 class ManejadorDOM extends UtilidadesDOM {
-    static agregarFila($pizarraSeleccionada, registroItem) {
-        const filaNueva = $(registroItem);
-        ManejadorDOM.agregar($pizarraSeleccionada, filaNueva);
-        Tabla.animarFilaAgregada(filaNueva);
+    static agregarFila(pizarraSeleccionada, registroItem) {
+        const $filaNueva = $(registroItem);
+        ManejadorDOM.agregar(pizarraSeleccionada, $filaNueva);
+        Tabla.animarFilaAgregada($filaNueva);
     }
 
     static eliminarFila(fila) {
@@ -35,9 +35,9 @@ class ManejadorDOM extends UtilidadesDOM {
     }
 
     static reemplazarFila(fila, registroItem) {
-        const filaNueva = $(registroItem);
-        ManejadorDOM.reemplazar(fila, filaNueva);
-        Tabla.animarFilaReemplazada(filaNueva);
+        const $filaNueva = $(registroItem);
+        ManejadorDOM.reemplazar(fila, $filaNueva);
+        Tabla.animarFilaReemplazada($filaNueva);
     }
 }
 
