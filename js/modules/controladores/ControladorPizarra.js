@@ -29,7 +29,7 @@ class ControladorPizarra {
             }
 
             // CREANDO DINÁMICAMENTE -> Opciones del select categoría de los formularios
-            const $selectCategoria = $('.select-categoria');
+            const $selectCategoria = $('.contenedor-select-categoria select');
             if (ManejadorDOM.existeEnDOM($selectCategoria)) {
                 const categorias = Categorias.get();
                 const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);

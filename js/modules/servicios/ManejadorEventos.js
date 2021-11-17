@@ -19,8 +19,8 @@ class ManejadorEventos extends UtilidadesEvento {
             Fecha.desformatearFecha(usuarioLogeado.fechaSeleccionada);
 
             // CARGANDO CAMPOS -> Formulario configuración
-            Formulario.setOpcionDeSelect('#configuracion-select-anio', Fecha.getAnioSeleccionado());
-            Formulario.setOpcionDeSelect('#configuracion-select-mes', Fecha.getMesSeleccionado());
+            Formulario.setOpcionDeSelect('configuracion-select-anio', Fecha.getAnioSeleccionado());
+            Formulario.setOpcionDeSelect('configuracion-select-mes', Fecha.getMesSeleccionado());
             
             // Procedimiento de finalización
             M.AutoInit();
@@ -32,6 +32,7 @@ class ManejadorEventos extends UtilidadesEvento {
         return function () {
             const $itemDisparador = $(this);
             const itemID = $itemDisparador.data('item-id');
+            const formularioID = "#form-editar-item";
 
             // OBTENIENDO DATOS -> Del item, a partir del HTML visible
             const $fila = Tabla.getFila($itemDisparador);
@@ -46,17 +47,17 @@ class ManejadorEventos extends UtilidadesEvento {
             */
             
             // CARGANDO CAMPOS -> Formulario editar item
-            Formulario.setInput('#editar-item-nombre', item.nombre);
+            Formulario.setInput('editar-item-nombre', item.nombre);
             Formulario.setRadioBtn('editar-item-radio-tipo', item.tipo);
-            Formulario.setOpcionDeSelect('#form-editar-item .select-categoria', item.categoria);
-            Formulario.setInput('#editar-item-monto', item.monto);
+            Formulario.setOpcionDeSelect('editar-select-categoria', item.categoria);
+            Formulario.setInput('editar-item-monto', item.monto);
             
             // MUESTRO u OCULTO -> El selector de categorias, dependiendo del tipo de item
-            Formulario.toggleDisplaySelect('#form-editar-item .contenedor-select-categoria', item.tipo, { mostrar: "Egreso", ocultar: "Ingreso" });
+            Formulario.toggleDisplaySelect(`${formularioID} .contenedor-select-categoria`, item.tipo, { mostrar: "Egreso", ocultar: "Ingreso" });
             
             // ALMACENO DATO -> Guardo el ID y la fila del item dentro del formulario, para poder leerlo cuando se dispara su evento submit
-            $('#form-editar-item').data('fila', $fila);
-            $('#form-editar-item').data('item-id', itemID);
+            $(formularioID).data('fila', $fila);
+            $(formularioID).data('item-id', itemID);
 
             // Procedimiento de finalización
             M.AutoInit();
@@ -86,7 +87,7 @@ class ManejadorEventos extends UtilidadesEvento {
             Pizarra.existenteEliminarItem(pizarra, itemID);
             ManejadorDOM.eliminarFila(fila);
 
-            Navegador.scrollear("inicio", 4000);
+            Navegador.scrollear("inicio", 5000);
         }
     }
 
@@ -96,8 +97,8 @@ class ManejadorEventos extends UtilidadesEvento {
             const formulario = e.target;
 
             // OBTENIENDO DATOS -> Formulario acceso usuario
-            const datoContrasena = Formulario.getInput('#acceso-contrasena');
-            const datoUsuario = Formulario.getInput('#acceso-usuario').toLowerCase();
+            const datoContrasena = Formulario.getInput('acceso-contrasena');
+            const datoUsuario = Formulario.getInput('acceso-usuario').toLowerCase();
 
             // LÓGICA -> Acceso usuario
             const usuario = Usuario.get();
@@ -121,15 +122,15 @@ class ManejadorEventos extends UtilidadesEvento {
             e.preventDefault();
 
             // OBTENIENDO DATOS -> Formulario agregar item
-            const datoNombre = Formulario.getInput('#agregar-item-nombre');
+            const datoNombre = Formulario.getInput('agregar-item-nombre');
             const datoTipo = Formulario.getRadioBtnElegido('agregar-item-radio-tipo');
 
             let datoCategoria = null;
             if (datoTipo === "Egreso") {
-                datoCategoria = Formulario.getOpcionDeSelectElegida('#form-agregar-item .select-categoria');
+                datoCategoria = Formulario.getOpcionDeSelectElegida('agregar-select-categoria');
             }
 
-            const datoMonto = parseFloat(Formulario.getInput('#agregar-item-monto'));
+            const datoMonto = parseFloat(Formulario.getInput('agregar-item-monto'));
 
             // LÓGICA -> Agregar item
             const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
@@ -166,8 +167,8 @@ class ManejadorEventos extends UtilidadesEvento {
             const formulario = e.target;
 
             // OBTENIENDO DATOS -> Formulario configuración
-            const datoAnio = Formulario.getOpcionDeSelectElegida('#configuracion-select-anio');
-            const datoMes = Formulario.getOpcionDeSelectElegida('#configuracion-select-mes');
+            const datoAnio = Formulario.getOpcionDeSelectElegida('configuracion-select-anio');
+            const datoMes = Formulario.getOpcionDeSelectElegida('configuracion-select-mes');
 
             // LÓGICA -> Configuración
             Fecha.setFecha(datoAnio, datoMes);
@@ -191,15 +192,15 @@ class ManejadorEventos extends UtilidadesEvento {
             const $fila = formulario.data('fila');
             
             // OBTENIENDO DATOS -> Formulario editar item
-            const datoNombre = Formulario.getInput('#editar-item-nombre');
+            const datoNombre = Formulario.getInput('editar-item-nombre');
             const datoTipo = Formulario.getRadioBtnElegido('editar-item-radio-tipo');
 
             let datoCategoria = null;
             if (datoTipo === "Egreso") {
-                datoCategoria = Formulario.getOpcionDeSelectElegida('#form-editar-item .select-categoria');
+                datoCategoria = Formulario.getOpcionDeSelectElegida('editar-select-categoria');
             }
 
-            const datoMonto = parseFloat(Formulario.getInput('#editar-item-monto'));
+            const datoMonto = parseFloat(Formulario.getInput('editar-item-monto'));
 
             // LÓGICA -> Editar item
             const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
@@ -229,8 +230,8 @@ class ManejadorEventos extends UtilidadesEvento {
             const formulario = e.target;
 
             // OBTENIENDO DATOS -> Formulario registrarse usuario
-            const datoUsuario = Formulario.getInput('#registrarse-usuario').toLowerCase();
-            const datoContrasena = Formulario.getInput('#registrarse-contrasena');
+            const datoUsuario = Formulario.getInput('registrarse-usuario').toLowerCase();
+            const datoContrasena = Formulario.getInput('registrarse-contrasena');
 
             // LÓGICA -> Registrarse usuario
             const usuario = Usuario.get();

@@ -21,7 +21,7 @@ class UtilidadesFormulario {
 
     // Métodos públicos
     static getInput(id) {
-        const $input = $(id);
+        const $input = $(`#${id}`);
 
         if (UtilidadesDOM.existeEnDOM($input)) {
             return $input.val().trim();
@@ -31,8 +31,8 @@ class UtilidadesFormulario {
         }
     }
 
-    static getOpcionDeSelectElegida(selector) {
-        const $opcionSeleccionada = $(`${selector} option:selected`);
+    static getOpcionDeSelectElegida(id) {
+        const $opcionSeleccionada = $(`#${id} option:selected`);
 
         if (UtilidadesDOM.existeEnDOM($opcionSeleccionada)) {
             const opcionSeleccionada = $opcionSeleccionada.val();
@@ -40,7 +40,7 @@ class UtilidadesFormulario {
             return opcionSeleccionada;
         }
         else {
-            throw `NO se pudo obtener la opción seleccionada del select cuya Selector es: ${selector}`;
+            throw `NO se pudo obtener la opción seleccionada del select cuya ID es: ${id}`;
         }
     }
 
@@ -72,7 +72,7 @@ class UtilidadesFormulario {
     }
 
     static setInput(id, valor) {
-        const $input = $(id);
+        const $input = $(`#${id}`);
 
         if (UtilidadesDOM.existeEnDOM($input)) {
             $input.val(valor);
@@ -82,8 +82,8 @@ class UtilidadesFormulario {
         }
     }
 
-    static setOpcionDeSelect(selector, valor) {
-        const $opcion = $(`${selector} option[value="${valor}"]`);
+    static setOpcionDeSelect(id, valor) {
+        const $opcion = $(`#${id} option[value="${valor}"]`);
 
         if (UtilidadesDOM.existeEnDOM($opcion)) {
             $opcion.prop('selected', true);
@@ -93,8 +93,8 @@ class UtilidadesFormulario {
         }
     }
 
-    static setRadioBtn(name, tipo) {
-        const $radio = $(`input[name="${name}"][value="${tipo}"]`);
+    static setRadioBtn(name, valor) {
+        const $radio = $(`input[name="${name}"][value="${valor}"]`);
         
         if (UtilidadesDOM.existeEnDOM($radio)) {
             $radio.prop('checked', true);
