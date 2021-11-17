@@ -19,8 +19,8 @@ class ManejadorEventos extends UtilidadesEvento {
             Fecha.desformatearFecha(usuarioLogeado.fechaSeleccionada);
 
             // CARGANDO CAMPOS -> Formulario configuración
-            Formulario.setOpcionDeSelect('configuracion-select-anio', Fecha.getAnioSeleccionado());
-            Formulario.setOpcionDeSelect('configuracion-select-mes', Fecha.getMesSeleccionado());
+            Formulario.setOpcionDeSelect('configuracion-select-anio', Fecha.getAnio());
+            Formulario.setOpcionDeSelect('configuracion-select-mes', Fecha.getMes());
             
             // Procedimiento de finalización
             M.AutoInit();
