@@ -1,4 +1,4 @@
-import { Almacenamiento } from '../igzframework.js';
+import { Almacenamiento, AppCache } from '../igzframework.js';
 import { ManejadorDOM } from '../servicios.js';
 import { JSON_pizarrasPredefinidas } from '../json.js';
 import { Item } from '../clases.js';
@@ -124,6 +124,12 @@ class Pizarra {
         pizarra.setUltimoItemID(datosDeAlmacenamiento.ultimoItemID);
     }
 
+    static cargarDatosCacheados(pizarra) {
+        const datosDeCache = AppCache.obtener("pizarra_seleccionada");
+        pizarra.setItems(datosDeCache.items);
+        pizarra.setUltimoItemID(datosDeCache.ultimoItemID);
+    }
+
     static cargarJSON_pizarrasPredefinidas() {
         const pizarrasPredefinidas = JSON.parse(JSON_pizarrasPredefinidas);
 
@@ -170,11 +176,18 @@ class Pizarra {
     static obtenerPizarraDeUsuario(usuarioLogeado) {
         const pizarraDelUsuario = new Pizarra(usuarioLogeado);
 
-        if (Pizarra.existePizarra(pizarraDelUsuario)) {
-            Pizarra.cargarDatosAlmacenados(pizarraDelUsuario);
+        if (AppCache.existe("pizarra_seleccionada")) {
+            Pizarra.cargarDatosCacheados(pizarraDelUsuario);
+            pizarraDelUsuario.actualizarInformacion();
+        } else {
+            if (Pizarra.existePizarra(pizarraDelUsuario)) {
+                Pizarra.cargarDatosAlmacenados(pizarraDelUsuario);
+                pizarraDelUsuario.actualizarInformacion();
+            
+                AppCache.guardar("pizarra_seleccionada", pizarraDelUsuario);
+            }
         }
 
-        pizarraDelUsuario.actualizarInformacion();
         return pizarraDelUsuario;
     }
 

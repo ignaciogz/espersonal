@@ -1,4 +1,4 @@
-import { Navegador, UtilidadesEvento } from '../igzframework.js';
+import { AppCache, Navegador, UtilidadesEvento } from '../igzframework.js';
 import { Fecha, Formulario, ManejadorDOM, Modal, Tabla } from '../servicios.js';
 import { DatosSesionDeUsuario, Item, Pizarra, Usuario } from '../clases.js';
 
@@ -87,6 +87,7 @@ class ManejadorEventos extends UtilidadesEvento {
             Pizarra.existenteEliminarItem(pizarra, itemID);
             ManejadorDOM.eliminarFila(fila);
 
+            AppCache.actualizar("pizarra_seleccionada", pizarra);
             Navegador.scrollear("inicio", 5000);
         }
     }
@@ -157,6 +158,7 @@ class ManejadorEventos extends UtilidadesEvento {
             ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
+            AppCache.actualizar("pizarra_seleccionada", pizarra);
             Navegador.scrollear("inicio", 4000);
         };
     }
@@ -179,6 +181,7 @@ class ManejadorEventos extends UtilidadesEvento {
 
             // Procedimiento de finalización
             Modal.cerrar('modal-configuracion');
+            AppCache.eliminar("pizarra_seleccionada");
             Navegador.redireccionar("pizarra.html");
         }
     }
@@ -220,6 +223,7 @@ class ManejadorEventos extends UtilidadesEvento {
             ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
+            AppCache.actualizar("pizarra_seleccionada", pizarra);
             Navegador.scrollear("inicio", 4000);
         };
     }

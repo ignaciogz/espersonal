@@ -1,4 +1,4 @@
-import { JSON_rutas } from '../json.js';
+import { JSON_rutas } from './config/JSON_rutas.js';
 
 class Ruteador {
     static rutas = JSON.parse(JSON_rutas).pop();

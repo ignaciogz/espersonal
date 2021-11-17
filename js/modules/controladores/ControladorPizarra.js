@@ -12,10 +12,6 @@ class ControladorPizarra {
             // [Al abrir la app la pizarra seleccionada será por defecto la del mes actual]
             const $pizarraSeleccionada = $('#pizarra-seleccionada');
             if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
-                // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada
-                const observador_itemsDePizarra = new MutationObserver(ManejadorEventos.getHandler_actualizarCambiosEnPizarra());
-                observador_itemsDePizarra.observe($pizarraSeleccionada[0], { childList: true, subtree: true });
-
                 // MOSTRANDO -> La pizarra selecionada
                 const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
                 const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
@@ -26,6 +22,10 @@ class ControladorPizarra {
                 ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
 
                 ManejadorDOM.mostrarInformacionPizarra(pizarra);
+
+                // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada
+                const observador_itemsDePizarra = new MutationObserver(ManejadorEventos.getHandler_actualizarCambiosEnPizarra());
+                observador_itemsDePizarra.observe($pizarraSeleccionada[0], { childList: true, subtree: true });
             }
 
             // CREANDO DINÁMICAMENTE -> Opciones del select categoría de los formularios

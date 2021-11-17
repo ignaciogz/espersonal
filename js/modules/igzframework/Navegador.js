@@ -1,4 +1,4 @@
-import { Sesion } from '../igzframework.js';
+import { AppCache, Sesion } from '../igzframework.js';
 
 class Navegador {
     // Propiedad pública
@@ -12,6 +12,7 @@ class Navegador {
     
     static cerrarSesion() {
         Navegador.eliminarDeSesion("usuario_logeado");
+        AppCache.limpiar();
     }
 
     static eliminarDeSesion(clave) {
