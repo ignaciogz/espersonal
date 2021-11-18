@@ -2,9 +2,9 @@ const JSON_rutas = `[
     {
         "":"ControladorIndex",
         "index":"ControladorIndex",
-        "pizarra":"ControladorPizarra",
-        "grafico":"ControladorGrafico",
-        "categorias":"ControladorCategorias"
+        "app/pizarra":"ControladorPizarra",
+        "app/grafico":"ControladorGrafico",
+        "app/categorias":"ControladorCategorias"
     }
 ]`;
 

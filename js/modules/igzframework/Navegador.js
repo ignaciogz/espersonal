@@ -2,7 +2,16 @@ import { AppCache, Sesion } from '../igzframework.js';
 
 class Navegador {
     // Propiedad pública
-    static paginaActual = location.pathname.split("/").pop().split(".").shift();
+    static paginaActual = Navegador.#getPaginaActual(location.pathname);
+
+    // Métodos privados
+    static #getPaginaActual(ubicacion) {
+        let paginaActual;
+        paginaActual = ubicacion.substring(1); // Elimino la barra inicial
+        paginaActual = paginaActual.split(".").shift(); // Elimino la extension
+
+        return paginaActual;
+    }
 
     // Métodos públicos
     static actualizarEnSesion(datosDeSesion) {
@@ -36,7 +45,7 @@ class Navegador {
     }
 
     static redireccionar(ubicacion) {
-        setTimeout(function () { location = ubicacion; }, 1000);
+        setTimeout(function () { location = `/${ubicacion}`; }, 1000);
     }
 
     static scrollear(ubicacion, tiempo = 0) {
