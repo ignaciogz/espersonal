@@ -4,7 +4,7 @@ import { DatosSesionDeUsuario, Item, Pizarra, Usuario } from '../clases.js';
 
 class ManejadorEventos extends UtilidadesEvento {
     static getHandler_actualizarCambiosEnPizarra() {
-        return function () {
+        return function handler_actualizarCambiosEnPizarra() {
             const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
             const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
@@ -13,7 +13,7 @@ class ManejadorEventos extends UtilidadesEvento {
     }
 
     static getHandler_autocompletarFormConfiguracion() {
-        return function () {
+        return function handler_autocompletarFormConfiguracion() {
             // OBTENIENDO DATOS
             const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
             Fecha.desformatearFecha(usuarioLogeado.fechaSeleccionada);
@@ -25,11 +25,11 @@ class ManejadorEventos extends UtilidadesEvento {
             // Procedimiento de finalización
             M.AutoInit();
             M.updateTextFields();
-        }
+        };
     }
 
     static getHandler_autocompletarFormEditarItem() {
-        return function () {
+        return function handler_autocompletarFormEditarItem() {
             const $itemDisparador = $(this);
             const itemID = $itemDisparador.data('item-id');
             const formularioID = "#form-editar-item";
@@ -62,11 +62,11 @@ class ManejadorEventos extends UtilidadesEvento {
             // Procedimiento de finalización
             M.AutoInit();
             M.updateTextFields();
-        }
+        };
     }
 
     static getHandler_cerrarApp() {
-        return function (e) {
+        return function handler_cerrarApp(e) {
             e.preventDefault();
             Navegador.cerrarSesion();
             Navegador.redireccionar("index.html");
@@ -74,7 +74,7 @@ class ManejadorEventos extends UtilidadesEvento {
     }
 
     static getHandler_eliminarItem() {
-        return function () {
+        return function handler_eliminarItem() {
             const $itemDisparador = $(this);
 
             const itemID = $itemDisparador.data('item-id');
@@ -89,11 +89,11 @@ class ManejadorEventos extends UtilidadesEvento {
 
             AppCache.actualizar("pizarra_seleccionada", pizarra);
             Navegador.scrollear("inicio", 5000);
-        }
+        };
     }
 
     static getHandler_formAcceso() {
-        return function (e) {
+        return function handler_formAcceso(e) {
             e.preventDefault();
             const formulario = e.target;
 
@@ -119,7 +119,7 @@ class ManejadorEventos extends UtilidadesEvento {
     }
 
     static getHandler_formAgregarItem() {
-        return function (e) {
+        return function handler_formAgregarItem(e) {
             e.preventDefault();
 
             // OBTENIENDO DATOS -> Formulario agregar item
@@ -164,7 +164,7 @@ class ManejadorEventos extends UtilidadesEvento {
     }
 
     static getHandler_formConfiguracion() {
-        return function (e) {
+        return function handler_formConfiguracion(e) {
             e.preventDefault();
             const formulario = e.target;
 
@@ -183,11 +183,11 @@ class ManejadorEventos extends UtilidadesEvento {
             Modal.cerrar('modal-configuracion');
             AppCache.eliminar("pizarra_seleccionada");
             Navegador.redireccionar("pizarra.html");
-        }
+        };
     }
 
     static getHandler_formEditarItem() {
-        return function (e) {
+        return function handler_formEditarItem(e) {
             e.preventDefault();
 
             const formulario = $(this);
@@ -216,12 +216,12 @@ class ManejadorEventos extends UtilidadesEvento {
             Modal.cerrar('modal-editar-item');
 
             // MOSTRANDO -> El item modificado al usuario
-            const registroItem = Item.crearRegistro(itemModificado);
-            ManejadorDOM.reemplazarFila($fila, registroItem);
+            const registroItemModificado = Item.crearRegistro(itemModificado);
+            ManejadorDOM.reemplazarFila($fila, registroItemModificado);
 
             /* FALTA PROGRAMAR :( -> Asociar evento solo al editado */
-            ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
-            ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
+            ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
+            ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
             AppCache.actualizar("pizarra_seleccionada", pizarra);
             Navegador.scrollear("inicio", 4000);
@@ -229,7 +229,7 @@ class ManejadorEventos extends UtilidadesEvento {
     }
 
     static getHandler_formRegistrarse() {
-        return function (e) {
+        return function handler_formRegistrarse(e) {
             e.preventDefault();
             const formulario = e.target;
 
@@ -258,7 +258,7 @@ class ManejadorEventos extends UtilidadesEvento {
     }
 
     static getHandler_reordenarTabla() {
-        return function () {
+        return function handler_reordenarTabla() {
             const $thDisparador = $(this);
             const indexColumna = $thDisparador.index();
 
@@ -281,18 +281,18 @@ class ManejadorEventos extends UtilidadesEvento {
                 // MUESTRO icono de ordenamiento en la columna que disparó el evento
                 ManejadorDOM.mostrarIconoDeOrdenamiento($thDisparador, this.asc);
             }
-        }
+        };
     }
 
     static getHandler_resetearFormAgregarItem() {
-        return function () {
+        return function handler_resetearFormAgregarItem() {
             Formulario.ocultarSelect('#form-agregar-item .contenedor-select-categoria');
             Formulario.reset('#form-agregar-item');
-        }
+        };
     }
 
     static getHandler_toggleDisplaySelectCategoria() {
-        return function () {
+        return function handler_toggleDisplaySelectCategoria() {
             const $radioInputDisparador = $(this);
             const idFormulario = Formulario.getFormulario($radioInputDisparador).prop('id');
             
