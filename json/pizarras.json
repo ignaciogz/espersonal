@@ -1,4 +1,4 @@
-const JSON_pizarrasPredefinidas = `[
+[
     { 
         "usuario":"coder",
         "fecha":"2021 - Noviembre",
@@ -129,6 +129,4 @@ const JSON_pizarrasPredefinidas = `[
         "totalEgresos":21000,
         "ultimoItemID":3
     }
-]`;
-
-export { JSON_pizarrasPredefinidas };
+]

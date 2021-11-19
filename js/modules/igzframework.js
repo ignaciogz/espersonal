@@ -1,5 +1,6 @@
 /* ******************** MI FRAMEWORK ******************** */
 // Las clases Almacenamiento y Sesion trabajan con array de objetos
+export { Ajax } from './igzframework/Ajax.js';
 export { Almacenamiento } from './igzframework/Almacenamiento.js';
 export { App } from './igzframework/App.js';
 export { AppCache } from './igzframework/AppCache.js';

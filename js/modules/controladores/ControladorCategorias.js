@@ -9,12 +9,15 @@ class ControladorCategorias {
         if (Usuario.estaLogeado()) {
             ControladorApp.inicializar();
             
-            //  CREANDO DINÁMICAMENTE -> Cards de categorías
+            //  CREANDO DINÁMICAMENTE  y de forma ASÍNCRONA -> Cards de categorías
             const $cardsCategorias = $('#contenedor-cards-categorias');
             if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
                 const categorias = Categorias.get();
-                const cardsCategorias = categorias.crearCards();
-                ManejadorDOM.agregar($cardsCategorias, cardsCategorias);
+
+                categorias.onReady.always(() => {
+                    const cardsCategorias = categorias.crearCards();
+                    ManejadorDOM.agregar($cardsCategorias, cardsCategorias);
+                });
             }
         } else {
             Navegador.redireccionar("index.html");

@@ -1,5 +1,7 @@
 /* ***************** ARCHIVOS JSON A CONSUMIR ***************** */
-export { JSON_categoriasPredefinidas } from './json/JSON_categoriasPredefinidas.js';
-export { JSON_menu } from './json/JSON_menu.js';
-export { JSON_pizarrasPredefinidas } from './json/JSON_pizarrasPredefinidas.js';
-export { JSON_usuariosPredefinidos } from './json/JSON_usuariosPredefinidos.js';
+export const JSON_config     = '/json/config.json';
+
+export const JSON_categorias = '/json/categorias.json';
+export const JSON_menu       = '/json/menu.json';
+export const JSON_pizarras   = '/json/pizarras.json';
+export const JSON_usuarios   = '/json/usuarios.json';

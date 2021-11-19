@@ -66,8 +66,7 @@ class ManejadorEventos extends UtilidadesEvento {
     }
 
     static getHandler_cerrarApp() {
-        return function handler_cerrarApp(e) {
-            e.preventDefault();
+        return function handler_cerrarApp() {
             Navegador.cerrarSesion();
             Navegador.redireccionar("index.html");
         };

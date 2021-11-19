@@ -1,5 +1,5 @@
-import { Almacenamiento, Navegador } from '../igzframework.js';
-import { JSON_usuariosPredefinidos } from '../json.js';
+import { Ajax, Almacenamiento, Navegador } from '../igzframework.js';
+import { JSON_usuarios } from '../json.js';
 
 class Usuario {
     constructor(nombre = null, contrasena = null, tipo = "invitado", anioDeRegistro = null, fechaSeleccionada = null) {
@@ -58,13 +58,8 @@ class Usuario {
     }
 
     static cargarJSON_usuariosPredefinidos() {
-        const usuariosPredefinidos = JSON.parse(JSON_usuariosPredefinidos);
-
-        for (const usuario of usuariosPredefinidos) {
-            if (!Usuario.existeUsuario(usuario)) {
-                Usuario.guardarUsuario(usuario);
-            }
-        }
+        Ajax.getJQXHR(JSON_usuarios)
+            .done(Usuario.fn_cargarUsuariosPredefinidos());
     }
 
     static estaLogeado() {
@@ -101,6 +96,16 @@ class Usuario {
             return usuario;
         } else {
             return undefined;
+        }
+    }
+
+    static fn_cargarUsuariosPredefinidos() {
+        return function(data) {
+            for (const usuario of data) {
+                if (!Usuario.existeUsuario(usuario)) {
+                    Usuario.guardarUsuario(usuario);
+                }
+            }
         }
     }
 

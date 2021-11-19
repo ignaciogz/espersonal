@@ -1,11 +1,10 @@
-const JSON_rutas = `[
-    {
+{
+    "modo":"desarrollo",
+    "rutas":{
         "":"ControladorIndex",
         "index":"ControladorIndex",
         "app/pizarra":"ControladorPizarra",
         "app/grafico":"ControladorGrafico",
         "app/categorias":"ControladorCategorias"
     }
-]`;
-
-export { JSON_rutas };
+}

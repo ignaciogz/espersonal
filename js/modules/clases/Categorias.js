@@ -1,11 +1,12 @@
+import { Ajax } from '../igzframework.js';
 import { ManejadorDOM } from '../servicios.js';
-import { JSON_categoriasPredefinidas } from '../json.js';
+import { JSON_categorias } from '../json.js';
 import { Categoria } from '../clases.js';
 
 class Categorias {
     constructor() {
-        this.listado = [];
-        this.cargarJSON_categoriasPredefinidas();
+        this.listado = new Array();
+        this.onReady = this.cargarJSON_categoriasPredefinidas();
     }
 
     static get() {
@@ -22,12 +23,10 @@ class Categorias {
     }
 
     cargarJSON_categoriasPredefinidas() {
-        const categoriasPredefinidas = JSON.parse(JSON_categoriasPredefinidas);
+        const _this = this;
 
-        for (const categoria of categoriasPredefinidas) {
-            const nuevaCategoria = new Categoria(categoria.nombre, categoria.descripcion, categoria.icono);
-            this.setCategoria(nuevaCategoria);
-        }
+        return Ajax.getJQXHR(JSON_categorias)
+                   .done(Categorias.fn_cargarCategoriasPredefinidas().bind(_this));
     }
 
     // Métodos públicos
@@ -44,6 +43,15 @@ class Categorias {
         }
 
         return fragmento;
+    }
+
+    static fn_cargarCategoriasPredefinidas() {
+        return function(data) {
+            for (const categoria of data) {
+                const nuevaCategoria = new Categoria(categoria.nombre, categoria.descripcion, categoria.icono);
+                this.setCategoria(nuevaCategoria);
+            }
+        }
     }
 }
 

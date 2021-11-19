@@ -4,16 +4,16 @@ import { Menu, Pizarra, Usuario } from '../clases.js';
 
 class ControladorApp {
     static inicializar() {
-        // CREANDO DINÁMICAMENTE -> Opciones del menú de navegación
+        // CREANDO DINÁMICAMENTE y de forma ASÍNCRONA -> Opciones del menú de navegación
         const $menu = $('#contenedor-menu');
         if (ManejadorDOM.existeEnDOM($menu)) {
             const menu = Menu.get();
-            const itemsDelMenu = menu.crearItems();
-            ManejadorDOM.agregar($menu, itemsDelMenu);
-        }
 
-        // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
-        Pizarra.cargarJSON_pizarrasPredefinidas();
+            menu.onReady.always(() => {
+                    const itemsDelMenu = menu.crearItems();
+                    ManejadorDOM.agregar($menu, itemsDelMenu);
+            });
+        }
 
         // MOSTRANDO -> Nombre de usuario
         const usuarioLogeado = Usuario.obtenerUsuarioLogeado();

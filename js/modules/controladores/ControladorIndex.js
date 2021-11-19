@@ -7,7 +7,7 @@ class ControladorIndex {
         if (Usuario.estaLogeado()) {
             Navegador.redireccionar("pizarra.html");
         } else {
-            // CARGANDO DATOS predefinidos en localStorage [Si ya existe NO agrega]
+            // CARGANDO DATOS predefinidos de forma ASÍNCRONA -> En localStorage [Si ya existe NO agrega]
             Usuario.cargarJSON_usuariosPredefinidos();
 
             // REDUCIENDO velocidad de reproducción del video

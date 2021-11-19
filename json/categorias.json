@@ -1,4 +1,4 @@
-const JSON_categoriasPredefinidas = `[
+[
     { 
         "nombre":"Comida",
         "descripcion":"Descripción - Categoría Comida",
@@ -69,6 +69,4 @@ const JSON_categoriasPredefinidas = `[
         "descripcion":"Descripción - Categoría Transporte",
         "icono":"commute"
     }
-]`;
-
-export { JSON_categoriasPredefinidas };
+]

@@ -1,6 +1,6 @@
-import { Almacenamiento, AppCache } from '../igzframework.js';
+import { Ajax, Almacenamiento, AppCache } from '../igzframework.js';
 import { ManejadorDOM } from '../servicios.js';
-import { JSON_pizarrasPredefinidas } from '../json.js';
+import { JSON_pizarras } from '../json.js';
 import { Item } from '../clases.js';
 
 class Pizarra {
@@ -131,12 +131,9 @@ class Pizarra {
     }
 
     static cargarJSON_pizarrasPredefinidas() {
-        const pizarrasPredefinidas = JSON.parse(JSON_pizarrasPredefinidas);
-
-        for (const pizarra of pizarrasPredefinidas) {
-            if (!Pizarra.existePizarra(pizarra)) {
-                Pizarra.guardarPizarra(pizarra);
-            }
+        return {
+            onReady: Ajax.getJQXHR(JSON_pizarras)
+                         .done(Pizarra.fn_cargarPizarrasPredefinidas())
         }
     }
 
@@ -178,15 +175,15 @@ class Pizarra {
 
         if (AppCache.existe("pizarra_seleccionada")) {
             Pizarra.cargarDatosCacheados(pizarraDelUsuario);
-            pizarraDelUsuario.actualizarInformacion();
         } else {
             if (Pizarra.existePizarra(pizarraDelUsuario)) {
                 Pizarra.cargarDatosAlmacenados(pizarraDelUsuario);
-                pizarraDelUsuario.actualizarInformacion();
             
                 AppCache.guardar("pizarra_seleccionada", pizarraDelUsuario);
             }
         }
+
+        pizarraDelUsuario.actualizarInformacion();
 
         return pizarraDelUsuario;
     }
@@ -222,6 +219,16 @@ class Pizarra {
 
     static guardarPizarra(pizarra) {
         Almacenamiento.guardar("pizarras", pizarra);
+    }
+
+    static fn_cargarPizarrasPredefinidas() {
+        return function(data) {
+            for (const pizarra of data) {
+                if (!Pizarra.existePizarra(pizarra)) {
+                    Pizarra.guardarPizarra(pizarra);
+                }
+            }
+        }
     }
 
     static fn_pizarraDeUsuarioBuscada(usuario, fecha) {

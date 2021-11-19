@@ -5,9 +5,10 @@ class UtilidadesEvento {
         if (UtilidadesDOM.existeEnDOM($elemento)) {
             $elemento.on(evento, manejador);
         }
-        else {
-            throw `NO se pudo asociar el evento: \n\tDISPARADOR -> ${selector} \n\tEVENTO -> ${evento} \n\tMANEJADOR -> ${manejador.name}()`;
-        }
+        // El siguiente código, es sólo para ambiente de desarrollo:
+        /* else {
+            throw `:: NO se pudo asociar el evento: \n\n-> Target: "${selector}" \n-> Event: "${evento}" \n-> Handler: ${manejador.name}()`;
+        } */
     }
 
     static asociar(elemento, evento, manejador) {

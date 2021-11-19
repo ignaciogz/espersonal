@@ -1,3 +1,4 @@
+import { Ajax } from '../igzframework.js';
 import { ManejadorDOM } from '../servicios.js';
 import { JSON_menu } from '../json.js';
 import { ItemDeMenu } from '../clases.js';
@@ -5,7 +6,7 @@ import { ItemDeMenu } from '../clases.js';
 class Menu {
     constructor() {
         this.opciones = new Array();
-        this.cargarJSON_menu();
+        this.onReady = this.cargarJSON_menu();
     }
 
     static get() {
@@ -22,12 +23,11 @@ class Menu {
     }
 
     cargarJSON_menu() {
-        const itemsDelMenu = JSON.parse(JSON_menu);
+        const _this = this;
 
-        for (const item of itemsDelMenu) {
-            const opcion = new ItemDeMenu(item.icono, item.nombre, item.link);
-            this.setOpcion(opcion);
-        }
+        return Ajax.getJQXHR(JSON_menu)
+                   .done(Menu.fn_cargarMenu().bind(_this));
+        
     }
 
     // Métodos públicos
@@ -44,6 +44,15 @@ class Menu {
         }
 
         return fragmento;
+    }
+
+    static fn_cargarMenu() {
+        return function(data) {
+            for (const item of data) {
+                const opcion = new ItemDeMenu(item.icono, item.nombre, item.link);
+                this.setOpcion(opcion);
+            }
+        }
     }
 }
 
