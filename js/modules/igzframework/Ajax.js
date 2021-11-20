@@ -1,12 +1,16 @@
-import { App } from '../igzframework.js';
+import { Excepcion_getAJAX } from '../igzframework.js';
 
 class Ajax {
     // Métodos privados
     static #getResponseTextJQXHR(responseText) {
-        const indexInicial = responseText.indexOf('<pre>') + '<pre>'.length;
-        const indexFinal = responseText.indexOf('</pre>');
-        
-        return responseText.substring(indexInicial, indexFinal);                   
+        if (responseText) {
+            const indexInicial = responseText.indexOf('<pre>') + '<pre>'.length;
+            const indexFinal = responseText.indexOf('</pre>');
+            
+            return responseText.substring(indexInicial, indexFinal);
+        }
+
+        return responseText;
     }
 
     // Métodos públicos
@@ -21,14 +25,8 @@ class Ajax {
                     url: url
                 })
                 .fail(
-                    (data, textStatus) => {
-                        let msjError = `:: La petición AJAX falló: ${textStatus}\n`;
-                        msjError += `\n-> Status code: "${data.status} - ${data.statusText}"`;
-                        msjError += `\n-> Response text: "${Ajax.#getResponseTextJQXHR(data.responseText)}"`;
-
-                        if (App.modoDesarrollo()) {
-                            throw msjError;
-                        }
+                    (data) => {
+                        new Excepcion_getAJAX(url, data, Ajax.#getResponseTextJQXHR(data.responseText));
                     }
                 );
     }
