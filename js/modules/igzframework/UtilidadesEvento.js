@@ -1,14 +1,14 @@
 import { UtilidadesDOM } from '../igzframework.js';
+import { Excepcion_asociarEvento } from '../igzframework.js';
 
 class UtilidadesEvento {
     static #asociar($elemento, evento, manejador, selector) {
         if (UtilidadesDOM.existeEnDOM($elemento)) {
             $elemento.on(evento, manejador);
         }
-        // El siguiente código, es sólo para ambiente de desarrollo:
-        /* else {
-            throw `:: NO se pudo asociar el evento: \n\n-> Target: "${selector}" \n-> Event: "${evento}" \n-> Handler: ${manejador.name}()`;
-        } */
+        else {
+            new Excepcion_asociarEvento(selector, evento, manejador);
+        }
     }
 
     static asociar(elemento, evento, manejador) {

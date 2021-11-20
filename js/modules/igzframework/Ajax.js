@@ -1,3 +1,5 @@
+import { App } from '../igzframework.js';
+
 class Ajax {
     // Métodos privados
     static #getResponseTextJQXHR(responseText) {
@@ -24,7 +26,9 @@ class Ajax {
                         msjError += `\n-> Status code: "${data.status} - ${data.statusText}"`;
                         msjError += `\n-> Response text: "${Ajax.#getResponseTextJQXHR(data.responseText)}"`;
 
-                        throw msjError;
+                        if (App.modoDesarrollo()) {
+                            throw msjError;
+                        }
                     }
                 );
     }

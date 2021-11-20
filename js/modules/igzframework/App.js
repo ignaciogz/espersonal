@@ -1,4 +1,4 @@
-import { Ajax } from '../igzframework.js';
+import { Ajax, Ruteador } from '../igzframework.js';
 import { JSON_config } from '../json.js';
 
 class App {
@@ -15,15 +15,27 @@ class App {
 
         return App.instancia = new App();
     }
-    
-    static ejecutarControlador(controlador) {
+
+    ejecutarControlador(controlador) {
         import(`../controladores/${controlador}.js`)
         .then(module => module.controlador.ejecutar());
+    }
+    
+    existe(pagina) {
+        return Ruteador.existe(pagina);
+    }
+
+    getControlador(pagina) {
+        return Ruteador.getControlador(pagina)
     }
 
     static inicializarDependencia(nombreDeDependencia) {
         import(`../dependencias/${nombreDeDependencia}.js`)
         .then(module => module.dependencia.inicializar());
+    }
+
+    static modoDesarrollo() {
+        return App.config["modo"] === "desarrollo";
     }
 
     static fn_cargarConfiguracion() {

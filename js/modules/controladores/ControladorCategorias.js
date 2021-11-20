@@ -15,8 +15,8 @@ class ControladorCategorias {
                 const categorias = Categorias.get();
 
                 categorias.onReady.always(() => {
-                    const cardsCategorias = categorias.crearCards();
-                    ManejadorDOM.agregar($cardsCategorias, cardsCategorias);
+                        const cardsCategorias = categorias.crearCards();
+                        ManejadorDOM.agregar($cardsCategorias, cardsCategorias);
                 });
             }
         } else {

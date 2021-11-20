@@ -1,19 +1,20 @@
-import { App, Navegador, Ruteador } from './modules/igzframework.js';
+import { App, Navegador } from './modules/igzframework.js';
+import { Excepcion_noExisteRuta } from './modules/igzframework.js';
 
 /* ******************** ARCHIVO PRINCIPAL ******************** */
 $(document).ready(function() {
-    const esPersonal = App.inicializar();
+    const esPersonalApp = App.inicializar();
 
-    esPersonal.onReady.always(() => {
+    esPersonalApp.onReady.always(() => {
         /* Controlador Frontal */
         const pagina = Navegador.paginaActual;
 
-        if (Ruteador.existe(pagina)) {
-            const controlador = Ruteador.getControlador(pagina);
-            App.ejecutarControlador(controlador);
+        if (esPersonalApp.existe(pagina)) {
+            const controlador = esPersonalApp.getControlador(pagina);
+            esPersonalApp.ejecutarControlador(controlador);
         }
         else {
-            throw "La página solicitada NO existe en el archivo de rutas";
+            new Excepcion_noExisteRuta(pagina);
         }
     });
 });

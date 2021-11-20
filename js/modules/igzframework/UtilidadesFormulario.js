@@ -1,4 +1,5 @@
 import { UtilidadesDOM } from '../igzframework.js';
+import { Excepcion_obtenerDeFormulario, Excepcion_setearEnFormulario } from '../igzframework.js';
 
 class UtilidadesFormulario {
     // Métodos privados
@@ -27,7 +28,7 @@ class UtilidadesFormulario {
             return $input.val().trim();
         }
         else {
-            throw `NO se pudo obtener el dato del input cuyo ID es: ${id}`;
+            new Excepcion_obtenerDeFormulario("input", id);
         }
     }
 
@@ -40,7 +41,7 @@ class UtilidadesFormulario {
             return opcionSeleccionada;
         }
         else {
-            throw `NO se pudo obtener la opción seleccionada del select cuya ID es: ${id}`;
+            new Excepcion_obtenerDeFormulario("select", id);
         }
     }
 
@@ -53,7 +54,7 @@ class UtilidadesFormulario {
             return radioSeleccionado;
         }
         else {
-            throw `NO se pudo obtener el botón de radio seleccionado cuyo name es: ${name}`;
+            new Excepcion_obtenerDeFormulario("radio", name);
         }
     }
 
@@ -78,7 +79,7 @@ class UtilidadesFormulario {
             $input.val(valor);
         }
         else {
-            throw `NO se pudo agregar el valor al input cuyo ID es: ${id}`;
+            new Excepcion_setearEnFormulario("input", id, valor);
         }
     }
 
@@ -89,7 +90,7 @@ class UtilidadesFormulario {
             $opcion.prop('selected', true);
         }
         else {
-            throw `NO se pudo agregar la opción seleccionada del select cuyo Selector es: ${selector}`;
+            new Excepcion_setearEnFormulario("select", id, valor);
         }
     }
 
@@ -100,7 +101,7 @@ class UtilidadesFormulario {
             $radio.prop('checked', true);
         }
         else {
-            throw `NO se pudo marcar el botón de radio seleccionado cuyo name es: ${name}`;
+            new Excepcion_setearEnFormulario("radio", name, valor);
         }
     }
 

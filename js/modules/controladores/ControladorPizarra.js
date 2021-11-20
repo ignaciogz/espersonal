@@ -16,20 +16,20 @@ class ControladorPizarra {
                 const pizarras = Pizarra.cargarJSON_pizarrasPredefinidas();
 
                 pizarras.onReady.always(() => {
-                    // MOSTRANDO -> La pizarra selecionada
-                    const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-                    const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+                        // MOSTRANDO -> La pizarra selecionada
+                        const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+                        const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
-                    const registrosDeItems = pizarra.crearRegistros();
+                        const registrosDeItems = pizarra.crearRegistros();
 
-                    ManejadorDOM.mostrarNombrePizarra(pizarra);
-                    ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
+                        ManejadorDOM.mostrarNombrePizarra(pizarra);
+                        ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
 
-                    ManejadorDOM.mostrarInformacionPizarra(pizarra);
+                        ManejadorDOM.mostrarInformacionPizarra(pizarra);
 
-                    // ASOCIANDO EVENTOS
-                    ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
-                    ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
+                        // ASOCIANDO EVENTOS
+                        ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
+                        ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
                 });
 
                 // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada
@@ -43,8 +43,8 @@ class ControladorPizarra {
                 const categorias = Categorias.get();
                 
                 categorias.onReady.always(() => {
-                    const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
-                    ManejadorDOM.agregar($selectCategoria, opcionesSelectCategoria);
+                        const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
+                        ManejadorDOM.agregar($selectCategoria, opcionesSelectCategoria);
                 });
             }
 

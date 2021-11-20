@@ -1,6 +1,6 @@
 import { App } from '../igzframework.js';
 import { Formulario, ManejadorDOM, ManejadorEventos } from '../servicios.js';
-import { Menu, Pizarra, Usuario } from '../clases.js';
+import { Menu, Usuario } from '../clases.js';
 
 class ControladorApp {
     static inicializar() {

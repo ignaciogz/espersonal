@@ -1,3 +1,5 @@
+import { Excepcion_noExisteEnDOM } from '../igzframework.js';
+
 class UtilidadesDOM {
     // Métodos privados
     static #limpiarTexto(contenedor) {
@@ -27,6 +29,9 @@ class UtilidadesDOM {
         if (UtilidadesDOM.existeEnDOM($contenedorTexto)) {
             $contenedorTexto.text(texto);
         }
+        else {
+            new Excepcion_noExisteEnDOM(selector, UtilidadesDOM.modificarTexto.name, UtilidadesDOM.name);
+        }
     }
 
     static mostrarError(selector, msj, duracion = 8000) {
@@ -43,7 +48,7 @@ class UtilidadesDOM {
             });
         }    
         else {
-            throw `NO existe el contenedor de error cuyo selector es: ${selector}`;
+            new Excepcion_noExisteEnDOM(selector, UtilidadesDOM.mostrarError.name, UtilidadesDOM.name);
         }
     }
 
