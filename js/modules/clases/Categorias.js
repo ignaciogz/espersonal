@@ -38,7 +38,7 @@ class Categorias {
         const fragmento = ManejadorDOM.crearFragmento();
 
         for (const categoria of this.getListado()) {
-            let cardCategoria = Categoria.crearCard(categoria.nombre, categoria.descripcion, categoria.icono);
+            let cardCategoria = Categoria.crearCard(categoria);
             ManejadorDOM.agregar(fragmento, cardCategoria);
         }
 

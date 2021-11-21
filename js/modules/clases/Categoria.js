@@ -5,18 +5,18 @@ class Categoria {
         this.icono = icono;
     }
 
-    static crearCard(nombre, descripcion, icono) {
+    static crearCard(categoria) {
         let $divColumna = document.createElement("div");
         $divColumna.classList.add('col', 's6', 'l4');
 
-        $divColumna.innerHTML = `<h2 class="card-header">${nombre}</h2>
+        $divColumna.innerHTML = `<h2 class="card-header">${categoria.nombre}</h2>
                                     <div class="card horizontal">
                                         <div class="card-image">
-                                            <i class="medium material-icons right">${icono}</i>
+                                            <i class="medium material-icons right">${categoria.icono}</i>
                                         </div>
                                         <div class="card-stacked">
                                             <div class="card-content">
-                                                <p>${descripcion}</p>
+                                                <p>${categoria.descripcion}</p>
                                             </div>
                                         </div>
                                     </div>`;
