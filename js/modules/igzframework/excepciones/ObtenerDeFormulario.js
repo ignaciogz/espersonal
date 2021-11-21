@@ -7,11 +7,15 @@ class obtenerDeFormulario extends Excepcion {
         this.selector = selector;
         
         this.nombre = "Obtener de formulario";
+        this.msj = new String();
         this.lanzarExcepcion();
     }
 
     toString() {
-        return `\n:: Excepción - ${this.nombre}: \n\n-> Elemento: ${this.elemento.toUpperCase()}\n-> Selector: "${this.selector}"`;
+        this.agregarLineaInfo("Elemento", this.elemento.toUpperCase());
+        this.agregarLineaInfo("Selector", this.selector);
+
+        return this.mostrarInfo();
     }
 }
 

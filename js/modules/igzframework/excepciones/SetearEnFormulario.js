@@ -8,11 +8,16 @@ class SetearEnFormulario extends Excepcion {
         this.valor = valor;
         
         this.nombre = "Setear a formulario";
+        this.msj = new String();
         this.lanzarExcepcion();
     }
 
     toString() {
-        return `\n:: Excepción - ${this.nombre}: \n\n-> Elemento: ${this.elemento.toUpperCase()}\n-> Selector: "${this.selector}"\n-> Valor: "${this.valor}"`;
+        this.agregarLineaInfo("Elemento", this.elemento.toUpperCase());
+        this.agregarLineaInfo("Selector", this.selector);
+        this.agregarLineaInfo("Valor", this.valor);
+
+        return this.mostrarInfo();
     }
 }
 

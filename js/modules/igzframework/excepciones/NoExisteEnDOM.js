@@ -8,12 +8,16 @@ class NoExisteEnDOM extends Excepcion {
         this.clase = clase;
         
         this.nombre = "No existe en DOM el elemento";
+        this.msj = new String();
         this.lanzarExcepcion();
     }
 
     toString() {
-        const ejecutando = `\n-> Ejecutando: ${this.metodo}() dentro la clase ${this.clase}`;
-        return `\n:: Excepción - ${this.nombre}: \n\n-> Selector: "${this.selector}"${ejecutando}`;
+        this.agregarLineaInfo("Selector", this.selector);
+        this.agregarLineaInfo("Ejecutando", `${this.metodo}() dentro la clase ${this.clase}`);
+
+        return this.mostrarInfo();
+        
     }
 }
 

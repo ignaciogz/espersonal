@@ -6,11 +6,14 @@ class NoExisteRuta extends Excepcion {
         this.paginaActual = paginaActual;
         
         this.nombre = "No existe ruta asociada, a la página solicitada";
+        this.msj = new String();
         this.lanzarExcepcion();
     }
 
     toString() {
-        return `\n:: Excepción - ${this.nombre}: \n\n-> Página solicitada: "${this.paginaActual}"`;
+        this.agregarLineaInfo("Página solicitada", this.paginaActual);
+        
+        return this.mostrarInfo();
     }
 }
 

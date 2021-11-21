@@ -10,6 +10,7 @@ class GetAJAX extends Excepcion {
         this.verificarEstadoDeComunicacion();
         
         this.nombre = "La petición GET de AJAX falló";
+        this.msj = new String();
         this.lanzarExcepcion();
     }
 
@@ -20,11 +21,11 @@ class GetAJAX extends Excepcion {
     }
 
     toString() {
-        let msj = `\n-> Status code: ${this.data.status} "${this.data.statusText}"`;
-        msj += `\n-> URL: "${this.url}"`;
-        msj += `\n-> Response text: "${this.responseText}"`;
+        this.agregarLineaInfo("Status code", `${this.data.status} "${this.data.statusText}"`);
+        this.agregarLineaInfo("URL", this.url);
+        this.agregarLineaInfo("Response text", this.responseText);
 
-        return `\n:: Excepción - ${this.nombre}:\n${msj}`;
+        return this.mostrarInfo();
     }
 }
 

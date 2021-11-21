@@ -40,7 +40,8 @@ class ManejadorEventos extends UtilidadesEvento {
             const item = Tabla.getItem($fila, itemID);
 
             // OBTENIENDO DATOS -> Del item, a partir de su ID
-            // Si existiera algún dato que NO pueda obtener del HTML visible, buscaría el item en localstorage para autocompletar:
+            // Si existiera algún dato que NO pueda obtener del HTML visible, 
+            // buscaría el item en localstorage (DB de mi App) o en la cache, para autocompletar:
             /* 
                 const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
                 const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);

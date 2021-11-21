@@ -8,11 +8,16 @@ class AsociarEvento extends Excepcion {
         this.manejador = manejador;
         
         this.nombre = "Asociar evento";
+        this.msj = new String();
         this.lanzarExcepcion();
     }
 
     toString() {
-        return `\n:: Excepción - ${this.nombre}: \n\n-> Target: "${this.selector}" \n-> Event: "${this.evento}" \n-> Handler: ${this.manejador.name}()`;
+        this.agregarLineaInfo("Target", this.selector);
+        this.agregarLineaInfo("Event", this.evento);
+        this.agregarLineaInfo("Handler", `${this.manejador.name}()`);
+
+        return this.mostrarInfo();
     }
 }
 

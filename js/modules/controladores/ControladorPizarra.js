@@ -1,4 +1,4 @@
-import { Navegador } from '../igzframework.js';
+import { Navegador, Observador } from '../igzframework.js';
 import { Formulario, ManejadorDOM, ManejadorEventos } from '../servicios.js';
 import { Categorias, Pizarra, Usuario } from '../clases.js';
 
@@ -33,8 +33,7 @@ class ControladorPizarra {
                 });
 
                 // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada
-                const observador_itemsDePizarra = new MutationObserver(ManejadorEventos.getHandler_actualizarCambiosEnPizarra());
-                observador_itemsDePizarra.observe($pizarraSeleccionada[0], { childList: true, subtree: true });
+                Observador.escuchar($pizarraSeleccionada, ManejadorEventos.getHandler_actualizarCambiosEnPizarra());
             }
 
             // CREANDO DINÁMICAMENTE y de forma ASÍNCRONA -> Opciones del select categoría de los formularios
