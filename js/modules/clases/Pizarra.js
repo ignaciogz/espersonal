@@ -2,6 +2,7 @@ import { Ajax, Almacenamiento, AppCache } from '../igzframework.js';
 import { ManejadorDOM } from '../servicios.js';
 import { JSON_pizarras } from '../json.js';
 import { Item } from '../clases.js';
+import { VistaItem } from '../vistas.js';
 
 class Pizarra {
     constructor(usuario) {
@@ -70,7 +71,7 @@ class Pizarra {
         const fragmento = ManejadorDOM.crearFragmento();
 
         for (const item of this.getItems()) {
-            let registroItem = Item.crearRegistro(item);
+            let registroItem = VistaItem.crearRegistro(item);
             ManejadorDOM.agregar(fragmento, registroItem);
         }
 

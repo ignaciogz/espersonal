@@ -1,6 +1,7 @@
 import { AppCache, Navegador, UtilidadesEvento } from '../igzframework.js';
 import { Fecha, Formulario, ManejadorDOM, Modal, Tabla } from '../servicios.js';
 import { DatosSesionDeUsuario, Item, Pizarra, Usuario } from '../clases.js';
+import { VistaItem } from '../vistas.js';
 
 class ManejadorEventos extends UtilidadesEvento {
     static getHandler_actualizarCambiosEnPizarra() {
@@ -150,7 +151,7 @@ class ManejadorEventos extends UtilidadesEvento {
 
             // MOSTRANDO -> El nuevo item al usuario
             const $pizarraSeleccionada = $('#pizarra-seleccionada');
-            const registroItem = Item.crearRegistro(itemNuevo);
+            const registroItem = VistaItem.crearRegistro(itemNuevo);
             ManejadorDOM.agregarFila($pizarraSeleccionada, registroItem);
 
             // ASOCIANDO EVENTOS -> Al nuevo item
@@ -215,7 +216,7 @@ class ManejadorEventos extends UtilidadesEvento {
             Modal.cerrar('modal-editar-item');
 
             // MOSTRANDO -> El item modificado al usuario
-            const registroItemModificado = Item.crearRegistro(itemModificado);
+            const registroItemModificado = VistaItem.crearRegistro(itemModificado);
             ManejadorDOM.reemplazarFila($fila, registroItemModificado);
 
             /* FALTA PROGRAMAR :( -> Asociar evento solo al editado */

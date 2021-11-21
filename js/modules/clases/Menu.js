@@ -2,6 +2,7 @@ import { Ajax } from '../igzframework.js';
 import { ManejadorDOM } from '../servicios.js';
 import { JSON_menu } from '../json.js';
 import { ItemDeMenu } from '../clases.js';
+import { VistaMenu } from '../vistas.js';
 
 class Menu {
     constructor() {
@@ -39,7 +40,7 @@ class Menu {
         const fragmento = ManejadorDOM.crearFragmento();
 
         for (const opcion of this.getOpciones()) {
-            let itemDeMenu = ItemDeMenu.crearItem(opcion);
+            let itemDeMenu = VistaMenu.crearItem(opcion);
             ManejadorDOM.agregar(fragmento, itemDeMenu);
         }
 

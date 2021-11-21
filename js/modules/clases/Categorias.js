@@ -2,6 +2,7 @@ import { Ajax } from '../igzframework.js';
 import { ManejadorDOM } from '../servicios.js';
 import { JSON_categorias } from '../json.js';
 import { Categoria } from '../clases.js';
+import { VistaCategoria } from '../vistas.js';
 
 class Categorias {
     constructor() {
@@ -38,7 +39,7 @@ class Categorias {
         const fragmento = ManejadorDOM.crearFragmento();
 
         for (const categoria of this.getListado()) {
-            let cardCategoria = Categoria.crearCard(categoria);
+            let cardCategoria = VistaCategoria.crearCard(categoria);
             ManejadorDOM.agregar(fragmento, cardCategoria);
         }
 
