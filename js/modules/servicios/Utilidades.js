@@ -14,6 +14,15 @@ class Utilidades {
         };
     }
 
+    static desformatearMonto(monto) {
+        let montoDesformateado  = monto;
+        montoDesformateado = montoDesformateado.replace('$', '');
+        montoDesformateado = montoDesformateado.replaceAll('.', '');
+        montoDesformateado = montoDesformateado.replace(',', '.');
+        
+        return parseFloat(montoDesformateado);
+    }
+
     static formatearMonto(monto) {
         const formatter = new Intl.NumberFormat('es-AR', {
             style: 'currency',
@@ -23,13 +32,11 @@ class Utilidades {
         return formatter.format(monto);
     }
 
-    static desformatearMonto(monto) {
-        let montoDesformateado  = monto;
-        montoDesformateado = montoDesformateado.replace('$', '');
-        montoDesformateado = montoDesformateado.replaceAll('.', '');
-        montoDesformateado = montoDesformateado.replace(',', '.');
+    static limitarDecimales(numero, limite) {
+        const expresionRegular = new RegExp("(\\d+\\.\\d{" + limite + "})(\\d)");
+        const resultados = numero.toString().match(expresionRegular);
         
-        return parseFloat(montoDesformateado);
+        return resultados ? parseFloat(resultados[1]) : numero.valueOf();
     }
 }
 

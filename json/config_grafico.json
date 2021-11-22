@@ -1,20 +1,11 @@
 {
     "type": "pie",
     "data": {
-        "labels": ["Categoria 1", "Categoria 2", "Categoria 3", "Categoria 4", "Categoria 5", "Categoria 6"],
         "datasets": [{
-            "label": "# of Votes",
-            "data": [12, 19, 3, 5, 2, 3],
-            "backgroundColor": [
-                "rgb(255, 99, 132)",
-                "rgb(54, 162, 235)",
-                "rgb(255, 205, 86)",
-                "violet",
-                "black",
-                "grey"
-            ],
-            "hoverOffset": 5,
-            "borderWidth": 2
+            "backgroundColor": null,
+            "borderWidth": 2,
+            "data": null,
+            "hoverOffset": 5
         }]
     },
     "options": {
@@ -26,11 +17,7 @@
         },
         "plugins": {
             "legend": {
-                "display": true,
-                "label": {
-                    "font": 40,
-                    "lineHeight": 20
-                }
+                "display": true
             }
         }
     }

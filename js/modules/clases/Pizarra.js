@@ -1,5 +1,5 @@
 import { Ajax, Almacenamiento, AppCache } from '../igzframework.js';
-import { ManejadorDOM } from '../servicios.js';
+import { ManejadorDOM, Utilidades } from '../servicios.js';
 import { JSON_pizarras } from '../json.js';
 import { Item } from '../clases.js';
 import { VistaItem } from '../vistas.js';
@@ -33,6 +33,12 @@ class Pizarra {
         return this.totalIngresos - this.totalEgresos;
     }
 
+    #calcularPorcentaje(valor, total) {
+        const porcentaje = valor * 100 / total;
+
+        return Utilidades.limitarDecimales(porcentaje, 2);
+    }
+
     #calcularTotal(coleccion) {
         return coleccion.reduce((a, b) => a + b.monto, 0);
     }
@@ -55,6 +61,13 @@ class Pizarra {
 
     #obtenerItemsDeTipo(tipoDeItem) {
         return this.#filtrarItems("tipo", tipoDeItem);
+    }
+
+    // Métodos públicos [Encargados de generar la información útil]
+    calcularPorcentajeDeCategoria(categoriaDeItem) {
+        const totalDeCategoria = this.#calcularTotal(this.#obtenerItemsDeCategoria(categoriaDeItem));
+
+        return this.#calcularPorcentaje(totalDeCategoria, this.totalEgresos);
     }
 
     // Métodos públicos

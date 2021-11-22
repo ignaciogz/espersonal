@@ -2,71 +2,85 @@
     { 
         "nombre":"Comida",
         "descripcion":"Descripción - Categoría Comida",
-        "icono":"fastfood"
+        "icono":"fastfood",
+        "color":"#2196f3"
     },
     { 
         "nombre":"Deportes",
         "descripcion":"Descripción - Categoría Deportes",
-        "icono":"sports_handball"
+        "icono":"sports_handball",
+        "color":"#9c27b0"
     },
     { 
         "nombre":"Deudas",
         "descripcion":"Descripción - Categoría Deudas",
-        "icono":"receipt"
+        "icono":"receipt",
+        "color":"#f44336"
     },
     { 
         "nombre":"Entretenimiento",
         "descripcion":"Descripción - Categoría Entretenimiento",
-        "icono":"celebration"
+        "icono":"celebration",
+        "color":"#3f51b5"
     },
     { 
         "nombre":"Facturas",
         "descripcion":"Descripción - Categoría Factura",
-        "icono":"receipt_long"
+        "icono":"receipt_long",
+        "color":"#ff9800"
     },
     { 
         "nombre":"Gimnasio",
         "descripcion":"Descripción - Categoría Gimnasio",
-        "icono":"fitness_center"
+        "icono":"fitness_center",
+        "color":"#ffeb3b"
     },
     { 
         "nombre":"Hogar",
         "descripcion":"Descripción - Categoría Hogar",
-        "icono":"home"
+        "icono":"home",
+        "color":"#009688"
     },
     { 
         "nombre":"Mascotas",
         "descripcion":"Descripción - Categoría Mascotas",
-        "icono":"pets"
+        "icono":"pets",
+        "color":"#ff5722"
     },
     { 
         "nombre":"Regalos",
         "descripcion":"Descripción - Categoría Regalos",
-        "icono":"card_giftcard"
+        "icono":"card_giftcard",
+        "color":"#9e9e9e"
     },
     { 
         "nombre":"Restaurantes",
         "descripcion":"Descripción - Categoría Restaurantes",
-        "icono":"restaurant"
+        "icono":"restaurant",
+        "color":"#4caf50"
     },
     { 
         "nombre":"Ropa",
         "descripcion":"Descripción - Categoría Ropa",
-        "icono":"shopping_bag"
+        "icono":"shopping_bag",
+        "color":"#795548"
     },
     { 
         "nombre":"Salud",
         "descripcion":"Descripción - Categoría Salud",
-        "icono":"health_and_safety"
+        "icono":"health_and_safety",
+        "color":"#e91e63"
     },
     { 
         "nombre":"Tarjeta de crédito",
         "descripcion":"Descripción - Categoría Tarjeta de crédito",
-        "icono":"credit_card"
+        "icono":"credit_card",
+        "color":"#cddc39"
     },
     { 
         "nombre":"Transporte",
         "descripcion":"Descripción - Categoría Transporte",
-        "icono":"commute"
+        "icono":"commute",
+        "color":"#00bcd4"
     }
 ]
