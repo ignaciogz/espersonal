@@ -9,7 +9,7 @@ class ControladorApp {
         if (ManejadorDOM.existeEnDOM($menu)) {
             const menu = Menu.get();
 
-            menu.onReady.always(() => {
+            menu.onReady().always(() => {
                     const itemsDelMenu = menu.crearItems();
                     ManejadorDOM.agregar($menu, itemsDelMenu);
             });

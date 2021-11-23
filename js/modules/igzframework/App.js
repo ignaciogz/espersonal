@@ -2,18 +2,23 @@ import { Ajax, Ruteador } from '../igzframework.js';
 import { JSON_config } from '../json.js';
 
 class App {
-    constructor() {
-        const _this = this;
-        this.onReady = Ajax.getJQXHR(JSON_config)
-                           .done(App.fn_cargarConfiguracion().bind(_this));
-    }
-
     static inicializar() {
         if (App.instancia instanceof App) {
             return App.instancia;
         }
 
         return App.instancia = new App();
+    }
+
+    onReady() {
+        return this.cargarJSON_configuracion();
+    }
+
+    cargarJSON_configuracion() {
+        const _this = this;
+
+        return  Ajax.getJQXHR(JSON_config)
+                    .done(App.fn_cargarConfiguracion().bind(_this));
     }
 
     ejecutarControlador(controlador) {

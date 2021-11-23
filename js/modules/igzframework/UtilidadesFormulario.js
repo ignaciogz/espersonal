@@ -97,20 +97,13 @@ class UtilidadesFormulario {
     }
 
     static toggleDisplaySelect(selector, valorSeleccionado, opciones) {
-        function mostrarSelect(valorSeleccionado ,opciones) {
-            if(valorSeleccionado === opciones.mostrar) {
-                return true;
-            }
-
-            if(valorSeleccionado === opciones.ocultar) {
-                return false;
-            }
-        }
-
-        if (mostrarSelect(valorSeleccionado ,opciones)) {
-            UtilidadesFormulario.mostrarSelect(selector);
-        } else {
-            UtilidadesFormulario.ocultarSelect(selector);
+        switch (valorSeleccionado) {
+            case opciones.mostrar:
+                UtilidadesFormulario.mostrarSelect(selector);
+                break;
+            case opciones.ocultar:
+                UtilidadesFormulario.ocultarSelect(selector);
+                break;
         }
     }
 }

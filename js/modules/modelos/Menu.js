@@ -7,7 +7,6 @@ import { VistaMenu } from '../vistas.js';
 class Menu {
     constructor() {
         this.opciones = new Array();
-        this.onReady = this.cargarJSON_menu();
     }
 
     static get() {
@@ -18,6 +17,10 @@ class Menu {
         return Menu.instancia = new Menu();
     }
 
+    onReady() {
+        return this.cargarJSON_menu();
+    }
+
     // Métodos privados
     setOpcion(valor) {
         this.opciones.push(valor);
@@ -26,8 +29,8 @@ class Menu {
     cargarJSON_menu() {
         const _this = this;
 
-        return Ajax.getJQXHR(JSON_menu)
-                   .done(Menu.fn_cargarMenu().bind(_this));
+        return  Ajax.getJQXHR(JSON_menu)
+                    .done(Menu.fn_cargarMenu().bind(_this));
         
     }
 

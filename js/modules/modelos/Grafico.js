@@ -4,10 +4,6 @@ import { JSON_config_grafico } from '../json.js';
 class Grafico {
     constructor(canvasGrafico) {
         this.canvasGrafico = canvasGrafico;
-
-        const _this = this;
-        this.onReady = Ajax.getJQXHR(JSON_config_grafico)
-                           .done(Grafico.fn_cargarConfiguracion().bind(_this));
     }
 
     static get(canvasGrafico) {
@@ -18,6 +14,11 @@ class Grafico {
         return Grafico.instancia = new Grafico(canvasGrafico);
     }
 
+    onReady() {
+        return this.cargarJSON_configuracion();
+    }
+
+    // Métodos privados
     #setColoresDeFondo() {0
         Grafico.config.data.datasets[0].backgroundColor = this.coloresDeFondo;
     }
@@ -39,6 +40,13 @@ class Grafico {
     }
 
     // Métodos públicos
+    cargarJSON_configuracion() {
+        const _this = this;
+
+        return  Ajax.getJQXHR(JSON_config_grafico)
+                    .done(Grafico.fn_cargarConfiguracion().bind(_this));
+    }
+    
     generarInformacion(pizarra, categorias) {
         let info = categorias.map(Grafico.fn_generarInfoDeCategoria(pizarra));
         info = info.filter(Grafico.fn_infoRelevante());

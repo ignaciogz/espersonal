@@ -3,6 +3,7 @@ import { ManejadorDOM } from '../servicios.js';
 import { Categorias, Grafico, Pizarra, Usuario } from '../modelos.js';
 
 import { ControladorApp } from './ControladorApp.js';
+
 class ControladorGrafico {
     static ejecutar() {
         if (Usuario.estaLogeado()) {
@@ -15,13 +16,12 @@ class ControladorGrafico {
 
 
             const categorias = Categorias.get();
-            
-            categorias.onReady.always(() => {
+            categorias.onReady().always(() => {
                     const $canvasGrafico = $('#grafico-pizarra-seleccionada');
                     if (ManejadorDOM.existeEnDOM($canvasGrafico)) {
                         const grafico = Grafico.get($canvasGrafico);
 
-                        grafico.onReady.always(() => {
+                        grafico.onReady().always(() => {
                                 grafico.generarInformacion(pizarra, categorias.getListado());
                                 grafico.graficar();
                         });

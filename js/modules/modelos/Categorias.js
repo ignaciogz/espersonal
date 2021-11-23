@@ -7,7 +7,6 @@ import { VistaCategoria } from '../vistas.js';
 class Categorias {
     constructor() {
         this.listado = new Array();
-        this.onReady = this.cargarJSON_categoriasPredefinidas();
     }
 
     static get() {
@@ -16,6 +15,10 @@ class Categorias {
         }
 
         return Categorias.instancia = new Categorias();
+    }
+
+    onReady() {
+        return this.cargarJSON_categoriasPredefinidas();
     }
 
     // Métodos privados

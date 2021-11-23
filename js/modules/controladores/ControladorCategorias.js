@@ -14,7 +14,7 @@ class ControladorCategorias {
             if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
                 const categorias = Categorias.get();
 
-                categorias.onReady.always(() => {
+                categorias.onReady().always(() => {
                         const cardsCategorias = categorias.crearCards();
                         ManejadorDOM.agregar($cardsCategorias, cardsCategorias);
                 });

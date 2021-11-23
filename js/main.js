@@ -5,7 +5,7 @@ import { Excepcion_noExisteRuta } from './modules/igzframework.js';
 $(document).ready(function() {
     const esPersonalApp = App.inicializar();
 
-    esPersonalApp.onReady.always(() => {
+    esPersonalApp.onReady().always(() => {
         /* Controlador Frontal */
         const pagina = Navegador.paginaActual;
 

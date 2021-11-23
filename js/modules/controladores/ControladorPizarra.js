@@ -15,7 +15,7 @@ class ControladorPizarra {
                 // CARGANDO DATOS predefinidos de forma ASÍNCRONA -> En localStorage [Si ya existe NO agrega]
                 const pizarras = Pizarra.cargarJSON_pizarrasPredefinidas();
 
-                pizarras.onReady.always(() => {
+                pizarras.onReady().always(() => {
                         // MOSTRANDO -> La pizarra selecionada
                         const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
                         const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
@@ -41,7 +41,7 @@ class ControladorPizarra {
             if (ManejadorDOM.existeEnDOM($selectCategoria)) {
                 const categorias = Categorias.get();
                 
-                categorias.onReady.always(() => {
+                categorias.onReady().always(() => {
                         const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
                         ManejadorDOM.agregar($selectCategoria, opcionesSelectCategoria);
                 });

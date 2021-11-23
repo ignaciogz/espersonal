@@ -160,8 +160,8 @@ class Pizarra {
 
     static cargarJSON_pizarrasPredefinidas() {
         return {
-            onReady: Ajax.getJQXHR(JSON_pizarras)
-                         .done(Pizarra.fn_cargarPizarrasPredefinidas())
+            onReady:  () => Ajax.getJQXHR(JSON_pizarras)
+                                .done(Pizarra.fn_cargarPizarrasPredefinidas())
         }
     }
 
