@@ -18,7 +18,7 @@ class Grafico {
         return Grafico.instancia = new Grafico(canvasGrafico);
     }
 
-    #setColoresDeFondo() {
+    #setColoresDeFondo() {0
         Grafico.config.data.datasets[0].backgroundColor = this.coloresDeFondo;
     }
 
@@ -32,6 +32,10 @@ class Grafico {
 
     #setPosicionDeLeyendas(posicion = "") {
         Grafico.config.options.plugins.legend.position = posicion;
+    }
+
+    #setTooltip() {
+        Grafico.config.options.plugins.tooltip.callbacks.label = Grafico.fn_tooltip();
     }
 
     // Métodos públicos
@@ -48,6 +52,7 @@ class Grafico {
     graficar() {
         this.#setPosicionDeLeyendas("right");
 
+        this.#setTooltip();
         this.#setColoresDeFondo();
         this.#setDatos();
         this.#setEtiquetas();
@@ -75,6 +80,16 @@ class Grafico {
 
     static fn_infoRelevante() {
         return elemento => elemento.porcentaje > 0;
+    }
+
+    static fn_tooltip() {
+        return function(context) {
+            let label = context.label.split(" ");
+            label.pop();
+            label = label.join(" ");
+            
+            return `${label} ${context.parsed}% de los egresos`;
+        }
     }
 }
 

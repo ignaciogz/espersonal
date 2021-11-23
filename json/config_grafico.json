@@ -5,7 +5,7 @@
             "backgroundColor": null,
             "borderWidth": 2,
             "data": null,
-            "hoverOffset": 5
+            "hoverOffset": 8
         }]
     },
     "options": {
@@ -25,7 +25,10 @@
             },
             "tooltip": {
                 "boxPadding": 5,
-                "padding": 10
+                "padding": 10,
+                "callbacks": {
+                    "label": null
+                }
             }
         }
     }
