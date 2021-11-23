@@ -1,7 +1,7 @@
 import { Ajax, Almacenamiento, AppCache } from '../igzframework.js';
 import { ManejadorDOM, Utilidades } from '../servicios.js';
 import { JSON_pizarras } from '../json.js';
-import { Item } from '../clases.js';
+import { Item } from '../modelos.js';
 import { VistaItem } from '../vistas.js';
 
 class Pizarra {
@@ -9,9 +9,9 @@ class Pizarra {
         this.usuario = usuario.nombre;
         this.fecha = usuario.fechaSeleccionada;
         this.items = [];
-        this.totalIngresos = null;
-        this.totalEgresos = null;
-        this.ultimoItemID = 0;
+        this.totalIngresos = 0;
+        this.totalEgresos = 0;
+        this.ultimoItemID = null;
     }
 
     // Métodos privados
@@ -33,10 +33,15 @@ class Pizarra {
         return this.totalIngresos - this.totalEgresos;
     }
 
-    #calcularPorcentaje(valor, total) {
+    #calcularPorcentaje(valor, total, aproximacion = "exceso") {
         const porcentaje = valor * 100 / total;
 
-        return Utilidades.limitarDecimales(porcentaje, 2);
+        switch (aproximacion) {
+            case "exceso":
+                return porcentaje.toFixed(2); // Aplica redondeo de cifras
+            case "defecto":
+                return Utilidades.limitarDecimales(porcentaje, 2); // NO aplica redondeo de cifras
+        }
     }
 
     #calcularTotal(coleccion) {
@@ -124,24 +129,33 @@ class Pizarra {
         this.items.splice(indiceItem, 1, itemModificado);
     }
 
-    setItems(items) {
-        this.items = items;
+    setDatosObtenidos(datos) {
+        this.setItems(datos);
+        this.setTotales(datos);
+        this.setUltimoItemID(datos);
     }
 
-    setUltimoItemID(ultimoItemID) {
-        this.ultimoItemID = ultimoItemID;
+    setItems(datos) {
+        this.items = datos.items;
+    }
+
+    setTotales(datos) {
+        this.totalEgresos = datos.totalEgresos;
+        this.totalIngresos = datos.totalIngresos;
+    }
+
+    setUltimoItemID(datos) {
+        this.ultimoItemID = datos.ultimoItemID;
     }
 
     static cargarDatosAlmacenados(pizarra) {
         const datosDeAlmacenamiento = Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha);
-        pizarra.setItems(datosDeAlmacenamiento.items);
-        pizarra.setUltimoItemID(datosDeAlmacenamiento.ultimoItemID);
+        pizarra.setDatosObtenidos(datosDeAlmacenamiento);
     }
 
     static cargarDatosCacheados(pizarra) {
         const datosDeCache = AppCache.obtener("pizarra_seleccionada");
-        pizarra.setItems(datosDeCache.items);
-        pizarra.setUltimoItemID(datosDeCache.ultimoItemID);
+        pizarra.setDatosObtenidos(datosDeCache);
     }
 
     static cargarJSON_pizarrasPredefinidas() {
@@ -149,12 +163,6 @@ class Pizarra {
             onReady: Ajax.getJQXHR(JSON_pizarras)
                          .done(Pizarra.fn_cargarPizarrasPredefinidas())
         }
-    }
-
-    static getIndice(pizarra, pizarras) {
-        const fn_busqueda = Pizarra.fn_pizarraDeUsuarioBuscada(pizarra.usuario, pizarra.fecha);
-
-        return pizarras.findIndex(fn_busqueda);
     }
 
     static existenteAgregarItem(pizarra, item) {
@@ -177,6 +185,12 @@ class Pizarra {
         Pizarra.actualizarPizarra(pizarra);
     }
 
+    static getIndice(pizarra, pizarras) {
+        const fn_busqueda = Pizarra.fn_pizarraDeUsuarioBuscada(pizarra.usuario, pizarra.fecha);
+
+        return pizarras.findIndex(fn_busqueda);
+    }
+
     static nuevaAgregarItem(pizarra, item) {
         pizarra.agregarItem(item);
         pizarra.actualizarInformacion();
@@ -196,8 +210,6 @@ class Pizarra {
                 AppCache.guardar("pizarra_seleccionada", pizarraDelUsuario);
             }
         }
-
-        pizarraDelUsuario.actualizarInformacion();
 
         return pizarraDelUsuario;
     }

@@ -3,10 +3,6 @@ class UtilidadesTabla {
         return elemento.parents(etiquetaPadreBuscada).eq(0);
     }
 
-    static comparar(valorA, valorB) {
-        return $.isNumeric(valorA) && $.isNumeric(valorB) ? valorA - valorB : valorA.localeCompare(valorB);
-    }
-
     static getArrayDeFilas(tabla) {
         return tabla.find('tr').slice(1).toArray();
     }

@@ -1,5 +1,6 @@
 import { UtilidadesDOM } from '../igzframework.js';
-import { Tabla, Utilidades } from '../servicios.js';
+import { Utilidades } from '../servicios.js';
+import { Tabla } from '../modelos.js';
 
 class ManejadorDOM extends UtilidadesDOM {
     static agregarFila(pizarraSeleccionada, registroItem) {

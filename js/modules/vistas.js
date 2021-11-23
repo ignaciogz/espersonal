@@ -2,3 +2,4 @@
 export { VistaCategoria } from './vistas/VistaCategoria.js';
 export { VistaItem } from './vistas/VistaItem.js';
 export { VistaMenu } from './vistas/VistaMenu.js';
+export { VistaOpcionSelect } from './vistas/VistaOpcionSelect.js';

@@ -1,4 +1,6 @@
-class Utilidades {
+import { UtilidadesBasicas } from "../igzframework.js";
+
+class Utilidades extends UtilidadesBasicas {
     static formatearFecha(anio, mes) {
         return `${anio} - ${mes}`;
     }
@@ -30,13 +32,6 @@ class Utilidades {
         });
 
         return formatter.format(monto);
-    }
-
-    static limitarDecimales(numero, limite) {
-        const expresionRegular = new RegExp("(\\d+\\.\\d{" + limite + "})(\\d)");
-        const resultados = numero.toString().match(expresionRegular);
-        
-        return resultados ? parseFloat(resultados[1]) : numero.valueOf();
     }
 }
 

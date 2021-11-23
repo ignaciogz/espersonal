@@ -42,7 +42,7 @@ class Grafico {
         // Guardo la informacion relevante en la instancia
         this.coloresDeFondo = Array.from(info, categoria => categoria.color);
         this.datos = Array.from(info, categoria => categoria.porcentaje);
-        this.etiquetas = Array.from(info, categoria => categoria.nombre);
+        this.etiquetas = Array.from(info, categoria => `${categoria.nombre} ${categoria.porcentaje}%`);
     }
 
     graficar() {
@@ -61,10 +61,6 @@ class Grafico {
         }
     }
 
-    static fn_infoRelevante() {
-        return elemento => elemento.porcentaje > 0;
-    }
-
     static fn_generarInfoDeCategoria(pizarra) {
         return categoria => {
             const porcentajeDeCategoria = pizarra.calcularPorcentajeDeCategoria(categoria.nombre);
@@ -75,6 +71,10 @@ class Grafico {
                 porcentaje: porcentajeDeCategoria
             }
         }
+    }
+
+    static fn_infoRelevante() {
+        return elemento => elemento.porcentaje > 0;
     }
 }
 

@@ -17,7 +17,15 @@
         },
         "plugins": {
             "legend": {
-                "display": true
+                "display": true,
+                "labels": {
+                    "boxWidth": 30,
+                    "boxHeight": 15
+                }
+            },
+            "tooltip": {
+                "boxPadding": 5,
+                "padding": 10
             }
         }
     }

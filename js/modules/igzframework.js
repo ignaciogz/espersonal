@@ -9,6 +9,7 @@ export { Navegador } from './igzframework/Navegador.js';
 export { Observador } from './igzframework/Observador.js';
 export { Ruteador } from './igzframework/Ruteador.js';
 export { Sesion } from './igzframework/Sesion.js';
+export { UtilidadesBasicas } from './igzframework/UtilidadesBasicas.js';
 export { UtilidadesDOM } from './igzframework/UtilidadesDOM.js';
 export { UtilidadesEvento } from './igzframework/UtilidadesEvento.js';
 export { UtilidadesFecha } from './igzframework/UtilidadesFecha.js';

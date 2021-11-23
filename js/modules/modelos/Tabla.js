@@ -1,6 +1,6 @@
-import { Item } from '../clases.js';
 import { UtilidadesTabla } from '../igzframework.js';
 import { Utilidades } from '../servicios.js';
+import { Item } from '../modelos.js';
 
 class Tabla extends UtilidadesTabla {
     static #getValorDeLaCelda(fila, indexColumna) {
@@ -69,7 +69,7 @@ class Tabla extends UtilidadesTabla {
             let valorA = Tabla.#getValorDeLaCelda($(filaA), indexColumna);
             let valorB = Tabla.#getValorDeLaCelda($(filaB), indexColumna);
 
-            return Tabla.comparar(valorA, valorB);
+            return Utilidades.comparar(valorA, valorB);
         }
     }
 }

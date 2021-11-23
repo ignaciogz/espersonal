@@ -1,5 +1,6 @@
 import { UtilidadesFormulario } from '../igzframework.js';
 import { Fecha, ManejadorDOM } from '../servicios.js';
+import { VistaOpcionSelect } from '../vistas.js';
 
 class Formulario extends UtilidadesFormulario {
     // Métodos públicos
@@ -7,8 +8,8 @@ class Formulario extends UtilidadesFormulario {
         const fragmento = ManejadorDOM.crearFragmento();
 
         for (let anio = usuarioLogeado.anioDeRegistro; anio <= usuarioLogeado.anioDeRegistro + 3; anio++) {
-            let optionDelSelect = Formulario.crearOption(anio);
-            ManejadorDOM.agregar(fragmento, optionDelSelect);
+            let opcionDelSelect = VistaOpcionSelect.crearOpcion(anio);
+            ManejadorDOM.agregar(fragmento, opcionDelSelect);
         }
 
         return fragmento;
@@ -18,8 +19,8 @@ class Formulario extends UtilidadesFormulario {
         const fragmento = ManejadorDOM.crearFragmento();
 
         for (const categoria of categorias.getListado()) {
-            let optionDelSelect = Formulario.crearOption(categoria.nombre);
-            ManejadorDOM.agregar(fragmento, optionDelSelect);
+            let opcionDelSelect = VistaOpcionSelect.crearOpcion(categoria.nombre);
+            ManejadorDOM.agregar(fragmento, opcionDelSelect);
         }
 
         return fragmento;
@@ -29,8 +30,8 @@ class Formulario extends UtilidadesFormulario {
         const fragmento = ManejadorDOM.crearFragmento();
 
         for (const mes of Fecha.meses) {
-            let optionDelSelect = Formulario.crearOption(mes);
-            ManejadorDOM.agregar(fragmento, optionDelSelect);
+            let opcionDelSelect = VistaOpcionSelect.crearOpcion(mes);
+            ManejadorDOM.agregar(fragmento, opcionDelSelect);
         }
 
         return fragmento;

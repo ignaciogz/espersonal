@@ -3,15 +3,6 @@ import { Excepcion_obtenerDeFormulario, Excepcion_setearEnFormulario } from '../
 
 class UtilidadesFormulario {
     // Métodos privados
-    static crearOption(valor) {
-        let $option = document.createElement("option");
-        $option.setAttribute("value", valor);
-
-        $option.text = valor;
-
-        return $option;
-    }
-
     static #getElementoPadre(elemento, etiquetaPadreBuscada) {
         return elemento.parents(etiquetaPadreBuscada).eq(0);
     }

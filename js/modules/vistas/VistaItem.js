@@ -1,5 +1,5 @@
 import { Utilidades } from '../servicios.js';
-import { Item } from '../clases.js';
+import { Item } from '../modelos.js';
 
 class VistaItem {
     static crearRegistro(item) {

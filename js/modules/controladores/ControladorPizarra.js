@@ -1,6 +1,6 @@
 import { Navegador, Observador } from '../igzframework.js';
-import { Formulario, ManejadorDOM, ManejadorEventos } from '../servicios.js';
-import { Categorias, Pizarra, Usuario } from '../clases.js';
+import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
+import { Categorias, Formulario, Pizarra, Usuario } from '../modelos.js';
 
 import { ControladorApp } from './ControladorApp.js';
 
