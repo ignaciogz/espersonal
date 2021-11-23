@@ -17,8 +17,9 @@ class Menu {
         return Menu.instancia = new Menu();
     }
 
+    // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
     onReady() {
-        return this.cargarJSON_menu();
+        return this.#cargarJSON_menu();
     }
 
     // Métodos privados
@@ -26,7 +27,7 @@ class Menu {
         this.opciones.push(valor);
     }
 
-    cargarJSON_menu() {
+    #cargarJSON_menu() {
         const _this = this;
 
         return  Ajax.getJQXHR(JSON_menu)

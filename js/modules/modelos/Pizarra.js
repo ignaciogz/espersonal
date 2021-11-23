@@ -160,6 +160,7 @@ class Pizarra {
 
     static cargarJSON_pizarrasPredefinidas() {
         return {
+            // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
             onReady:  () => Ajax.getJQXHR(JSON_pizarras)
                                 .done(Pizarra.fn_cargarPizarrasPredefinidas())
         }

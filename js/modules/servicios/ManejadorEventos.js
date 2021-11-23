@@ -88,8 +88,7 @@ class ManejadorEventos extends UtilidadesEvento {
             Pizarra.existenteEliminarItem(pizarra, itemID);
             ManejadorDOM.eliminarFila(fila);
 
-            AppCache.actualizar("pizarra_seleccionada", pizarra);
-            Navegador.scrollear("inicio", 5000);
+            ManejadorEventos.finishHandler_item(pizarra, 5000);
         };
     }
 
@@ -159,8 +158,7 @@ class ManejadorEventos extends UtilidadesEvento {
             ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
-            AppCache.actualizar("pizarra_seleccionada", pizarra);
-            Navegador.scrollear("inicio", 4000);
+            ManejadorEventos.finishHandler_item(pizarra, 4000);
         };
     }
 
@@ -182,7 +180,7 @@ class ManejadorEventos extends UtilidadesEvento {
 
             // Procedimiento de finalización
             Modal.cerrar('modal-configuracion');
-            AppCache.eliminar("pizarra_seleccionada");
+            AppCache.limpiar();
             Navegador.redireccionar("app/pizarra.html");
         };
     }
@@ -224,8 +222,7 @@ class ManejadorEventos extends UtilidadesEvento {
             ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
-            AppCache.actualizar("pizarra_seleccionada", pizarra);
-            Navegador.scrollear("inicio", 4000);
+            ManejadorEventos.finishHandler_item(pizarra, 4000);
         };
     }
 
@@ -299,6 +296,12 @@ class ManejadorEventos extends UtilidadesEvento {
             
             Formulario.toggleDisplaySelect(`#${idFormulario} .contenedor-select-categoria`, this.value, { mostrar: "Egreso", ocultar: "Ingreso" });
         };
+    }
+
+    static finishHandler_item(pizarra, tiempoDeScroll) {
+        AppCache.actualizar("pizarra_seleccionada", pizarra);
+        AppCache.eliminar("grafico_informacion");
+        Navegador.scrollear("inicio", tiempoDeScroll);
     }
 }
 

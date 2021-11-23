@@ -10,17 +10,20 @@ class App {
         return App.instancia = new App();
     }
 
+    // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
     onReady() {
-        return this.cargarJSON_configuracion();
+        return this.#cargarJSON_configuracion();
     }
 
-    cargarJSON_configuracion() {
+    // Métodos privados
+    #cargarJSON_configuracion() {
         const _this = this;
 
         return  Ajax.getJQXHR(JSON_config)
                     .done(App.fn_cargarConfiguracion().bind(_this));
     }
 
+    // Métodos públicos
     ejecutarControlador(controlador) {
         import(`../controladores/${controlador}.js`)
         .then(module => module.controlador.ejecutar());

@@ -17,8 +17,9 @@ class Categorias {
         return Categorias.instancia = new Categorias();
     }
 
+    // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
     onReady() {
-        return this.cargarJSON_categoriasPredefinidas();
+        return this.#cargarJSON_categoriasPredefinidas();
     }
 
     // Métodos privados
@@ -26,7 +27,7 @@ class Categorias {
         this.listado.push(valor);
     }
 
-    cargarJSON_categoriasPredefinidas() {
+    #cargarJSON_categoriasPredefinidas() {
         const _this = this;
 
         return Ajax.getJQXHR(JSON_categorias)

@@ -9,24 +9,23 @@ class ControladorGrafico {
         if (Usuario.estaLogeado()) {
             ControladorApp.inicializar();
 
-            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-            const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+            const $canvasGrafico = $('#grafico-pizarra-seleccionada');
+            if (ManejadorDOM.existeEnDOM($canvasGrafico)) {
+                const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+                const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
-            ManejadorDOM.mostrarNombrePizarra(pizarra);
-
-
-            const categorias = Categorias.get();
-            categorias.onReady().always(() => {
-                    const $canvasGrafico = $('#grafico-pizarra-seleccionada');
-                    if (ManejadorDOM.existeEnDOM($canvasGrafico)) {
+                ManejadorDOM.mostrarNombrePizarra(pizarra);
+                
+                const categorias = Categorias.get();
+                categorias.onReady().always(() => {
                         const grafico = Grafico.get($canvasGrafico);
-
+                    
                         grafico.onReady().always(() => {
-                                grafico.generarInformacion(pizarra, categorias.getListado());
-                                grafico.graficar();
-                        });
-                    }
-            });
+                                grafico.obtenerInformacion(pizarra, categorias.getListado());
+                                grafico.graficarInformacion();
+                        });            
+                });
+            }
         } else {
             Navegador.redireccionar("index.html");
         }

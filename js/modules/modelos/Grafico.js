@@ -1,4 +1,4 @@
-import { Ajax } from '../igzframework.js';
+import { Ajax, AppCache } from '../igzframework.js';
 import { JSON_config_grafico } from '../json.js';
 
 class Grafico {
@@ -14,21 +14,49 @@ class Grafico {
         return Grafico.instancia = new Grafico(canvasGrafico);
     }
 
+    // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
     onReady() {
-        return this.cargarJSON_configuracion();
+        return this.#cargarJSON_configuracion();
     }
 
     // Métodos privados
-    #setColoresDeFondo() {0
-        Grafico.config.data.datasets[0].backgroundColor = this.coloresDeFondo;
+    #cargarJSON_configuracion() {
+        const _this = this;
+
+        return  Ajax.getJQXHR(JSON_config_grafico)
+                    .done(Grafico.fn_cargarConfiguracion().bind(_this));
+    }
+
+    #getInfo() {
+        return this.info;
+    }
+
+    #setColoresDeFondo() {
+        Grafico.config.data.datasets[0].backgroundColor = this.#getInfo().coloresDeFondo;
     }
 
     #setDatos() {
-        Grafico.config.data.datasets[0].data = this.datos;
+        Grafico.config.data.datasets[0].data = this.#getInfo().datos;
     }
 
     #setEtiquetas() {
-        Grafico.config.data.labels = this.etiquetas;
+        Grafico.config.data.labels = this.#getInfo().etiquetas;
+    }
+
+    #setInformacionObtenida(informacion) {
+        this.info = {
+            coloresDeFondo: informacion.coloresDeFondo,
+            datos: informacion.datos,
+            etiquetas: informacion.etiquetas
+        }
+    }
+
+    #setInformacionGenerada(informacion) {
+        this.info = {
+            coloresDeFondo: Array.from(informacion, categoria => categoria.color),
+            datos: Array.from(informacion, categoria => categoria.porcentaje),
+            etiquetas: Array.from(informacion, categoria => `${categoria.nombre} ${categoria.porcentaje}%`)
+        }
     }
 
     #setPosicionDeLeyendas(posicion = "") {
@@ -40,24 +68,19 @@ class Grafico {
     }
 
     // Métodos públicos
-    cargarJSON_configuracion() {
-        const _this = this;
-
-        return  Ajax.getJQXHR(JSON_config_grafico)
-                    .done(Grafico.fn_cargarConfiguracion().bind(_this));
+    cargarDatosCacheados() {
+        const informacionDeCache = AppCache.obtener("grafico_informacion");
+        this.#setInformacionObtenida(informacionDeCache);
     }
-    
+
     generarInformacion(pizarra, categorias) {
-        let info = categorias.map(Grafico.fn_generarInfoDeCategoria(pizarra));
-        info = info.filter(Grafico.fn_infoRelevante());
+        let informacion = categorias.map(Grafico.fn_generarInfoDeCategoria(pizarra));
+        informacion = informacion.filter(Grafico.fn_infoRelevante());
         
-        // Guardo la informacion relevante en la instancia
-        this.coloresDeFondo = Array.from(info, categoria => categoria.color);
-        this.datos = Array.from(info, categoria => categoria.porcentaje);
-        this.etiquetas = Array.from(info, categoria => `${categoria.nombre} ${categoria.porcentaje}%`);
+        this.#setInformacionGenerada(informacion);    
     }
 
-    graficar() {
+    graficarInformacion() {
         this.#setPosicionDeLeyendas("right");
 
         this.#setTooltip();
@@ -66,6 +89,16 @@ class Grafico {
         this.#setEtiquetas();
 
         return new Chart(this.canvasGrafico, Grafico.config);
+    }
+    
+    obtenerInformacion(pizarra, categorias) {
+        if (AppCache.existe("grafico_informacion")) {
+            // Genero la información fue generada previamente, la tomo de la cache
+            this.cargarDatosCacheados();
+        } else {
+            this.generarInformacion(pizarra, categorias);
+            AppCache.guardar("grafico_informacion", this.#getInfo());
+        }
     }
     
     static fn_cargarConfiguracion() {
