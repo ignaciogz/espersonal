@@ -1,6 +1,6 @@
 import { AppCache, Navegador, UtilidadesEvento } from '../igzframework.js';
 import { Fecha, ManejadorDOM, Modal } from '../servicios.js';
-import { DatosSesionDeUsuario, Formulario, Item, Pizarra, Tabla, Usuario } from '../modelos.js';
+import { DatosSesionDeUsuario, Formulario, Item, Pizarra, Tabla, Usuario } from '../clases.js';
 import { VistaItem } from '../vistas.js';
 
 class ManejadorEventos extends UtilidadesEvento {

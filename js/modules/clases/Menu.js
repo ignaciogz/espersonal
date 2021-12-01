@@ -1,7 +1,7 @@
 import { Ajax } from '../igzframework.js';
 import { ManejadorDOM } from '../servicios.js';
 import { JSON_menu } from '../json.js';
-import { ItemDeMenu } from '../modelos.js';
+import { ItemDeMenu } from '../clases.js';
 import { VistaMenu } from '../vistas.js';
 
 class Menu {

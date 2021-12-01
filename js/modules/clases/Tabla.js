@@ -1,6 +1,6 @@
 import { UtilidadesTabla } from '../igzframework.js';
 import { Utilidades } from '../servicios.js';
-import { Item } from '../modelos.js';
+import { Item } from '../clases.js';
 
 class Tabla extends UtilidadesTabla {
     static #getValorDeLaCelda(fila, indexColumna) {

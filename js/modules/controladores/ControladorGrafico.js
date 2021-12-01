@@ -1,6 +1,6 @@
 import { Navegador } from '../igzframework.js';
 import { ManejadorDOM } from '../servicios.js';
-import { Categorias, Grafico, Pizarra, Usuario } from '../modelos.js';
+import { Categorias, Grafico, Pizarra, Usuario } from '../clases.js';
 
 import { ControladorApp } from './ControladorApp.js';
 

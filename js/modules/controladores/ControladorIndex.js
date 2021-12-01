@@ -1,6 +1,6 @@
 import { App, Navegador, Video } from '../igzframework.js';
 import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
-import { Usuario } from '../modelos.js';
+import { Usuario } from '../clases.js';
 
 class ControladorIndex {
     static ejecutar() {

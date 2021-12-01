@@ -1,7 +1,7 @@
 import { Ajax } from '../igzframework.js';
 import { ManejadorDOM } from '../servicios.js';
 import { JSON_categorias } from '../json.js';
-import { Categoria } from '../modelos.js';
+import { Categoria } from '../clases.js';
 import { VistaCategoria } from '../vistas.js';
 
 class Categorias {

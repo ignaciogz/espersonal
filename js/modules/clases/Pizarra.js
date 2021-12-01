@@ -1,7 +1,7 @@
 import { Ajax, Almacenamiento, AppCache } from '../igzframework.js';
 import { ManejadorDOM, Utilidades } from '../servicios.js';
 import { JSON_pizarras } from '../json.js';
-import { Item } from '../modelos.js';
+import { Item } from '../clases.js';
 import { VistaItem } from '../vistas.js';
 
 class Pizarra {

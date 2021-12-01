@@ -3,8 +3,8 @@
     "rutas":{
         "":"ControladorIndex",
         "index":"ControladorIndex",
-        "app/pizarra":"ControladorPizarra",
-        "app/grafico":"ControladorGrafico",
-        "app/categorias":"ControladorCategorias"
+        "/":"ControladorPizarra",
+        "/grafico":"ControladorGrafico",
+        "/categorias":"ControladorCategorias"
     }
 }

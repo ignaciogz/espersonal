@@ -2,16 +2,16 @@
     { 
         "icono":"dashboard_customize",
         "nombre":"Pizarra",
-        "link":"pizarra.html"
+        "link":"/"
     },
     { 
         "icono":"donut_large",
         "nombre":"Gráfico",
-        "link":"grafico.html"
+        "link":"#/grafico"
     },
     { 
         "icono":"category",
         "nombre":"Categorías",
-        "link":"categorias.html"
+        "link":"#/categorias"
     }
 ]

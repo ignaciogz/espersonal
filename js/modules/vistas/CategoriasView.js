@@ -1,0 +1,5 @@
+class CategoriasView {
+
+}
+
+export { CategoriasView };

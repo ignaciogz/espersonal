@@ -2,14 +2,6 @@ import { Ajax, Ruteador } from '../igzframework.js';
 import { JSON_config } from '../json.js';
 
 class App {
-    static inicializar() {
-        if (App.instancia instanceof App) {
-            return App.instancia;
-        }
-
-        return App.instancia = new App();
-    }
-
     // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
     onReady() {
         return this.#cargarJSON_configuracion();

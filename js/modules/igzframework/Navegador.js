@@ -2,15 +2,14 @@ import { AppCache, Sesion } from '../igzframework.js';
 
 class Navegador {
     // Propiedad pública
-    static paginaActual = Navegador.#getPaginaActual(location.pathname);
+    static paginaActual = Navegador.#getPaginaActual();
 
     // Métodos privados
-    static #getPaginaActual(ubicacion) {
-        let paginaActual;
-        paginaActual = ubicacion.substring(1); // Elimino la barra inicial
-        paginaActual = paginaActual.split(".").shift(); // Elimino la extension
+    static #getPaginaActual() {
+        let url = document.createElement('a');
+        url.href = location.href;
 
-        return paginaActual;
+        return url;
     }
 
     // Métodos públicos
