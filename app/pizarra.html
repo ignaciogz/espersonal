@@ -55,6 +55,7 @@
                 </li>
                 
                 <li><a class="subheader">MENÚ</a></li>
+                <!-- Aquí se agrega DINÁMICAMENTE -->
             </div>
             <div>
                 <li><a href="#!" class="subheader"><i class="material-icons left">account_circle</i><strong id="usuario-logeado"></strong></a></li>
@@ -85,28 +86,36 @@
                         <i class="small material-icons left">flag</i>
                         <div>
                             Total de items
-                            <div id="total-de-items"></div>
+                            <div id="total-de-items">
+                                <!-- Aquí se agrega DINÁMICAMENTE -->
+                            </div>
                         </div>
                     </div>
                     <div class="col s6 m3 d-flex">
                         <i class="small material-icons left">north_east</i>
                         <div>
                             Total Ingresos
-                            <div id="total-ingresos"></div>
+                            <div id="total-ingresos">
+                                <!-- Aquí se agrega DINÁMICAMENTE -->
+                            </div>
                         </div>
                     </div>
                     <div class="col s6 m3 d-flex">
                         <i class="small material-icons left">south_west</i>
                         <div>
                             Total Egresos
-                            <div id="total-egresos"></div>
+                            <div id="total-egresos">
+                                <!-- Aquí se agrega DINÁMICAMENTE -->
+                            </div>
                         </div>
                     </div>
                     <div class="col s6 m3 d-flex">
                         <i class="small material-icons left">account_balance</i>
                         <div>
                             Balance
-                            <div id="balance"></div>
+                            <div id="balance">
+                                <!-- Aquí se agrega DINÁMICAMENTE -->
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -127,6 +136,7 @@
                         </thead>
                 
                         <tbody id="pizarra-seleccionada">
+                            <!-- Aquí se agrega DINÁMICAMENTE -->
                         </tbody>
                     </table>
                 </div>
@@ -165,12 +175,13 @@
                     <div class="contenedor-select-categoria input-field col s12">
                         <select id="agregar-select-categoria" required>
                             <option value="Sin categoría" disabled>- Categoría -</option>
+                            <!-- Aquí se agrega DINÁMICAMENTE -->
                         </select>
                         <label for="agregar-select-categoria">Seleccione una categoría:</label>
                     </div>
                 
                     <div class="input-field col s12">
-                        <input id="agregar-item-monto" type="number" min=1 required>
+                        <input id="agregar-item-monto" type="number" min=0.01 step="any" required>
                         <label for="agregar-item-monto">Monto</label>
                     </div>
                 </div>
@@ -208,12 +219,13 @@
                     <div class="contenedor-select-categoria input-field col s12">
                         <select id="editar-select-categoria" required>
                             <option value="Sin categoría" disabled>- Categoría -</option>
+                            <!-- Aquí se agrega DINÁMICAMENTE -->
                         </select>
                         <label for="editar-select-categoria">Seleccione una categoría:</label>
                     </div>
                 
                     <div class="input-field col s12">
-                        <input id="editar-item-monto" type="number" min=1 required>
+                        <input id="editar-item-monto" type="number" min=0.01 step="any" required>
                         <label class="active" for="editar-item-monto">Monto</label>
                     </div>
                 </div>
@@ -234,6 +246,7 @@
                     <div class="input-field col s12 m6">
                         <select id="configuracion-select-anio" required>
                             <option value="" disabled selected>- Año -</option>
+                            <!-- Aquí se agrega DINÁMICAMENTE -->
                         </select>
                         <label>Seleccione el año:</label>
                     </div>
@@ -241,6 +254,7 @@
                     <div class="input-field col s12 m6">
                         <select id="configuracion-select-mes" required>
                             <option value="" disabled selected>- Mes -</option>
+                            <!-- Aquí se agrega DINÁMICAMENTE -->
                         </select>
                         <label>Seleccione el mes:</label>
                     </div>
