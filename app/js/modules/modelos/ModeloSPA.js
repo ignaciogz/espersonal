@@ -23,14 +23,14 @@ class ModeloSPA {
         const $selectAnio = $('#configuracion-select-anio');
         if (ManejadorDOM.existeEnDOM($selectAnio)) {
             const opcionesSelectAnio = Formulario.crearOpcionesSelectAnio(usuarioLogeado);
-            ManejadorDOM.renderizar($selectAnio, opcionesSelectAnio);
+            ManejadorDOM.agregar($selectAnio, opcionesSelectAnio);
         }
 
         // CREANDO DINÁMICAMENTE -> Opciones del select fecha, del formulario de configuración
         const $selectMes = $('#configuracion-select-mes');
         if (ManejadorDOM.existeEnDOM($selectMes)) {
             const opcionesSelectMes = Formulario.crearOpcionesSelectMes();
-            ManejadorDOM.renderizar($selectMes, opcionesSelectMes);
+            ManejadorDOM.agregar($selectMes, opcionesSelectMes);
         }
 
         // ASOCIANDO EVENTOS

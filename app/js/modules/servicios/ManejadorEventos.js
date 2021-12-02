@@ -34,6 +34,7 @@ class ManejadorEventos extends UtilidadesEvento {
             const $itemDisparador = $(this);
             const itemID = $itemDisparador.data('item-id');
             const formularioID = "#form-editar-item";
+            Formulario.reset(formularioID);
 
             // OBTENIENDO DATOS -> Del item, a partir del HTML visible
             const $fila = Tabla.getFila($itemDisparador);
@@ -51,7 +52,7 @@ class ManejadorEventos extends UtilidadesEvento {
             // CARGANDO CAMPOS -> Formulario editar item
             Formulario.setInput('editar-item-nombre', item.nombre);
             Formulario.setRadioBtn('editar-item-radio-tipo', item.tipo);
-            Formulario.setOpcionDeSelect('editar-select-categoria', item.categoria);
+            if(item.categoria !== "Sin categoría") Formulario.setOpcionDeSelect('editar-select-categoria', item.categoria);
             Formulario.setInput('editar-item-monto', item.monto);
             
             // MUESTRO u OCULTO -> El selector de categorias, dependiendo del tipo de item
@@ -217,7 +218,6 @@ class ManejadorEventos extends UtilidadesEvento {
             const registroItemModificado = VistaItem.crearRegistro(itemModificado);
             ManejadorDOM.reemplazarFila($fila, registroItemModificado);
 
-            /* FALTA PROGRAMAR :( -> Asociar evento solo al editado */
             ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
             ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
 
