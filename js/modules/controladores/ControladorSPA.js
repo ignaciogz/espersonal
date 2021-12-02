@@ -2,7 +2,7 @@ import { App } from '../igzframework.js';
 import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
 import { Formulario, Menu, Usuario } from '../clases.js';
 
-class ControladorApp {
+class ControladorSPA {
     static inicializar() {
         // CREANDO DINÁMICAMENTE y de forma ASÍNCRONA -> Opciones del menú de navegación
         const $menu = $('#contenedor-menu');
@@ -23,14 +23,14 @@ class ControladorApp {
         const $selectAnio = $('#configuracion-select-anio');
         if (ManejadorDOM.existeEnDOM($selectAnio)) {
             const opcionesSelectAnio = Formulario.crearOpcionesSelectAnio(usuarioLogeado);
-            ManejadorDOM.agregar($selectAnio, opcionesSelectAnio);
+            ManejadorDOM.renderizar($selectAnio, opcionesSelectAnio);
         }
 
         // CREANDO DINÁMICAMENTE -> Opciones del select fecha, del formulario de configuración
         const $selectMes = $('#configuracion-select-mes');
         if (ManejadorDOM.existeEnDOM($selectMes)) {
             const opcionesSelectMes = Formulario.crearOpcionesSelectMes();
-            ManejadorDOM.agregar($selectMes, opcionesSelectMes);
+            ManejadorDOM.renderizar($selectMes, opcionesSelectMes);
         }
 
         // ASOCIANDO EVENTOS
@@ -44,4 +44,4 @@ class ControladorApp {
     }
 }
 
-export { ControladorApp };
+export { ControladorSPA };

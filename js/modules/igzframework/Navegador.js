@@ -1,11 +1,7 @@
 import { AppCache, Sesion } from '../igzframework.js';
 
 class Navegador {
-    // Propiedad pública
-    static paginaActual = Navegador.#getPaginaActual();
-
-    // Métodos privados
-    static #getPaginaActual() {
+    static paginaActual() {
         let url = document.createElement('a');
         url.href = location.href;
 

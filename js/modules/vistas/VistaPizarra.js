@@ -1,5 +1,5 @@
-class PizarraView {
-    static crear() {
+class VistaPizarra {
+    constructor() {
         let $seccionPizarra = document.createElement("section");
         $seccionPizarra.classList.add('pizarra');
 
@@ -84,4 +84,4 @@ class PizarraView {
     }
 }
 
-export { PizarraView };
+export { VistaPizarra };

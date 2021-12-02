@@ -1,5 +1,0 @@
-class CategoriasView {
-
-}
-
-export { CategoriasView };

@@ -10,7 +10,7 @@ class MPA extends App {
     }
 
     // Métodos privados
-    static parseLocation(url) {
+    static #parsearPagina(url) {
         let paginaActual;
         paginaActual = url.pathname.substring(1); // Elimino la barra inicial
         paginaActual = paginaActual.split(".").shift(); // Elimino la extension
@@ -20,12 +20,12 @@ class MPA extends App {
 
     // Métodos públicos
     existe(pagina) {
-        pagina = MPA.parseLocation(pagina);
+        pagina = MPA.#parsearPagina(pagina);
         return super.existe(pagina);
     }
 
     getControlador(pagina) {
-        pagina = MPA.parseLocation(pagina);
+        pagina = MPA.#parsearPagina(pagina);
         return super.getControlador(pagina);
     }
 }

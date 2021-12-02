@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     esPersonalApp.onReady().always(() => {
         /* Controlador Frontal */
-        const pagina = Navegador.paginaActual;
+        const pagina = Navegador.paginaActual();
 
         if (esPersonalApp.existe(pagina)) {
             const controlador = esPersonalApp.getControlador(pagina);

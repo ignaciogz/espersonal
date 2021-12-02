@@ -1,24 +1,16 @@
 import { Navegador } from '../igzframework.js';
 import { ManejadorDOM } from '../servicios.js';
-import { Categorias, Usuario } from '../clases.js';
-
-import { ControladorApp } from './ControladorApp.js';
+import { Usuario } from '../clases.js';
+import { VistaCategorias } from '../vistas.js';
+import { ModeloCategorias } from '../modelos.js';
 
 class ControladorCategorias {
     static ejecutar() {
         if (Usuario.estaLogeado()) {
-            ControladorApp.inicializar();
+            const contenedor = $('#contenedor-app');
+            ManejadorDOM.renderizar(contenedor, new VistaCategorias());
             
-            //  CREANDO DINÁMICAMENTE  y de forma ASÍNCRONA -> Cards de categorías
-            const $cardsCategorias = $('#contenedor-cards-categorias');
-            if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
-                const categorias = Categorias.get();
-
-                categorias.onReady().always(() => {
-                        const cardsCategorias = categorias.crearCards();
-                        ManejadorDOM.agregar($cardsCategorias, cardsCategorias);
-                });
-            }
+            new ModeloCategorias();   
         } else {
             Navegador.redireccionar("index.html");
         }

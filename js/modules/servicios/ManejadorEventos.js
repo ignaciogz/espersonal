@@ -110,7 +110,7 @@ class ManejadorEventos extends UtilidadesEvento {
                 const datosDeSesion = new DatosSesionDeUsuario(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaActual());
                 Navegador.iniciarSesion(datosDeSesion);
                 formulario.reset();
-                Navegador.redireccionar("app/pizarra.html");
+                Navegador.redireccionar("app/index.html");
             } else {
                 ManejadorDOM.mostrarError('#error-acceso', "Datos de ingreso incorrectos");
                 formulario.reset();
@@ -181,7 +181,7 @@ class ManejadorEventos extends UtilidadesEvento {
             // Procedimiento de finalización
             Modal.cerrar('modal-configuracion');
             AppCache.limpiar();
-            Navegador.redireccionar("app/pizarra.html");
+            Navegador.redireccionar("app/index.html");
         };
     }
 
@@ -247,7 +247,7 @@ class ManejadorEventos extends UtilidadesEvento {
                 const datosDeSesion = new DatosSesionDeUsuario(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaActual());
                 Navegador.iniciarSesion(datosDeSesion);
                 formulario.reset();
-                Navegador.redireccionar("app/pizarra.html");
+                Navegador.redireccionar("app/index.html");
             } else {
                 ManejadorDOM.mostrarError('#error-registrarse', "Nombre de usuario NO disponible");
                 formulario.reset();

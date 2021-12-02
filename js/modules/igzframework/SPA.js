@@ -10,19 +10,19 @@ class SPA extends App {
     }
 
     // Métodos privados
-    static parseLocation(url) {
-        const paginaActual = url.hash.slice(1).toLowerCase() || '/';
+    static #parsearPagina(url) {
+        let paginaActual = url.hash.slice(1).toLowerCase() || '/';
         return paginaActual;
     }
 
     // Métodos públicos
     existe(pagina) {
-        pagina = SPA.parseLocation(pagina);
+        pagina = SPA.#parsearPagina(pagina);
         return super.existe(pagina);
     }
 
     getControlador(pagina) {
-        pagina = SPA.parseLocation(pagina);
+        pagina = SPA.#parsearPagina(pagina);
         return super.getControlador(pagina);
     }
 }

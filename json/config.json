@@ -4,6 +4,7 @@
         "":"ControladorIndex",
         "index":"ControladorIndex",
         "/":"ControladorPizarra",
+        "/pizarra":"ControladorPizarra",
         "/grafico":"ControladorGrafico",
         "/categorias":"ControladorCategorias"
     }

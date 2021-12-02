@@ -6,14 +6,6 @@ class Grafico {
         this.canvasGrafico = canvasGrafico;
     }
 
-    static get(canvasGrafico) {
-        if (Grafico.instancia instanceof Grafico) {
-            return Grafico.instancia;
-        }
-
-        return Grafico.instancia = new Grafico(canvasGrafico);
-    }
-
     // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
     onReady() {
         return this.#cargarJSON_configuracion();

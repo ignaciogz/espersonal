@@ -2,7 +2,7 @@
     { 
         "icono":"dashboard_customize",
         "nombre":"Pizarra",
-        "link":"/"
+        "link":"#/pizarra"
     },
     { 
         "icono":"donut_large",

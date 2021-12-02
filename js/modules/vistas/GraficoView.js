@@ -1,5 +1,0 @@
-class GraficoView {
-
-}
-
-export { GraficoView };

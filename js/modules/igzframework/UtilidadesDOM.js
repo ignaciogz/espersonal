@@ -55,6 +55,14 @@ class UtilidadesDOM {
     static reemplazar(elementoInicial, elemento) {
         elementoInicial.replaceWith(elemento);
     }
+
+    static renderizar(contenedor, elemento) {
+        contenedor.html(elemento);
+    }
+
+    static tituloDePagina(titulo) {
+        document.title = titulo;
+    }
 }
 
 export { UtilidadesDOM };

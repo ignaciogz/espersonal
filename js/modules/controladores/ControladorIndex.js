@@ -5,7 +5,7 @@ import { Usuario } from '../clases.js';
 class ControladorIndex {
     static ejecutar() {
         if (Usuario.estaLogeado()) {
-            Navegador.redireccionar("pizarra.html");
+            Navegador.redireccionar("app/index.html");
         } else {
             // CARGANDO DATOS predefinidos de forma ASÍNCRONA -> En localStorage [Si ya existe NO agrega]
             Usuario.cargarJSON_usuariosPredefinidos();
