@@ -5,16 +5,14 @@ class ModeloCategorias {
     constructor() {
         ManejadorDOM.tituloDePagina('Categorías - Panel del usuario');
 
-         //  CREANDO DINÁMICAMENTE  y de forma ASÍNCRONA -> Cards de categorías
-         const $cardsCategorias = $('#contenedor-cards-categorias');
-         if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
-             const categorias = new Categorias();
+        //  CREANDO DINÁMICAMENTE  y de forma ASÍNCRONA -> Cards de categorías
+        const $cardsCategorias = $('#contenedor-cards-categorias');
+        if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
+            const categorias = Categorias.get();
 
-             categorias.onReady().always(() => {
-                     const cardsCategorias = categorias.crearCards();
-                     ManejadorDOM.agregar($cardsCategorias, cardsCategorias);
-             });
-         }
+            const cardsCategorias = categorias.crearCards();
+            ManejadorDOM.agregar($cardsCategorias, cardsCategorias);
+        }
     }
 }
 

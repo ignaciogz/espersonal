@@ -1,41 +1,27 @@
-import { SPA, Navegador } from '/js//modules/igzframework.js';
-import { Excepcion_noExisteRuta } from '/js/modules/igzframework.js';
+import { ModeloSPA } from '/js/modules/modelos/ModeloSPA.js';
+import { SPA } from '/js/modules/igzframework.js';
+import { Categorias, Pizarra } from '/js/modules/clases.js';
 
-import { ControladorSPA } from '/js/modules/controladores/ControladorSPA.js';
+import { ControladorFrontal } from '/js/modules/controladores/ControladorFrontal.js';
 
 /* ******************** ARCHIVO PRINCIPAL - SPA ******************** */
 $(document).ready(function() {
-    ControladorSPA.inicializar();
-    
     const esPersonalApp = SPA.inicializar();
 
+    // Consumo por única vez de forma ASÍNCRONA, el JSON de: configuración de la app.
     esPersonalApp.onReady().always(() => {
-        /* Controlador Frontal */
-        const pagina = Navegador.paginaActual();
-        
-        if (esPersonalApp.existe(pagina)) {
-            const controlador = esPersonalApp.getControlador(pagina);
-            esPersonalApp.ejecutarControlador(controlador);
-        }
-        else {
-            new Excepcion_noExisteRuta(pagina);
-        }
+        new ModeloSPA();
+
+        // Consumo por única vez de forma ASÍNCRONA, los JSON de: pizarras y categorías.
+        const pizarras = Pizarra.get();
+        const categorias = Categorias.get();
+
+        $.when( pizarras.onReady(), categorias.onReady() ).always(() => {
+            ControladorFrontal.ejecutar(esPersonalApp);
+        });
     });
 });
 
 $(window).on('hashchange', function() {
-    const esPersonalApp = SPA.inicializar();
-
-    esPersonalApp.onReady().always(() => {
-        /* Controlador Frontal */
-        const pagina = Navegador.paginaActual();
-        
-        if (esPersonalApp.existe(pagina)) {
-            const controlador = esPersonalApp.getControlador(pagina);
-            esPersonalApp.ejecutarControlador(controlador);
-        }
-        else {
-            new Excepcion_noExisteRuta(pagina);
-        }
-    });
+    SPA.actualizar();
 });

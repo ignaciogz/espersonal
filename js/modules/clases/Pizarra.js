@@ -14,6 +14,13 @@ class Pizarra {
         this.ultimoItemID = null;
     }
 
+    static get() {
+        return {
+            // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
+            onReady: () => Pizarra.cargarJSON_pizarrasPredefinidas()
+        }
+    }
+
     // Métodos privados
     #generarNuevoItemID() {
         this.ultimoItemID = this.ultimoItemID + 1;
@@ -159,13 +166,10 @@ class Pizarra {
     }
 
     static cargarJSON_pizarrasPredefinidas() {
-        return {
-            // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
-            onReady:  () => Ajax.getJQXHR(JSON_pizarras)
-                                .done(Pizarra.fn_cargarPizarrasPredefinidas())
-        }
+        return  Ajax.getJQXHR(JSON_pizarras)
+                    .done(Pizarra.fn_cargarPizarrasPredefinidas());
     }
-
+    
     static existenteAgregarItem(pizarra, item) {
         pizarra.agregarItem(item);
 

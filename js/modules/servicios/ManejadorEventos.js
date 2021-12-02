@@ -1,4 +1,4 @@
-import { AppCache, Navegador, UtilidadesEvento } from '../igzframework.js';
+import { AppCache, Navegador, SPA, UtilidadesEvento } from '../igzframework.js';
 import { Fecha, ManejadorDOM, Modal } from '../servicios.js';
 import { DatosSesionDeUsuario, Formulario, Item, Pizarra, Tabla, Usuario } from '../clases.js';
 import { VistaItem } from '../vistas.js';
@@ -165,7 +165,6 @@ class ManejadorEventos extends UtilidadesEvento {
     static getHandler_formConfiguracion() {
         return function handler_formConfiguracion(e) {
             e.preventDefault();
-            const formulario = e.target;
 
             // OBTENIENDO DATOS -> Formulario configuración
             const datoAnio = Formulario.getOpcionDeSelectElegida('configuracion-select-anio');
@@ -181,7 +180,7 @@ class ManejadorEventos extends UtilidadesEvento {
             // Procedimiento de finalización
             Modal.cerrar('modal-configuracion');
             AppCache.limpiar();
-            Navegador.redireccionar("app/index.html");
+            SPA.actualizar();
         };
     }
 

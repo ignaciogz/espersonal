@@ -9,6 +9,14 @@ class Categorias {
         this.listado = new Array();
     }
 
+    static get() {
+        if (Categorias.instancia instanceof Categorias) {
+            return Categorias.instancia;
+        }
+
+        return Categorias.instancia = new Categorias();
+    }
+
     // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
     onReady() {
         return this.#cargarJSON_categoriasPredefinidas();

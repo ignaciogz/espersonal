@@ -1,6 +1,13 @@
 import { App } from '../igzframework.js';
 
+import { ControladorFrontal } from '/js/modules/controladores/ControladorFrontal.js';
+
 class SPA extends App {
+    static actualizar() {
+        const instanciaSPA = SPA.inicializar();
+        ControladorFrontal.ejecutar(instanciaSPA);
+    }
+
     static inicializar() {
         if (SPA.instancia instanceof SPA) {
             return SPA.instancia;

@@ -2,8 +2,8 @@ import { App } from '../igzframework.js';
 import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
 import { Formulario, Menu, Usuario } from '../clases.js';
 
-class ControladorSPA {
-    static inicializar() {
+class ModeloSPA {
+    constructor() {
         // CREANDO DINÁMICAMENTE y de forma ASÍNCRONA -> Opciones del menú de navegación
         const $menu = $('#contenedor-menu');
         if (ManejadorDOM.existeEnDOM($menu)) {
@@ -44,4 +44,4 @@ class ControladorSPA {
     }
 }
 
-export { ControladorSPA };
+export { ModeloSPA };

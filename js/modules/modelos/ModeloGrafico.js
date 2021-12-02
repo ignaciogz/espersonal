@@ -12,14 +12,13 @@ class ModeloGrafico {
 
             ManejadorDOM.mostrarNombrePizarra(pizarra);
             
-            const categorias = new Categorias();
-            categorias.onReady().always(() => {
-                    const grafico = new Grafico($canvasGrafico);
-                
-                    grafico.onReady().always(() => {
-                            grafico.obtenerInformacion(pizarra, categorias.getListado());
-                            grafico.graficarInformacion();
-                    });            
+            const categorias = Categorias.get();
+            
+            const grafico = new Grafico($canvasGrafico);
+            // Consumo de forma ASÍNCRONA, el JSON de: configuración del grafico.
+            grafico.onReady().always(() => {
+                    grafico.obtenerInformacion(pizarra, categorias.getListado());
+                    grafico.graficarInformacion();
             });
         }   
     }
