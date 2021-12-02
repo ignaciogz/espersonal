@@ -144,6 +144,9 @@ class ManejadorEventos extends UtilidadesEvento {
                 Pizarra.existenteAgregarItem(pizarra, itemNuevo);
             } else {
                 Pizarra.nuevaAgregarItem(pizarra, itemNuevo);
+
+                const $infoPizarraVacia = $('#infoPizarraVacia');
+                ManejadorDOM.eliminar($infoPizarraVacia);
             }
             // FIN LÓGICA -> Agregar item
 

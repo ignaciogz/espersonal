@@ -67,7 +67,9 @@ class VistaPizarra {
                                                 </tr>
                                                 </thead>
                                         
+                                                
                                                 <tbody id="pizarra-seleccionada">
+                                                    <td id="infoPizarraVacia" class="center-align" colspan="5">Use el botón de la esquina inferior derecha de su pantalla para agregar un item</td>
                                                     <!-- Aquí se agrega DINÁMICAMENTE -->
                                                 </tbody>
                                             </table>

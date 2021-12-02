@@ -107,6 +107,10 @@ class Pizarra {
         this.items.splice(indiceItem, 1);
     }
 
+    noEstaVacia() {
+        return this.getCantidadDeItems() ? true : false;
+    }
+
     getBalance() {
         return this.#calcularBalance();
     }

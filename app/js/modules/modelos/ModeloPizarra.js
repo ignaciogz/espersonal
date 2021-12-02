@@ -13,12 +13,14 @@ class ModeloPizarra {
             const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
             const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
-            const registrosDeItems = pizarra.crearRegistros();
-
             ManejadorDOM.mostrarNombrePizarra(pizarra);
-            ManejadorDOM.agregar($pizarraSeleccionada, registrosDeItems);
+            
+            if (pizarra.noEstaVacia()) {
+                const registrosDeItems = pizarra.crearRegistros();
+                ManejadorDOM.renderizar($pizarraSeleccionada, registrosDeItems);
+            }
 
-            ManejadorDOM.mostrarInformacionPizarra(pizarra);    
+            ManejadorDOM.mostrarInformacionPizarra(pizarra);
 
             // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada
             Observador.escuchar($pizarraSeleccionada, ManejadorEventos.getHandler_actualizarCambiosEnPizarra());
@@ -36,8 +38,12 @@ class ModeloPizarra {
         // ASOCIANDO EVENTOS
         ManejadorEventos.asociar('#btn-agregar', 'click', ManejadorEventos.getHandler_resetearFormAgregarItem());
         ManejadorEventos.asociar('table th', 'click', ManejadorEventos.getHandler_reordenarTabla());
-        ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
-        ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
+
+        const $registrosDeItems = $('#pizarra-seleccionada tr');
+        if (ManejadorDOM.existeEnDOM($registrosDeItems)) {
+            ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
+            ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
+        }
 
         ManejadorEventos.asociar('#form-agregar-item', 'submit', ManejadorEventos.getHandler_formAgregarItem());
         ManejadorEventos.asociar('#form-editar-item', 'submit', ManejadorEventos.getHandler_formEditarItem());
