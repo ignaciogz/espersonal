@@ -1,6 +1,6 @@
 import { App } from '../igzframework.js';
 
-import { ControladorFrontal } from '/js/modules/controladores/ControladorFrontal.js';
+import { ControladorFrontal } from '../controladores/ControladorFrontal.js';
 
 class SPA extends App {
     static actualizar() {

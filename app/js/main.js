@@ -1,8 +1,8 @@
-import { ModeloSPA } from '/js/modules/modelos/ModeloSPA.js';
-import { SPA } from '/js/modules/igzframework.js';
-import { Categorias, Pizarra } from '/js/modules/clases.js';
+import { ModeloSPA } from './modules/modelos/ModeloSPA.js';
+import { SPA } from './modules/igzframework.js';
+import { Categorias, Pizarra } from './modules/clases.js';
 
-import { ControladorFrontal } from '/js/modules/controladores/ControladorFrontal.js';
+import { ControladorFrontal } from './modules/controladores/ControladorFrontal.js';
 
 /* ******************** ARCHIVO PRINCIPAL - SPA ******************** */
 $(document).ready(function() {
