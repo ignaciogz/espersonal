@@ -7,7 +7,7 @@ import { ModeloPizarra } from '../modelos.js';
 class ControladorPizarra {
     static ejecutar() {
         if (Usuario.estaLogeado()) {
-            const $contenedor = $('#contenedor-app');
+            const $contenedor = $('#contenedor-spa');
             ManejadorDOM.renderizar($contenedor, new VistaPizarra());
             
             new ModeloPizarra();

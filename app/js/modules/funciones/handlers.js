@@ -1,6 +1,6 @@
 import { AppCache, Navegador, SPA } from '../igzframework.js';
 import { Fecha, ManejadorDOM, ManejadorEventos, Modal } from '../servicios.js';
-import { DatosSesionDeUsuario, Formulario, Item, Pizarra, Tabla, Usuario } from '../clases.js';
+import { DatosSesionDeUsuario, Formulario, Item, Menu, Pizarra, Tabla, Usuario } from '../clases.js';
 import { VistaItem } from '../vistas.js';
 
 export function actualizarCambiosEnPizarra() {
@@ -9,6 +9,7 @@ export function actualizarCambiosEnPizarra() {
 
     ManejadorDOM.mostrarInformacionPizarra(pizarra);
 }
+
 
 export function autocompletarFormConfiguracion() {
     // OBTENIENDO DATOS
@@ -23,6 +24,7 @@ export function autocompletarFormConfiguracion() {
     M.AutoInit();
     M.updateTextFields();
 }
+
 
 export function autocompletarFormEditarItem() {
     const $itemDisparador = $(this);
@@ -46,7 +48,7 @@ export function autocompletarFormEditarItem() {
     // CARGANDO CAMPOS -> Formulario editar item
     Formulario.setInput('editar-item-nombre', item.nombre);
     Formulario.setRadioBtn('editar-item-radio-tipo', item.tipo);
-    if (item.categoria !== "Sin categoría") Formulario.setOpcionDeSelect('editar-select-categoria', item.categoria);
+    if (item.categoria !== "Sin categoría") Formulario.setOpcionDeSelect('editar-item-select-categoria', item.categoria);
     Formulario.setInput('editar-item-monto', item.monto);
 
     // MUESTRO u OCULTO -> El selector de categorias, dependiendo del tipo de item
@@ -64,10 +66,12 @@ export function autocompletarFormEditarItem() {
     M.updateTextFields();
 }
 
+
 export function cerrarApp() {
     Navegador.cerrarSesion();
     Navegador.redireccionar("index.html");
 }
+
 
 export function eliminarItem() {
     const $itemDisparador = $(this);
@@ -84,6 +88,8 @@ export function eliminarItem() {
 
     finishHandler_item(pizarra, 5000);
 }
+
+
 export function formAcceso(e) {
     e.preventDefault();
     const formulario = e.target;
@@ -100,6 +106,7 @@ export function formAcceso(e) {
         Usuario.cargarDatosAlmacenados(usuario);
         const datosDeSesion = new DatosSesionDeUsuario(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaActual());
         Navegador.iniciarSesion(datosDeSesion);
+
         formulario.reset();
         Navegador.redireccionar("app/index.html");
     } else {
@@ -107,6 +114,7 @@ export function formAcceso(e) {
         formulario.reset();
     }
 }
+
 
 export function formAgregarItem(e) {
     e.preventDefault();
@@ -117,7 +125,7 @@ export function formAgregarItem(e) {
 
     let datoCategoria = null;
     if (datoTipo === "Egreso") {
-        datoCategoria = Formulario.getOpcionDeSelectElegida('agregar-select-categoria');
+        datoCategoria = Formulario.getOpcionDeSelectElegida('agregar-item-select-categoria');
     }
 
     const datoMonto = parseFloat(Formulario.getInput('agregar-item-monto'));
@@ -153,6 +161,7 @@ export function formAgregarItem(e) {
     finishHandler_item(pizarra, 4000);
 }
 
+
 export function formConfiguracion(e) {
     e.preventDefault();
 
@@ -173,6 +182,7 @@ export function formConfiguracion(e) {
     SPA.actualizar();
 }
 
+
 export function formEditarItem(e) {
     e.preventDefault();
 
@@ -186,7 +196,7 @@ export function formEditarItem(e) {
 
     let datoCategoria = null;
     if (datoTipo === "Egreso") {
-        datoCategoria = Formulario.getOpcionDeSelectElegida('editar-select-categoria');
+        datoCategoria = Formulario.getOpcionDeSelectElegida('editar-item-select-categoria');
     }
 
     const datoMonto = parseFloat(Formulario.getInput('editar-item-monto'));
@@ -210,6 +220,7 @@ export function formEditarItem(e) {
 
     finishHandler_item(pizarra, 4000);
 }
+
 
 export function formRegistrarse(e) {
     e.preventDefault();
@@ -238,6 +249,7 @@ export function formRegistrarse(e) {
     }
 }
 
+
 export function reordenarTabla() {
     const $thDisparador = $(this);
     const indexColumna = $thDisparador.index();
@@ -263,10 +275,12 @@ export function reordenarTabla() {
     }
 }
 
+
 export function resetearFormAgregarItem() {
     Formulario.ocultarSelect('#form-agregar-item .contenedor-select-categoria');
     Formulario.reset('#form-agregar-item');
 }
+
 
 export function toggleDisplaySelectCategoria() {
     const $radioInputDisparador = $(this);
@@ -277,6 +291,7 @@ export function toggleDisplaySelectCategoria() {
         ocultar: "Ingreso"
     });
 }
+
 
 function finishHandler_item(pizarra, tiempoDeScroll) {
     AppCache.actualizar("pizarra_seleccionada", pizarra);

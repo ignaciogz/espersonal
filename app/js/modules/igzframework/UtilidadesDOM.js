@@ -12,7 +12,7 @@ class UtilidadesDOM {
     }
 
     static crearFragmento() {
-        return document.createDocumentFragment();
+        return new DocumentFragment();
     }
 
     static eliminar(elemento) {

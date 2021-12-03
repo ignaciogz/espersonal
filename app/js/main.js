@@ -1,6 +1,6 @@
-import { ModeloSPA } from './modules/modelos/ModeloSPA.js';
 import { SPA } from './modules/igzframework.js';
 import { Categorias, Pizarra } from './modules/clases.js';
+import { ModeloSPA } from './modules/modelos/ModeloSPA.js';
 
 import { ControladorFrontal } from './modules/controladores/ControladorFrontal.js';
 
@@ -11,7 +11,7 @@ $(document).ready(function() {
     // Consumo por única vez de forma ASÍNCRONA, el JSON de: configuración de la app.
     esPersonalApp.onReady().always(() => {
         new ModeloSPA();
-
+        
         // Consumo por única vez de forma ASÍNCRONA, los JSON de: pizarras y categorías.
         const pizarras = Pizarra.get();
         const categorias = Categorias.get();

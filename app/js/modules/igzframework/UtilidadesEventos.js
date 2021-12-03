@@ -1,7 +1,7 @@
 import { UtilidadesDOM } from '../igzframework.js';
 import { Excepcion_asociarEvento } from '../igzframework.js';
 
-class UtilidadesEvento {
+class UtilidadesEventos {
     static #asociar($elemento, evento, manejador, selector) {
         if (UtilidadesDOM.existeEnDOM($elemento)) {
             $elemento.on(evento, manejador);
@@ -13,18 +13,18 @@ class UtilidadesEvento {
 
     static asociar(elemento, evento, manejador) {
         const $elemento = $(elemento);
-        UtilidadesEvento.#asociar($elemento, evento, manejador, elemento);
+        UtilidadesEventos.#asociar($elemento, evento, manejador, elemento);
     }
 
     static asociarAlSubElemento(elemento, subElemento, evento, manejador) {
         const $subElemento = $(elemento).find(subElemento);
-        UtilidadesEvento.#asociar($subElemento, evento, manejador, elemento);
+        UtilidadesEventos.#asociar($subElemento, evento, manejador, elemento);
     }
 
     static asociarAlUltimo(elemento, evento, manejador) {
         const $ultimoElemento = $(elemento).last();
-        UtilidadesEvento.#asociar($ultimoElemento, evento, manejador, elemento);
+        UtilidadesEventos.#asociar($ultimoElemento, evento, manejador, elemento);
     }
 }
 
-export { UtilidadesEvento };
+export { UtilidadesEventos };

@@ -1,10 +1,6 @@
 import { UtilidadesBasicas } from "../igzframework.js";
 
 class Utilidades extends UtilidadesBasicas {
-    static formatearFecha(anio, mes) {
-        return `${anio} - ${mes}`;
-    }
-
     static desformatearFecha(fecha) {
         let fechaDesformateada = fecha;
         fechaDesformateada = fecha.replaceAll(' ', '');
@@ -14,6 +10,10 @@ class Utilidades extends UtilidadesBasicas {
             anio: fechaDesformateada[0],
             mes: fechaDesformateada[1]
         };
+    }
+
+    static formatearFecha(anio, mes) {
+        return `${anio} - ${mes}`;
     }
 
     static desformatearMonto(monto) {
@@ -32,6 +32,16 @@ class Utilidades extends UtilidadesBasicas {
         });
 
         return formatter.format(monto);
+    }
+
+    static sanitizarIdentificador(identificador) {
+        identificador = identificador.replace('á', 'a');
+        identificador = identificador.replace('é', 'e');
+        identificador = identificador.replace('í', 'i');
+        identificador = identificador.replace('ó', 'o');
+        identificador = identificador.replace('ú', 'u');
+
+        return identificador;
     }
 }
 

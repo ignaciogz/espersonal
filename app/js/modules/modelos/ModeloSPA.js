@@ -1,5 +1,5 @@
 import { App } from '../igzframework.js';
-import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
+import { ManejadorDOM, ManejadorEventos, Modal } from '../servicios.js';
 import { Formulario, Menu, Usuario } from '../clases.js';
 
 class ModeloSPA {
@@ -14,6 +14,10 @@ class ModeloSPA {
                     ManejadorDOM.agregar($menu, itemsDelMenu);
             });
         }
+
+        // CREANDO DINÁMICAMENTE -> Modal con el formulario de configuración
+        const $modalConfiguracion = Modal.crearConFormulario('Configuración', 'settings', 'Guardar');
+        ManejadorDOM.agregar(document.body, $modalConfiguracion);
 
         // MOSTRANDO -> Nombre de usuario
         const usuarioLogeado = Usuario.obtenerUsuarioLogeado();

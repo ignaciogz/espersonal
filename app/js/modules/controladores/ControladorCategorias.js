@@ -7,7 +7,7 @@ import { ModeloCategorias } from '../modelos.js';
 class ControladorCategorias {
     static ejecutar() {
         if (Usuario.estaLogeado()) {
-            const $contenedor = $('#contenedor-app');
+            const $contenedor = $('#contenedor-spa');
             ManejadorDOM.renderizar($contenedor, new VistaCategorias());
             
             new ModeloCategorias();   

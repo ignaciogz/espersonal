@@ -13,7 +13,7 @@ export { Sesion } from './igzframework/Sesion.js';
 export { SPA } from './igzframework/SPA.js';
 export { UtilidadesBasicas } from './igzframework/UtilidadesBasicas.js';
 export { UtilidadesDOM } from './igzframework/UtilidadesDOM.js';
-export { UtilidadesEvento } from './igzframework/UtilidadesEvento.js';
+export { UtilidadesEventos } from './igzframework/UtilidadesEventos.js';
 export { UtilidadesFecha } from './igzframework/UtilidadesFecha.js';
 export { UtilidadesFormulario } from './igzframework/UtilidadesFormulario.js';
 export { UtilidadesTabla } from './igzframework/UtilidadesTabla.js';

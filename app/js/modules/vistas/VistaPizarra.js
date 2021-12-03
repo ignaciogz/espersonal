@@ -1,3 +1,5 @@
+import { ManejadorDOM, Modal } from '../servicios.js';
+
 class VistaPizarra {
     constructor() {
         let $seccionPizarra = document.createElement("section");
@@ -66,8 +68,7 @@ class VistaPizarra {
                                                     <th>Monto</th>
                                                 </tr>
                                                 </thead>
-                                        
-                                                
+
                                                 <tbody id="pizarra-seleccionada">
                                                     <td id="infoPizarraVacia" class="center-align" colspan="5">Use el botón de la esquina inferior derecha de su pantalla para agregar un item</td>
                                                     <!-- Aquí se agrega DINÁMICAMENTE -->
@@ -80,7 +81,16 @@ class VistaPizarra {
                                     <!-- Btn flotante de la pizarra -->
                                     <div id="btn-agregar" class="btn-flotante">
                                         <a class="waves-effect waves-red btn-large btn-floating pulse brown modal-trigger" href="#modal-agregar-item"><i class="material-icons">add</i></a>
-                                    </div>`;
+                                    </div>
+                                        
+
+                                    <!-- Modales -->`;
+            
+        const $modalAgregarItem = Modal.crearConFormulario('Agregar Item', 'add', 'Agregar');
+        const $modalEditarItem = Modal.crearConFormulario('Editar Item', 'edit', 'Editar');
+
+        ManejadorDOM.agregar($seccionPizarra, $modalAgregarItem);
+        ManejadorDOM.agregar($seccionPizarra, $modalEditarItem);
 
         return $seccionPizarra;
     }

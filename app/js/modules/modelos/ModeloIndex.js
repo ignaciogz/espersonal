@@ -1,5 +1,5 @@
 import { App, Video } from '../igzframework.js';
-import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
+import { ManejadorDOM, ManejadorEventos, Modal } from '../servicios.js';
 import { Usuario } from '../clases.js';
 
 class ModeloIndex {
@@ -12,6 +12,10 @@ class ModeloIndex {
         if (ManejadorDOM.existeEnDOM($videoMarketing)) {
             Video.cambiarVelocidadDeReproduccion($videoMarketing, 0.5);
         }
+
+        // CREANDO DINÁMICAMENTE -> Modal con el formulario de registro
+        const $modalRegistrarse = Modal.crearConFormulario('Registrarse', 'app_registration', 'Registrarme');
+        ManejadorDOM.agregar(document.body, $modalRegistrarse);
 
         // ASOCIANDO EVENTOS
         ManejadorEventos.asociar('#form-acceso', 'submit', ManejadorEventos.getHandler("formAcceso"));
