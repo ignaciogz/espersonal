@@ -23,7 +23,7 @@ class ModeloPizarra {
             ManejadorDOM.mostrarInformacionPizarra(pizarra);
 
             // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada
-            Observador.escuchar($pizarraSeleccionada, ManejadorEventos.getHandler_actualizarCambiosEnPizarra());
+            Observador.escuchar($pizarraSeleccionada, ManejadorEventos.getHandler("actualizarCambiosEnPizarra"));
         }
 
         // CREANDO DINÁMICAMENTE -> Opciones del select categoría de los formularios
@@ -36,18 +36,18 @@ class ModeloPizarra {
         }
 
         // ASOCIANDO EVENTOS
-        ManejadorEventos.asociar('#btn-agregar', 'click', ManejadorEventos.getHandler_resetearFormAgregarItem());
-        ManejadorEventos.asociar('table th', 'click', ManejadorEventos.getHandler_reordenarTabla());
+        ManejadorEventos.asociar('#btn-agregar', 'click', ManejadorEventos.getHandler("resetearFormAgregarItem"));
+        ManejadorEventos.asociar('table th', 'click', ManejadorEventos.getHandler("reordenarTabla"));
 
         const $registrosDeItems = $('#pizarra-seleccionada tr');
         if (ManejadorDOM.existeEnDOM($registrosDeItems)) {
-            ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler_autocompletarFormEditarItem());
-            ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler_eliminarItem());
+            ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
+            ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
         }
 
-        ManejadorEventos.asociar('#form-agregar-item', 'submit', ManejadorEventos.getHandler_formAgregarItem());
-        ManejadorEventos.asociar('#form-editar-item', 'submit', ManejadorEventos.getHandler_formEditarItem());
-        ManejadorEventos.asociar('form .contenedor-radio-tipo input', 'change', ManejadorEventos.getHandler_toggleDisplaySelectCategoria());
+        ManejadorEventos.asociar('#form-agregar-item', 'submit', ManejadorEventos.getHandler("formAgregarItem"));
+        ManejadorEventos.asociar('#form-editar-item', 'submit', ManejadorEventos.getHandler("formEditarItem"));
+        ManejadorEventos.asociar('form .contenedor-radio-tipo input', 'change', ManejadorEventos.getHandler("toggleDisplaySelectCategoria"));
 
         // INICIALIZANDO COMPONENTES DE TERCEROS
         App.inicializarDependencia('Materialize');

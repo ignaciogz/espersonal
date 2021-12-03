@@ -1,27 +1,13 @@
-import { App, Navegador, Video } from '../igzframework.js';
-import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
+import { Navegador } from '../igzframework.js';
 import { Usuario } from '../clases.js';
+import { ModeloIndex } from '../modelos.js';
 
 class ControladorIndex {
     static ejecutar() {
         if (Usuario.estaLogeado()) {
             Navegador.redireccionar("app/index.html");
         } else {
-            // CARGANDO DATOS predefinidos de forma ASÍNCRONA -> En localStorage [Si ya existe NO agrega]
-            Usuario.cargarJSON_usuariosPredefinidos();
-
-            // REDUCIENDO velocidad de reproducción del video
-            const $videoMarketing = $('.video-marketing video'); 
-            if (ManejadorDOM.existeEnDOM($videoMarketing)) {
-                Video.cambiarVelocidadDeReproduccion($videoMarketing, 0.5);
-            }
-
-            // ASOCIANDO EVENTOS
-            ManejadorEventos.asociar('#form-acceso', 'submit', ManejadorEventos.getHandler_formAcceso());
-            ManejadorEventos.asociar('#form-registrarse', 'submit', ManejadorEventos.getHandler_formRegistrarse());
-
-            // INICIALIZANDO COMPONENTES DE TERCEROS
-            App.inicializarDependencia('Materialize');
+            new ModeloIndex();
         }
     }
 }

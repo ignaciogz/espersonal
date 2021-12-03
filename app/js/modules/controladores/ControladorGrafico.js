@@ -7,8 +7,8 @@ import { ModeloGrafico } from '../modelos.js';
 class ControladorGrafico {
     static ejecutar() {
         if (Usuario.estaLogeado()) {
-            const contenedor = $('#contenedor-app');
-            ManejadorDOM.renderizar(contenedor, new VistaGrafico());
+            const $contenedor = $('#contenedor-app');
+            ManejadorDOM.renderizar($contenedor, new VistaGrafico());
 
             new ModeloGrafico();
         } else {

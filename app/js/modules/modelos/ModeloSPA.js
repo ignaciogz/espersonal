@@ -34,10 +34,10 @@ class ModeloSPA {
         }
 
         // ASOCIANDO EVENTOS
-        ManejadorEventos.asociar('#form-configuracion', 'submit', ManejadorEventos.getHandler_formConfiguracion());
+        ManejadorEventos.asociar('#form-configuracion', 'submit', ManejadorEventos.getHandler("formConfiguracion"));
         
-        ManejadorEventos.asociar('#btn-configuracion', 'click', ManejadorEventos.getHandler_autocompletarFormConfiguracion());
-        ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getHandler_cerrarApp());
+        ManejadorEventos.asociar('#btn-configuracion', 'click', ManejadorEventos.getHandler("autocompletarFormConfiguracion"));
+        ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getHandler("cerrarApp"));
 
         // INICIALIZANDO COMPONENTES DE TERCEROS
         App.inicializarDependencia('Materialize');
