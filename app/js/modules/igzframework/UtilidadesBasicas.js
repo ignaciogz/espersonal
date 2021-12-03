@@ -1,4 +1,10 @@
 class UtilidadesBasicas {
+    static capitalizar(cadena) {
+        if (typeof cadena !== 'string') return '';
+
+        return cadena.charAt(0).toUpperCase() + cadena.slice(1);
+    }
+
     static comparar(valorA, valorB) {
         return $.isNumeric(valorA) && $.isNumeric(valorB) ? valorA - valorB : valorA.localeCompare(valorB);
     }

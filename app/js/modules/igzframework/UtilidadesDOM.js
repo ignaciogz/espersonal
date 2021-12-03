@@ -11,6 +11,11 @@ class UtilidadesDOM {
         contenedor.append(elemento);
     }
 
+    static agregarContenidoAlSubElemento(elemento, subElemento, contenido) {
+        const $subElemento = $(elemento).find(subElemento);
+        UtilidadesDOM.agregar($subElemento, contenido);
+    }
+
     static crearFragmento() {
         return new DocumentFragment();
     }
@@ -38,7 +43,7 @@ class UtilidadesDOM {
         const $contenedorDeError = $(selector);
 
         if (UtilidadesDOM.existeEnDOM($contenedorDeError)) {
-            $contenedorDeError.text(`ERROR -> ${msj}`);
+            $contenedorDeError.text(msj);
 
             $contenedorDeError.slideDown("slow", function(){
                 $contenedorDeError.fadeOut(duracion, function() {

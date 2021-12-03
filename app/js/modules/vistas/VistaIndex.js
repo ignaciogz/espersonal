@@ -1,3 +1,6 @@
+import { ManejadorDOM } from '../servicios.js';
+import { Formulario, Modal } from '../clases.js';
+
 class VistaIndex {
     constructor() {
         let $paginaIndex = document.createElement("div");
@@ -18,28 +21,7 @@ class VistaIndex {
                                                 </div>
                                                 <!-- Formulario de acceso -->
                                                 <form id="form-acceso">
-                                                    <div class="error red-text center-align">
-                                                        <div id="error-acceso"></div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="input-field col s12">
-                                                            <input id="acceso-usuario" type="text" required>
-                                                            <label for="acceso-usuario">Usuario</label>
-                                                        </div>
                                                     
-                                                        <div class="input-field col s12">
-                                                            <input id="acceso-contrasena" type="password" required>
-                                                            <label for="acceso-contrasena">Contraseña</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col s12">
-                                                            <button class="btn waves-effect waves-red brown" type="submit" name="action">INGRESAR
-                                                                <i class="material-icons left">login</i>
-                                                            </button>
-                                                            <a class="waves-effect btn-flat modal-trigger" href="#modal-registrarse">Registrarse</a>
-                                                        </div>
-                                                    </div>
                                                 </form>
 
                                                 <div class="row">
@@ -66,6 +48,12 @@ class VistaIndex {
                                             </video>
                                         </section>
                                     </div>`;
+
+        const $formAcceso = Formulario.crearFormAcceso('Acceso', 'ingresar', 'registrarse');
+        ManejadorDOM.agregarContenidoAlSubElemento($paginaIndex, '#form-acceso', $formAcceso);
+
+        const $modalRegistrarse = Modal.crearConFormulario('Registrarse', 'app_registration', 'registrarme');
+        ManejadorDOM.agregar($paginaIndex, $modalRegistrarse);
         
         return $paginaIndex;        
     }

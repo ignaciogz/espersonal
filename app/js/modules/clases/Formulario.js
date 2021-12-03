@@ -1,9 +1,26 @@
 import { UtilidadesFormulario } from '../igzframework.js';
-import { Fecha, ManejadorDOM } from '../servicios.js';
-import { VistaOpcionSelect } from '../vistas.js';
+import { Fecha, ManejadorDOM, Utilidades } from '../servicios.js';
+import { VistaFormAcceso, VistaFormConfiguracion, VistaFormItem, VistaFormRegistrarse, VistaOpcionSelect } from '../vistas.js';
 
 class Formulario extends UtilidadesFormulario {
     // Métodos públicos
+    static crearFormAcceso(identificador, nombreBtnPrincipal, nombreBtnSecundario) {
+        identificador = Utilidades.obtenerIdentificador(identificador);
+        return VistaFormAcceso.crear(identificador, nombreBtnPrincipal, nombreBtnSecundario);
+    }
+
+    static crearFormConfiguracion(identificador) {
+        return VistaFormConfiguracion.crear(identificador);
+    }
+
+    static crearFormItem(identificador) {
+        return VistaFormItem.crear(identificador);
+    }
+
+    static crearFormRegistrarse(identificador) {
+        return VistaFormRegistrarse.crear(identificador);
+    }
+
     static crearOpcionesSelectAnio(usuarioLogeado) {
         const fragmento = ManejadorDOM.crearFragmento();
 

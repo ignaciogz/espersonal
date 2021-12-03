@@ -1,6 +1,16 @@
 import { UtilidadesBasicas } from "../igzframework.js";
 
 class Utilidades extends UtilidadesBasicas {
+    static #sanitizarIdentificador(identificador) {
+        identificador = identificador.replace('á', 'a');
+        identificador = identificador.replace('é', 'e');
+        identificador = identificador.replace('í', 'i');
+        identificador = identificador.replace('ó', 'o');
+        identificador = identificador.replace('ú', 'u');
+
+        return identificador;
+    }
+    
     static desformatearFecha(fecha) {
         let fechaDesformateada = fecha;
         fechaDesformateada = fecha.replaceAll(' ', '');
@@ -34,14 +44,9 @@ class Utilidades extends UtilidadesBasicas {
         return formatter.format(monto);
     }
 
-    static sanitizarIdentificador(identificador) {
-        identificador = identificador.replace('á', 'a');
-        identificador = identificador.replace('é', 'e');
-        identificador = identificador.replace('í', 'i');
-        identificador = identificador.replace('ó', 'o');
-        identificador = identificador.replace('ú', 'u');
-
-        return identificador;
+    static obtenerIdentificador(cadena) {
+        const identificador = cadena.toLowerCase().replace(" ", "-");
+        return Utilidades.#sanitizarIdentificador(identificador);
     }
 }
 

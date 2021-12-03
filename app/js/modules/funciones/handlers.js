@@ -1,6 +1,6 @@
 import { AppCache, Navegador, SPA } from '../igzframework.js';
-import { Fecha, ManejadorDOM, ManejadorEventos, Modal } from '../servicios.js';
-import { DatosSesionDeUsuario, Formulario, Item, Menu, Pizarra, Tabla, Usuario } from '../clases.js';
+import { Fecha, ManejadorDOM, ManejadorEventos } from '../servicios.js';
+import { DatosSesionDeUsuario, Formulario, Item, Modal, Pizarra, Tabla, Usuario } from '../clases.js';
 import { VistaItem } from '../vistas.js';
 
 export function actualizarCambiosEnPizarra() {

@@ -1,4 +1,5 @@
-import { ManejadorDOM, Modal } from '../servicios.js';
+import { ManejadorDOM } from '../servicios.js';
+import { Modal } from '../clases.js';
 
 class VistaPizarra {
     constructor() {

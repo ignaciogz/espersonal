@@ -1,6 +1,6 @@
 import { App } from '../igzframework.js';
-import { ManejadorDOM, ManejadorEventos, Modal } from '../servicios.js';
-import { Formulario, Menu, Usuario } from '../clases.js';
+import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
+import { Formulario, Menu, Modal, Usuario } from '../clases.js';
 
 class ModeloSPA {
     constructor() {
