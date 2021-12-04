@@ -394,6 +394,8 @@ h1 + i.material-icons {
 
 /* -------- FORMULARIOS -------- */
 form {
+  --form-ok-color: #4caf50;
+  --form-error-color: #f44336;
   user-select: none;
 }
 
@@ -451,6 +453,43 @@ form input[type=number]::-webkit-inner-spin-button, form input[type=number]::-we
   color: var(--color-textos);
 }
 
+/* **********     ContactForm Validations     ********** */
+form [required]:invalid + label {
+  color: var(--form-error-color) !important;
+}
+
+form [required]:invalid:focus {
+  border-bottom: 1px solid var(--form-error-color) !important;
+  box-shadow: 0 1px 0 0 var(--form-error-color) !important;
+}
+
+.form-error {
+  color: var(--form-error-color);
+  font-size: 0.6rem;
+  font-weight: bolder;
+  margin-top: -0.2rem;
+  text-align: justify;
+  transition: all 800ms ease;
+}
+.form-error.mostrar-form-error {
+  display: block;
+  animation: show-message 2s 1 normal 0s ease-out both;
+}
+
+.none {
+  display: none;
+}
+
+@keyframes show-message {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+  }
+}
 /*@import 'components/animaciones'; */
 /* -------- BROWSER -------- */
 ::selection {

@@ -1,5 +1,5 @@
 import { AppCache, Navegador, SPA } from '../igzframework.js';
-import { Fecha, ManejadorDOM, ManejadorEventos } from '../servicios.js';
+import { Fecha, ManejadorDOM, ManejadorEventos, Utilidades, Validador } from '../servicios.js';
 import { DatosSesionDeUsuario, Formulario, Item, Modal, Pizarra, Tabla, Usuario } from '../clases.js';
 import { VistaItem } from '../vistas.js';
 
@@ -118,47 +118,50 @@ export function formAcceso(e) {
 
 export function formAgregarItem(e) {
     e.preventDefault();
+    const formulario = e.target;
+    const formularioID = `#${formulario.id}`;
 
-    // OBTENIENDO DATOS -> Formulario agregar item
-    const datoNombre = Formulario.getInput('agregar-item-nombre');
-    const datoTipo = Formulario.getRadioBtnElegido('agregar-item-radio-tipo');
+    if (Validador.formularioEsValido(formularioID)) {
+        // OBTENIENDO DATOS -> Formulario agregar item
+        const datoNombre = Formulario.getInput('agregar-item-nombre');
+        const datoTipo = Formulario.getRadioBtnElegido('agregar-item-radio-tipo');
 
-    let datoCategoria = null;
-    if (datoTipo === "Egreso") {
-        datoCategoria = Formulario.getOpcionDeSelectElegida('agregar-item-select-categoria');
+        let datoCategoria = null;
+        if (datoTipo === "Egreso") {
+            datoCategoria = Formulario.getOpcionDeSelectElegida('agregar-item-select-categoria');
+        }
+
+        const datoMonto = Utilidades.parseNumero(Formulario.getInput('agregar-item-monto'));
+
+        // LÓGICA -> Agregar item
+        const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+        const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+        const itemID = pizarra.getNuevoItemID();
+        const itemNuevo = new Item(itemID, datoTipo, datoCategoria, datoNombre, datoMonto);
+
+        if (Pizarra.existePizarra(pizarra)) {
+            Pizarra.existenteAgregarItem(pizarra, itemNuevo);
+        } else {
+            Pizarra.nuevaAgregarItem(pizarra, itemNuevo);
+
+            ManejadorDOM.quitarInfoPizarraVacia();
+        }
+        // FIN LÓGICA -> Agregar item
+
+        Modal.cerrar('modal-agregar-item');
+        Navegador.scrollear("final");
+
+        // MOSTRANDO -> El nuevo item al usuario
+        const $pizarraSeleccionada = $('#pizarra-seleccionada');
+        const registroItem = VistaItem.crearRegistro(itemNuevo);
+        ManejadorDOM.agregarFila($pizarraSeleccionada, registroItem);
+
+        // ASOCIANDO EVENTOS -> Al nuevo item
+        ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
+        ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
+
+        finishHandler_item(pizarra, 4000);
     }
-
-    const datoMonto = parseFloat(Formulario.getInput('agregar-item-monto'));
-
-    // LÓGICA -> Agregar item
-    const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-    const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
-    const itemID = pizarra.getNuevoItemID();
-    const itemNuevo = new Item(itemID, datoTipo, datoCategoria, datoNombre, datoMonto);
-
-    if (Pizarra.existePizarra(pizarra)) {
-        Pizarra.existenteAgregarItem(pizarra, itemNuevo);
-    } else {
-        Pizarra.nuevaAgregarItem(pizarra, itemNuevo);
-
-        const $infoPizarraVacia = $('#infoPizarraVacia');
-        ManejadorDOM.eliminar($infoPizarraVacia);
-    }
-    // FIN LÓGICA -> Agregar item
-
-    Modal.cerrar('modal-agregar-item');
-    Navegador.scrollear("final");
-
-    // MOSTRANDO -> El nuevo item al usuario
-    const $pizarraSeleccionada = $('#pizarra-seleccionada');
-    const registroItem = VistaItem.crearRegistro(itemNuevo);
-    ManejadorDOM.agregarFila($pizarraSeleccionada, registroItem);
-
-    // ASOCIANDO EVENTOS -> Al nuevo item
-    ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
-    ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
-
-    finishHandler_item(pizarra, 4000);
 }
 
 
@@ -185,40 +188,43 @@ export function formConfiguracion(e) {
 
 export function formEditarItem(e) {
     e.preventDefault();
+    const formulario = e.target;
+    const formularioID = `#${formulario.id}`;
 
-    const formulario = $(this);
-    const itemID = formulario.data('item-id');
-    const $fila = formulario.data('fila');
+    if (Validador.formularioEsValido(formularioID)) {
+        const itemID = formulario.data('item-id');
+        const $fila = formulario.data('fila');
 
-    // OBTENIENDO DATOS -> Formulario editar item
-    const datoNombre = Formulario.getInput('editar-item-nombre');
-    const datoTipo = Formulario.getRadioBtnElegido('editar-item-radio-tipo');
+        // OBTENIENDO DATOS -> Formulario editar item
+        const datoNombre = Formulario.getInput('editar-item-nombre');
+        const datoTipo = Formulario.getRadioBtnElegido('editar-item-radio-tipo');
 
-    let datoCategoria = null;
-    if (datoTipo === "Egreso") {
-        datoCategoria = Formulario.getOpcionDeSelectElegida('editar-item-select-categoria');
+        let datoCategoria = null;
+        if (datoTipo === "Egreso") {
+            datoCategoria = Formulario.getOpcionDeSelectElegida('editar-item-select-categoria');
+        }
+
+        const datoMonto = Utilidades.parseNumero(Formulario.getInput('editar-item-monto'));
+
+        // LÓGICA -> Editar item
+        const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+        const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+        const itemModificado = new Item(itemID, datoTipo, datoCategoria, datoNombre, datoMonto);
+
+        Pizarra.existenteEditarItem(pizarra, itemID, itemModificado);
+        // FIN LÓGICA -> Editar item
+
+        Modal.cerrar('modal-editar-item');
+
+        // MOSTRANDO -> El item modificado al usuario
+        const registroItemModificado = VistaItem.crearRegistro(itemModificado);
+        ManejadorDOM.reemplazarFila($fila, registroItemModificado);
+
+        ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
+        ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
+
+        finishHandler_item(pizarra, 4000);
     }
-
-    const datoMonto = parseFloat(Formulario.getInput('editar-item-monto'));
-
-    // LÓGICA -> Editar item
-    const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-    const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
-    const itemModificado = new Item(itemID, datoTipo, datoCategoria, datoNombre, datoMonto);
-
-    Pizarra.existenteEditarItem(pizarra, itemID, itemModificado);
-    // FIN LÓGICA -> Editar item
-
-    Modal.cerrar('modal-editar-item');
-
-    // MOSTRANDO -> El item modificado al usuario
-    const registroItemModificado = VistaItem.crearRegistro(itemModificado);
-    ManejadorDOM.reemplazarFila($fila, registroItemModificado);
-
-    ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
-    ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
-
-    finishHandler_item(pizarra, 4000);
 }
 
 
@@ -293,8 +299,38 @@ export function toggleDisplaySelectCategoria() {
 }
 
 
+export function validarCampos() {
+    const patronDelCampo = this.pattern || this.dataset.pattern;
+    const $contenedorDeError = $(`#error-${this.id}`);
+    let campoValido = null;
+    
+    if(patronDelCampo && this.value) {
+        // Cuando tiene atributo o data pattern. Y el campo NO se encuentra vacio
+        const regex = new RegExp(patronDelCampo);
+        campoValido = regex.test(this.value);
+    }
+    else if (!patronDelCampo) {
+        // Cuando NO tiene atributo o data pattern 
+        campoValido = this.value !== "";
+    }
+
+    toggleDisplayFormError($contenedorDeError, campoValido);
+    
+    // ALMACENO DATO -> Guardo si el input actual pasó la validación o NO, dentro del formulario. Para poder leerlo en el método: formularioEsValido
+    $(selector).data(`campo-valido-${this.id}`, campoValido);
+}
+
+
 function finishHandler_item(pizarra, tiempoDeScroll) {
     AppCache.actualizar("pizarra_seleccionada", pizarra);
     AppCache.eliminar("grafico_informacion");
     Navegador.scrollear("inicio", tiempoDeScroll);
+}
+
+function toggleDisplayFormError(contenedorDeError, condicion) {
+    if (condicion) {
+        contenedorDeError.removeClass('mostrar-form-error');
+    } else {
+        contenedorDeError.addClass('mostrar-form-error');
+    }
 }

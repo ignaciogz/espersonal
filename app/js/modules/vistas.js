@@ -6,6 +6,7 @@ export { VistaCategoria } from './vistas/VistaCategoria.js';
 export { VistaCategorias } from './vistas/VistaCategorias.js';
 export { VistaFormAcceso } from './vistas/VistaFormAcceso.js';
 export { VistaFormConfiguracion } from './vistas/VistaFormConfiguracion.js';
+export { VistaFormError } from './vistas/VistaFormError.js';
 export { VistaFormItem } from './vistas/VistaFormItem.js';
 export { VistaFormRegistrarse } from './vistas/VistaFormRegistrarse.js';
 export { VistaGrafico } from './vistas/VistaGrafico.js';

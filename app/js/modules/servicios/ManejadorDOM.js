@@ -35,6 +35,11 @@ class ManejadorDOM extends UtilidadesDOM {
         ManejadorDOM.modificarTexto('#pizarra-nombre', pizarra.fecha);
     }
 
+    static quitarInfoPizarraVacia() {
+        const $infoPizarraVacia = $('#info-pizarra-vacia');
+        ManejadorDOM.eliminar($infoPizarraVacia);
+    }
+
     static reemplazarFila(fila, registroItem) {
         const $filaNueva = $(registroItem);
         ManejadorDOM.reemplazar(fila, $filaNueva);

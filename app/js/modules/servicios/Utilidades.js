@@ -30,9 +30,9 @@ class Utilidades extends UtilidadesBasicas {
         let montoDesformateado  = monto;
         montoDesformateado = montoDesformateado.replace('$', '');
         montoDesformateado = montoDesformateado.replaceAll('.', '');
-        montoDesformateado = montoDesformateado.replace(',', '.');
-        
-        return parseFloat(montoDesformateado);
+        montoDesformateado = montoDesformateado.trim();
+
+        return montoDesformateado;
     }
 
     static formatearMonto(monto) {

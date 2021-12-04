@@ -1,5 +1,5 @@
 {
-    "modo_desarrollo":false,
+    "modo_desarrollo":true,
     "rutas":{
         "":"ControladorIndex",
         "index":"ControladorIndex",

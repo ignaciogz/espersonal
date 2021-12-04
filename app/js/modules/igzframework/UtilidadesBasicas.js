@@ -9,6 +9,11 @@ class UtilidadesBasicas {
         return $.isNumeric(valorA) && $.isNumeric(valorB) ? valorA - valorB : valorA.localeCompare(valorB);
     }
 
+    static parseNumero(cadena) {
+        cadena = cadena.replace(',', '.');
+        return parseFloat(cadena);
+    }
+
     static limitarDecimales(numero, limite) {
         const expresionRegular = new RegExp("(\\d+\\.\\d{" + limite + "})(\\d)");
         const resultados = numero.toString().match(expresionRegular);

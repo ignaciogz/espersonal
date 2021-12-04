@@ -1,5 +1,5 @@
 import { App, Observador } from '../igzframework.js';
-import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
+import { ManejadorDOM, ManejadorEventos, Validador } from '../servicios.js';
 import { Categorias, Formulario, Pizarra, Usuario } from '../clases.js';
 
 class ModeloPizarra {
@@ -26,7 +26,7 @@ class ModeloPizarra {
             Observador.escuchar($pizarraSeleccionada, ManejadorEventos.getHandler("actualizarCambiosEnPizarra"));
         }
 
-        // CREANDO DINÁMICAMENTE -> Opciones del select categoría de los formularios
+        // CREANDO DINÁMICAMENTE -> Opciones del select categoría de los formularios de item
         const $selectCategoria = $('.contenedor-select-categoria select');
         if (ManejadorDOM.existeEnDOM($selectCategoria)) {
             const categorias = Categorias.get();
@@ -34,6 +34,10 @@ class ModeloPizarra {
             const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
             ManejadorDOM.agregar($selectCategoria, opcionesSelectCategoria);
         }
+
+        // ACTIVO VALIDACIONES
+        Validador.validarFormulario('#form-agregar-item');
+        Validador.validarFormulario('#form-editar-item');
 
         // ASOCIANDO EVENTOS
         ManejadorEventos.asociar('#btn-agregar', 'click', ManejadorEventos.getHandler("resetearFormAgregarItem"));
