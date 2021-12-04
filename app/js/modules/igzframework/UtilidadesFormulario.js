@@ -12,8 +12,8 @@ class UtilidadesFormulario {
     }
 
     // Métodos públicos
-    static getFormularioIDdelInput(input) {
-        return `#${input.form.id}`;
+    static getFormularioIDdelInput($input) {
+        return `#${$input.form.id}`;
     }
 
     static getInput(id) {
@@ -53,8 +53,14 @@ class UtilidadesFormulario {
         }
     }
 
-    static mostrarContenedorDeError(contenedorDeError) {
-        contenedorDeError.addClass('mostrar-form-error');
+    static inicializar(formularioID) {
+        UtilidadesFormulario.ocultarContenedorDeError(`${formularioID} .form-error`);
+        UtilidadesFormulario.reset(formularioID);
+    }
+
+    static mostrarContenedorDeError(selector) {
+        const $contenedorDeError = $(selector);
+        $contenedorDeError.addClass('mostrar-form-error');
     }
 
     static mostrarSelect(selector) {
@@ -62,8 +68,9 @@ class UtilidadesFormulario {
         $contenedorSelect.show();
     }
     
-    static ocultarContenedorDeError(contenedorDeError) {
-        contenedorDeError.removeClass('mostrar-form-error');
+    static ocultarContenedorDeError(selector) {
+        const $contenedorDeError = $(selector);
+        $contenedorDeError.removeClass('mostrar-form-error');
     }
 
     static ocultarSelect(selector) {
@@ -119,11 +126,11 @@ class UtilidadesFormulario {
         }
     }
 
-    static toggleDisplayFormError(contenedorDeError, condicion) {
+    static toggleDisplayFormError(selector, condicion) {
         if (condicion) {
-            UtilidadesFormulario.ocultarContenedorDeError(contenedorDeError);
+            UtilidadesFormulario.ocultarContenedorDeError(selector);
         } else {
-            UtilidadesFormulario.mostrarContenedorDeError(contenedorDeError);
+            UtilidadesFormulario.mostrarContenedorDeError(selector);
         }
     }
 }

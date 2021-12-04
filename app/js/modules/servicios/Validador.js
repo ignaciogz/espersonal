@@ -25,8 +25,8 @@ class Validador {
         const $inputsRequeridos = $(`${selector} [required]`);
 
         Formulario.crearContenedoresDeError($inputsRequeridos);
-        ManejadorEventos.asociar($inputsRequeridos, 'keyup', ManejadorEventos.getHandler('validarCampos'));
-        ManejadorEventos.asociar($inputsRequeridos, 'blur', ManejadorEventos.getHandler('validarCampos'));
+        ManejadorEventos.asociar($inputsRequeridos, 'keyup', ManejadorEventos.getHandler("validarCampos"));
+        ManejadorEventos.asociar($inputsRequeridos, 'blur', ManejadorEventos.getHandler("validarCampos"));
     }
 }
 

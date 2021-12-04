@@ -27,11 +27,10 @@ export function autocompletarFormConfiguracion() {
 
 
 export function autocompletarFormEditarItem() {
+    const formularioID = "#form-editar-item";
     const $itemDisparador = $(this);
     const itemID = $itemDisparador.data('item-id');
-    const formularioID = "#form-editar-item";
-    Formulario.reset(formularioID);
-
+    
     // OBTENIENDO DATOS -> Del item, a partir del HTML visible
     const $fila = Tabla.getFila($itemDisparador);
     const item = Tabla.getItem($fila, itemID);
@@ -107,12 +106,12 @@ export function formAcceso(e) {
         const datosDeSesion = new DatosSesionDeUsuario(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaActual());
         Navegador.iniciarSesion(datosDeSesion);
 
-        formulario.reset();
         Navegador.redireccionar("app/index.html");
     } else {
         ManejadorDOM.mostrarError('#error-acceso', "Datos de ingreso incorrectos");
-        formulario.reset();
     }
+
+    formulario.reset();
 }
 
 
@@ -283,16 +282,22 @@ export function reordenarTabla() {
 
 
 export function resetearFormAgregarItem() {
-    Formulario.ocultarSelect('#form-agregar-item .contenedor-select-categoria');
-    Formulario.reset('#form-agregar-item');
+    const formularioID = '#form-agregar-item';
+    Formulario.inicializar(formularioID);
+
+    Formulario.ocultarSelect(`${formularioID} .contenedor-select-categoria`);
+}
+
+
+export function resetearFormEditarItem() {
+    const formularioID = '#form-editar-item';
+    Formulario.inicializar(formularioID);
 }
 
 
 export function toggleDisplaySelectCategoria() {
-    const $radioInputDisparador = $(this);
-    const idFormulario = Formulario.getFormulario($radioInputDisparador).prop('id');
-
-    Formulario.toggleDisplaySelect(`#${idFormulario} .contenedor-select-categoria`, this.value, {
+    const formularioID = Formulario.getFormularioIDdelInput(this);
+    Formulario.toggleDisplaySelect(`${formularioID} .contenedor-select-categoria`, this.value, {
         mostrar: "Egreso",
         ocultar: "Ingreso"
     });
@@ -302,7 +307,6 @@ export function toggleDisplaySelectCategoria() {
 export function validarCampos() {
     const formularioID = Formulario.getFormularioIDdelInput(this);
     const patronDelCampo = this.pattern || this.dataset.pattern;
-    const $contenedorDeError = $(`#error-${this.id}`);
     let campoValido = null;
 
     if(patronDelCampo && this.value) {
@@ -315,7 +319,7 @@ export function validarCampos() {
         campoValido = this.value !== "";
     }
 
-    Formulario.toggleDisplayFormError($contenedorDeError, campoValido);
+    Formulario.toggleDisplayFormError(`#error-${this.id}`, campoValido);
     
     // ALMACENO DATO -> Guardo si el input actual pasó la validación o NO, dentro del formulario. Para poder leerlo en el método: formularioEsValido
     $(formularioID).data(`campo-valido-${this.id}`, campoValido);

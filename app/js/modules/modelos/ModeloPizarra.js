@@ -45,6 +45,7 @@ class ModeloPizarra {
 
         const $registrosDeItems = $('#pizarra-seleccionada tr');
         if (ManejadorDOM.existeEnDOM($registrosDeItems)) {
+            ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler("resetearFormEditarItem"));
             ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
             ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
         }
