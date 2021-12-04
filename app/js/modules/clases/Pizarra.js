@@ -40,17 +40,6 @@ class Pizarra {
         return this.totalIngresos - this.totalEgresos;
     }
 
-    #calcularPorcentaje(valor, total, aproximacion = "exceso") {
-        const porcentaje = valor * 100 / total;
-
-        switch (aproximacion) {
-            case "exceso":
-                return porcentaje.toFixed(2); // Aplica redondeo de cifras
-            case "defecto":
-                return Utilidades.limitarDecimales(porcentaje, 2); // NO aplica redondeo de cifras
-        }
-    }
-
     #calcularTotal(coleccion) {
         return coleccion.reduce((a, b) => a + b.monto, 0);
     }
@@ -79,7 +68,7 @@ class Pizarra {
     calcularPorcentajeDeCategoria(categoriaDeItem) {
         const totalDeCategoria = this.#calcularTotal(this.#obtenerItemsDeCategoria(categoriaDeItem));
 
-        return this.#calcularPorcentaje(totalDeCategoria, this.totalEgresos);
+        return Utilidades.calcularPorcentaje(totalDeCategoria, this.totalEgresos);
     }
 
     // Métodos públicos
