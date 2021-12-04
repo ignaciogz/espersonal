@@ -300,10 +300,11 @@ export function toggleDisplaySelectCategoria() {
 
 
 export function validarCampos() {
+    const formularioID = Formulario.getFormularioIDdelInput(this);
     const patronDelCampo = this.pattern || this.dataset.pattern;
     const $contenedorDeError = $(`#error-${this.id}`);
     let campoValido = null;
-    
+
     if(patronDelCampo && this.value) {
         // Cuando tiene atributo o data pattern. Y el campo NO se encuentra vacio
         const regex = new RegExp(patronDelCampo);
@@ -314,10 +315,10 @@ export function validarCampos() {
         campoValido = this.value !== "";
     }
 
-    toggleDisplayFormError($contenedorDeError, campoValido);
+    Formulario.toggleDisplayFormError($contenedorDeError, campoValido);
     
     // ALMACENO DATO -> Guardo si el input actual pasó la validación o NO, dentro del formulario. Para poder leerlo en el método: formularioEsValido
-    $(selector).data(`campo-valido-${this.id}`, campoValido);
+    $(formularioID).data(`campo-valido-${this.id}`, campoValido);
 }
 
 
@@ -325,12 +326,4 @@ function finishHandler_item(pizarra, tiempoDeScroll) {
     AppCache.actualizar("pizarra_seleccionada", pizarra);
     AppCache.eliminar("grafico_informacion");
     Navegador.scrollear("inicio", tiempoDeScroll);
-}
-
-function toggleDisplayFormError(contenedorDeError, condicion) {
-    if (condicion) {
-        contenedorDeError.removeClass('mostrar-form-error');
-    } else {
-        contenedorDeError.addClass('mostrar-form-error');
-    }
 }

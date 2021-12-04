@@ -12,6 +12,10 @@ class UtilidadesFormulario {
     }
 
     // Métodos públicos
+    static getFormularioIDdelInput(input) {
+        return `#${input.form.id}`;
+    }
+
     static getInput(id) {
         const $input = $(`#${id}`);
 
@@ -49,14 +53,22 @@ class UtilidadesFormulario {
         }
     }
 
-    static ocultarSelect(selector) {
-        const $contenedorSelect = $(selector);
-        $contenedorSelect.hide();
+    static mostrarContenedorDeError(contenedorDeError) {
+        contenedorDeError.addClass('mostrar-form-error');
     }
 
     static mostrarSelect(selector) {
         const $contenedorSelect = $(selector);
         $contenedorSelect.show();
+    }
+    
+    static ocultarContenedorDeError(contenedorDeError) {
+        contenedorDeError.removeClass('mostrar-form-error');
+    }
+
+    static ocultarSelect(selector) {
+        const $contenedorSelect = $(selector);
+        $contenedorSelect.hide();
     }
 
     static reset(selector) {
@@ -104,6 +116,14 @@ class UtilidadesFormulario {
             case opciones.ocultar:
                 UtilidadesFormulario.ocultarSelect(selector);
                 break;
+        }
+    }
+
+    static toggleDisplayFormError(contenedorDeError, condicion) {
+        if (condicion) {
+            UtilidadesFormulario.ocultarContenedorDeError(contenedorDeError);
+        } else {
+            UtilidadesFormulario.mostrarContenedorDeError(contenedorDeError);
         }
     }
 }
