@@ -35,7 +35,7 @@ class App {
     }
 
     static modoDesarrollo() {
-        return App.config["modo_desarrollo"];
+        return App.config ? App.config["modo_desarrollo"] : true;
     }
 
     static fn_cargarConfiguracion() {

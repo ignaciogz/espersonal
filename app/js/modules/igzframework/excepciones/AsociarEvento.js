@@ -1,23 +1,20 @@
 import { Excepcion } from '../../igzframework.js';
 
 class AsociarEvento extends Excepcion {
-    constructor(selector, evento, manejador) {
-        super();
+    constructor(selector, evento, manejador, ...restantes) {
+        super("Asociar evento", ...restantes);
         this.selector = selector;
         this.evento = evento;
         this.manejador = manejador;
         
-        this.nombre = "Asociar evento";
-        this.msj = new String();
+        this.setInfoDepuracion();
         this.lanzarExcepcion();
     }
 
-    toString() {
-        this.agregarLineaInfo("Target", this.selector);
-        this.agregarLineaInfo("Event", this.evento);
-        this.agregarLineaInfo("Handler", `${this.manejador.name}()`);
-
-        return this.mostrarInfo();
+    setInfoDepuracion() {
+        this.setLineaInfo("Target", this.selector);
+        this.setLineaInfo("Event", this.evento);
+        this.setLineaInfo("Handler", `${this.manejador.name}()`);
     }
 }
 

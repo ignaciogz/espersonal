@@ -1,3 +1,4 @@
+import { ManejadorExcepcion } from '../igzframework.js';
 import { ManejadorEventos } from '../servicios.js';
 import { Formulario, Usuario } from '../clases.js'
 
@@ -12,12 +13,16 @@ class Validador {
     }
 
     static validarCamposDelFormulario(selector) {
-        const $inputsRequeridos = $(`${selector} [required]`);
+        try {
+            const $inputsRequeridos = $(`${selector} [required]`);
 
-        Formulario.crearContenedoresDeError($inputsRequeridos);
+            Formulario.crearContenedoresDeError($inputsRequeridos);
 
-        ManejadorEventos.asociar($inputsRequeridos, 'keyup', ManejadorEventos.getHandler("validarCampo"));
-        ManejadorEventos.asociar($inputsRequeridos, 'blur', ManejadorEventos.getHandler("validarCampo"));
+            ManejadorEventos.asociar($inputsRequeridos, 'keyup', ManejadorEventos.getHandler("validarCampo"));
+            ManejadorEventos.asociar($inputsRequeridos, 'blur', ManejadorEventos.getHandler("validarCampo"));
+        } catch(e) {
+            ManejadorExcepcion.generarLOG(e);
+        }
     }
 
     static validarDatosDeUsuario(usuario) {

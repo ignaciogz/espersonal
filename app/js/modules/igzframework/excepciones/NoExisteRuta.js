@@ -1,19 +1,16 @@
 import { Excepcion } from '../../igzframework.js';
 
 class NoExisteRuta extends Excepcion {
-    constructor(paginaActual) {
-        super();
+    constructor(paginaActual, ...restantes) {
+        super("No existe ruta asociada, a la página solicitada", ...restantes);
         this.paginaActual = paginaActual;
         
-        this.nombre = "No existe ruta asociada, a la página solicitada";
-        this.msj = new String();
+        this.setInfoDepuracion();
         this.lanzarExcepcion();
     }
 
-    toString() {
-        this.agregarLineaInfo("Página solicitada", this.paginaActual);
-        
-        return this.mostrarInfo();
+    setInfoDepuracion() {
+        this.setLineaInfo("Página solicitada", this.paginaActual);
     }
 }
 

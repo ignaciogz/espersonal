@@ -1,19 +1,16 @@
 import { Excepcion } from '../../igzframework.js';
 
 class ObservarElementoDOM extends Excepcion {
-    constructor(manejador) {
-        super();
+    constructor(manejador, ...restantes) {
+        super("Observar elemento DOM", ...restantes);
         this.manejador = manejador;
         
-        this.nombre = "Observar elemento DOM";
-        this.msj = new String();
+        this.setInfoDepuracion();
         this.lanzarExcepcion();
     }
 
-    toString() {
-        this.agregarLineaInfo("Handler", `${this.manejador.name}()`);
-
-        return this.mostrarInfo();
+    setInfoDepuracion() {
+        this.setLineaInfo("Handler", `${this.manejador.name}()`);
     }
 }
 

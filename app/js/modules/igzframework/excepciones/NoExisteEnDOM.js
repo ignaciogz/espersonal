@@ -1,23 +1,19 @@
 import { Excepcion } from '../../igzframework.js';
 
 class NoExisteEnDOM extends Excepcion {
-    constructor(selector, metodo = "", clase = "") {
-        super();
+    constructor(selector, metodo = "", clase = "", ...restantes) {
+        super("No existe en DOM el elemento", ...restantes);
         this.selector = selector;
         this.metodo = metodo;
         this.clase = clase;
         
-        this.nombre = "No existe en DOM el elemento";
-        this.msj = new String();
+        this.setInfoDepuracion();
         this.lanzarExcepcion();
     }
 
-    toString() {
-        this.agregarLineaInfo("Selector", this.selector);
-        this.agregarLineaInfo("Ejecutando", `${this.metodo}() dentro la clase ${this.clase}`);
-
-        return this.mostrarInfo();
-        
+    setInfoDepuracion() {
+        this.setLineaInfo("Selector", this.selector);
+        this.setLineaInfo("Ejecutando", `${this.metodo}() dentro la clase ${this.clase}`);
     }
 }
 

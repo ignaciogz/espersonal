@@ -1,4 +1,4 @@
-import { Excepcion_getAJAX } from '../igzframework.js';
+import { Excepcion_getAJAX, ManejadorExcepcion } from '../igzframework.js';
 
 class Ajax {
     // Métodos privados
@@ -26,7 +26,11 @@ class Ajax {
                 })
                 .fail(
                     (data) => {
-                        new Excepcion_getAJAX(url, data, Ajax.#getResponseTextJQXHR(data.responseText));
+                        try {    
+                            new Excepcion_getAJAX(url, data, Ajax.#getResponseTextJQXHR(data.responseText));
+                        } catch(e) {
+                            ManejadorExcepcion.generarLOG(e);
+                        }
                     }
                 );
     }

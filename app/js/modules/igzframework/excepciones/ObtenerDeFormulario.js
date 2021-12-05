@@ -1,21 +1,18 @@
 import { Excepcion } from '../../igzframework.js';
 
 class obtenerDeFormulario extends Excepcion {
-    constructor(elemento = "", selector) {
-        super();
+    constructor(elemento = "", selector, ...restantes) {
+        super("Obtener de formulario", ...restantes);
         this.elemento = elemento;
         this.selector = selector;
         
-        this.nombre = "Obtener de formulario";
-        this.msj = new String();
+        this.setInfoDepuracion();
         this.lanzarExcepcion();
     }
 
-    toString() {
-        this.agregarLineaInfo("Elemento", this.elemento.toUpperCase());
-        this.agregarLineaInfo("Selector", this.selector);
-
-        return this.mostrarInfo();
+    setInfoDepuracion() {
+        this.setLineaInfo("Elemento", this.elemento.toUpperCase());
+        this.setLineaInfo("Selector", this.selector);
     }
 }
 

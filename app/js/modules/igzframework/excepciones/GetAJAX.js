@@ -1,31 +1,28 @@
 import { Excepcion } from '../../igzframework.js';
 
 class GetAJAX extends Excepcion {
-    constructor(url, data, responseText) {
-        super();
+    constructor(url, data, responseText, ...restantes) {
+        super("La petición GET de AJAX falló", ...restantes);
         this.url = url;
         this.data = data;
         this.responseText = responseText;
 
         this.verificarEstadoDeComunicacion();
         
-        this.nombre = "La petición GET de AJAX falló";
-        this.msj = new String();
+        this.setInfoDepuracion();
         this.lanzarExcepcion();
+    }
+
+    setInfoDepuracion() {
+        this.setLineaInfo("Status code", `${this.data.status} "${this.data.statusText}"`);
+        this.setLineaInfo("URL", this.url);
+        this.setLineaInfo("Response text", this.responseText);
     }
 
     verificarEstadoDeComunicacion() {
         if (this.data.status == 0) {
             this.responseText = "Error de comunicación, la URL NO responde [VERIFICARLA]";
         }
-    }
-
-    toString() {
-        this.agregarLineaInfo("Status code", `${this.data.status} "${this.data.statusText}"`);
-        this.agregarLineaInfo("URL", this.url);
-        this.agregarLineaInfo("Response text", this.responseText);
-
-        return this.mostrarInfo();
     }
 }
 
