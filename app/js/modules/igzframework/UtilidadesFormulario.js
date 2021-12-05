@@ -133,6 +133,20 @@ class UtilidadesFormulario {
             UtilidadesFormulario.mostrarContenedorDeError(selector);
         }
     }
+
+    static validarCampos(selector) {
+        const $inputsRequeridos = $(`${selector} [required]`);
+
+        for (const input of $inputsRequeridos) {
+            const campoValido = $(selector).data(`campo-valido-${input.id}`);
+            
+            if (!campoValido) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
 
 export { UtilidadesFormulario };

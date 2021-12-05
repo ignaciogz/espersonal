@@ -1,5 +1,7 @@
 import { Ajax, Almacenamiento, Navegador } from '../igzframework.js';
+import { Fecha, Validador } from '../servicios.js';
 import { JSON_usuarios } from '../json.js';
+import { DatosSesionDeUsuario } from '../clases.js';
 
 class Usuario {
     constructor(nombre = null, contrasena = null, tipo = "invitado", anioDeRegistro = null, fechaSeleccionada = null) {
@@ -18,17 +20,6 @@ class Usuario {
         return Usuario.instancia = new Usuario();
     }
 
-    // Métodos privados
-    static validarUsuario(usuario) {
-        if (Almacenamiento.existe("usuarios_registrados")) {
-            const fn_busqueda = Usuario.fn_usuarioBuscado(usuario.nombre, usuario.contrasena);
-
-            return Almacenamiento.buscar("usuarios_registrados", fn_busqueda) ? true : false;
-        } else {
-            return false;
-        }
-    }
-
     // Métodos públicos
     setAnioDeRegistro(anio) {
         this.anioDeRegistro = anio;
@@ -45,6 +36,21 @@ class Usuario {
 
     setTipoDeUsuario(tipo) {
         this.tipo = tipo;
+    }
+
+    static validarUsuario(usuario) {
+        if (Almacenamiento.existe("usuarios_registrados")) {
+            const fn_busqueda = Usuario.fn_usuarioBuscado(usuario.nombre, usuario.contrasena);
+
+            return Almacenamiento.buscar("usuarios_registrados", fn_busqueda) ? true : false;
+        } else {
+            return undefined;
+        }
+    }
+
+    static actualizarFechaSeleccionada(usuarioLogeado, fechaSeleccionada) {
+        const datosDeSesion = new DatosSesionDeUsuario(usuarioLogeado.nombre, usuarioLogeado.anioDeRegistro, fechaSeleccionada);
+        Navegador.actualizarEnSesion(datosDeSesion);
     }
 
     static buscarUsuario(usuario) {
@@ -66,16 +72,13 @@ class Usuario {
         return Navegador.existeEnSesion("usuario_logeado");
     }
 
-    static existeUsuario(usuario) {
-        return Usuario.buscarUsuario(usuario) ? true : false;
-    }
-
     static guardarUsuario(usuario) {
         Almacenamiento.guardar("usuarios_registrados", usuario);
     }
 
     static logearUsuario(usuario) {
-        return Usuario.validarUsuario(usuario) ? true : false;
+        const datosDeSesion = new DatosSesionDeUsuario(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaActual());
+        Navegador.iniciarSesion(datosDeSesion);
     }
 
     static cargarDatosAlmacenados(usuario) {
@@ -102,7 +105,7 @@ class Usuario {
     static fn_cargarUsuariosPredefinidos() {
         return function(data) {
             for (const usuario of data) {
-                if (!Usuario.existeUsuario(usuario)) {
+                if (!Validador.validarExistenciaDeUsuario(usuario)) {
                     Usuario.guardarUsuario(usuario);
                 }
             }

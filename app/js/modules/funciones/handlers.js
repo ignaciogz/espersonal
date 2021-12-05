@@ -1,6 +1,6 @@
 import { AppCache, Navegador, SPA } from '../igzframework.js';
 import { Fecha, ManejadorDOM, ManejadorEventos, Utilidades, Validador } from '../servicios.js';
-import { DatosSesionDeUsuario, Formulario, Item, Modal, Pizarra, Tabla, Usuario } from '../clases.js';
+import { Formulario, Item, Modal, Pizarra, Tabla, Usuario } from '../clases.js';
 import { VistaItem } from '../vistas.js';
 
 export function actualizarCambiosEnPizarra() {
@@ -101,11 +101,10 @@ export function formAcceso(e) {
     const usuario = Usuario.get();
     usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
 
-    if (Usuario.logearUsuario(usuario)) {
+    if (Validador.validarDatosDeUsuario(usuario)) {
         Usuario.cargarDatosAlmacenados(usuario);
-        const datosDeSesion = new DatosSesionDeUsuario(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaActual());
-        Navegador.iniciarSesion(datosDeSesion);
 
+        Usuario.logearUsuario(usuario);
         Navegador.redireccionar("app/index.html");
     } else {
         ManejadorDOM.mostrarError('#error-acceso', "Datos de ingreso incorrectos");
@@ -175,8 +174,7 @@ export function formConfiguracion(e) {
     Fecha.setFecha(datoAnio, datoMes);
 
     const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-    const datosDeSesion = new DatosSesionDeUsuario(usuarioLogeado.nombre, usuarioLogeado.anioDeRegistro, Fecha.getFecha());
-    Navegador.actualizarEnSesion(datosDeSesion);
+    Usuario.actualizarFechaSeleccionada(usuarioLogeado, Fecha.getFecha());
 
     // Procedimiento de finalización
     Modal.cerrar('modal-configuracion');
@@ -239,19 +237,19 @@ export function formRegistrarse(e) {
     const usuario = Usuario.get();
     usuario.setDatosDeUsuario(datoUsuario, datoContrasena);
 
-    if (!Usuario.existeUsuario(usuario)) {
+    if (!Validador.validarExistenciaDeUsuario(usuario)) {
         usuario.setTipoDeUsuario("registrado");
         usuario.setAnioDeRegistro(Fecha.anioActual);
+        
         Usuario.guardarUsuario(usuario);
 
-        const datosDeSesion = new DatosSesionDeUsuario(usuario.nombre, usuario.anioDeRegistro, Fecha.getFechaActual());
-        Navegador.iniciarSesion(datosDeSesion);
-        formulario.reset();
+        Usuario.logearUsuario(usuario);
         Navegador.redireccionar("app/index.html");
     } else {
         ManejadorDOM.mostrarError('#error-registrarse', "Nombre de usuario NO disponible");
-        formulario.reset();
     }
+
+    formulario.reset();
 }
 
 
@@ -304,7 +302,7 @@ export function toggleDisplaySelectCategoria() {
 }
 
 
-export function validarCampos() {
+export function validarCampo() {
     const formularioID = Formulario.getFormularioIDdelInput(this);
     const patronDelCampo = this.pattern || this.dataset.pattern;
     let campoValido = null;

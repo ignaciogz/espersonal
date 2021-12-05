@@ -36,8 +36,8 @@ class ModeloPizarra {
         }
 
         // ACTIVO VALIDACIONES
-        Validador.validarFormulario('#form-agregar-item');
-        Validador.validarFormulario('#form-editar-item');
+        Validador.validarCamposDelFormulario('#form-agregar-item');
+        Validador.validarCamposDelFormulario('#form-editar-item');
 
         // ASOCIANDO EVENTOS
         ManejadorEventos.asociar('#btn-agregar', 'click', ManejadorEventos.getHandler("resetearFormAgregarItem"));

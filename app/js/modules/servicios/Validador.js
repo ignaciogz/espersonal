@@ -1,5 +1,5 @@
 import { ManejadorEventos } from '../servicios.js';
-import { Formulario } from '../clases.js'
+import { Formulario, Usuario } from '../clases.js'
 
 class Validador {
     static regex = {
@@ -8,25 +8,24 @@ class Validador {
     }
 
     static formularioEsValido(selector) {
-        const $inputsRequeridos = $(`${selector} [required]`);
-
-        for (const input of $inputsRequeridos) {
-            const campoValido = $(selector).data(`campo-valido-${input.id}`);
-            
-            if (!campoValido) {
-                return false;
-            }
-        }
-
-        return true;
+        return Formulario.validarCampos(selector);
     }
 
-    static validarFormulario(selector) {
+    static validarCamposDelFormulario(selector) {
         const $inputsRequeridos = $(`${selector} [required]`);
 
         Formulario.crearContenedoresDeError($inputsRequeridos);
-        ManejadorEventos.asociar($inputsRequeridos, 'keyup', ManejadorEventos.getHandler("validarCampos"));
-        ManejadorEventos.asociar($inputsRequeridos, 'blur', ManejadorEventos.getHandler("validarCampos"));
+
+        ManejadorEventos.asociar($inputsRequeridos, 'keyup', ManejadorEventos.getHandler("validarCampo"));
+        ManejadorEventos.asociar($inputsRequeridos, 'blur', ManejadorEventos.getHandler("validarCampo"));
+    }
+
+    static validarDatosDeUsuario(usuario) {
+        return Usuario.validarUsuario(usuario) ? true : false;
+    }
+
+    static validarExistenciaDeUsuario(usuario) {
+        return Usuario.buscarUsuario(usuario) ? true : false;
     }
 }
 
