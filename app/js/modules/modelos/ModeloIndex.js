@@ -1,4 +1,4 @@
-import { App, Video } from '../igzframework.js';
+import { App, Video, ManejadorExcepcion } from '../igzframework.js';
 import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
 import { Usuario } from '../clases.js';
 
