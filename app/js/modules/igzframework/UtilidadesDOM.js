@@ -24,6 +24,10 @@ class UtilidadesDOM {
         elemento.remove();
     }
 
+    static existe(elemento) {
+        return elemento.length ? true : false;
+    }
+
     static existeEnDOM(elemento) {
         return elemento.is($(window)) ? true : $.contains(document.body, elemento[0]);
     }

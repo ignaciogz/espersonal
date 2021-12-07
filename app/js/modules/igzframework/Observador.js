@@ -1,15 +1,23 @@
-import { UtilidadesDOM } from '../igzframework.js';
-import { Excepcion_observarElementoDOM } from '../igzframework.js';
+import { ManejadorExcepcion } from '../igzframework.js';
 
 class Observador {
-    static escuchar($selector, manejador, opcionesDeEscucha = { childList: true, subtree: true }) {
-        if (UtilidadesDOM.existeEnDOM($selector)) {
+    static #escuchar(elemento, manejador, opcionesDeEscucha) {
+        try {
             const observador_itemsDePizarra = new MutationObserver(manejador);
-            observador_itemsDePizarra.observe($selector[0], opcionesDeEscucha);
+            observador_itemsDePizarra.observe(elemento[0], opcionesDeEscucha);
+        } catch(e) {
+            ManejadorExcepcion.generarLOG(e);
         }
-        else {
-            new Excepcion_observarElementoDOM(manejador);
-        }
+    }
+
+    static escuchar(elemento, manejador, opcionesDeEscucha = { childList: true, subtree: true }) {
+        const $elemento = $(elemento);
+        Observador.#escuchar($elemento, manejador, opcionesDeEscucha);
+    }
+
+    static escucharAlSubElemento(elemento, subElemento, manejador, opcionesDeEscucha = { childList: true, subtree: true }) {
+        const $subElemento = $(elemento).find(subElemento);
+        Observador.#escuchar($subElemento, manejador, opcionesDeEscucha);
     }
 }
 

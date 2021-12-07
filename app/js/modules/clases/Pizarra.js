@@ -17,7 +17,7 @@ class Pizarra {
     static get() {
         return {
             // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
-            onReady: () => Pizarra.cargarJSON_pizarrasPredefinidas()
+            onReady: () => Pizarra.#cargarJSON_pizarrasPredefinidas()
         }
     }
 
@@ -25,6 +25,12 @@ class Pizarra {
     #generarNuevoItemID() {
         this.ultimoItemID = this.ultimoItemID + 1;
         return this.ultimoItemID;
+    }
+
+    static #cargarJSON_pizarrasPredefinidas() {
+        return  Ajax.getJQXHR(JSON_pizarras)
+                    .done(Pizarra.fn_cargarPizarrasPredefinidas())
+                    .fail(() => console.warn("Falló la carga de las pizarras predefinidas"));
     }
 
     static #eliminarPizarras() {
@@ -156,11 +162,6 @@ class Pizarra {
     static cargarDatosCacheados(pizarra) {
         const datosDeCache = AppCache.obtener("pizarra_seleccionada");
         pizarra.setDatosObtenidos(datosDeCache);
-    }
-
-    static cargarJSON_pizarrasPredefinidas() {
-        return  Ajax.getJQXHR(JSON_pizarras)
-                    .done(Pizarra.fn_cargarPizarrasPredefinidas());
     }
     
     static existenteAgregarItem(pizarra, item) {

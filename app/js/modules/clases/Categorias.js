@@ -31,7 +31,8 @@ class Categorias {
         const _this = this;
 
         return Ajax.getJQXHR(JSON_categorias)
-                   .done(Categorias.fn_cargarCategoriasPredefinidas().bind(_this));
+                   .done(Categorias.fn_cargarCategoriasPredefinidas().bind(_this))
+                   .fail(() => console.warn("Falló la carga de las categorías predefinidas"));
     }
 
     // Métodos públicos

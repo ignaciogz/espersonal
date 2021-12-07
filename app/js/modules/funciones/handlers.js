@@ -214,8 +214,8 @@ export function formEditarItem(e) {
         const formularioID = `#${formulario.id}`;
 
         if (Validador.formularioEsValido(formularioID)) {
-            const itemID = formulario.data('item-id');
-            const $fila = formulario.data('fila');
+            const itemID = $(formularioID).data('item-id');
+            const $fila = $(formularioID).data('fila');
 
             // OBTENIENDO DATOS -> Formulario editar item
             const datoNombre = Formulario.getInput('editar-item-nombre');
@@ -313,9 +313,7 @@ export function reordenarTabla() {
 
 export function resetearFormAgregarItem() {
     const formularioID = '#form-agregar-item';
-    Formulario.inicializar(formularioID);
-
-    Formulario.ocultarSelect(`${formularioID} .contenedor-select-categoria`);
+    Formulario.inicializar(formularioID);   
 }
 
 

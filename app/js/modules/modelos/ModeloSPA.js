@@ -1,6 +1,6 @@
-import { App, ManejadorExcepcion } from '../igzframework.js';
+import { ManejadorExcepcion } from '../igzframework.js';
 import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
-import { Categorias, Formulario, Menu, Modal, Pizarra, Usuario } from '../clases.js';
+import { Categorias, Formulario, Grafico, Menu, Modal, Pizarra, Usuario } from '../clases.js';
 
 class ModeloSPA {
     constructor() {
@@ -8,15 +8,18 @@ class ModeloSPA {
             this.setupInicial();
 
             return {
-                pizarras: Pizarra.get(),
-                categorias: Categorias.get()
+                categorias: Categorias.get(),
+                grafico: Grafico.get(),
+                pizarras: Pizarra.get()
             }
         } catch(e) {
             ManejadorExcepcion.generarLOG(e);
         }
     }
-
+    
     setupInicial() {
+        // BUSCANDO -> En el DOM, por única vez, usando el motor de busqueda de jQuery.
+        // Las busquedas posteriores serán sobre el objeto jQuery obtenido, usando el método find();
         const $documentoSPA = $(document.body);
 
         // CREANDO DINÁMICAMENTE y de forma ASÍNCRONA -> Opciones del menú de navegación
@@ -24,9 +27,11 @@ class ModeloSPA {
         if (ManejadorDOM.existeEnDOM($menu)) {
             const menu = Menu.get();
 
-            menu.onReady().always(() => {
-                    const itemsDelMenu = menu.crearItems();
-                    ManejadorDOM.agregar($menu, itemsDelMenu);
+            menu.onReady().then(() => {
+                const itemsDelMenu = menu.crearItems();
+                ManejadorDOM.agregar($menu, itemsDelMenu);
+            }, () => {
+                ManejadorDOM.notificarErrorAlUsuario("Carga de menú");
             });
         }
 
@@ -59,9 +64,6 @@ class ModeloSPA {
         ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getHandler("cerrarApp"));
 
         ManejadorEventos.asociar(window, 'hashchange', ManejadorEventos.getHandler("actualizarSPA"));
-
-        // INICIALIZANDO COMPONENTES DE TERCEROS
-        App.inicializarDependencia('Materialize');
     }
 }
 

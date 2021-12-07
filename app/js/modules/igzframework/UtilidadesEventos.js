@@ -3,7 +3,7 @@ import { Excepcion_asociarEvento } from '../igzframework.js';
 
 class UtilidadesEventos {
     static #asociar($elemento, evento, manejador, selector) {
-        if (UtilidadesDOM.existeEnDOM($elemento)) {
+        if (UtilidadesDOM.existe($elemento)) {
             $elemento.on(evento, manejador);
         }
         else {

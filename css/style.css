@@ -354,6 +354,13 @@ table tr th:nth-child(4) {
   content: "↓";
 }
 
+.aviso {
+  font-size: 0.7rem;
+  padding: 8px 13px;
+  position: fixed;
+  right: 23px;
+}
+
 /* -------- ICONOS -------- */
 i.medium {
   font-size: 3rem;

@@ -5,9 +5,9 @@ import { ModeloGrafico } from '../modelos.js';
 class ControladorGrafico {
     static ejecutar() {
         const $contenedor = $('#contenedor-spa');
-        ManejadorDOM.renderizar($contenedor, new VistaGrafico());
-
-        new ModeloGrafico();
+        
+        const datos = new ModeloGrafico();
+        ManejadorDOM.renderizar($contenedor, new VistaGrafico(datos));
     }
 }
 

@@ -5,9 +5,9 @@ import { ModeloPizarra } from '../modelos.js';
 class ControladorPizarra {
     static ejecutar() {
         const $contenedor = $('#contenedor-spa');
-        ManejadorDOM.renderizar($contenedor, new VistaPizarra());
-            
-        new ModeloPizarra();
+        
+        const datos = new ModeloPizarra();
+        ManejadorDOM.renderizar($contenedor, new VistaPizarra(datos));
     }
 }
 

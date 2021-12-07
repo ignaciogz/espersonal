@@ -1,22 +1,14 @@
-import { ManejadorExcepcion } from '../igzframework.js';
-import { ManejadorDOM } from '../servicios.js';
 import { Categorias } from '../clases.js';
 
 class ModeloCategorias {
     constructor() {
-        try {
-            ManejadorDOM.tituloDePagina('Categorías - Panel del usuario');
+        const categorias = Categorias.get();
 
-            //  CREANDO DINÁMICAMENTE  y de forma ASÍNCRONA -> Cards de categorías
-            const $cardsCategorias = $('#contenedor-cards-categorias');
-            if (ManejadorDOM.existeEnDOM($cardsCategorias)) {
-                const categorias = Categorias.get();
-
-                const cardsCategorias = categorias.crearCards();
-                ManejadorDOM.agregar($cardsCategorias, cardsCategorias);
+        return {
+            tituloDePagina: 'Categorías - Panel del usuario',
+            categorias: {
+                cards: categorias.crearCards()
             }
-        } catch(e) {
-            ManejadorExcepcion.generarLOG(e);
         }
     }
 }

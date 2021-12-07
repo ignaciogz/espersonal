@@ -35,6 +35,10 @@ class ManejadorDOM extends UtilidadesDOM {
         ManejadorDOM.modificarTexto('#pizarra-nombre', pizarra.fecha);
     }
 
+    static notificarErrorAlUsuario(mensaje) {
+        M.toast({html: `ERROR -> ${mensaje}`, classes: 'aviso red darken-2'});
+    }
+
     static quitarInfoPizarraVacia() {
         const $infoPizarraVacia = $('#info-pizarra-vacia');
         ManejadorDOM.eliminar($infoPizarraVacia);

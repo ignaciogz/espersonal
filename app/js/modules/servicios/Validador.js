@@ -12,9 +12,9 @@ class Validador {
         return Formulario.validarCampos(selector);
     }
 
-    static validarCamposDelFormulario(selector) {
+    static validarCamposDelFormulario(vista, selector) {
         try {
-            const $inputsRequeridos = $(`${selector} [required]`);
+            const $inputsRequeridos = $(vista).find(`${selector} [required]`);
 
             Formulario.crearContenedoresDeError($inputsRequeridos);
 

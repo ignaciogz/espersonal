@@ -1,4 +1,5 @@
 import { Navegador } from '../igzframework.js';
+import { ManejadorDOM } from '../servicios.js';
 import { Usuario } from '../clases.js';
 import { ModeloSPA } from '../modelos.js';
 
@@ -9,10 +10,13 @@ class ControladorSPA {
         if (Usuario.estaLogeado()) {
             const datos = new ModeloSPA();
 
-            $.when( datos.pizarras.onReady(), datos.categorias.onReady() ).always(() => {
-                // Luego de CONSUMIR por única vez de forma ASÍNCRONA, los JSON de: pizarras y categorías.
-                // El ControladorSPA delega el control al ControladorFrontal:
-                ControladorFrontal.ejecutar(instanciaApp);
+            $.when( datos.pizarras.onReady(), datos.categorias.onReady(), datos.grafico.onReady() )
+            .done(() => {
+                    // Luego de CONSUMIR por única vez de forma ASÍNCRONA, los JSON de: pizarras, categorías y configuración del gráfico.
+                    // El ControladorSPA delega el control al ControladorFrontal:
+                    ControladorFrontal.ejecutar(instanciaApp);
+            }).fail(() => {
+                    ManejadorDOM.notificarErrorAlUsuario("Carga inicial")
             });
         } else {
             Navegador.redireccionar("index.html");

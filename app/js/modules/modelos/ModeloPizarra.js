@@ -1,65 +1,36 @@
-import { App, Observador, ManejadorExcepcion } from '../igzframework.js';
-import { ManejadorDOM, ManejadorEventos, Validador } from '../servicios.js';
-import { Categorias, Formulario, Pizarra, Usuario } from '../clases.js';
+import { Utilidades } from '../servicios.js';
+import { Categorias, Formulario, Modal, Pizarra, Usuario } from '../clases.js';
 
 class ModeloPizarra {
     constructor() {
-        try {
-            ManejadorDOM.tituloDePagina('Pizarra - Panel del usuario');
+        const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+        const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
-            // [Al abrir la app la pizarra seleccionada será por defecto la del mes actual]
-            const $pizarraSeleccionada = $('#pizarra-seleccionada');
-            if (ManejadorDOM.existeEnDOM($pizarraSeleccionada)) {
-                // MOSTRANDO -> La pizarra selecionada
-                const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-                const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+        const categorias = Categorias.get();
+        const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
 
-                ManejadorDOM.mostrarNombrePizarra(pizarra);
-                
-                if (pizarra.noEstaVacia()) {
-                    const registrosDeItems = pizarra.crearRegistros();
-                    ManejadorDOM.renderizar($pizarraSeleccionada, registrosDeItems);
-                }
-
-                ManejadorDOM.mostrarInformacionPizarra(pizarra);
-
-                // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada
-                Observador.escuchar($pizarraSeleccionada, ManejadorEventos.getHandler("actualizarCambiosEnPizarra"));
+        // CREANDO DINÁMICAMENTE -> Modal con el formularios de agregar y editar item
+        const $modalAgregarItem = Modal.crearConFormulario('Agregar Item', 'add', 'Agregar');
+        const $modalEditarItem = Modal.crearConFormulario('Editar Item', 'edit', 'Editar');
+        
+        return {
+            tituloDePagina: 'Pizarra - Panel del usuario',
+            pizarra: {
+                nombre: pizarra.fecha,
+                registros: pizarra.noEstaVacia() ? pizarra.crearRegistros() : null,
+                cantidadDeItems: pizarra.getCantidadDeItems(),
+                totalIngresos: Utilidades.formatearMonto(pizarra.getTotalIngresos()),
+                totalEgresos: Utilidades.formatearMonto(pizarra.getTotalEgresos()),
+                balance: Utilidades.formatearMonto(pizarra.getBalance())
+            },
+            selectCategoria: {
+                opciones: opcionesSelectCategoria
+            },
+            modales: {
+                agregarItem: $modalAgregarItem,
+                editarItem: $modalEditarItem
             }
-
-            // CREANDO DINÁMICAMENTE -> Opciones del select categoría de los formularios de item
-            const $selectCategoria = $('.contenedor-select-categoria select');
-            if (ManejadorDOM.existeEnDOM($selectCategoria)) {
-                const categorias = Categorias.get();
-                
-                const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
-                ManejadorDOM.agregar($selectCategoria, opcionesSelectCategoria);
-            }
-
-            // ACTIVO VALIDACIONES
-            Validador.validarCamposDelFormulario('#form-agregar-item');
-            Validador.validarCamposDelFormulario('#form-editar-item');
-
-            // ASOCIANDO EVENTOS
-            ManejadorEventos.asociar('#btn-agregar', 'click', ManejadorEventos.getHandler("resetearFormAgregarItem"));
-            ManejadorEventos.asociar('table th', 'click', ManejadorEventos.getHandler("reordenarTabla"));
-
-            const $registrosDeItems = $('#pizarra-seleccionada tr');
-            if (ManejadorDOM.existeEnDOM($registrosDeItems)) {
-                ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler("resetearFormEditarItem"));
-                ManejadorEventos.asociar('table .btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
-                ManejadorEventos.asociar('table .btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
-            }
-
-            ManejadorEventos.asociar('#form-agregar-item', 'submit', ManejadorEventos.getHandler("formAgregarItem"));
-            ManejadorEventos.asociar('#form-editar-item', 'submit', ManejadorEventos.getHandler("formEditarItem"));
-            ManejadorEventos.asociar('form .contenedor-radio-tipo input', 'change', ManejadorEventos.getHandler("toggleDisplaySelectCategoria"));
-
-            // INICIALIZANDO COMPONENTES DE TERCEROS
-            App.inicializarDependencia('Materialize');            
-        } catch(e) {
-            ManejadorExcepcion.generarLOG(e);
-        }
+        };
     }
 }
 

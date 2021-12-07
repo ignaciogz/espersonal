@@ -1,5 +1,9 @@
+import { ManejadorDOM } from '../servicios.js';
+
 class VistaCategorias {
-    constructor() {
+    constructor(datos) {
+        ManejadorDOM.tituloDePagina(datos.tituloDePagina);
+
         let $seccionCategorias = document.createElement("section");
         $seccionCategorias.classList.add('categorias');
 
@@ -14,6 +18,8 @@ class VistaCategorias {
                                             <!-- Aquí se agrega DINÁMICAMENTE -->
                                         </div>`;
         
+        ManejadorDOM.agregarContenidoAlSubElemento($seccionCategorias, '#contenedor-cards-categorias', datos.categorias.cards);
+
         return $seccionCategorias;
     }
 }

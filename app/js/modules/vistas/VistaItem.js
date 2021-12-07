@@ -7,7 +7,7 @@ class VistaItem {
 
         const tipoDeItem = Item.getTipoDeItem(item.tipo);
         if (tipoDeItem.nombre === "Ingreso") {
-            item.categoria = "----------";
+            item.categoria = '-'.repeat(10);
         }
 
         $registroItem.innerHTML =  `<td><i class="material-icons left ${tipoDeItem.estilo_tipo} text-darken-2">${tipoDeItem.icono}</i></td>

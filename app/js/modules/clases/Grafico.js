@@ -2,21 +2,23 @@ import { Ajax, AppCache } from '../igzframework.js';
 import { JSON_config_grafico } from '../json.js';
 
 class Grafico {
-    constructor(canvasGrafico) {
-        this.canvasGrafico = canvasGrafico;
+    constructor(canvasID) {
+        this.canvasGrafico = this.#crearCanvas(canvasID);
     }
 
-    // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
-    onReady() {
-        return this.#cargarJSON_configuracion();
+    static get() {
+        return {
+            // Interfaz común de clases, que ejecutarán determinadas instrucciones, cuando finaliza el asincronismo
+            onReady: () => Grafico.#cargarJSON_configuracion()
+        }
     }
 
     // Métodos privados
-    #cargarJSON_configuracion() {
-        const _this = this;
-
-        return  Ajax.getJQXHR(JSON_config_grafico)
-                    .done(Grafico.fn_cargarConfiguracion().bind(_this));
+    #crearCanvas(canvasID) {
+        const canvas = document.createElement('canvas');
+        canvas.id = canvasID;
+        
+        return canvas;
     }
 
     #getInfo() {
@@ -59,6 +61,12 @@ class Grafico {
         Grafico.config.options.plugins.tooltip.callbacks.label = Grafico.fn_tooltip();
     }
 
+    static #cargarJSON_configuracion() {
+        return  Ajax.getJQXHR(JSON_config_grafico)
+                    .done(Grafico.fn_cargarConfiguracion())
+                    .fail(() => console.warn("Falló la carga de la configuración del gráfico"));
+    }
+
     // Métodos públicos
     cargarDatosCacheados() {
         const informacionDeCache = AppCache.obtener("grafico_informacion");
@@ -85,9 +93,10 @@ class Grafico {
     
     obtenerInformacion(pizarra, categorias) {
         if (AppCache.existe("grafico_informacion")) {
-            // Genero la información fue generada previamente, la tomo de la cache
+            // La información fue generada previamente. Entonces la tomo de la cache
             this.cargarDatosCacheados();
         } else {
+            // La información NO fue generada previamente o se modificó. Entonces la genero
             this.generarInformacion(pizarra, categorias);
             AppCache.guardar("grafico_informacion", this.#getInfo());
         }

@@ -1,15 +1,19 @@
-import { ManejadorDOM } from '../servicios.js';
-import { Modal } from '../clases.js';
+import { App, Observador } from '../igzframework.js';
+import { ManejadorDOM, ManejadorEventos, Validador } from '../servicios.js';
 
 class VistaPizarra {
-    constructor() {
+    constructor(datos) {
+        ManejadorDOM.tituloDePagina(datos.tituloDePagina);
+
         let $seccionPizarra = document.createElement("section");
         $seccionPizarra.classList.add('pizarra');
 
         $seccionPizarra.innerHTML = `<div class="row">
                                         <!-- Nombre de pizarra -->
                                         <div class="col s10 l12 valign-wrapper">
-                                            <h1><div id="pizarra-nombre"></div></h1>
+                                            <h1>
+                                                <div id="pizarra-nombre">${datos.pizarra.nombre}</div>
+                                            </h1>
                                             <i class="small material-icons">dashboard_customize</i>
                                         </div>
                                     </div>
@@ -22,7 +26,7 @@ class VistaPizarra {
                                                 <div>
                                                     Total de items
                                                     <div id="total-de-items">
-                                                        <!-- Aquí se agrega DINÁMICAMENTE -->
+                                                        ${datos.pizarra.cantidadDeItems}
                                                     </div>
                                                 </div>
                                             </div>
@@ -31,7 +35,7 @@ class VistaPizarra {
                                                 <div>
                                                     Total Ingresos
                                                     <div id="total-ingresos">
-                                                        <!-- Aquí se agrega DINÁMICAMENTE -->
+                                                        ${datos.pizarra.totalIngresos}
                                                     </div>
                                                 </div>
                                             </div>
@@ -40,7 +44,7 @@ class VistaPizarra {
                                                 <div>
                                                     Total Egresos
                                                     <div id="total-egresos">
-                                                        <!-- Aquí se agrega DINÁMICAMENTE -->
+                                                        ${datos.pizarra.totalEgresos}
                                                     </div>
                                                 </div>
                                             </div>
@@ -49,7 +53,7 @@ class VistaPizarra {
                                                 <div>
                                                     Balance
                                                     <div id="balance">
-                                                        <!-- Aquí se agrega DINÁMICAMENTE -->
+                                                        ${datos.pizarra.balance}
                                                     </div>
                                                 </div>
                                             </div>
@@ -71,7 +75,6 @@ class VistaPizarra {
                                                 </thead>
 
                                                 <tbody id="pizarra-seleccionada">
-                                                    <td id="info-pizarra-vacia" class="center-align" colspan="5">Use el botón de la esquina inferior derecha de su pantalla para agregar un item</td>
                                                     <!-- Aquí se agrega DINÁMICAMENTE -->
                                                 </tbody>
                                             </table>
@@ -86,12 +89,46 @@ class VistaPizarra {
                                         
 
                                     <!-- Modales -->`;
-            
-        const $modalAgregarItem = Modal.crearConFormulario('Agregar Item', 'add', 'Agregar');
-        const $modalEditarItem = Modal.crearConFormulario('Editar Item', 'edit', 'Editar');
+        
+        // AGREGANDO -> Modales de agregar y editar item
+        ManejadorDOM.agregar($seccionPizarra, datos.modales.agregarItem);
+        ManejadorDOM.agregar($seccionPizarra, datos.modales.editarItem);
 
-        ManejadorDOM.agregar($seccionPizarra, $modalAgregarItem);
-        ManejadorDOM.agregar($seccionPizarra, $modalEditarItem);
+        ManejadorDOM.agregarContenidoAlSubElemento($seccionPizarra, '.contenedor-select-categoria select', datos.selectCategoria.opciones);
+
+        // AGREGANDO -> Los registros a la pizarra seleccionada
+        if (datos.pizarra.registros) {
+            ManejadorDOM.agregarContenidoAlSubElemento($seccionPizarra, '#pizarra-seleccionada', datos.pizarra.registros);
+
+            // ASOCIANDO EVENTOS
+            ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table .btn-edit', 'click', ManejadorEventos.getHandler("resetearFormEditarItem"));
+            ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table .btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
+            ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table .btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
+        } else {
+            const infoPizarraVacia =    `<td class="center-align" colspan="5">
+                                            Use el botón de la esquina inferior derecha de su pantalla para agregar un item
+                                        </td>`;
+            
+            ManejadorDOM.agregarContenidoAlSubElemento($seccionPizarra, '#pizarra-seleccionada', infoPizarraVacia);
+        }
+        
+        // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada
+        Observador.escucharAlSubElemento($seccionPizarra, '#pizarra-seleccionada', ManejadorEventos.getHandler("actualizarCambiosEnPizarra"));
+
+        // ACTIVO VALIDACIONES
+        Validador.validarCamposDelFormulario($seccionPizarra, '#form-agregar-item');
+        Validador.validarCamposDelFormulario($seccionPizarra, '#form-editar-item');
+
+        // ASOCIANDO EVENTOS
+        ManejadorEventos.asociarAlSubElemento($seccionPizarra, '#btn-agregar', 'click', ManejadorEventos.getHandler("resetearFormAgregarItem"));
+        ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table th', 'click', ManejadorEventos.getHandler("reordenarTabla"));        
+
+        ManejadorEventos.asociarAlSubElemento($seccionPizarra, '#form-agregar-item', 'submit', ManejadorEventos.getHandler("formAgregarItem"));
+        ManejadorEventos.asociarAlSubElemento($seccionPizarra, '#form-editar-item', 'submit', ManejadorEventos.getHandler("formEditarItem"));
+        ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'form .contenedor-radio-tipo input', 'change', ManejadorEventos.getHandler("toggleDisplaySelectCategoria"));
+
+        // INICIALIZANDO COMPONENTES DE TERCEROS
+        App.inicializarDependencia('Materialize');
 
         return $seccionPizarra;
     }

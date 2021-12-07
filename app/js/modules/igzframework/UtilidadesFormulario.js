@@ -11,6 +11,14 @@ class UtilidadesFormulario {
             return UtilidadesFormulario.#getElementoPadre(elemento, 'form');
     }
 
+    static #inicializarValidadorDeCampos(selector) {
+        const $inputsRequeridos = $(`${selector} [required]`);
+
+        for (const input of $inputsRequeridos) {
+            $(selector).data(`campo-valido-${input.id}`, true);
+        }
+    }
+
     // Métodos públicos
     static getFormularioIDdelInput($input) {
         return `#${$input.form.id}`;
@@ -56,6 +64,8 @@ class UtilidadesFormulario {
     static inicializar(formularioID) {
         UtilidadesFormulario.ocultarContenedorDeError(`${formularioID} .form-error`);
         UtilidadesFormulario.reset(formularioID);
+        UtilidadesFormulario.ocultarSelect(`${formularioID} .contenedor-select-categoria`);
+        UtilidadesFormulario.#inicializarValidadorDeCampos(formularioID);
     }
 
     static mostrarContenedorDeError(selector) {
