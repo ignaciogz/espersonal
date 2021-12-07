@@ -7,8 +7,8 @@ class UtilidadesDOM {
     }
 
     // Métodos públicos
-    static agregar(contenedor, elemento) {
-        contenedor.append(elemento);
+    static agregar(elemento, contenido) {
+        elemento.append(contenido);
     }
 
     static agregarContenidoAlSubElemento(elemento, subElemento, contenido) {
@@ -25,7 +25,7 @@ class UtilidadesDOM {
     }
 
     static existeEnDOM(elemento) {
-        return $.contains(document.body, elemento[0]);
+        return elemento.is($(window)) ? true : $.contains(document.body, elemento[0]);
     }
 
     static modificarTexto(selector, texto) {

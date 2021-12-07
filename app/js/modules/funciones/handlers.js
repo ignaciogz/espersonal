@@ -10,6 +10,10 @@ export function actualizarCambiosEnPizarra() {
     ManejadorDOM.mostrarInformacionPizarra(pizarra);
 }
 
+export function actualizarSPA() {
+    SPA.actualizar();
+}
+
 
 export function autocompletarFormConfiguracion() {
     try {
@@ -196,7 +200,7 @@ export function formConfiguracion(e) {
         // Procedimiento de finalización
         Modal.cerrar('modal-configuracion');
         AppCache.limpiar();
-        SPA.actualizar();
+        actualizarSPA();
     } catch(e) {
         ManejadorExcepcion.generarLOG(e);
     }

@@ -1,5 +1,6 @@
 import { SPA } from './modules/igzframework.js';
-import { ModeloSPA } from './modules/modelos.js';
+
+import { ControladorSPA } from './modules/controladores/ControladorSPA.js';
 
 /* ******************** ARCHIVO PRINCIPAL - SPA ******************** */
 $(document).ready(function() {
@@ -7,10 +8,6 @@ $(document).ready(function() {
 
     // Consumo por única vez de forma ASÍNCRONA, el JSON de: configuración de la app.
     esPersonalApp.onReady().always(() => {
-        new ModeloSPA(esPersonalApp);
+        ControladorSPA.ejecutar(esPersonalApp);
     });
-});
-
-$(window).on('hashchange', function() {
-    SPA.actualizar();
 });
