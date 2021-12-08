@@ -1,4 +1,4 @@
-import { Validador } from '../servicios.js'
+import { Validador } from '../../servicios.js'
 
 class VistaFormItem {
     static crear(identificador) {

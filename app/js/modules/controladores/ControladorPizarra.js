@@ -9,7 +9,7 @@ class ControladorPizarra {
             const $contenedor = $('#contenedor-spa');
         
             const datos = new ModeloPizarra();
-            ManejadorDOM.renderizar($contenedor, new VistaPizarra(datos));    
+            ManejadorDOM.renderizar($contenedor, new VistaPizarra(datos));
         } catch (e) {
             ManejadorExcepcion.generarLOG(e);
         }

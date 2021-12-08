@@ -45,10 +45,6 @@ class ManejadorDOM extends UtilidadesDOM {
         ManejadorDOM.modificarTexto('#balance', Utilidades.formatearMonto(pizarra.getBalance()));
     }
 
-    static mostrarNombreDeUsuario(usuario) {
-        ManejadorDOM.modificarTexto('#usuario-logeado', usuario.nombre);
-    }
-
     static notificarErrorAlUsuario(mensaje) {
         M.toast({html: `ERROR -> ${mensaje}`, classes: 'aviso red darken-2'});
     }

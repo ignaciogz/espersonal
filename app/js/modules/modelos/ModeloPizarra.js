@@ -3,10 +3,11 @@ import { Categorias, Formulario, Modal, Pizarra, Usuario } from '../clases.js';
 
 class ModeloPizarra {
     constructor() {
+        const categorias = Categorias.get();
         const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
         const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
-        const categorias = Categorias.get();
+        // CREANDO DINÁMICAMENTE -> Opciones del select categoría, de los formulario de agregar y editar item
         const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
 
         // CREANDO DINÁMICAMENTE -> Modal con el formularios de agregar y editar item
@@ -23,8 +24,8 @@ class ModeloPizarra {
                 totalEgresos: Utilidades.formatearMonto(pizarra.getTotalEgresos()),
                 balance: Utilidades.formatearMonto(pizarra.getBalance())
             },
-            selectCategoria: {
-                opciones: opcionesSelectCategoria
+            selects: {
+                categoria: { opciones: opcionesSelectCategoria }
             },
             modales: {
                 agregarItem: $modalAgregarItem,

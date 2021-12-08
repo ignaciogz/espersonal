@@ -94,7 +94,8 @@ class VistaPizarra {
         ManejadorDOM.agregar($seccionPizarra, datos.modales.agregarItem);
         ManejadorDOM.agregar($seccionPizarra, datos.modales.editarItem);
 
-        ManejadorDOM.agregarContenidoAlSubElemento($seccionPizarra, '.contenedor-select-categoria select', datos.selectCategoria.opciones);
+        // CARGANDO -> Opciones a los select categoría
+        ManejadorDOM.agregarContenidoAlSubElemento($seccionPizarra, '.contenedor-select-categoria select', datos.selects.categoria.opciones);
 
         // AGREGANDO -> Los registros a la pizarra seleccionada
         if (datos.pizarra.registros) {
