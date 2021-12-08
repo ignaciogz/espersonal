@@ -7,7 +7,7 @@ export function actualizarCambiosEnPizarra() {
     const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
     const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
 
-    ManejadorDOM.mostrarInformacionPizarra(pizarra);
+    ManejadorDOM.mostrarInfoPizarra(pizarra);
 }
 
 export function actualizarSPA() {
@@ -102,6 +102,10 @@ export function eliminarItem() {
     Pizarra.existenteEliminarItem(pizarra, itemID);
     ManejadorDOM.eliminarFila(fila);
 
+    if(pizarra.estaVacia()) {
+        setTimeout(() => ManejadorDOM.agregarInfoPizarraVacia(), 4000);
+    }
+
     finishHandler_item(pizarra, 5000);
 }
 
@@ -163,7 +167,9 @@ export function formAgregarItem(e) {
                 Pizarra.existenteAgregarItem(pizarra, itemNuevo);
             } else {
                 Pizarra.nuevaAgregarItem(pizarra, itemNuevo);
+            }
 
+            if(!pizarra.estaVacia()) {
                 ManejadorDOM.quitarInfoPizarraVacia();
             }
             // FIN LÓGICA -> Agregar item

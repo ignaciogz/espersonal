@@ -9,6 +9,24 @@ class ManejadorDOM extends UtilidadesDOM {
         Tabla.animarFilaAgregada($filaNueva);
     }
 
+    static agregarInfoPizarraVacia(vista = null) {
+        const selector = '#pizarra-seleccionada';
+        const infoPizarraVacia =    `<td id="info-pizarra-vacia" class="center-align" colspan="5">
+                                            Use el botón de la esquina inferior derecha de su pantalla para agregar un item
+                                        </td>`;
+
+        if(vista) {
+            ManejadorDOM.agregarContenidoAlSubElemento(vista, selector, infoPizarraVacia);
+        } else {
+            ManejadorDOM.agregar($(selector), infoPizarraVacia);
+        }
+    }
+
+    static cambiarVelocidadDeReproduccionDeVideo(vista, selector, velocidad) {
+        const $video = $(vista).find(selector);
+        Video.cambiarVelocidadDeReproduccion($video, velocidad);
+    }
+
     static eliminarFila(fila) {
         function fn_finalizacion() {
             ManejadorDOM.eliminar(fila);
@@ -20,7 +38,7 @@ class ManejadorDOM extends UtilidadesDOM {
         Tabla.setIconoDeOrdenamiento(elemento,asc);
     }
     
-    static mostrarInformacionPizarra(pizarra) {
+    static mostrarInfoPizarra(pizarra) {
         ManejadorDOM.modificarTexto('#total-de-items', pizarra.getCantidadDeItems());
         ManejadorDOM.modificarTexto('#total-ingresos', Utilidades.formatearMonto(pizarra.getTotalIngresos()));
         ManejadorDOM.modificarTexto('#total-egresos', Utilidades.formatearMonto(pizarra.getTotalEgresos()));
@@ -31,10 +49,6 @@ class ManejadorDOM extends UtilidadesDOM {
         ManejadorDOM.modificarTexto('#usuario-logeado', usuario.nombre);
     }
 
-    static mostrarNombrePizarra(pizarra) {
-        ManejadorDOM.modificarTexto('#pizarra-nombre', pizarra.fecha);
-    }
-
     static notificarErrorAlUsuario(mensaje) {
         M.toast({html: `ERROR -> ${mensaje}`, classes: 'aviso red darken-2'});
     }
@@ -42,11 +56,6 @@ class ManejadorDOM extends UtilidadesDOM {
     static quitarInfoPizarraVacia() {
         const $infoPizarraVacia = $('#info-pizarra-vacia');
         ManejadorDOM.eliminar($infoPizarraVacia);
-    }
-
-    static cambiarVelocidadDeReproduccionDeVideo(vista, selector, velocidad) {
-        const $video = $(vista).find(selector);
-        Video.cambiarVelocidadDeReproduccion($video, velocidad);
     }
 
     static reemplazarFila(fila, registroItem) {

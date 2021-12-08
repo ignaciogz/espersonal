@@ -105,11 +105,7 @@ class VistaPizarra {
             ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table .btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
             ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table .btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
         } else {
-            const infoPizarraVacia =    `<td id="info-pizarra-vacia" class="center-align" colspan="5">
-                                            Use el botón de la esquina inferior derecha de su pantalla para agregar un item
-                                        </td>`;
-            
-            ManejadorDOM.agregarContenidoAlSubElemento($seccionPizarra, '#pizarra-seleccionada', infoPizarraVacia);
+            ManejadorDOM.agregarInfoPizarraVacia($seccionPizarra);
         }
         
         // OBSERVANDO -> Cuando se agrega/edita/elimina un nuevo item a la pizarra seleccionada

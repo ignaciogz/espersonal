@@ -17,7 +17,7 @@ class ModeloPizarra {
             tituloDePagina: 'Pizarra - Panel del usuario',
             pizarra: {
                 nombre: pizarra.fecha,
-                registros: pizarra.noEstaVacia() ? pizarra.crearRegistros() : null,
+                registros: pizarra.estaVacia() ? null : pizarra.crearRegistros(),
                 cantidadDeItems: pizarra.getCantidadDeItems(),
                 totalIngresos: Utilidades.formatearMonto(pizarra.getTotalIngresos()),
                 totalEgresos: Utilidades.formatearMonto(pizarra.getTotalEgresos()),
