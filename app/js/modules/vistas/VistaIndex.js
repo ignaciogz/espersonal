@@ -1,8 +1,10 @@
-import { ManejadorDOM } from '../servicios.js';
-import { Formulario, Modal } from '../clases.js';
+import { App } from '../igzframework.js';
+import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
 
 class VistaIndex {
-    constructor() {
+    constructor(datos) {
+        ManejadorDOM.tituloDePagina(datos.tituloDePagina);
+
         let $paginaIndex = document.createElement("div");
         $paginaIndex.classList.add('row', 'm-0');
 
@@ -49,12 +51,22 @@ class VistaIndex {
                                         </section>
                                     </div>`;
 
-        const $formAcceso = Formulario.crearFormAcceso('Acceso', 'ingresar', 'registrarse');
-        ManejadorDOM.agregarContenidoAlSubElemento($paginaIndex, '#form-acceso', $formAcceso);
-
-        const $modalRegistrarse = Modal.crearConFormulario('Registrarse', 'app_registration', 'registrarme');
-        ManejadorDOM.agregar($paginaIndex, $modalRegistrarse);
+        // AGREGANDO -> Modal de registro de usuario
+        ManejadorDOM.agregar($paginaIndex, datos.modales.registrarse);
         
+        // AGREGANDO -> Elementos del formulario de acceso
+        ManejadorDOM.agregarContenidoAlSubElemento($paginaIndex, '#form-acceso', datos.formularios.acceso);
+
+        // REDUCIENDO velocidad de reproducción del video
+        ManejadorDOM.cambiarVelocidadDeReproduccionDeVideo($paginaIndex, '.video-marketing video', 0.5);
+        
+        // ASOCIANDO EVENTOS
+        ManejadorEventos.asociarAlSubElemento($paginaIndex, '#form-acceso', 'submit', ManejadorEventos.getHandler("formAcceso"));
+        ManejadorEventos.asociarAlSubElemento($paginaIndex, '#form-registrarse', 'submit', ManejadorEventos.getHandler("formRegistrarse"));
+
+        // INICIALIZANDO COMPONENTES DE TERCEROS
+        App.inicializarDependencia('Materialize');
+
         return $paginaIndex;        
     }
 }

@@ -27,5 +27,6 @@ export { Excepcion_getAJAX } from './igzframework/excepciones/GetAJAX.js';
 export { Excepcion_noExisteEnDOM } from './igzframework/excepciones/NoExisteEnDOM.js';
 export { Excepcion_noExisteHandler } from './igzframework/excepciones/NoExisteHandler.js';
 export { Excepcion_noExisteRuta } from './igzframework/excepciones/NoExisteRuta.js';
+export { Excepcion_observarElemento } from './igzframework/excepciones/ObservarElemento.js';
 export { Excepcion_obtenerDeFormulario } from './igzframework/excepciones/ObtenerDeFormulario.js';
 export { Excepcion_setearEnFormulario } from './igzframework/excepciones/SetearEnFormulario.js';

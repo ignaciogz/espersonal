@@ -11,7 +11,7 @@ class VistaModal {
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn waves-effect waves-red brown" type="submit">${nombreBtnPrincipal}</button>
-                                    <a href="#" class="modal-close waves-effect btn-flat">Cancelar</a>
+                                    <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
                                 </div>
                             </form>`;
         

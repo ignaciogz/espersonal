@@ -18,7 +18,7 @@ class UtilidadesEventos {
 
     static asociarAlSubElemento(elemento, subElemento, evento, manejador) {
         const $subElemento = $(elemento).find(subElemento);
-        UtilidadesEventos.#asociar($subElemento, evento, manejador, elemento);
+        UtilidadesEventos.#asociar($subElemento, evento, manejador, subElemento);
     }
 
     static asociarAlUltimo(elemento, evento, manejador) {

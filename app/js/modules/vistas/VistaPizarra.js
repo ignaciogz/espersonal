@@ -105,7 +105,7 @@ class VistaPizarra {
             ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table .btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
             ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table .btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
         } else {
-            const infoPizarraVacia =    `<td class="center-align" colspan="5">
+            const infoPizarraVacia =    `<td id="info-pizarra-vacia" class="center-align" colspan="5">
                                             Use el botón de la esquina inferior derecha de su pantalla para agregar un item
                                         </td>`;
             
@@ -121,11 +121,13 @@ class VistaPizarra {
 
         // ASOCIANDO EVENTOS
         ManejadorEventos.asociarAlSubElemento($seccionPizarra, '#btn-agregar', 'click', ManejadorEventos.getHandler("resetearFormAgregarItem"));
-        ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table th', 'click', ManejadorEventos.getHandler("reordenarTabla"));        
+        ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table th', 'click', ManejadorEventos.getHandler("reordenarTabla"));
 
         ManejadorEventos.asociarAlSubElemento($seccionPizarra, '#form-agregar-item', 'submit', ManejadorEventos.getHandler("formAgregarItem"));
         ManejadorEventos.asociarAlSubElemento($seccionPizarra, '#form-editar-item', 'submit', ManejadorEventos.getHandler("formEditarItem"));
         ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'form .contenedor-radio-tipo input', 'change', ManejadorEventos.getHandler("toggleDisplaySelectCategoria"));
+
+        ManejadorEventos.asociarAlSubElemento($seccionPizarra, '.modal-close', 'click', ManejadorEventos.getHandler("cerrarModal"));
 
         // INICIALIZANDO COMPONENTES DE TERCEROS
         App.inicializarDependencia('Materialize');

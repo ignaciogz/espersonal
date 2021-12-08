@@ -13,16 +13,12 @@ class Validador {
     }
 
     static validarCamposDelFormulario(vista, selector) {
-        try {
-            const $inputsRequeridos = $(vista).find(`${selector} [required]`);
+        const $inputsRequeridos = $(vista).find(`${selector} [required]`);
 
-            Formulario.crearContenedoresDeError($inputsRequeridos);
+        Formulario.crearContenedoresDeError($inputsRequeridos);
 
-            ManejadorEventos.asociar($inputsRequeridos, 'keyup', ManejadorEventos.getHandler("validarCampo"));
-            ManejadorEventos.asociar($inputsRequeridos, 'blur', ManejadorEventos.getHandler("validarCampo"));
-        } catch(e) {
-            ManejadorExcepcion.generarLOG(e);
-        }
+        ManejadorEventos.asociar($inputsRequeridos, 'keyup', ManejadorEventos.getHandler("validarCampo"));
+        ManejadorEventos.asociar($inputsRequeridos, 'blur', ManejadorEventos.getHandler("validarCampo"));
     }
 
     static validarDatosDeUsuario(usuario) {

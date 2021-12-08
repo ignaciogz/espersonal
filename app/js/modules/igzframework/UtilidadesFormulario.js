@@ -3,14 +3,6 @@ import { Excepcion_obtenerDeFormulario, Excepcion_setearEnFormulario } from '../
 
 class UtilidadesFormulario {
     // Métodos privados
-    static #getElementoPadre(elemento, etiquetaPadreBuscada) {
-        return elemento.parents(etiquetaPadreBuscada).eq(0);
-    }
-    
-    static getFormulario(elemento) {
-            return UtilidadesFormulario.#getElementoPadre(elemento, 'form');
-    }
-
     static #inicializarValidadorDeCampos(selector) {
         const $inputsRequeridos = $(`${selector} [required]`);
 

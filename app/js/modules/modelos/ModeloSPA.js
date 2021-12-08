@@ -1,19 +1,14 @@
-import { ManejadorExcepcion } from '../igzframework.js';
 import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
 import { Categorias, Formulario, Grafico, Menu, Modal, Pizarra, Usuario } from '../clases.js';
 
 class ModeloSPA {
     constructor() {
-        try {
-            this.setupInicial();
-
-            return {
-                categorias: Categorias.get(),
-                grafico: Grafico.get(),
-                pizarras: Pizarra.get()
-            }
-        } catch(e) {
-            ManejadorExcepcion.generarLOG(e);
+        this.setupInicial();
+        
+        return {
+            categorias: Categorias.get(),
+            grafico: Grafico.get(),
+            pizarras: Pizarra.get()
         }
     }
     
@@ -59,6 +54,7 @@ class ModeloSPA {
 
         // ASOCIANDO EVENTOS
         ManejadorEventos.asociar('#form-configuracion', 'submit', ManejadorEventos.getHandler("formConfiguracion"));
+        ManejadorEventos.asociar('.modal-close', 'click', ManejadorEventos.getHandler("cerrarModal"));
         
         ManejadorEventos.asociar('#btn-configuracion', 'click', ManejadorEventos.getHandler("autocompletarFormConfiguracion"));
         ManejadorEventos.asociar('#btn-salir', 'click', ManejadorEventos.getHandler("cerrarApp"));

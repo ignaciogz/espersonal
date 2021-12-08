@@ -5,12 +5,12 @@ class ManejadorExcepcion {
         return `:: Excepción - ${excepcion.name}\n${ManejadorExcepcion.separador}\n${excepcion.date || ""}\n${excepcion.message}\n`;
     }
 
-    static generarLOG(excepcion, mostrarStackTrace = false) {
+    static generarLOG(excepcion, mostrarStackTrace = true) {
         const infoDepuracion = ManejadorExcepcion.#getInfoFormateada(excepcion);
         console.error(infoDepuracion);
 
         if(mostrarStackTrace) {
-            console.warn(excepcion.stack);
+            console.warn(`:: Stack Trace [Optimizado para Google Chrome]\n${ManejadorExcepcion.separador}\n${excepcion.stack}`);
         }
     }
 }

@@ -1,13 +1,18 @@
+import { ManejadorExcepcion } from '../igzframework.js';
 import { ManejadorDOM } from '../servicios.js';
-import { VistaPizarra } from '../vistas.js';
 import { ModeloPizarra } from '../modelos.js';
+import { VistaPizarra } from '../vistas.js';
 
 class ControladorPizarra {
     static ejecutar() {
-        const $contenedor = $('#contenedor-spa');
+        try {
+            const $contenedor = $('#contenedor-spa');
         
-        const datos = new ModeloPizarra();
-        ManejadorDOM.renderizar($contenedor, new VistaPizarra(datos));
+            const datos = new ModeloPizarra();
+            ManejadorDOM.renderizar($contenedor, new VistaPizarra(datos));    
+        } catch (e) {
+            ManejadorExcepcion.generarLOG(e);
+        }
     }
 }
 

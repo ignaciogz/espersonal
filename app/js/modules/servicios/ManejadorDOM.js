@@ -1,4 +1,4 @@
-import { UtilidadesDOM } from '../igzframework.js';
+import { UtilidadesDOM, Video } from '../igzframework.js';
 import { Utilidades } from '../servicios.js';
 import { Tabla } from '../clases.js';
 
@@ -42,6 +42,11 @@ class ManejadorDOM extends UtilidadesDOM {
     static quitarInfoPizarraVacia() {
         const $infoPizarraVacia = $('#info-pizarra-vacia');
         ManejadorDOM.eliminar($infoPizarraVacia);
+    }
+
+    static cambiarVelocidadDeReproduccionDeVideo(vista, selector, velocidad) {
+        const $video = $(vista).find(selector);
+        Video.cambiarVelocidadDeReproduccion($video, velocidad);
     }
 
     static reemplazarFila(fila, registroItem) {

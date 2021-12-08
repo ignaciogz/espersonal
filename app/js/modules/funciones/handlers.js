@@ -78,9 +78,14 @@ export function autocompletarFormEditarItem() {
 }
 
 
-export function cerrarApp() {
+export function cerrarApp(e) {
+    e.preventDefault();
     Navegador.cerrarSesion();
     Navegador.redireccionar("index.html");
+}
+
+export function cerrarModal(e) {
+    e.preventDefault();
 }
 
 

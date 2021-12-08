@@ -40,7 +40,7 @@ class Navegador {
     }
 
     static redireccionar(ubicacion) {
-        setTimeout(function () { location = `/${ubicacion}`; }, 1000);
+        setTimeout(() => { location = `/${ubicacion}`; }, 500);
     }
 
     static scrollear(ubicacion, tiempo = 0) {
