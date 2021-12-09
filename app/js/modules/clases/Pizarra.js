@@ -154,6 +154,10 @@ class Pizarra {
         this.ultimoItemID = datos.ultimoItemID;
     }
 
+    tieneDatosParaGraficar() {
+        return this.#obtenerItemsDeTipo("Egreso").length ? true : false;
+    }
+
     static cargarDatosAlmacenados(pizarra) {
         const datosDeAlmacenamiento = Pizarra.buscarPizarra(pizarra.usuario, pizarra.fecha);
         pizarra.setDatosObtenidos(datosDeAlmacenamiento);

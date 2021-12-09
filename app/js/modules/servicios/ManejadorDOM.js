@@ -9,11 +9,19 @@ class ManejadorDOM extends UtilidadesDOM {
         Tabla.animarFilaAgregada($filaNueva);
     }
 
+    static agregarInfoGraficoVacio(vista, selector) {
+        const infoGraficoVacio =    `<div class="center-align">
+                                        Debe agregar items de tipo egreso dentro de la <a href="#/pizarra">pizarra</a>, para poder generar el gráfico.
+                                    </div>`;
+
+        ManejadorDOM.agregarContenidoAlSubElemento(vista, selector, infoGraficoVacio);
+    }
+
     static agregarInfoPizarraVacia(vista = null) {
         const selector = '#pizarra-seleccionada';
         const infoPizarraVacia =    `<td id="info-pizarra-vacia" class="center-align" colspan="5">
-                                            Use el botón de la esquina inferior derecha de su pantalla para agregar un item
-                                        </td>`;
+                                        Use el botón de la esquina inferior derecha de su pantalla para agregar un item
+                                    </td>`;
 
         if(vista) {
             ManejadorDOM.agregarContenidoAlSubElemento(vista, selector, infoPizarraVacia);

@@ -9,9 +9,13 @@ class ModeloGrafico {
 
         const menu = Menu.get();
 
-        const grafico = new Grafico('grafico-pizarra-seleccionada');
-        grafico.obtenerInformacion(pizarra, categorias.getListado());
-        grafico.graficarInformacion();
+        debugger
+        let grafico = null;
+        if(pizarra.tieneDatosParaGraficar()) {
+            grafico = new Grafico('grafico-pizarra-seleccionada');
+            grafico.obtenerInformacion(pizarra, categorias.getListado());
+            grafico.graficarInformacion();
+        }
 
         return {
             tituloDelDocumento: 'Gráfico - Panel del usuario',
@@ -21,7 +25,7 @@ class ModeloGrafico {
             },
             grafico: {
                 nombre: 'Gráfico de egresos',
-                canvas: grafico.canvasGrafico
+                canvas: grafico ? grafico.canvasGrafico : null
             }
         };
     }

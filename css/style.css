@@ -361,6 +361,13 @@ table tr th:nth-child(4) {
   right: 23px;
 }
 
+#contenedor-grafico-egresos .chart-container {
+  height: 300px;
+  margin: 0 auto;
+  position: relative;
+  width: 450px;
+}
+
 /* -------- ICONOS -------- */
 i.medium {
   font-size: 3rem;

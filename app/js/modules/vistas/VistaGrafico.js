@@ -19,13 +19,25 @@ class VistaGrafico {
                                     <div class="row">
                                         <div class="col s12">
                                             <h2>${datos.grafico.nombre}</h2>
-                                            <div class="chart-container valign-wrapper" style="position: relative; height:300px; width:450px; margin: 0 auto">
-                                                <!-- Aquí se agrega DINÁMICAMENTE -->
+                                            <div id="contenedor-grafico-egresos">
+                                                
                                             </div>
                                         </div>
                                     </div>`;
-                                    
-        ManejadorDOM.agregarContenidoAlSubElemento($seccionGrafico, '.chart-container', datos.grafico.canvas);
+        
+        if(datos.grafico.canvas) {
+            let $grafico = document.createElement("div");
+            $grafico.classList.add('chart-container', 'valign-wrapper');
+            
+            $grafico.innerHTML =    `<div class="chart-container valign-wrapper">
+                                        <!-- Aquí se agrega DINÁMICAMENTE -->
+                                    </div>`
+
+            ManejadorDOM.agregarContenidoAlSubElemento($grafico, '.chart-container', datos.grafico.canvas);
+            ManejadorDOM.agregarContenidoAlSubElemento($seccionGrafico, '#contenedor-grafico-egresos', $grafico);
+        } else {
+            ManejadorDOM.agregarInfoGraficoVacio($seccionGrafico, '#contenedor-grafico-egresos');
+        }
 
         return $seccionGrafico;
     }
