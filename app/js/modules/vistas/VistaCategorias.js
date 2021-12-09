@@ -2,15 +2,15 @@ import { ManejadorDOM } from '../servicios.js';
 
 class VistaCategorias {
     constructor(datos) {
-        ManejadorDOM.tituloDePagina(datos.tituloDePagina);
+        ManejadorDOM.tituloDelDocumento(datos.tituloDelDocumento);
 
         let $seccionCategorias = document.createElement("section");
         $seccionCategorias.classList.add('categorias');
 
         $seccionCategorias.innerHTML = `<div class="row">
                                             <div class="col s10 l12 valign-wrapper">
-                                                <h1>Categorías</h1>
-                                                <i class="small material-icons">category</i>
+                                                <h1>${datos.pagina.titulo}</h1>
+                                                <i class="small material-icons">${datos.pagina.icono}</i>
                                             </div>
                                         </div>
 

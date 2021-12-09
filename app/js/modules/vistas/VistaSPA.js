@@ -53,8 +53,8 @@ class VistaSPA {
                                     </ul>
                                 </section>
                                 
-                                <!-- Contenedor de la SPA -->
-                                <main id="contenedor-spa">
+                                <!-- Contenido de la SPA -->
+                                <main>
                                     
                                 </main>
                                 

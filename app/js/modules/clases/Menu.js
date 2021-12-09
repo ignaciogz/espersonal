@@ -37,6 +37,12 @@ class Menu {
     }
 
     // Métodos públicos
+    getOpcion(nombre) {
+        const fn_busqueda = Menu.fn_itemBuscado(nombre);
+
+        return this.getOpciones().find(fn_busqueda);
+    }
+
     getOpciones() {
         return this.opciones;
     }
@@ -59,6 +65,10 @@ class Menu {
                 this.setOpcion(opcion);
             }
         }
+    }
+
+    static fn_itemBuscado(nombre) {
+        return elemento => elemento.nombre === nombre;
     }
 }
 

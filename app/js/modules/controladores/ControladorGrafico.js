@@ -6,7 +6,7 @@ import { VistaGrafico } from '../vistas.js';
 class ControladorGrafico {
     static ejecutar() {
         try {
-            const $contenedor = $('#contenedor-spa');
+            const $contenedor = $('#contenedor-spa main');
             
             const datos = new ModeloGrafico();
             ManejadorDOM.renderizar($contenedor, new VistaGrafico(datos));

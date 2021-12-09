@@ -1,4 +1,4 @@
-import { Categorias, Grafico, Pizarra, Usuario } from '../clases.js';
+import { Categorias, Grafico, Menu, Pizarra, Usuario } from '../clases.js';
 
 class ModeloGrafico {
     constructor() {
@@ -7,14 +7,20 @@ class ModeloGrafico {
 
         const categorias = Categorias.get();
 
+        const menu = Menu.get();
+
         const grafico = new Grafico('grafico-pizarra-seleccionada');
         grafico.obtenerInformacion(pizarra, categorias.getListado());
         grafico.graficarInformacion();
 
         return {
-            tituloDePagina: 'Gráfico - Panel del usuario',
+            tituloDelDocumento: 'Gráfico - Panel del usuario',
+            pagina: {
+                titulo: pizarra.fecha,
+                icono: menu.getOpcion('Gráfico').icono,
+            },
             grafico: {
-                nombre: pizarra.fecha,
+                nombre: 'Gráfico de egresos',
                 canvas: grafico.canvasGrafico
             }
         };

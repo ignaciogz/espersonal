@@ -69,7 +69,7 @@ class UtilidadesDOM {
         contenedor.html(elemento);
     }
 
-    static tituloDePagina(titulo) {
+    static tituloDelDocumento(titulo) {
         document.title = titulo;
     }
 }

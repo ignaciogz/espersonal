@@ -12,7 +12,7 @@ class ModeloIndex {
         const $modalRegistrarse = Modal.crearConFormulario('Registrarse', 'app_registration', 'registrarme');
 
         return {
-            tituloDePagina: 'ESTO ESPERSONAL ! - Finanzas personales más grosas',
+            tituloDelDocumento: 'ESTO ESPERSONAL ! - Finanzas personales más grosas',
             formularios: {
                 acceso: $formAcceso
             },

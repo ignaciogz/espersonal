@@ -6,7 +6,7 @@ import { VistaCategorias } from '../vistas.js';
 class ControladorCategorias {
     static ejecutar() {
         try {
-            const $contenedor = $('#contenedor-spa');
+            const $contenedor = $('#contenedor-spa main');
 
             const datos = new ModeloCategorias();
             ManejadorDOM.renderizar($contenedor, new VistaCategorias(datos));

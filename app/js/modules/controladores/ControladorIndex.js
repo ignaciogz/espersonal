@@ -12,8 +12,12 @@ class ControladorIndex {
             } else {
                 const $contenedor = $('#contenedor-mpa');
                 
-                const datos = new ModeloIndex();
-                ManejadorDOM.renderizar($contenedor, new VistaIndex(datos));
+                if(ManejadorDOM.existeEnDOM($contenedor)) {
+                    const datos = new ModeloIndex();
+                    ManejadorDOM.renderizar($contenedor, new VistaIndex(datos));
+                } else {
+                    ManejadorDOM.notificarErrorAlUsuario("Sin contenedor");
+                }
             }
         } catch (e) {
             ManejadorExcepcion.generarLOG(e);

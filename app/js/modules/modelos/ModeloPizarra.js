@@ -1,11 +1,14 @@
 import { Utilidades } from '../servicios.js';
-import { Categorias, Formulario, Modal, Pizarra, Usuario } from '../clases.js';
+import { Categorias, Formulario, Menu, Modal, Pizarra, Usuario } from '../clases.js';
 
 class ModeloPizarra {
     constructor() {
-        const categorias = Categorias.get();
         const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
         const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+        
+        const categorias = Categorias.get();
+        
+        const menu = Menu.get();
 
         // CREANDO DINÁMICAMENTE -> Opciones del select categoría, de los formulario de agregar y editar item
         const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
@@ -15,9 +18,12 @@ class ModeloPizarra {
         const $modalEditarItem = Modal.crearConFormulario('Editar Item', 'edit', 'Editar');
         
         return {
-            tituloDePagina: 'Pizarra - Panel del usuario',
+            tituloDelDocumento: 'Pizarra - Panel del usuario',
+            pagina: {
+                titulo: pizarra.fecha,
+                icono: menu.getOpcion('Pizarra').icono,
+            },
             pizarra: {
-                nombre: pizarra.fecha,
                 registros: pizarra.estaVacia() ? null : pizarra.crearRegistros(),
                 cantidadDeItems: pizarra.getCantidadDeItems(),
                 totalIngresos: Utilidades.formatearMonto(pizarra.getTotalIngresos()),

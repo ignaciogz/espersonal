@@ -10,21 +10,25 @@ class ControladorSPA {
     static ejecutar(instanciaApp) {
         try {
             if (Usuario.estaLogeado()) {
-                const $categorias = Categorias.get();
-                const $grafico = Grafico.get();
-                const $menu = Menu.get();
-                const $pizarras = Pizarra.get();
+                const categorias = Categorias.get();
+                const grafico = Grafico.get();
+                const menu = Menu.get();
+                const pizarras = Pizarra.get();
 
                 // CONSUMO por única vez de forma ASÍNCRONA, los JSON de: pizarras, categorías, menú y configuración del gráfico.
-                $.when( $pizarras.onReady(), $categorias.onReady(), $menu.onReady(), $grafico.onReady() )
+                $.when( pizarras.onReady(), categorias.onReady(), menu.onReady(), grafico.onReady() )
                 .always(() => {
-                        const $documentoSPA = $(document.body);
-                        
-                        const datos = new ModeloSPA();
-                        ManejadorDOM.renderizar($documentoSPA, new VistaSPA(datos));
+                        const $contenedor = $('#contenedor-spa');
 
-                        // El ControladorSPA delega el control al ControladorFrontal
-                        ControladorFrontal.ejecutar(instanciaApp);
+                        if(ManejadorDOM.existeEnDOM($contenedor)) {
+                            const datos = new ModeloSPA();
+                            ManejadorDOM.renderizar($contenedor, new VistaSPA(datos));
+
+                            // El ControladorSPA delega el control al ControladorFrontal
+                            ControladorFrontal.ejecutar(instanciaApp);
+                        } else {
+                            ManejadorDOM.notificarErrorAlUsuario("Sin contenedor");
+                        }
                 }).fail(() => {
                         ManejadorDOM.notificarErrorAlUsuario("Carga inicial")
                 });

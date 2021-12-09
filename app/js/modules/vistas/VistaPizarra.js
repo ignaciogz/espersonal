@@ -3,7 +3,7 @@ import { ManejadorDOM, ManejadorEventos, Validador } from '../servicios.js';
 
 class VistaPizarra {
     constructor(datos) {
-        ManejadorDOM.tituloDePagina(datos.tituloDePagina);
+        ManejadorDOM.tituloDelDocumento(datos.tituloDelDocumento);
 
         let $seccionPizarra = document.createElement("section");
         $seccionPizarra.classList.add('pizarra');
@@ -12,9 +12,9 @@ class VistaPizarra {
                                         <!-- Nombre de pizarra -->
                                         <div class="col s10 l12 valign-wrapper">
                                             <h1>
-                                                <div id="pizarra-nombre">${datos.pizarra.nombre}</div>
+                                                <div id="pizarra-nombre">${datos.pagina.titulo}</div>
                                             </h1>
-                                            <i class="small material-icons">dashboard_customize</i>
+                                            <i class="small material-icons">${datos.pagina.icono}</i>
                                         </div>
                                     </div>
 

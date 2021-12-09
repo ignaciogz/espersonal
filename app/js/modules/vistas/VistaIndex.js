@@ -3,7 +3,7 @@ import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
 
 class VistaIndex {
     constructor(datos) {
-        ManejadorDOM.tituloDePagina(datos.tituloDePagina);
+        ManejadorDOM.tituloDelDocumento(datos.tituloDelDocumento);
 
         let $paginaIndex = document.createElement("div");
         $paginaIndex.classList.add('row', 'm-0');
