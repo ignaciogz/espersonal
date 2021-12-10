@@ -10,7 +10,7 @@ class VistaSPA {
                                 <div class="navbar-fixed hide-on-large-only">
                                     <nav class="brown z-depth-4">
                                         <div class="nav-wrapper">
-                                            <a class="logo brand-logo white-text" href="index.html" title="logo de espesonal">
+                                            <a class="logo brand-logo white-text" href="index.html" title="logo de es personal">
                                                 <div>ESPERSONAL !</div>
                                             </a>
                                             <ul class="left">

@@ -44,6 +44,11 @@ class Utilidades extends UtilidadesBasicas {
         return formatter.format(monto);
     }
 
+    static formatearPorcentaje(porcentaje) {
+        porcentaje = porcentaje.toString();
+        return porcentaje.replace('.', ',');
+    }
+
     static obtenerIdentificador(cadena) {
         const identificador = cadena.toLowerCase().replace(" ", "-");
         return Utilidades.#sanitizarIdentificador(identificador);

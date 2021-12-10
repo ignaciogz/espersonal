@@ -8,7 +8,7 @@ class VistaGrafico {
         $seccionGrafico.classList.add('grafico');
 
         $seccionGrafico.innerHTML = `<div class="row">
-                                        <div class="col s10 l12 valign-wrapper">
+                                        <div class="col s12 valign-wrapper">
                                             <h1>
                                                 <div id="pizarra-nombre">${datos.pagina.titulo}</div>
                                             </h1>
@@ -16,25 +16,25 @@ class VistaGrafico {
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col s12">
-                                            <h2>${datos.grafico.nombre}</h2>
-                                            <div id="contenedor-grafico-egresos">
+                                    <div class="row valign-wrapper flex-s-column">
+                                        <div class="col s8 ml-0 m5 xl4">
+                                            <div class="chart-container">
                                                 
+                                            </div>
+                                        </div>
+                                        <div class="col s12 m7 xl8">
+                                            <div class="col s12">
+                                                <h2>${datos.grafico.nombre}:</h2>
+                                            </div>
+                                            <div class="contenedor-etiquetas">
+
                                             </div>
                                         </div>
                                     </div>`;
         
         if(datos.grafico.canvas) {
-            let $grafico = document.createElement("div");
-            $grafico.classList.add('chart-container', 'valign-wrapper');
-            
-            $grafico.innerHTML =    `<div class="chart-container valign-wrapper">
-                                        <!-- Aquí se agrega DINÁMICAMENTE -->
-                                    </div>`
-
-            ManejadorDOM.agregarContenidoAlSubElemento($grafico, '.chart-container', datos.grafico.canvas);
-            ManejadorDOM.agregarContenidoAlSubElemento($seccionGrafico, '#contenedor-grafico-egresos', $grafico);
+            ManejadorDOM.agregarContenidoAlSubElemento($seccionGrafico, '.chart-container', datos.grafico.canvas);
+            ManejadorDOM.agregarContenidoAlSubElemento($seccionGrafico, '.contenedor-etiquetas', datos.grafico.info);
         } else {
             ManejadorDOM.agregarInfoGraficoVacio($seccionGrafico, '#contenedor-grafico-egresos');
         }

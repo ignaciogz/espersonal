@@ -8,7 +8,7 @@ class VistaCategorias {
         $seccionCategorias.classList.add('categorias');
 
         $seccionCategorias.innerHTML = `<div class="row">
-                                            <div class="col s10 l12 valign-wrapper">
+                                            <div class="col s12 valign-wrapper">
                                                 <h1>${datos.pagina.titulo}</h1>
                                                 <i class="small material-icons">${datos.pagina.icono}</i>
                                             </div>

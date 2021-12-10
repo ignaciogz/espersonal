@@ -1,5 +1,7 @@
 import { Ajax, AppCache } from '../igzframework.js';
+import { ManejadorDOM, Utilidades } from '../servicios.js';
 import { JSON_config_grafico } from '../json.js';
+import { VistaEtiqueta } from '../vistas.js';
 
 class Grafico {
     constructor(canvasID) {
@@ -21,35 +23,37 @@ class Grafico {
         return canvas;
     }
 
-    #getInfo() {
+    #getInformacion() {
         return this.info;
     }
 
     #setColoresDeFondo() {
-        Grafico.config.data.datasets[0].backgroundColor = this.#getInfo().coloresDeFondo;
+        Grafico.config.data.datasets[0].backgroundColor = this.#getInformacion().coloresDeFondo;
     }
 
     #setDatos() {
-        Grafico.config.data.datasets[0].data = this.#getInfo().datos;
+        Grafico.config.data.datasets[0].data = this.#getInformacion().porcentajes;
     }
 
     #setEtiquetas() {
-        Grafico.config.data.labels = this.#getInfo().etiquetas;
+        Grafico.config.data.labels = this.#getInformacion().etiquetas;
     }
 
     #setInformacionObtenida(informacion) {
         this.info = {
             coloresDeFondo: informacion.coloresDeFondo,
-            datos: informacion.datos,
-            etiquetas: informacion.etiquetas
+            etiquetas: informacion.etiquetas,
+            nombres: informacion.nombres,
+            porcentajes: informacion.porcentajes
         }
     }
 
     #setInformacionGenerada(informacion) {
         this.info = {
             coloresDeFondo: Array.from(informacion, categoria => categoria.color),
-            datos: Array.from(informacion, categoria => categoria.porcentaje),
-            etiquetas: Array.from(informacion, categoria => `${categoria.nombre} ${categoria.porcentaje}%`)
+            etiquetas: Array.from(informacion, categoria => `${categoria.nombre} ${categoria.porcentaje}%`),
+            nombres: Array.from(informacion, categoria => categoria.nombre),
+            porcentajes: Array.from(informacion, categoria => categoria.porcentaje)
         }
     }
 
@@ -73,6 +77,32 @@ class Grafico {
         this.#setInformacionObtenida(informacionDeCache);
     }
 
+    cargarInformacion(pizarra, categorias) {
+        if (AppCache.existe("grafico_informacion")) {
+            // La información fue generada previamente. Entonces la tomo de la cache
+            this.cargarDatosCacheados();
+        } else {
+            // La información NO fue generada previamente o se modificó. Entonces la genero
+            this.generarInformacion(pizarra, categorias);
+            AppCache.guardar("grafico_informacion", this.#getInformacion());
+        }
+    }
+
+    crearInformacionAsociada() {
+        const fragmento = ManejadorDOM.crearFragmento();
+
+        const coloresDeFondo = this.#getInformacion().coloresDeFondo;
+        const nombres = this.#getInformacion().nombres;
+        const porcentajes = this.#getInformacion().porcentajes;
+
+        for (let i = 0; i < nombres.length; i++) {
+            let $etiqueta = VistaEtiqueta.crear(coloresDeFondo[i], nombres[i], Utilidades.formatearPorcentaje(porcentajes[i]));
+            ManejadorDOM.agregar(fragmento, $etiqueta);   
+        }
+
+        return fragmento;
+    }
+
     generarInformacion(pizarra, categorias) {
         let informacion = categorias.map(Grafico.fn_generarInfoDeCategoria(pizarra));
         informacion = informacion.filter(Grafico.fn_infoRelevante());
@@ -87,19 +117,10 @@ class Grafico {
         this.#setColoresDeFondo();
         this.#setDatos();
         this.#setEtiquetas();
-
-        return new Chart(this.canvasGrafico, Grafico.config);
-    }
-    
-    obtenerInformacion(pizarra, categorias) {
-        if (AppCache.existe("grafico_informacion")) {
-            // La información fue generada previamente. Entonces la tomo de la cache
-            this.cargarDatosCacheados();
-        } else {
-            // La información NO fue generada previamente o se modificó. Entonces la genero
-            this.generarInformacion(pizarra, categorias);
-            AppCache.guardar("grafico_informacion", this.#getInfo());
-        }
+        
+        new Chart(this.canvasGrafico, Grafico.config);
+        
+        return this.canvasGrafico;
     }
     
     static fn_cargarConfiguracion() {
@@ -113,8 +134,8 @@ class Grafico {
             const porcentajeDeCategoria = pizarra.calcularPorcentajeDeCategoria(categoria.nombre);
 
             return {
-                nombre: categoria.nombre,
                 color: categoria.color,
+                nombre: categoria.nombre,
                 porcentaje: porcentajeDeCategoria
             }
         }
@@ -130,7 +151,7 @@ class Grafico {
             label.pop();
             label = label.join(" ");
             
-            return `${label} ${context.parsed}% de los egresos`;
+            return `${label} ${Utilidades.formatearPorcentaje(context.parsed)}% de los egresos`;
         }
     }
 }

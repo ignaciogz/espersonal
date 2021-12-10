@@ -361,11 +361,18 @@ table tr th:nth-child(4) {
   right: 23px;
 }
 
-#contenedor-grafico-egresos .chart-container {
-  height: 300px;
-  margin: 0 auto;
-  position: relative;
-  width: 450px;
+section.grafico h2 {
+  margin-bottom: 1rem;
+}
+
+.contenedor-etiquetas div {
+  margin-bottom: 10px;
+}
+.contenedor-etiquetas .barra-de-color {
+  display: inline-block;
+  height: 2.5rem;
+  margin-right: 5px;
+  width: 0.3rem;
 }
 
 /* -------- ICONOS -------- */
@@ -542,6 +549,10 @@ form [required]:invalid:focus {
   margin: 0 !important;
 }
 
+.ml-0 {
+  margin-left: 0 !important;
+}
+
 .d-flex {
   display: flex;
 }
@@ -558,6 +569,12 @@ form [required]:invalid:focus {
   display: block;
   height: var(--altura-menu-fijo);
   margin-top: calc(0px - var(--altura-menu-fijo));
+}
+
+@media only screen and (max-width: 600px) {
+  .flex-s-column {
+    flex-direction: column;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -9,6 +9,7 @@ export { VistaSPA } from './vistas/VistaSPA.js';
 
 
 export { VistaCategoria } from './vistas/secundarias/VistaCategoria.js';
+export { VistaEtiqueta } from './vistas/secundarias/VistaEtiqueta.js';
 export { VistaFormAcceso } from './vistas/secundarias/VistaFormAcceso.js';
 export { VistaFormConfiguracion } from './vistas/secundarias/VistaFormConfiguracion.js';
 export { VistaFormError } from './vistas/secundarias/VistaFormError.js';

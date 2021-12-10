@@ -9,23 +9,25 @@ class ModeloGrafico {
 
         const menu = Menu.get();
 
-        debugger
-        let grafico = null;
+        let canvasGrafico, infoGrafico;
         if(pizarra.tieneDatosParaGraficar()) {
-            grafico = new Grafico('grafico-pizarra-seleccionada');
-            grafico.obtenerInformacion(pizarra, categorias.getListado());
-            grafico.graficarInformacion();
+            const grafico = new Grafico('grafico-pizarra-seleccionada');
+            grafico.cargarInformacion(pizarra, categorias.getListado());
+            
+            canvasGrafico = grafico.graficarInformacion();
+            infoGrafico = grafico.crearInformacionAsociada();
         }
 
         return {
             tituloDelDocumento: 'Gráfico - Panel del usuario',
             pagina: {
-                titulo: pizarra.fecha,
+                titulo: 'Gráfico de egresos',
                 icono: menu.getOpcion('Gráfico').icono,
             },
             grafico: {
-                nombre: 'Gráfico de egresos',
-                canvas: grafico ? grafico.canvasGrafico : null
+                nombre: pizarra.fecha,
+                canvas: canvasGrafico ? canvasGrafico : null,
+                info: infoGrafico ? infoGrafico : null
             }
         };
     }

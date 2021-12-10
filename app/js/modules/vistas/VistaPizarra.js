@@ -10,7 +10,7 @@ class VistaPizarra {
 
         $seccionPizarra.innerHTML = `<div class="row">
                                         <!-- Nombre de pizarra -->
-                                        <div class="col s10 l12 valign-wrapper">
+                                        <div class="col s12 valign-wrapper">
                                             <h1>
                                                 <div id="pizarra-nombre">${datos.pagina.titulo}</div>
                                             </h1>
