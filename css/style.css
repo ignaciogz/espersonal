@@ -329,76 +329,9 @@ section.login .logo {
   margin-bottom: 12px;
 }
 
-/* -------- MENU -------- */
 /*@import 'components/menu-mobile';
 @import 'components/tarjetas';
 @import 'components/carousel';*/
-table tr th {
-  cursor: pointer;
-  user-select: none;
-}
-table tr th:nth-child(4) {
-  cursor: initial;
-}
-
-.asc::after,
-.desc::after {
-  margin-left: 5px;
-}
-
-.asc::after {
-  content: "↑";
-}
-
-.desc::after {
-  content: "↓";
-}
-
-.notificacion {
-  font-size: 0.7rem;
-  padding: 8px 13px;
-  position: fixed;
-  right: 23px;
-}
-
-section.grafico h2 {
-  margin-bottom: 1rem;
-}
-
-.legend-container > div {
-  margin-bottom: 1rem;
-  padding: 0;
-}
-.legend-container .barra-de-color {
-  display: inline-block;
-  height: 2.5rem;
-  margin-right: 5px;
-  width: 0.3rem;
-}
-.legend-container .etiqueta-info {
-  display: inline-block;
-  margin-left: 5px;
-}
-
-/* -------- ICONOS -------- */
-i.medium {
-  font-size: 3rem;
-}
-
-i.material-icons {
-  user-select: none;
-}
-
-h1 + i.material-icons {
-  color: var(--color-logo);
-  margin-left: 1rem;
-}
-
-/* -------- MODALES -------- */
-.modal {
-  max-height: 80%;
-}
-
 /* -------- BOTONES -------- */
 .btn,
 .btn-flat {
@@ -516,6 +449,69 @@ form [required]:invalid:focus {
     opacity: 1;
   }
 }
+section.grafico h2 {
+  margin-bottom: 1rem;
+}
+section.grafico .legend-container > div {
+  margin-bottom: 1rem;
+  padding: 0;
+}
+section.grafico .legend-container .barra-de-color {
+  display: inline-block;
+  height: 2.5rem;
+  margin-right: 5px;
+  width: 0.3rem;
+}
+section.grafico .legend-container .etiqueta-info {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+/* -------- ICONOS -------- */
+i.medium {
+  font-size: 3rem;
+}
+
+i.material-icons {
+  user-select: none;
+}
+
+h1 + i.material-icons {
+  color: var(--color-logo);
+  margin-left: 1rem;
+}
+
+/* -------- MENU -------- */
+/* -------- MODALES -------- */
+.modal {
+  max-height: 80%;
+}
+
+.notificacion {
+  font-size: 0.7rem;
+  padding: 8px 13px;
+  position: fixed;
+  right: 23px;
+}
+
+section.pizarra table thead th {
+  cursor: pointer;
+  user-select: none;
+}
+section.pizarra table thead th:nth-child(4) {
+  cursor: initial;
+}
+section.pizarra table .asc::after,
+section.pizarra table .desc::after {
+  margin-left: 5px;
+}
+section.pizarra table .asc::after {
+  content: "↑";
+}
+section.pizarra table .desc::after {
+  content: "↓";
+}
+
 /*@import 'components/animaciones'; */
 /* -------- BROWSER -------- */
 ::selection {

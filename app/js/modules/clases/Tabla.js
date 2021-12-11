@@ -6,7 +6,7 @@ class Tabla extends UtilidadesTabla {
     static #getValorDeLaCelda(fila, indexColumna) {
         const valor = Tabla.getContenedorDato(fila, indexColumna).text();
         
-        return indexColumna !== 4 ? valor.trim() : Utilidades.desformatearMonto(valor);
+        return indexColumna !== 4 ? valor.trim() : Utilidades.parseNumero(Utilidades.desformatearMonto(valor));
     }
 
     static animarFilaAgregada(fila, duracion = 1400) {
