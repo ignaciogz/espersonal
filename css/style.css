@@ -354,7 +354,7 @@ table tr th:nth-child(4) {
   content: "↓";
 }
 
-.aviso {
+.notificacion {
   font-size: 0.7rem;
   padding: 8px 13px;
   position: fixed;
@@ -365,14 +365,19 @@ section.grafico h2 {
   margin-bottom: 1rem;
 }
 
-.contenedor-etiquetas div {
-  margin-bottom: 10px;
+.legend-container > div {
+  margin-bottom: 1rem;
+  padding: 0;
 }
-.contenedor-etiquetas .barra-de-color {
+.legend-container .barra-de-color {
   display: inline-block;
   height: 2.5rem;
   margin-right: 5px;
   width: 0.3rem;
+}
+.legend-container .etiqueta-info {
+  display: inline-block;
+  margin-left: 5px;
 }
 
 /* -------- ICONOS -------- */
@@ -549,7 +554,7 @@ form [required]:invalid:focus {
   margin: 0 !important;
 }
 
-.ml-0 {
+.ms-0 {
   margin-left: 0 !important;
 }
 

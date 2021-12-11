@@ -17,26 +17,26 @@ class VistaGrafico {
                                     </div>
 
                                     <div class="row valign-wrapper flex-s-column">
-                                        <div class="col s8 ml-0 m5 xl4">
-                                            <div class="chart-container">
+                                        <div class="col ms-0 s8 m4 l5 xl4">
+                                            <div id="grafico-egresos" class="chart-container">
                                                 
                                             </div>
                                         </div>
-                                        <div class="col s12 m7 xl8">
+                                        <div class="col s12 m8 l7 xl8">
                                             <div class="col s12">
                                                 <h2>${datos.grafico.nombre}:</h2>
                                             </div>
-                                            <div class="contenedor-etiquetas">
+                                            <div id="etiquetas-grafico-egresos" class="col s12 legend-container">
 
                                             </div>
                                         </div>
                                     </div>`;
         
         if(datos.grafico.canvas) {
-            ManejadorDOM.agregarContenidoAlSubElemento($seccionGrafico, '.chart-container', datos.grafico.canvas);
-            ManejadorDOM.agregarContenidoAlSubElemento($seccionGrafico, '.contenedor-etiquetas', datos.grafico.info);
+            ManejadorDOM.agregarContenidoAlSubElemento($seccionGrafico, '#grafico-egresos', datos.grafico.canvas);
+            ManejadorDOM.agregarContenidoAlSubElemento($seccionGrafico, '#etiquetas-grafico-egresos', datos.grafico.info);
         } else {
-            ManejadorDOM.agregarInfoGraficoVacio($seccionGrafico, '#contenedor-grafico-egresos');
+            ManejadorDOM.agregarInfoGraficoVacio($seccionGrafico, '#etiquetas-grafico-egresos');
         }
 
         return $seccionGrafico;

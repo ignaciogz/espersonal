@@ -54,7 +54,7 @@ class ManejadorDOM extends UtilidadesDOM {
     }
 
     static notificarErrorAlUsuario(mensaje) {
-        M.toast({html: `ERROR -> ${mensaje}`, classes: 'aviso red darken-2'});
+        M.toast({html: `ERROR -> ${mensaje}`, classes: 'notificacion red darken-2'});
     }
 
     static quitarInfoPizarraVacia() {

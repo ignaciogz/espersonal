@@ -1,6 +1,7 @@
 import { Ajax, AppCache } from '../igzframework.js';
 import { ManejadorDOM, Utilidades } from '../servicios.js';
 import { JSON_config_grafico } from '../json.js';
+import { Categorias } from '../clases.js';
 import { VistaEtiqueta } from '../vistas.js';
 
 class Grafico {
@@ -43,6 +44,7 @@ class Grafico {
         this.info = {
             coloresDeFondo: informacion.coloresDeFondo,
             etiquetas: informacion.etiquetas,
+            iconos: informacion.iconos,
             nombres: informacion.nombres,
             porcentajes: informacion.porcentajes
         }
@@ -52,6 +54,7 @@ class Grafico {
         this.info = {
             coloresDeFondo: Array.from(informacion, categoria => categoria.color),
             etiquetas: Array.from(informacion, categoria => `${categoria.nombre} ${categoria.porcentaje}%`),
+            iconos: Array.from(informacion, categoria => categoria.icono),
             nombres: Array.from(informacion, categoria => categoria.nombre),
             porcentajes: Array.from(informacion, categoria => categoria.porcentaje)
         }
@@ -92,11 +95,12 @@ class Grafico {
         const fragmento = ManejadorDOM.crearFragmento();
 
         const coloresDeFondo = this.#getInformacion().coloresDeFondo;
+        const iconos = this.#getInformacion().iconos;
         const nombres = this.#getInformacion().nombres;
         const porcentajes = this.#getInformacion().porcentajes;
 
         for (let i = 0; i < nombres.length; i++) {
-            let $etiqueta = VistaEtiqueta.crear(coloresDeFondo[i], nombres[i], Utilidades.formatearPorcentaje(porcentajes[i]));
+            let $etiqueta = VistaEtiqueta.crear(coloresDeFondo[i], nombres[i], Utilidades.formatearPorcentaje(porcentajes[i]), iconos[i]);
             ManejadorDOM.agregar(fragmento, $etiqueta);   
         }
 
@@ -135,6 +139,7 @@ class Grafico {
 
             return {
                 color: categoria.color,
+                icono: categoria.icono,
                 nombre: categoria.nombre,
                 porcentaje: porcentajeDeCategoria
             }
