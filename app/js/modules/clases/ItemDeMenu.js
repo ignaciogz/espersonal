@@ -4,6 +4,19 @@ class ItemDeMenu {
         this.nombre = nombre;
         this.link = link;
     }
+
+    // Métodos públicos
+    getIcono() {
+        return this.icono;
+    }
+
+    getNombre() {
+        return this.nombre;
+    }
+
+    getLink() {
+        return this.link;
+    }
 }
 
 export { ItemDeMenu };

@@ -8,7 +8,7 @@ class Pizarra {
     constructor(usuario) {
         this.usuario = usuario.nombre;
         this.fecha = usuario.fechaSeleccionada;
-        this.items = [];
+        this.items = new Array();
         this.totalIngresos = 0;
         this.totalEgresos = 0;
         this.ultimoItemID = null;
@@ -142,7 +142,7 @@ class Pizarra {
     }
 
     setItems(datos) {
-        this.items = datos.items;
+        this.items = Array.from(datos.items, item => new Item(item.id, item.tipo, item.categoria, item.nombre, item.monto));
     }
 
     setTotales(datos) {

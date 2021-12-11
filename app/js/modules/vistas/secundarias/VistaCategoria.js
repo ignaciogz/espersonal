@@ -3,14 +3,14 @@ class VistaCategoria {
         let $divColumna = document.createElement("div");
         $divColumna.classList.add('col', 's6', 'l4');
 
-        $divColumna.innerHTML =`<h2 class="card-header">${categoria.nombre}</h2>
+        $divColumna.innerHTML =`<h2 class="card-header">${categoria.getNombre()}</h2>
                                 <div class="card horizontal">
                                     <div class="card-image">
-                                        <i class="medium material-icons right">${categoria.icono}</i>
+                                        <i class="medium material-icons right">${categoria.getIcono()}</i>
                                     </div>
                                     <div class="card-stacked">
                                         <div class="card-content">
-                                            <p>${categoria.descripcion}</p>
+                                            <p>${categoria.getDescripcion()}</p>
                                         </div>
                                     </div>
                                 </div>`;

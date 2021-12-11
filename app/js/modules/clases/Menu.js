@@ -33,7 +33,6 @@ class Menu {
         return  Ajax.getJQXHR(JSON_menu)
                     .done(Menu.fn_cargarMenu().bind(_this))
                     .fail(() => console.warn("Falló la carga del menú de navegación"));
-        
     }
 
     // Métodos públicos

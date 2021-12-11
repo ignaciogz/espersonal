@@ -20,7 +20,31 @@ class Item {
             "estilo_tipo": "red-text",
             "estilo_monto": "negativo",
         }
-    ]
+    ];
+
+    getID() {
+        return this.id;
+    }
+
+    getTipo() {
+        return this.tipo;
+    }
+
+    getCategoria() {
+        return this.categoria;
+    }
+
+    getNombre() {
+        return this.nombre;
+    }
+
+    getMonto() {
+        return this.monto;
+    }
+
+    setCategoria(categoria) {
+        this.categoria = categoria;
+    }
 
     static getTipoDeItem(nombreTipoDeItem) {
         const fn_busqueda = Item.fn_tipoDeItem(nombreTipoDeItem);
@@ -37,10 +61,11 @@ class Item {
     static getItem(itemID, items) {     
         const fn_busqueda = Item.fn_itemBuscado(itemID);
 
-        const datosDelItem = items.find(fn_busqueda);
-        datosDelItem.categoria = Item.getValorDeCategoriaDeTipo(datosDelItem.tipo, datosDelItem.categoria);
+        const item = items.find(fn_busqueda);
+        const categoria = Item.getValorDeCategoriaDeTipo(item.getTipo(), item.getCategoria());
+        item.setCategoria(categoria);
 
-        return new Item(datosDelItem.id, datosDelItem.tipo, datosDelItem.categoria, datosDelItem.nombre, datosDelItem.monto);
+        return item;
     }
 
     static getTipoDelIcono(icono) {

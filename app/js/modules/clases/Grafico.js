@@ -135,12 +135,12 @@ class Grafico {
 
     static fn_generarInfoDeCategoria(pizarra) {
         return categoria => {
-            const porcentajeDeCategoria = pizarra.calcularPorcentajeDeCategoria(categoria.nombre);
+            const porcentajeDeCategoria = pizarra.calcularPorcentajeDeCategoria(categoria.getNombre());
 
             return {
-                color: categoria.color,
-                icono: categoria.icono,
-                nombre: categoria.nombre,
+                color: categoria.getColor(),
+                icono: categoria.getIcono(),
+                nombre: categoria.getNombre(),
                 porcentaje: porcentajeDeCategoria
             }
         }

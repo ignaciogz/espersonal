@@ -22,7 +22,7 @@ class ModeloGrafico {
             tituloDelDocumento: 'Gráfico - Panel del usuario',
             pagina: {
                 titulo: 'Gráfico de egresos',
-                icono: menu.getOpcion('Gráfico').icono,
+                icono: menu.getOpcion('Gráfico').getIcono(),
             },
             grafico: {
                 nombre: pizarra.fecha,
