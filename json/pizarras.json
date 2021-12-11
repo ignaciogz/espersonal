@@ -123,10 +123,17 @@
                 "categoria":"Hogar",
                 "nombre":"Pinturas para el nuevo cuarto",
                 "monto":6000
+            },
+            {
+                "id":4,
+                "tipo":"Egreso",
+                "categoria":"Regalos",
+                "nombre":"Cumpleaños de mi pareja",
+                "monto":4000
             }
         ],
         "totalIngresos":48000,
-        "totalEgresos":21000,
+        "totalEgresos":25000,
         "ultimoItemID":3
     }
 ]

@@ -5,14 +5,14 @@
             "backgroundColor": null,
             "borderWidth": 2,
             "data": null,
-            "hoverOffset": 8
+            "hoverOffset": 6
         }]
     },
     "options": {
         "layout": {
             "padding": {
-                "left": 2,
-                "right": 2
+                "top": 8,
+                "bottom": 8
             }
         },
         "plugins": {

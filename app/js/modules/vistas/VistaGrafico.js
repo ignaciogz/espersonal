@@ -16,7 +16,7 @@ class VistaGrafico {
                                         </div>
                                     </div>
 
-                                    <div class="row valign-wrapper flex-s-column">
+                                    <div id="contenedor-grafico-egreso" class="row valign-wrapper flex-s-column">
                                         <div class="col ms-0 s8 m4 l5 xl4">
                                             <div id="grafico-egresos" class="chart-container">
                                                 
@@ -36,7 +36,8 @@ class VistaGrafico {
             ManejadorDOM.agregarContenidoAlSubElemento($seccionGrafico, '#grafico-egresos', datos.grafico.canvas);
             ManejadorDOM.agregarContenidoAlSubElemento($seccionGrafico, '#etiquetas-grafico-egresos', datos.grafico.info);
         } else {
-            ManejadorDOM.agregarInfoGraficoVacio($seccionGrafico, '#etiquetas-grafico-egresos');
+            const infoGraficoVacio = 'Debe agregar items de tipo egreso dentro de la <a href="#/pizarra">pizarra</a>, para poder generar el gráfico.';
+            ManejadorDOM.agregarInfoGraficoVacio($seccionGrafico, '#contenedor-grafico-egreso', infoGraficoVacio);
         }
 
         return $seccionGrafico;
