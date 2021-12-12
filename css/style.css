@@ -1,27 +1,4 @@
 @charset "UTF-8";
-/* 
-$altura-menu-fijo: 75px !default;
-$borde-general: 12px !default;
-$padding-horizontal: 2.5rem !default;
-$padding-vertical: 2.5rem !default; */
-/* 
-// -------- RESPONSIVE --------
-$altura-menu-fijo-mobile: 67px !default;
-$padding-horizontal-mobile: 0.5rem !default;
-$padding-vertical-mobile: 2rem !default;
-
-// Las media query se generan dinamicamente !
-// En base al siguiente mapa:
-$mq-breakpoints: (
-    xs: 0,
-    sm: 576px,
-    md: 768px,
-    lg: 992px,
-    xl: 1200px,
-    xxl: 1400px
-) !default;
-
-$mq-breakpoints-subtract: 0.02px !default;  // Hack para evitar error logico en las condiciones de las media queries */
 /* Colores del proyecto */
 /* -------- CSS Custom properties -------- */
 :root {
@@ -33,12 +10,12 @@ $mq-breakpoints-subtract: 0.02px !default;  // Hack para evitar error logico en 
   /* General */
   --altura-completa: 100vh;
   /* Colores del sitio */
-  --color-logo: #0D0D0D;
+  --color-blanco: #FFFFFF;
+  --color-detalles: #787878;
+  --color-marron: #795548;
+  --color-negro: #0D0D0D;
+  --color-rojo: #f44336;
   --color-textos: #484848;
-  --color-primario: #BE0B0B;
-  --color-secundario: #866B47;
-  --color-fondo: #FFFFFF;
-  --color-icono-fondo: #787878;
 }
 
 /* -------- GENERAL -------- */
@@ -116,21 +93,21 @@ strong {
 
 /* -------- LOGO -------- */
 .logo {
-  color: var(--color-logo);
+  color: var(--color-negro);
   font-family: var(--font-family-espersonal);
   font-size: 2.3rem;
   user-select: none;
 }
 .logo .eslogan {
-  color: var(--color-secundario);
+  color: var(--color-marron);
   font-size: 0.9rem;
 }
 .logo .eslogan :visited,
 .logo .eslogan :active {
-  color: var(--color-secundario);
+  color: var(--color-marron);
 }
 .logo:visited, .logo:active {
-  color: var(--color-logo);
+  color: var(--color-negro);
 }
 
 section.navegacion .header .logo {
@@ -252,24 +229,25 @@ section.login .logo {
 /* -------- FORMULARIOS -------- */
 form {
   --form-error-color: #f44336;
+  --form-inputs-margin: 0.8rem;
   user-select: none;
+}
+form .none {
+  display: none;
 }
 
 .input-field {
-  margin: 0.8rem 0 0.8rem;
-  /* label color */
-  /* label focus color */
-  /* label underline focus color */
+  margin: var(--form-inputs-margin) 0 var(--form-inputs-margin);
 }
 .input-field p {
   margin: 0;
 }
 .input-field p.radio-header {
   font-size: 0.9rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: var(--form-inputs-margin);
 }
 .input-field.select-container {
-  margin-top: 1.6rem;
+  margin-top: calc(2 * var(--form-inputs-margin));
 }
 .input-field.select-container .dropdown-content li > a,
 .input-field.select-container .dropdown-content li > span {
@@ -286,10 +264,10 @@ form {
   font-size: inherit;
 }
 .input-field .contenedor-radio-tipo input[type=radio]:checked + span:after, .input-field .contenedor-radio-tipo input[type=radio].with-gap:checked + span:before, .input-field .contenedor-radio-tipo input[type=radio].with-gap:checked + span:after {
-  border: 2px solid #866B47;
+  border: 2px solid var(--color-marron);
 }
 .input-field .contenedor-radio-tipo input[type=radio]:checked + span:after, .input-field .contenedor-radio-tipo input[type=radio].with-gap:checked + span:after {
-  background-color: #866B47;
+  background-color: var(--color-marron);
 }
 .input-field label {
   color: var(--color-textos);
@@ -299,40 +277,29 @@ form {
 .input-field input[type=number]:focus + label,
 .input-field input[type=password]:focus + label {
   font-weight: bold;
-  color: var(--color-secundario) !important;
+  color: var(--color-marron) !important;
 }
 .input-field input[type=text]:focus,
 .input-field input[type=number]:focus,
 .input-field input[type=password]:focus {
-  border-bottom: 1px solid var(--color-secundario) !important;
-  box-shadow: 0 1px 0 0 var(--color-secundario) !important;
+  border-bottom: 1px solid var(--color-marron) !important;
+  box-shadow: 0 1px 0 0 var(--color-marron) !important;
 }
 
 /* -------- VALIDACION DE FORMULARIOS -------- */
-form [required]:invalid + label {
-  color: var(--form-error-color) !important;
-}
-
-form [required]:invalid:focus {
-  border-bottom: 1px solid var(--form-error-color) !important;
-  box-shadow: 0 1px 0 0 var(--form-error-color) !important;
-}
-
 .form-error {
   color: var(--form-error-color);
+  border-top: 2px solid var(--form-error-color);
   font-size: 0.6rem;
   font-weight: bolder;
-  margin-top: -0.2rem;
+  margin-top: -0.45rem;
+  padding-top: 0.4rem;
   text-align: justify;
   transition: all 800ms ease;
 }
 .form-error.mostrar-form-error {
   display: block;
   animation: show-message 2s 1 normal 0s ease-out both;
-}
-
-.none {
-  display: none;
 }
 
 @keyframes show-message {
@@ -564,18 +531,18 @@ section.pizarra table tbody td .valor-negativo::before {
 
 /* -------- BROWSER -------- */
 ::selection {
-  background: var(--color-secundario);
-  color: var(--color-fondo);
+  background: var(--color-marron);
+  color: var(--color-blanco);
 }
 
 /* -------- Browser Chrome-------- */
 ::-webkit-scrollbar {
   width: 8px;
-  background-color: var(--color-fondo);
+  background-color: var(--color-blanco);
 }
 
 ::-webkit-scrollbar-track {
-  background-color: var(--color-fondo);
+  background-color: var(--color-blanco);
 }
 
 ::-webkit-scrollbar-thumb {

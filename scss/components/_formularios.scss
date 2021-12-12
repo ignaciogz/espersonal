@@ -1,23 +1,28 @@
 /* -------- FORMULARIOS -------- */
 form {
     --form-error-color: #f44336;
+    --form-inputs-margin: 0.8rem;
     user-select: none;
+
+    .none {
+        display: none;
+    }
 }
 
 .input-field {
-    margin: 0.8rem 0 0.8rem;
+    margin: var(--form-inputs-margin) 0 var(--form-inputs-margin);
 
     p {
         margin: 0;
 
         &.radio-header {
             font-size: 0.9rem;
-            margin-bottom: 0.8rem;
+            margin-bottom: var(--form-inputs-margin);
         }
     }
 
     &.select-container {
-        margin-top: 1.6rem;
+        margin-top: calc(2 * var(--form-inputs-margin));
 
         // -------- INICIO - Colores de opciones de select --------
         .dropdown-content {
@@ -37,66 +42,59 @@ form {
             margin-right: unset;
         }
 
-        // -------- INICIO - Colores de botones de radio --------
-        input[type="radio"] {
+        input[type=radio] {
             &:not(:checked)+span, 
             &:checked+span {
                 font-size: inherit;
             }
 
+            // -------- INICIO - Colores de botones de radio --------
             &:checked+span:after,
             &.with-gap:checked+span:before,
             &.with-gap:checked+span:after {
-                border: 2px solid #866B47;
+                border: 2px solid var(--color-marron);
             }
 
             &:checked+span:after,
             &.with-gap:checked+span:after {
-                background-color: #866B47;
+                background-color: var(--color-marron);
             }
+            // -------- FIN - Colores de botones de radio --------
         }
-        // -------- FIN - Colores de botones de radio --------
     }
 
-    /* label color */
+    // -------- Label --------
     label {
         color: var(--color-textos);
         font-size: 0.9rem;
     }
 
-    /* label focus color */
+    // -------- Label [cuando tienen foco determinados inputs] --------
     input[type=text]:focus+label,
     input[type=number]:focus+label,
     input[type=password]:focus+label {
         font-weight: bold;
-        color: var(--color-secundario) !important;
+        color: var(--color-marron) !important;
     }
 
-    /* label underline focus color */
+    // -------- Color del subrayado de determinados inputs [cuando tienen foco] -------- 
     input[type=text]:focus,
     input[type=number]:focus,
     input[type=password]:focus {
-        border-bottom: 1px solid var(--color-secundario) !important;
-        box-shadow: 0 1px 0 0 var(--color-secundario) !important;
+        border-bottom: 1px solid var(--color-marron) !important;
+        box-shadow: 0 1px 0 0 var(--color-marron) !important;
     }
 }
 
 
 /* -------- VALIDACION DE FORMULARIOS -------- */
-form [required]:invalid+label {
-    color: var(--form-error-color) !important;
-}
-
-form [required]:invalid:focus {
-    border-bottom: 1px solid var(--form-error-color) !important;
-    box-shadow: 0 1px 0 0 var(--form-error-color) !important;
-}
-
 .form-error {
     color: var(--form-error-color);
+    border-top: 2px solid var(--form-error-color);
     font-size: 0.6rem;
     font-weight: bolder;
-    margin-top: -0.2rem;
+    margin-top: -0.45rem;
+    padding-top: 0.4rem;
     text-align: justify;
     transition: all 800ms ease;
 
@@ -104,10 +102,6 @@ form [required]:invalid:focus {
         display: block;
         animation: show-message 2s 1 normal 0s ease-out both;
     }
-}
-
-.none {
-    display: none;
 }
 
 @keyframes show-message {

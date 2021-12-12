@@ -1,23 +1,23 @@
 /* -------- LOGO -------- */
 .logo {
-    color: var(--color-logo);
+    color: var(--color-negro);
     font-family: var(--font-family-espersonal);
     font-size: 2.3rem;
     user-select: none;
 
     .eslogan {
-        color: var(--color-secundario);
+        color: var(--color-marron);
         font-size: 0.9rem;
 
         :visited,
         :active {
-            color: var(--color-secundario);
+            color: var(--color-marron);
         }
     }
 
     &:visited,
     &:active {
-        color: var(--color-logo);
+        color: var(--color-negro);
     }
 }
 

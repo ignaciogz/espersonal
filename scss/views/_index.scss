@@ -1,6 +1,8 @@
+@import '../base/gradientes';
+
 /* -------- index.html -------- */
 section.login {
-    background: linear-gradient(to left, #ece9e6, #ffffff); //UIg_clouds
+    background: map-get($gradientes, UIg-Clouds);
     padding-top: 30px;
 }
 
