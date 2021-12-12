@@ -18,6 +18,15 @@
 .p-0 {
     padding: 0 !important;
 }
+@media only screen and (max-width : 992px) {
+    .flex-sm-align-start {
+        align-items: flex-start;
+    }
+
+    .flex-sm-column {
+        flex-direction: column;
+    }
+}
 
 @media only screen and (min-width: 600px) and (max-width : 992px) {
     .flex-m-column {

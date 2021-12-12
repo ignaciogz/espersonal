@@ -372,24 +372,35 @@ form .none {
     font-size: 0.8rem;
   }
 }
-section.grafico #contenedor-grafico-egresos h2 {
+section.grafico h2 {
   margin-bottom: 1rem;
 }
-section.grafico #contenedor-grafico-egresos .legend-container > div {
+section.grafico .legend-container > div {
   margin-bottom: 1rem;
   padding: 0;
 }
-section.grafico #contenedor-grafico-egresos .legend-container .barra-de-color {
+section.grafico .legend-container .barra-de-color {
   display: inline-block;
   height: 2.5rem;
   margin-right: 5px;
   width: 0.3rem;
 }
-section.grafico #contenedor-grafico-egresos .legend-container .etiqueta-info {
+section.grafico .legend-container .etiqueta-info {
   display: inline-block;
   margin-left: 5px;
 }
 
+@media only screen and (max-width: 992px) {
+  section.grafico h2 {
+    margin-bottom: 0.8rem;
+  }
+  section.grafico #contenedor-grafico-egresos > div:first-child {
+    margin-bottom: 0.8rem;
+  }
+  section.grafico .legend-container .barra-de-color {
+    height: 4.2rem;
+  }
+}
 /* -------- ICONOS -------- */
 i.small {
   font-size: 2rem;
@@ -573,6 +584,15 @@ section.pizarra table tbody td .valor-negativo::before {
   padding: 0 !important;
 }
 
+@media only screen and (max-width: 992px) {
+  .flex-sm-align-start {
+    align-items: flex-start;
+  }
+
+  .flex-sm-column {
+    flex-direction: column;
+  }
+}
 @media only screen and (min-width: 600px) and (max-width: 992px) {
   .flex-m-column {
     flex-direction: column;

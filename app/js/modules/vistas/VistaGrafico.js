@@ -20,13 +20,13 @@ class VistaGrafico {
                                     <div class="row">
                                         <div class="col s12">
                                             <!-- Gráfico de Egresos -->
-                                            <section id="contenedor-grafico-egresos" class="valign-wrapper flex-s-column">
-                                                <div class="col ms-0 p-0 s8 m4 l5 xl4">
+                                            <section id="contenedor-grafico-egresos" class="valign-wrapper flex-sm-column">
+                                                <div class="col ms-0 p-0 s8 m5 l5 xl4">
                                                     <div id="grafico-egresos" class="chart-container">
                                                         
                                                     </div>
                                                 </div>
-                                                <div class="col s12 m8 l7 xl8">
+                                                <div class="col p-0 s12 m12 l7 xl8">
                                                     <div class="col s12">
                                                         <h2>${datos.grafico.nombre}:</h2>
                                                     </div>

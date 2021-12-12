@@ -1,25 +1,43 @@
 section.grafico {
-    #contenedor-grafico-egresos {
-        h2 {
+    h2 {
+        margin-bottom: 1rem;
+    }
+
+    .legend-container {
+        > div {
             margin-bottom: 1rem;
+            padding: 0;
         }
     
+        .barra-de-color {
+            display: inline-block;
+            height: 2.5rem;
+            margin-right: 5px;
+            width: 0.3rem;
+        }
+    
+        .etiqueta-info{
+            display: inline-block;
+            margin-left: 5px;
+        }
+    }
+}
+
+@media only screen and (max-width : 992px) {
+    section.grafico {
+        h2 {
+            margin-bottom: 0.8rem;
+        }
+
+        #contenedor-grafico-egresos {
+            & > div:first-child {
+                margin-bottom: 0.8rem;
+            }
+        }
+
         .legend-container {
-            > div {
-                margin-bottom: 1rem;
-                padding: 0;
-            }
-        
             .barra-de-color {
-                display: inline-block;
-                height: 2.5rem;
-                margin-right: 5px;
-                width: 0.3rem;
-            }
-        
-            .etiqueta-info{
-                display: inline-block;
-                margin-left: 5px;
+                height: 4.2rem;
             }
         }
     }
