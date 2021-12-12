@@ -15,7 +15,9 @@ class VistaItem {
                                     <td>${item.getCategoria()}</td>
                                     <td>${item.getNombre()}</td>
                                     <td>
-                                        <i data-item-id=${item.getID()} class="btn-delete material-icons brown-text right">delete_forever</i>
+                                        <a class="modal-trigger" href="#modal-eliminar-item">
+                                            <i data-item-id=${item.getID()} class="btn-delete material-icons brown-text right">delete_forever</i>
+                                        </a>
                                         <a class="modal-trigger" href="#modal-editar-item">
                                             <i data-item-id=${item.getID()} class="btn-edit material-icons brown-text right">edit</i>
                                         </a>

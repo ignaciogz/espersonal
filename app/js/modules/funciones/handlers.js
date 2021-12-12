@@ -79,35 +79,49 @@ export function autocompletarFormEditarItem() {
 }
 
 
+export function autocompletarFormEliminarItem() {
+    try {
+        const formularioID = "#form-eliminar-item";
+        const $itemDisparador = $(this);
+        const itemID = $itemDisparador.data('item-id');
+        
+        // OBTENIENDO DATOS -> Del item, a partir del HTML visible
+        const $fila = Tabla.getFila($itemDisparador);
+        const item = Tabla.getItem($fila, itemID);
+
+        // OBTENIENDO DATOS -> Del item, a partir de su ID
+        // Si existiera algún dato que NO pueda obtener del HTML visible, 
+        // buscaría el item en localstorage (DB de mi App) o en la cache, para autocompletar:
+        /* 
+            const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+            const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+            const item = Item.getItem(itemID, pizarra.getItems());
+        */
+
+        // CARGANDO DETALLE -> Formulario eliminar item
+        ManejadorDOM.modificarTexto('#eliminar-item-nombre', item.nombre);
+        ManejadorDOM.modificarTexto('#eliminar-item-tipo', item.tipo);
+        ManejadorDOM.modificarTexto('#eliminar-item-categoria', item.categoria);
+        ManejadorDOM.modificarTexto('#eliminar-item-monto',  Utilidades.formatearMonto(item.monto));
+
+        // ALMACENO DATO -> Guardo el ID y la fila del item dentro del formulario, para poder leerlo cuando se dispara su evento submit
+        $(formularioID).data('fila', $fila);
+        $(formularioID).data('item-id', itemID);
+    } catch(e) {
+        ManejadorExcepcion.generarLOG(e);
+    }
+}
+
+
 export function cerrarApp(e) {
     e.preventDefault();
     Navegador.cerrarSesion();
     Navegador.redireccionar("index.html");
 }
 
+
 export function cerrarModal(e) {
     e.preventDefault();
-}
-
-
-export function eliminarItem() {
-    const $itemDisparador = $(this);
-
-    const itemID = $itemDisparador.data('item-id');
-    const fila = Tabla.getFila($itemDisparador);
-
-    // LÓGICA -> Eliminar item
-    const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-    const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
-
-    Pizarra.existenteEliminarItem(pizarra, itemID);
-    ManejadorDOM.eliminarFila(fila);
-
-    if(pizarra.estaVacia()) {
-        setTimeout(() => ManejadorDOM.agregarInfoPizarraVacia(), 4000);
-    }
-
-    finishHandler_item(pizarra, 5000);
 }
 
 
@@ -175,7 +189,7 @@ export function formAgregarItem(e) {
             }
             // FIN LÓGICA -> Agregar item
 
-            Modal.cerrar('modal-agregar-item');
+            Modal.cerrar('agregar-item');
             Navegador.scrollear("final");
 
             // MOSTRANDO -> El nuevo item al usuario
@@ -185,7 +199,7 @@ export function formAgregarItem(e) {
 
             // ASOCIANDO EVENTOS -> Al nuevo item
             ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
-            ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
+            ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler("autocompletarFormEliminarItem"));
 
             finishHandler_item(pizarra, 4000);
         }
@@ -210,7 +224,7 @@ export function formConfiguracion(e) {
         Usuario.actualizarFechaSeleccionada(usuarioLogeado, Fecha.getFecha());
 
         // Procedimiento de finalización
-        Modal.cerrar('modal-configuracion');
+        Modal.cerrar('configuracion');
         AppCache.limpiar();
         actualizarSPA();
     } catch(e) {
@@ -248,20 +262,48 @@ export function formEditarItem(e) {
             Pizarra.existenteEditarItem(pizarra, itemID, itemModificado);
             // FIN LÓGICA -> Editar item
 
-            Modal.cerrar('modal-editar-item');
+            Modal.cerrar('editar-item');
 
             // MOSTRANDO -> El item modificado al usuario
             const registroItemModificado = VistaItem.crearRegistro(itemModificado);
             ManejadorDOM.reemplazarFila($fila, registroItemModificado);
 
             ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
-            ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
+            ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-delete', 'click', ManejadorEventos.getHandler("autocompletarFormEliminarItem"));
 
             finishHandler_item(pizarra, 4000);
         }
     } catch(e) {
         ManejadorExcepcion.generarLOG(e);
     }
+}
+
+
+export function formEliminarItem(e) {
+    e.preventDefault();
+    const formulario = e.target;
+    const formularioID = `#${formulario.id}`;
+
+    const itemID = $(formularioID).data('item-id');
+    const $fila = $(formularioID).data('fila');
+
+    // LÓGICA -> Eliminar item
+    const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+    const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+
+    Pizarra.existenteEliminarItem(pizarra, itemID);
+    // FIN LÓGICA -> Eliminar item
+
+    Modal.cerrar('eliminar-item');
+    
+    // MOSTRANDO -> El item modificado al usuario
+    ManejadorDOM.eliminarFila($fila);
+
+    if(pizarra.estaVacia()) {
+        setTimeout(() => ManejadorDOM.agregarInfoPizarraVacia(), 4000);
+    }
+
+    finishHandler_item(pizarra, 5000);
 }
 
 

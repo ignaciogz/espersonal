@@ -201,17 +201,6 @@ section.navegacion .sidenav {
   justify-content: space-between;
 }
 
-/* -------- FLEX SPA - Pizarra -------- */
-@media screen and (max-width: 600px) {
-  section.pizarra table tbody td:nth-of-type(4) {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-  }
-  section.pizarra table tbody td:nth-of-type(4) .btn-delete {
-    order: 1;
-  }
-}
 /* -------- GRID General -------- */
 .row {
   margin-bottom: 0.6rem;
@@ -281,6 +270,16 @@ form {
 }
 form .none {
   display: none;
+}
+
+#form-eliminar-item .datos-del-item {
+  margin-bottom: calc(0.8 * var(--form-inputs-margin));
+}
+#form-eliminar-item .datos-del-item:last-child {
+  margin-bottom: unset;
+}
+#form-eliminar-item .datos-del-item p {
+  margin: 0;
 }
 
 .input-field {

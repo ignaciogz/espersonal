@@ -10,12 +10,12 @@ class VistaSPA {
                                 <div class="navbar-fixed hide-on-large-only">
                                     <nav class="brown z-depth-3">
                                         <div class="nav-wrapper">
-                                            <a class="logo brand-logo" href="index.html" title="logo de es personal">
+                                            <a class="logo brand-logo" href="#/" title="logo de es personal">
                                                 <div>ESPERSONAL !</div>
                                             </a>
                                             <ul class="left">
                                                 <li>
-                                                    <a href="!#" data-target="navegacion" class="btn-menu-mobile pulse waves-effect waves-red sidenav-trigger"><i class="large material-icons right">menu</i></a>
+                                                    <a href="#!" data-target="navegacion" class="btn-menu-mobile pulse waves-effect waves-red sidenav-trigger"><i class="large material-icons right">menu</i></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -28,10 +28,10 @@ class VistaSPA {
                                         <div id="contenedor-menu">
                                             <li>
                                                 <div class="header">
-                                                    <a class="logo" href="index.html" title="logo de espesonal">
+                                                    <a class="logo" href="#/" title="logo de espesonal">
                                                         <div>ESPERSONAL !</div>
                                                         <div class="eslogan">Finanzas personales más grosas</div>
-                                                    </a>    
+                                                    </a>
                                                 </div>
                                             </li>
                                             

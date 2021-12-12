@@ -16,6 +16,7 @@ class ModeloPizarra {
         // CREANDO DINÁMICAMENTE -> Modal con el formularios de agregar y editar item
         const $modalAgregarItem = Modal.crearConFormulario('Agregar Item', 'add', 'Agregar');
         const $modalEditarItem = Modal.crearConFormulario('Editar Item', 'edit', 'Editar');
+        const $modalEliminarItem = Modal.crearConFormulario('Eliminar Item', 'delete_forever', 'Eliminar');
         
         return {
             tituloDelDocumento: 'Pizarra - Panel del usuario',
@@ -35,7 +36,8 @@ class ModeloPizarra {
             },
             modales: {
                 agregarItem: $modalAgregarItem,
-                editarItem: $modalEditarItem
+                editarItem: $modalEditarItem,
+                eliminarItem: $modalEliminarItem
             }
         };
     }

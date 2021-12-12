@@ -3,19 +3,19 @@ import { Formulario } from "../clases.js";
 import { VistaModal } from "../vistas.js";
 
 class Modal {
-    static agregarFormulario(modal, formulario) {
-        ManejadorDOM.agregarContenidoAlSubElemento(modal, '.modal-content', formulario);
+    static agregarContenidoAlModal(modal, contenido) {
+        ManejadorDOM.agregarContenidoAlSubElemento(modal, '.modal-content', contenido);
     }
 
     static cerrar(idModal) {
-        const $modalAgregarItem = document.getElementById(idModal);
+        const $modalAgregarItem = document.getElementById(`modal-${idModal}`);
         const modal = M.Modal.getInstance($modalAgregarItem);
         modal.close();
     }
 
-    static crearConFormulario(titulo, icono, nombreBtnPrincipal) {
+    static crearConFormulario(titulo, icono, nombreBtnPrincipal, textoFooter = "") {
         const identificador = Utilidades.obtenerIdentificador(titulo);
-        const $modal = VistaModal.crear(identificador, titulo, icono, nombreBtnPrincipal);
+        const $modal = VistaModal.crear(identificador, titulo, icono, nombreBtnPrincipal, textoFooter);
         
         let $formulario = null;
         switch (identificador) {
@@ -26,12 +26,15 @@ class Modal {
             case 'configuracion':
                 $formulario = Formulario.crearFormConfiguracion(identificador);  
                 break;
+            case 'eliminar-item':
+                $formulario = Formulario.crearFormEliminarItem(identificador);  
+                break;
             case 'registrarse':
                 $formulario = Formulario.crearFormRegistrarse(identificador);  
                 break;
         };
 
-        Modal.agregarFormulario($modal, $formulario);
+        Modal.agregarContenidoAlModal($modal, $formulario);
 
         return $modal;
     }

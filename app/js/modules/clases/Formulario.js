@@ -1,6 +1,6 @@
 import { UtilidadesFormulario } from '../igzframework.js';
 import { Fecha, ManejadorDOM, Utilidades } from '../servicios.js';
-import { VistaFormAcceso, VistaFormConfiguracion, VistaFormError, VistaFormItem, VistaFormRegistrarse, VistaOpcionSelect } from '../vistas.js';
+import { VistaFormAcceso, VistaFormConfiguracion, VistaFormEliminarItem, VistaFormError, VistaFormItem, VistaFormRegistrarse, VistaOpcionSelect } from '../vistas.js';
 
 class Formulario extends UtilidadesFormulario {
     // Métodos públicos
@@ -18,6 +18,10 @@ class Formulario extends UtilidadesFormulario {
 
     static crearFormConfiguracion(identificador) {
         return VistaFormConfiguracion.crear(identificador);
+    }
+
+    static crearFormEliminarItem(identificador) {
+        return VistaFormEliminarItem.crear(identificador);
     }
 
     static crearFormItem(identificador) {
