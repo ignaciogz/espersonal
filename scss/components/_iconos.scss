@@ -12,7 +12,7 @@ i.material-icons {
 }
 
 h1 + i.material-icons {
-    color: var(--color-logo);
+    color: var(--color-negro);
     margin-left: 1rem;
 }
 
@@ -23,7 +23,7 @@ h1 + i.material-icons {
 }
 
 @media only screen and (max-width : 600px) {
-    i.small { font-size: 1.7rem; }
+    i.small { font-size: 1.5rem; }
     
-    i.medium { font-size: 2rem;}
+    i.medium { font-size: 1.8rem;}
 }

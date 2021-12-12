@@ -20,14 +20,14 @@
 
 /* -------- GENERAL -------- */
 body {
-  background: linear-gradient(to left, #ece9e6 20%, #ffffff 80%);
+  background: linear-gradient(to left, #ece9e6, #ffffff);
   color: var(--color-textos);
   font-family: var(--font-family-general);
   font-size: 0.8rem;
 }
 
 h1 {
-  color: var(--color-logo);
+  color: var(--color-negro);
   font-family: var(--font-family-espersonal);
   font-size: 1.6rem;
   line-height: unset;
@@ -48,7 +48,7 @@ small.copyright {
   text-align: center;
 }
 small.datos-de-acceso {
-  color: var(--color-icono-fondo);
+  color: var(--color-detalle);
   font-style: italic;
 }
 small .desarrollador {
@@ -109,6 +109,10 @@ strong {
 .logo:visited, .logo:active {
   color: var(--color-negro);
 }
+.logo.brand-logo {
+  color: var(--color-blanco);
+  font-size: 1.6rem;
+}
 
 section.navegacion .header .logo {
   font-size: 1.6rem;
@@ -146,7 +150,7 @@ section.pizarra section.informacion-pizarra #balance {
   font-weight: bolder;
 }
 section.pizarra section.informacion-pizarra > .col {
-  border-left: 1px solid var(--color-icono-fondo);
+  border-left: 1px solid var(--color-detalles);
   padding: 0.4rem 1rem;
 }
 section.pizarra section.informacion-pizarra > .col.d-flex:hover {
@@ -166,7 +170,8 @@ section.pizarra section.informacion-pizarra > .col:first-child {
 @media only screen and (max-width: 992px) {
   #contenedor-spa main {
     margin-left: 0;
-    padding: 0.4rem;
+    padding: 0.3rem;
+    padding-top: 0.6rem;
     width: 100%;
   }
 
@@ -189,11 +194,53 @@ section.login .logo {
   flex-direction: column;
 }
 
-/* -------- GRID General -------- */
-.row {
-  margin-bottom: 12px;
+/* -------- FLEX SPA -------- */
+section.navegacion .sidenav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+/* -------- FLEX SPA - Pizarra -------- */
+@media screen and (max-width: 600px) {
+  section.pizarra table tbody td:nth-of-type(4) {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  section.pizarra table tbody td:nth-of-type(4) .btn-delete {
+    order: 1;
+  }
+}
+/* -------- GRID General -------- */
+.row {
+  margin-bottom: 0.6rem;
+}
+
+/* -------- GRID SPA - Pizarra -------- */
+@media screen and (max-width: 600px) {
+  section.pizarra table tbody td:nth-of-type(1) {
+    grid-area: tipo;
+  }
+  section.pizarra table tbody td:nth-of-type(2) {
+    grid-area: categoria;
+  }
+  section.pizarra table tbody td:nth-of-type(3) {
+    grid-area: nombre;
+  }
+  section.pizarra table tbody td:nth-of-type(4) {
+    grid-area: botones;
+  }
+  section.pizarra table tbody td:nth-of-type(5) {
+    grid-area: monto;
+  }
+  section.pizarra table tbody tr {
+    display: grid;
+    grid-template-areas: "tipo nombre ." "categoria monto botones";
+    grid-template-columns: 2fr 2fr 1fr;
+    grid-template-rows: auto;
+  }
+}
 /* -------- BOTONES -------- */
 .btn,
 .btn-flat {
@@ -357,7 +404,7 @@ i.material-icons {
 }
 
 h1 + i.material-icons {
-  color: var(--color-logo);
+  color: var(--color-negro);
   margin-left: 1rem;
 }
 
@@ -372,18 +419,15 @@ h1 + i.material-icons {
 }
 @media only screen and (max-width: 600px) {
   i.small {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
   }
 
   i.medium {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 }
 /* -------- MENU -------- */
 section.navegacion .sidenav {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   padding-bottom: 10px;
   width: 20%;
 }
@@ -417,7 +461,7 @@ section.navegacion .sidenav .usuario-logeado {
 
 @media only screen and (max-width: 600px) {
   .modal .modal-header {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 }
 /* -------- NOTIFICACIONES -------- */
@@ -470,60 +514,19 @@ section.pizarra table tbody td .valor-negativo::before {
 }
 
 @media screen and (max-width: 600px) {
-  /* table {
-      width:100%;
-  } */
-  thead {
+  section.pizarra table thead {
     display: none;
   }
-
-  /* tr td:first-child {
-      font-weight:bold;
-      font-size:1.3em;
-  } */
-  /* tbody td {
-      display: block;
-      //text-align:center;
-  } */
-  tbody td:before {
+  section.pizarra table tbody td:before {
     content: attr(data-th);
     display: block;
     text-align: center;
   }
-
-  tbody td:nth-of-type(1) {
-    grid-area: tipo;
-  }
-  tbody td:nth-of-type(2) {
-    grid-area: categoria;
-  }
-  tbody td:nth-of-type(3) {
-    grid-area: nombre;
-  }
-  tbody td:nth-of-type(4) {
-    grid-area: botones;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-  }
-  tbody td:nth-of-type(4) .btn-delete {
-    order: 1;
-  }
-  tbody td:nth-of-type(5) {
-    grid-area: monto;
-  }
-
-  tbody tr {
-    display: grid;
-    grid-template-columns: 2fr 2fr 1fr;
-    grid-template-rows: auto;
-    grid-template-areas: "tipo nombre ." "categoria monto botones";
-  }
 }
 /* -------- TARJETAS -------- */
 .card-categoria .card-header {
-  padding: 32px 10px 0;
   margin-bottom: 8px;
+  padding: 32px 10px 0;
 }
 .card-categoria i.material-icons {
   padding-top: 20px;

@@ -19,6 +19,11 @@
     &:active {
         color: var(--color-negro);
     }
+
+    &.brand-logo {
+        color: var(--color-blanco);
+        font-size: 1.6rem;
+    }
 }
 
 section.navegacion .header {

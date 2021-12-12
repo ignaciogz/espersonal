@@ -8,9 +8,9 @@ class VistaSPA {
 
         $paginaSPA.innerHTML =  `<!-- Header mobile -->
                                 <div class="navbar-fixed hide-on-large-only">
-                                    <nav class="brown z-depth-4">
+                                    <nav class="brown z-depth-3">
                                         <div class="nav-wrapper">
-                                            <a class="logo brand-logo white-text" href="index.html" title="logo de es personal">
+                                            <a class="logo brand-logo" href="index.html" title="logo de es personal">
                                                 <div>ESPERSONAL !</div>
                                             </a>
                                             <ul class="left">

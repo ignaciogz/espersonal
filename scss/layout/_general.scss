@@ -1,13 +1,15 @@
+@import '../base/gradientes';
+
 /* -------- GENERAL -------- */
 body {
-    background: linear-gradient(to left, #ece9e6 20%, #ffffff 80%); //UIg_clouds
+    background: map-get($gradientes, UIg-Clouds);
     color: var(--color-textos);
     font-family: var(--font-family-general);
     font-size: 0.8rem;
 }
 
 h1 {
-    color: var(--color-logo);
+    color: var(--color-negro);
     font-family: var(--font-family-espersonal);
     font-size: 1.6rem;
     line-height: unset;
@@ -29,7 +31,7 @@ small {
     }
 
     &.datos-de-acceso {
-        color: var(--color-icono-fondo);
+        color: var(--color-detalle);
         font-style: italic;
     }
     
@@ -47,20 +49,11 @@ strong {
 }
 
 @media only screen and (max-width : 992px) {
-    body {
-        font-size: 0.7rem;
-    }
+    body { font-size: 0.7rem; }
     
-    h1 {
-        font-size: 1.5rem;
-
-    }
+    h1 { font-size: 1.5rem; }
     
-    h2 {
-        font-size: 0.9rem;
-    }
+    h2 { font-size: 0.9rem; }
 
-    small {
-        font-size: 0.6rem;
-    }
+    small { font-size: 0.6rem; }
 }
