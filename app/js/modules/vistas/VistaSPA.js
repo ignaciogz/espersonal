@@ -41,7 +41,7 @@ class VistaSPA {
                                         <div>
                                             <li>
                                                 <a href="#!" class="subheader"><i class="material-icons left">account_circle</i>
-                                                    <strong id="usuario-logeado">${datos.usuario.nombre}</strong>
+                                                    <strong class="usuario-logeado">${datos.usuario.nombre}</strong>
                                                 </a>
                                             </li>
                                             <li><a id="btn-configuracion" class="waves-effect modal-trigger" href="#modal-configuracion"><i class="material-icons left">settings</i>Configuracion</a></li>

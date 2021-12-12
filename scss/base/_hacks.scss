@@ -1,0 +1,32 @@
+/* -------- CSS Tricks -------- */
+.d-flex {
+    display: flex;
+}
+
+.h-visible {
+    height: var(--altura-completa);
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.ms-0 {
+    margin-left: 0 !important;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+@media only screen and (min-width: 600px) and (max-width : 992px) {
+    .flex-m-column {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width : 600px) {
+    .flex-s-column {
+        flex-direction: column;
+    }
+}

@@ -10,6 +10,7 @@ export function actualizarCambiosEnPizarra() {
     ManejadorDOM.mostrarInfoPizarra(pizarra);
 }
 
+
 export function actualizarSPA() {
     SPA.actualizar();
 }

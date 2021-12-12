@@ -1,0 +1,147 @@
+/* -------- FORMULARIOS -------- */
+form {
+    --form-error-color: #f44336;
+    user-select: none;
+}
+
+.input-field {
+    margin: 0.8rem 0 0.8rem;
+
+    p {
+        margin: 0;
+
+        &.radio-header {
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+    }
+
+    &.select-container {
+        margin-top: 1.6rem;
+
+        // -------- INICIO - Colores de opciones de select --------
+        .dropdown-content {
+            li > a,
+            li > span {
+                color: var(--color-textos);
+            }
+        }
+        // -------- FIN - Colores de opciones de select --------
+    }
+
+    .contenedor-radio-tipo {
+        display: inline-block;
+        margin-right: 1rem;
+
+        &:last-child {
+            margin-right: unset;
+        }
+
+        // -------- INICIO - Colores de botones de radio --------
+        input[type="radio"] {
+            &:not(:checked)+span, 
+            &:checked+span {
+                font-size: inherit;
+            }
+
+            &:checked+span:after,
+            &.with-gap:checked+span:before,
+            &.with-gap:checked+span:after {
+                border: 2px solid #866B47;
+            }
+
+            &:checked+span:after,
+            &.with-gap:checked+span:after {
+                background-color: #866B47;
+            }
+        }
+        // -------- FIN - Colores de botones de radio --------
+    }
+
+    /* label color */
+    label {
+        color: var(--color-textos);
+        font-size: 0.9rem;
+    }
+
+    /* label focus color */
+    input[type=text]:focus+label,
+    input[type=number]:focus+label,
+    input[type=password]:focus+label {
+        font-weight: bold;
+        color: var(--color-secundario) !important;
+    }
+
+    /* label underline focus color */
+    input[type=text]:focus,
+    input[type=number]:focus,
+    input[type=password]:focus {
+        border-bottom: 1px solid var(--color-secundario) !important;
+        box-shadow: 0 1px 0 0 var(--color-secundario) !important;
+    }
+}
+
+
+/* -------- VALIDACION DE FORMULARIOS -------- */
+form [required]:invalid+label {
+    color: var(--form-error-color) !important;
+}
+
+form [required]:invalid:focus {
+    border-bottom: 1px solid var(--form-error-color) !important;
+    box-shadow: 0 1px 0 0 var(--form-error-color) !important;
+}
+
+.form-error {
+    color: var(--form-error-color);
+    font-size: 0.6rem;
+    font-weight: bolder;
+    margin-top: -0.2rem;
+    text-align: justify;
+    transition: all 800ms ease;
+
+    &.mostrar-form-error {
+        display: block;
+        animation: show-message 2s 1 normal 0s ease-out both;
+    }
+}
+
+.none {
+    display: none;
+}
+
+@keyframes show-message {
+    0% {
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    100% {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+/* -------- FIN - VALIDACION DE FORMULARIOS -------- */
+
+@media only screen and (max-width : 600px) {
+    .input-field {
+        p {
+            &.radio-header {
+                font-size: 0.8rem;
+            }
+        }
+
+        &.select-container {
+            .dropdown-content {
+                li > a,
+                li > span {
+                    font-size: 0.7rem;
+                }
+            }
+        }
+
+        label {
+            font-size: 0.8rem;
+        }
+    }
+}

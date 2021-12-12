@@ -15,15 +15,16 @@ class VistaIndex {
                                                 <!-- Logo -->
                                                 <div class="row">
                                                     <div class="col s12">
-                                                        <a class="logo" href="index.html" title="logo de espesonal">
+                                                        <a class="logo d-flex" href="index.html" title="logo de espesonal">
                                                             <div><span>ESTO </span>ESPERSONAL !</div>
                                                             <div class="eslogan">Finanzas personales más grosas</div>
                                                         </a>
                                                     </div>
                                                 </div>
+
                                                 <!-- Formulario de acceso -->
-                                                <form id="form-acceso">
-                                                    
+                                                <form id="form-acceso" class="col s12">
+                                                        
                                                 </form>
 
                                                 <div class="row">

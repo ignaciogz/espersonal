@@ -1,0 +1,66 @@
+/* -------- GENERAL -------- */
+body {
+    background: linear-gradient(to left, #ece9e6 20%, #ffffff 80%); //UIg_clouds
+    color: var(--color-textos);
+    font-family: var(--font-family-general);
+    font-size: 0.8rem;
+}
+
+h1 {
+    color: var(--color-logo);
+    font-family: var(--font-family-espersonal);
+    font-size: 1.6rem;
+    line-height: unset;
+    margin: unset;
+}
+
+h2 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+small {
+    font-size: 0.7rem;
+    user-select: none;
+
+    &.copyright {
+        text-align: center;
+    }
+
+    &.datos-de-acceso {
+        color: var(--color-icono-fondo);
+        font-style: italic;
+    }
+    
+    .desarrollador {
+        display: inline;
+        font-family: var(--font-family-copyright);
+        font-size: 1rem;
+        font-weight: bold;
+        margin-left: 0.3rem;
+    }
+}
+
+strong {
+    font-weight: bolder;
+}
+
+@media only screen and (max-width : 992px) {
+    body {
+        font-size: 0.7rem;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+
+    }
+    
+    h2 {
+        font-size: 0.9rem;
+    }
+
+    small {
+        font-size: 0.6rem;
+    }
+}

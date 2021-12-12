@@ -1,0 +1,17 @@
+/* -------- NOTIFICACIONES -------- */
+.error {
+    font-size: 0.7rem;
+    font-weight: bolder;
+    height: 1rem;
+
+    & > div {
+        display: none;
+    }
+}
+
+.notificacion {
+    font-size: 0.7rem;
+    padding: 8px 13px;
+    position: fixed;
+    right: 23px;
+}

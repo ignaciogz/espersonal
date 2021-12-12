@@ -9,55 +9,57 @@ class VistaPizarra {
         $seccionPizarra.classList.add('pizarra');
 
         $seccionPizarra.innerHTML = `<div class="row">
-                                        <!-- Nombre de pizarra -->
-                                        <div class="col s12 valign-wrapper">
-                                            <h1>
-                                                <div id="pizarra-nombre">${datos.pagina.titulo}</div>
-                                            </h1>
-                                            <i class="small material-icons">${datos.pagina.icono}</i>
+                                        <div class="col s12">
+                                            <!-- Título de la Página -->
+                                            <section class="titulo-de-pagina valign-wrapper">
+                                                <h1>${datos.pagina.titulo}</h1>
+                                                <i class="small material-icons">${datos.pagina.icono}</i>
+                                            </section>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <!-- Info de pizarra -->
-                                        <section class="pizarra-informacion">
-                                            <div class="col s6 m3 d-flex">
-                                                <i class="small material-icons left">flag</i>
-                                                <div>
-                                                    Total de items
-                                                    <div id="total-de-items">
-                                                        ${datos.pizarra.cantidadDeItems}
+                                        <div class="col s12 p-0">
+                                            <!-- Info de pizarra -->
+                                            <section class="informacion-pizarra">
+                                                <div class="col s6 m3 d-flex flex-m-column">
+                                                    <i class="small material-icons left">flag</i>
+                                                    <div>
+                                                        Total de items
+                                                        <div id="total-de-items">
+                                                            ${datos.pizarra.cantidadDeItems}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col s6 m3 d-flex">
-                                                <i class="small material-icons left">north_east</i>
-                                                <div>
-                                                    Total Ingresos
-                                                    <div id="total-ingresos">
-                                                        ${datos.pizarra.totalIngresos}
+                                                <div class="col s6 m3 d-flex flex-m-column">
+                                                    <i class="small material-icons left">north_east</i>
+                                                    <div>
+                                                        Total Ingresos
+                                                        <div id="total-ingresos">
+                                                            ${datos.pizarra.totalIngresos}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col s6 m3 d-flex">
-                                                <i class="small material-icons left">south_west</i>
-                                                <div>
-                                                    Total Egresos
-                                                    <div id="total-egresos">
-                                                        ${datos.pizarra.totalEgresos}
+                                                <div class="col s6 m3 d-flex flex-m-column">
+                                                    <i class="small material-icons left">south_west</i>
+                                                    <div>
+                                                        Total Egresos
+                                                        <div id="total-egresos">
+                                                            ${datos.pizarra.totalEgresos}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col s6 m3 d-flex">
-                                                <i class="small material-icons left">account_balance</i>
-                                                <div>
-                                                    Balance
-                                                    <div id="balance">
-                                                        ${datos.pizarra.balance}
+                                                <div class="col s6 m3 d-flex flex-m-column">
+                                                    <i class="small material-icons left">account_balance</i>
+                                                    <div>
+                                                        Balance
+                                                        <div id="balance">
+                                                            ${datos.pizarra.balance}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </section>
+                                            </section>
+                                        </div>
                                     </div>
 
                                     <div class="row">

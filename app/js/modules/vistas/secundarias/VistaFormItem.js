@@ -10,8 +10,8 @@ class VistaFormItem {
                                                 <label for="${identificador}-nombre">Nombre</label>
                                             </div>
 
-                                            <div class="input-field col 12">
-                                                <p>
+                                            <div class="input-field col s12">
+                                                <p class="radio-header">
                                                     Seleccione el tipo de item:
                                                 </p>
                                                 <p class="contenedor-radio-tipo">
@@ -22,7 +22,7 @@ class VistaFormItem {
                                                 </p>
                                             </div>
                                             
-                                            <div class="contenedor-select-categoria input-field col s12">
+                                            <div class="contenedor-select-categoria input-field select-container col s12">
                                                 <select id="${identificador}-select-categoria">
                                                     <option disabled>- Categoría -</option>
                                                     <!-- Aquí se agrega DINÁMICAMENTE -->

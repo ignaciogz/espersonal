@@ -1,0 +1,64 @@
+/* -------- index.html de la SPA -------- */
+#contenedor-spa main {
+    margin-left: 20%;
+    padding: 32px;
+    width: 80%;
+}
+
+section.titulo-de-pagina {
+    margin-bottom: 0.5rem;
+}
+
+section.pizarra {
+    section.informacion-pizarra {
+        #total-de-items,
+        #total-ingresos,
+        #total-egresos,
+        #balance {
+            font-weight: bolder;
+        }
+    
+        & > .col {
+            border-left: 1px solid var(--color-icono-fondo);
+            padding: 0.4rem 1rem;
+
+            &.d-flex:hover {
+                color: #795548;
+            }
+    
+            &:first-child {
+                border-left: unset;
+                padding: 0.4rem 1rem 0.4rem 0.75rem;
+            }
+        }  
+    }
+}
+
+@media only screen and (min-width : 992px) and (max-width : 1200px) {
+    #contenedor-spa main {
+        margin-left: 25%;
+        width: 75%;
+    }
+}
+
+@media only screen and (max-width : 992px) {
+    #contenedor-spa main {
+        margin-left: 0;
+        padding: 0.4rem;
+        width: 100%;
+    }
+
+    section.pizarra {
+        section.informacion-pizarra {
+            & > .col {
+                border-left: unset;
+                padding: 0.4rem 0.5rem 0.4rem 0.75rem;
+    
+                &:first-child {
+                    border-left: unset;
+                    padding: 0.4rem 0.5rem 0.4rem 0.75rem;
+                }
+            }
+        }
+    }
+}

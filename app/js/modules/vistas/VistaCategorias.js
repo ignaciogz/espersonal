@@ -8,14 +8,24 @@ class VistaCategorias {
         $seccionCategorias.classList.add('categorias');
 
         $seccionCategorias.innerHTML = `<div class="row">
-                                            <div class="col s12 valign-wrapper">
-                                                <h1>${datos.pagina.titulo}</h1>
-                                                <i class="small material-icons">${datos.pagina.icono}</i>
+                                            <div class="col s12">
+                                                <!-- Título de la Página -->
+                                                <section class="titulo-de-pagina valign-wrapper">
+                                                    <h1>${datos.pagina.titulo}</h1>
+                                                    <i class="small material-icons">${datos.pagina.icono}</i>
+                                                </section>
                                             </div>
                                         </div>
 
-                                        <div id="contenedor-cards-categorias" class="row">
-                                            <!-- Aquí se agrega DINÁMICAMENTE -->
+                                        <div class="row">
+                                            <div class="col s12 p-0">
+                                                <!-- Categorías -->
+                                                <section class="categorias">
+                                                    <div id="contenedor-cards-categorias">
+                                                        <!-- Aquí se agrega DINÁMICAMENTE -->
+                                                    </div>
+                                                </section>
+                                            </div>
                                         </div>`;
         
         ManejadorDOM.agregarContenidoAlSubElemento($seccionCategorias, '#contenedor-cards-categorias', datos.categorias.cards);

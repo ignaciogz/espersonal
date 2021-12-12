@@ -1,0 +1,26 @@
+section.grafico {
+    #contenedor-grafico-egresos {
+        h2 {
+            margin-bottom: 1rem;
+        }
+    
+        .legend-container {
+            > div {
+                margin-bottom: 1rem;
+                padding: 0;
+            }
+        
+            .barra-de-color {
+                display: inline-block;
+                height: 2.5rem;
+                margin-right: 5px;
+                width: 0.3rem;
+            }
+        
+            .etiqueta-info{
+                display: inline-block;
+                margin-left: 5px;
+            }
+        }
+    }
+}

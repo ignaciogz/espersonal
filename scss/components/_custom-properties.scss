@@ -1,0 +1,25 @@
+@use 'sass:meta';
+@import '../base/config';
+@import '../base/colores';
+@import '../base/tipografias';
+
+/* -------- CSS Custom properties -------- */
+:root {
+    font-size: #{$font-size-general};
+
+        /* Tipografias */
+        --font-family-general: #{meta.inspect($font-family-general)};
+        --font-family-espersonal: #{meta.inspect($font-family-espersonal)};
+        --font-family-copyright: #{meta.inspect($font-family-copyright)};
+
+        /* General */
+        --altura-completa: #{$altura-completa};
+
+        /* Colores del sitio */
+        --color-logo: #{$color-logo};
+        --color-textos: #{$color-textos};
+        --color-primario: #{$color-primario};
+        --color-secundario: #{$color-secundario};
+        --color-fondo: #{$color-fondo};
+        --color-icono-fondo: #{$color-icono-fondo};
+}

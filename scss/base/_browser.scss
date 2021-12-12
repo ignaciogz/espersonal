@@ -1,0 +1,18 @@
+/* -------- BROWSER -------- */
+::selection { 
+    background: var(--color-secundario);
+    color: var(--color-fondo);
+}
+
+/* -------- Browser Chrome-------- */
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: var(--color-fondo);
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--color-fondo);
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-textos); 
+}

@@ -4,7 +4,7 @@ class VistaCategoria {
         $divColumna.classList.add('col', 's6', 'l4');
 
         $divColumna.innerHTML =`<h2 class="card-header">${categoria.getNombre()}</h2>
-                                <div class="card horizontal">
+                                <div class="card card-categoria horizontal">
                                     <div class="card-image">
                                         <i class="medium material-icons right">${categoria.getIcono()}</i>
                                     </div>
