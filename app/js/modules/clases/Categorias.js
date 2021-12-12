@@ -54,7 +54,7 @@ class Categorias {
     static fn_cargarCategoriasPredefinidas() {
         return function(data) {
             for (const categoria of data) {
-                const nuevaCategoria = new Categoria(categoria.nombre, categoria.descripcion, categoria.icono, categoria.color);
+                const nuevaCategoria = new Categoria(categoria.nombre, categoria.descripcion, categoria.ejemplos, categoria.icono, categoria.color);
                 this.setCategoria(nuevaCategoria);
             }
         }

@@ -1,7 +1,8 @@
 class Categoria {
-    constructor(nombre, descripcion, icono, color) {
+    constructor(nombre, descripcion, ejemplos, icono, color) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.ejemplos = ejemplos;
         this.icono = icono;
         this.color = color;
     }
@@ -13,6 +14,10 @@ class Categoria {
 
     getDescripcion() {
         return this.descripcion;
+    }
+
+    getEjemplos() {
+        return this.ejemplos;
     }
 
     getIcono() {

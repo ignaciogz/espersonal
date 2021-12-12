@@ -1,3 +1,6 @@
+@import '../base/mixins';
+
+/* -------- GRÁFICOS -------- */
 section.grafico {
     h2 {
         margin-bottom: 1rem;
@@ -10,10 +13,7 @@ section.grafico {
         }
     
         .barra-de-color {
-            display: inline-block;
-            height: 2.5rem;
-            margin-right: 5px;
-            width: 0.3rem;
+            @include barra-de-color();
         }
     
         .etiqueta-info{
@@ -37,7 +37,7 @@ section.grafico {
 
         .legend-container {
             .barra-de-color {
-                height: 4.2rem;
+                @include barra-de-color(4.2rem);
             }
         }
     }

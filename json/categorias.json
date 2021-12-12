@@ -1,85 +1,99 @@
 [
     { 
         "nombre":"Comida",
-        "descripcion":"Descripción - Categoría Comida",
+        "descripcion":"Alimentación básica del individuo o grupo familiar.",
+        "ejemplos":"Compra en tienda, almacén y/o supermercado.",
         "icono":"fastfood",
         "color":"#2196f3"
     },
     { 
         "nombre":"Deportes",
-        "descripcion":"Descripción - Categoría Deportes",
+        "descripcion":"Elementos deportivos o cuotas de instituciones deportivas.",
+        "ejemplos":"Compra de bicicleta fija ; Cuota 2 de 12 del club.",
         "icono":"sports_handball",
         "color":"#9c27b0"
     },
     { 
         "nombre":"Deudas",
-        "descripcion":"Descripción - Categoría Deudas",
+        "descripcion":"Pago a terceros de deudas pendientes.",
+        "ejemplos":"Pago a mafiosos, familiares, otros.",
         "icono":"receipt",
         "color":"#f44336"
     },
     { 
         "nombre":"Entretenimiento",
-        "descripcion":"Descripción - Categoría Entretenimiento",
+        "descripcion":"Salidas de distraccion u ocio.",
+        "ejemplos":"Salida al cine, teatro, conciertos, otros.",
         "icono":"celebration",
         "color":"#3f51b5"
     },
     { 
         "nombre":"Facturas",
-        "descripcion":"Descripción - Categoría Factura",
+        "descripcion":"Servicios contratados por el individuo o grupo familiar.",
+        "ejemplos":"Netflix, Luz, Internet, Gas.",
         "icono":"receipt_long",
         "color":"#ff9800"
     },
     { 
         "nombre":"Gimnasio",
-        "descripcion":"Descripción - Categoría Gimnasio",
+        "descripcion":"Pago de cuota del gimnasio",
+        "ejemplos":"Cuota gimnasio X.",
         "icono":"fitness_center",
         "color":"#ffeb3b"
     },
     { 
         "nombre":"Hogar",
-        "descripcion":"Descripción - Categoría Hogar",
+        "descripcion":"Mejoras o reparaciones para el hogar.",
+        "ejemplos":"Pinturas para el cuarto ; Reparación de línea telefónica.",
         "icono":"home",
         "color":"#009688"
     },
     { 
         "nombre":"Mascotas",
-        "descripcion":"Descripción - Categoría Mascotas",
+        "descripcion":"Gastos / inversiones realizadas en las mascotas del hogar.",
+        "ejemplos":"Aplicación de vacuna X ; Alimento balanceado",
         "icono":"pets",
         "color":"#ff5722"
     },
     { 
         "nombre":"Regalos",
-        "descripcion":"Descripción - Categoría Regalos",
+        "descripcion":"Obsequios a terceros o propios.",
+        "ejemplos":"Perfume 212 ; Regalo de navidad a padres.",
         "icono":"card_giftcard",
         "color":"#9e9e9e"
     },
     { 
         "nombre":"Restaurantes",
-        "descripcion":"Descripción - Categoría Restaurantes",
+        "descripcion":"Gastos de alimentación en restaurantes.",
+        "ejemplos":"Almuerzo en Fogón Asado Experience.",
         "icono":"restaurant",
         "color":"#4caf50"
     },
     { 
         "nombre":"Ropa",
-        "descripcion":"Descripción - Categoría Ropa",
+        "descripcion":"Gastos / inversiones en indumentaria y calzado.",
+        "ejemplos":"Zapatilla para running ; Camisa de vestir para el trabajo.",
         "icono":"shopping_bag",
         "color":"#795548"
     },
     { 
         "nombre":"Salud",
-        "descripcion":"Descripción - Categoría Salud",
+        "descripcion":"Gastos / inversiones en la cobertura de salud o medicamentos.",
+        "ejemplos":"Cuota 8 de 12 prepaga A123 ; Paracetamol 60u.",
         "icono":"health_and_safety",
         "color":"#e91e63"
     },
     { 
         "nombre":"Tarjeta de crédito",
-        "descripcion":"Descripción - Categoría Tarjeta de crédito",
+        "descripcion":"Egresos de las tarjetas de crédito.",
+        "ejemplos":"Tarjeta ICBC Visa Gold.",
         "icono":"credit_card",
         "color":"#cddc39"
     },
     { 
         "nombre":"Transporte",
-        "descripcion":"Descripción - Categoría Transporte",
+        "descripcion":"Gastos relacionados con movilidad.",
+        "ejemplos":"Carga de nafta ; Recarga tarjeta Sube.",
         "icono":"commute",
         "color":"#00bcd4"
     }
