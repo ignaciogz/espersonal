@@ -18,6 +18,17 @@ class ModeloIndex {
             },
             modales: {
                 registrarse: $modalRegistrarse
+            },
+            videos: {
+                login: {
+                    nombre: "esto-espersonal",
+                    attr: {
+                        autoplay: true,
+                        loop: true,
+                        muted: true,
+                        title: "Video de hombre gritando eufóricamente: ESTO ESPERSONAL !"
+                    }
+                }
             }
         };
     }

@@ -17,7 +17,7 @@ class ModeloPizarra {
         const $modalAgregarItem = Modal.crearConFormulario('Agregar Item', 'add', 'Agregar');
         const $modalEditarItem = Modal.crearConFormulario('Editar Item', 'edit', 'Editar');
 
-        // CREANDO DINÁMICAMENTE -> Modal eliminar item
+        // CREANDO DINÁMICAMENTE -> Modal de eliminar item
         const $modalEliminarItem = Modal.crear('Eliminar Item', 'delete_forever', 'Eliminar');
         
         return {

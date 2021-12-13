@@ -4,6 +4,7 @@ import { ManejadorDOM, ManejadorEventos } from '../servicios.js';
 class VistaIndex {
     constructor(datos) {
         ManejadorDOM.tituloDelDocumento(datos.tituloDelDocumento);
+        const video = datos.videos.login;
 
         let $paginaIndex = document.createElement("div");
         $paginaIndex.classList.add('row', 'm-0');
@@ -45,9 +46,9 @@ class VistaIndex {
                                     <!-- Video marketing -->
                                     <div class="col l5 hide-on-med-and-down p-0">
                                         <section class="video-marketing h-visible">
-                                            <video class="responsive-video" title="Video de hombre gritando eufóricamente: ESTO ESPERSONAL !" autoplay loop muted preload="auto" loading="eager">
-                                                <!-- <source src="video/esto-espersonal.webm" type="video/webm"> -->
-                                                <source src="video/esto-espersonal.mp4" type="video/mp4">
+                                            <video class="responsive-video" title="${video.attr.title}" ${video.attr.autoplay ? "autoplay" : ""} ${video.attr.loop ? "loop" : ""} ${video.attr.muted ? "muted" : ""} preload="auto" loading="eager">
+                                                <source src="video/${video.nombre}.webm" type="video/webm">
+                                                <source src="video/${video.nombre}.mp4" type="video/mp4">
                                             </video>
                                         </section>
                                     </div>`;
