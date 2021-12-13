@@ -4,8 +4,8 @@
 
 
 <h2 align="left">Descripción</h2>
-<p align="left">ESPERSONAL ! es una app de finanzas personales minimalista.</p>
-<p align="left">Los usuarios podrán agregar, editar o eliminar ítems dentro de sus pizarras personales. También podrán navegar entre su conjunto de pizarras, seleccionándolas por año y mes.</p>
+<p align="left">ESPERSONAL ! es una app minimalista de finanzas personales.</p>
+<p align="left">Los usuarios podrán agregar, editar o eliminar ítems dentro de sus pizarras personales. También podrán navegar entre sus conjuntos de pizarras, seleccionándolas por año y mes.</p>
 <p align="left">En cada pizarra, podrán visualizar la información relevante que ha sido generada: total de items, total de ingresos, total de egresos y el balance. Además, podrán visualizar los egresos porcentualmente y de forma gráfica con la finalidad de ayudar en la toma de decisiones financieras futuras.</p>
 
 
