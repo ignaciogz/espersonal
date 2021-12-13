@@ -13,10 +13,12 @@ class ModeloPizarra {
         // CREANDO DINÁMICAMENTE -> Opciones del select categoría, de los formulario de agregar y editar item
         const opcionesSelectCategoria = Formulario.crearOpcionesSelectCategoria(categorias);
 
-        // CREANDO DINÁMICAMENTE -> Modal con el formularios de agregar y editar item
+        // CREANDO DINÁMICAMENTE -> Modales con formularios de agregar y editar item
         const $modalAgregarItem = Modal.crearConFormulario('Agregar Item', 'add', 'Agregar');
         const $modalEditarItem = Modal.crearConFormulario('Editar Item', 'edit', 'Editar');
-        const $modalEliminarItem = Modal.crearConFormulario('Eliminar Item', 'delete_forever', 'Eliminar');
+
+        // CREANDO DINÁMICAMENTE -> Modal eliminar item
+        const $modalEliminarItem = Modal.crear('Eliminar Item', 'delete_forever', 'Eliminar');
         
         return {
             tituloDelDocumento: 'Pizarra - Panel del usuario',

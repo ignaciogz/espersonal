@@ -4,16 +4,31 @@
 
     .modal-header {
         font-size: 2rem;
-        line-height: 110%;
+        line-height: 2.5rem;
         margin-top: 0;
         margin-bottom: 0.5rem;
+    }
+}
+
+#modal-eliminar-item {
+    .datos-del-item {
+        margin-bottom: 0.7rem;
+
+        &:last-child {
+            margin-bottom: unset;
+        }
+
+        p {
+            margin: 0;
+        }
     }
 }
 
 @media only screen and (max-width : 600px) {
     .modal {
         .modal-header {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
+            line-height: 1.8rem;
         }
     }
 }

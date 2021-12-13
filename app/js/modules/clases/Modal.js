@@ -3,7 +3,7 @@ import { Formulario } from "../clases.js";
 import { VistaModal } from "../vistas.js";
 
 class Modal {
-    static agregarContenidoAlModal(modal, contenido) {
+    static #agregarContenidoAlModal(modal, contenido) {
         ManejadorDOM.agregarContenidoAlSubElemento(modal, '.modal-content', contenido);
     }
 
@@ -13,28 +13,29 @@ class Modal {
         modal.close();
     }
 
-    static crearConFormulario(titulo, icono, nombreBtnPrincipal, textoFooter = "") {
+    static crear(titulo, icono, nombreBtnPrincipal, nombreBtnSecundario = "Cancelar") {
         const identificador = Utilidades.obtenerIdentificador(titulo);
-        const $modal = VistaModal.crear(identificador, titulo, icono, nombreBtnPrincipal, textoFooter);
+        const $modal = VistaModal.crear(identificador, titulo, icono, nombreBtnPrincipal, nombreBtnSecundario);
         
-        let $formulario = null;
-        switch (identificador) {
-            case 'agregar-item':
-            case 'editar-item':
-                $formulario = Formulario.crearFormItem(identificador);  
-                break;
-            case 'configuracion':
-                $formulario = Formulario.crearFormConfiguracion(identificador);  
-                break;
-            case 'eliminar-item':
-                $formulario = Formulario.crearFormEliminarItem(identificador);  
-                break;
-            case 'registrarse':
-                $formulario = Formulario.crearFormRegistrarse(identificador);  
-                break;
-        };
+        // Obtengo el nombre del método generador de la vista
+        const metodoGenerador = Utilidades.obtenerNombeDelMetodoGenerador(identificador);
 
-        Modal.agregarContenidoAlModal($modal, $formulario);
+        // DINÁMICAMENTE Ejecuto el método correspondiente para obtener el contenido
+        const $contenido = VistaModal[`crearModal${metodoGenerador}`](identificador);
+
+        Modal.#agregarContenidoAlModal($modal, $contenido);
+
+        return $modal;
+    }
+
+    static crearConFormulario(titulo, icono, nombreBtnPrincipal, nombreBtnSecundario = "Cancelar") {
+        const identificador = Utilidades.obtenerIdentificador(titulo);
+        const $modal = VistaModal.crearConFormulario(identificador, titulo, icono, nombreBtnPrincipal, nombreBtnSecundario);
+
+        // DINÁMICAMENTE Ejecuto el método correspondiente para obtener el contenido
+        const $formulario = Formulario.crearFormParaModal(identificador);
+
+        Modal.#agregarContenidoAlModal($modal, $formulario);
 
         return $modal;
     }

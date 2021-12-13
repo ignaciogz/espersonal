@@ -272,16 +272,6 @@ form .none {
   display: none;
 }
 
-#form-eliminar-item .datos-del-item {
-  margin-bottom: calc(0.8 * var(--form-inputs-margin));
-}
-#form-eliminar-item .datos-del-item:last-child {
-  margin-bottom: unset;
-}
-#form-eliminar-item .datos-del-item p {
-  margin: 0;
-}
-
 .input-field {
   margin: var(--form-inputs-margin) 0 var(--form-inputs-margin);
 }
@@ -369,6 +359,10 @@ form .none {
   }
   .input-field label {
     font-size: 0.8rem;
+  }
+
+  .form-error {
+    font-size: 0.5rem;
   }
 }
 /* -------- GRÁFICOS -------- */
@@ -468,14 +462,25 @@ section.navegacion .sidenav .usuario-logeado {
 }
 .modal .modal-header {
   font-size: 2rem;
-  line-height: 110%;
+  line-height: 2.5rem;
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
 
+#modal-eliminar-item .datos-del-item {
+  margin-bottom: 0.7rem;
+}
+#modal-eliminar-item .datos-del-item:last-child {
+  margin-bottom: unset;
+}
+#modal-eliminar-item .datos-del-item p {
+  margin: 0;
+}
+
 @media only screen and (max-width: 600px) {
   .modal .modal-header {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
   }
 }
 /* -------- NOTIFICACIONES -------- */

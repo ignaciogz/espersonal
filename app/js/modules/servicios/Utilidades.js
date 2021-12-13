@@ -53,6 +53,11 @@ class Utilidades extends UtilidadesBasicas {
         const identificador = cadena.toLowerCase().replace(" ", "-");
         return Utilidades.#sanitizarIdentificador(identificador);
     }
+
+    static obtenerNombeDelMetodoGenerador(identificador) {
+        const identificadorVista = identificador.split('-').map(cadena => Utilidades.capitalizar(cadena)).join('');
+        return identificadorVista;
+    }
 }
 
 export { Utilidades };

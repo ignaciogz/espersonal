@@ -108,8 +108,7 @@ class VistaPizarra {
             ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table .btn-edit', 'click', ManejadorEventos.getHandler("resetearFormEditarItem"));
             ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table .btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
 
-            ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table .btn-delete', 'click', ManejadorEventos.getHandler("autocompletarFormEliminarItem"));
-            //ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table .btn-delete', 'click', ManejadorEventos.getHandler("eliminarItem"));
+            ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'table .btn-delete', 'click', ManejadorEventos.getHandler("autocompletarModalEliminarItem"));
         } else {
             ManejadorDOM.agregarInfoPizarraVacia($seccionPizarra);
         }
@@ -127,7 +126,7 @@ class VistaPizarra {
 
         ManejadorEventos.asociarAlSubElemento($seccionPizarra, '#form-agregar-item', 'submit', ManejadorEventos.getHandler("formAgregarItem"));
         ManejadorEventos.asociarAlSubElemento($seccionPizarra, '#form-editar-item', 'submit', ManejadorEventos.getHandler("formEditarItem"));
-        ManejadorEventos.asociarAlSubElemento($seccionPizarra, '#form-eliminar-item', 'submit', ManejadorEventos.getHandler("formEliminarItem"));
+        ManejadorEventos.asociarAlSubElemento($seccionPizarra, '#btn-modal-eliminar-item', 'click', ManejadorEventos.getHandler("modalEliminarItem"));
         ManejadorEventos.asociarAlSubElemento($seccionPizarra, 'form .contenedor-radio-tipo input', 'change', ManejadorEventos.getHandler("toggleDisplaySelectCategoria"));
 
         ManejadorEventos.asociarAlSubElemento($seccionPizarra, '.modal-close', 'click', ManejadorEventos.getHandler("cerrarModal"));

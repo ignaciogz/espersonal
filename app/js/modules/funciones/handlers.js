@@ -79,9 +79,9 @@ export function autocompletarFormEditarItem() {
 }
 
 
-export function autocompletarFormEliminarItem() {
+export function autocompletarModalEliminarItem() {
     try {
-        const formularioID = "#form-eliminar-item";
+        const modalEliminarItem = "#modal-eliminar-item";
         const $itemDisparador = $(this);
         const itemID = $itemDisparador.data('item-id');
         
@@ -105,8 +105,8 @@ export function autocompletarFormEliminarItem() {
         ManejadorDOM.modificarTexto('#eliminar-item-monto',  Utilidades.formatearMonto(item.monto));
 
         // ALMACENO DATO -> Guardo el ID y la fila del item dentro del formulario, para poder leerlo cuando se dispara su evento submit
-        $(formularioID).data('fila', $fila);
-        $(formularioID).data('item-id', itemID);
+        $(modalEliminarItem).data('fila', $fila);
+        $(modalEliminarItem).data('item-id', itemID);
     } catch(e) {
         ManejadorExcepcion.generarLOG(e);
     }
@@ -279,34 +279,6 @@ export function formEditarItem(e) {
 }
 
 
-export function formEliminarItem(e) {
-    e.preventDefault();
-    const formulario = e.target;
-    const formularioID = `#${formulario.id}`;
-
-    const itemID = $(formularioID).data('item-id');
-    const $fila = $(formularioID).data('fila');
-
-    // LÓGICA -> Eliminar item
-    const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
-    const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
-
-    Pizarra.existenteEliminarItem(pizarra, itemID);
-    // FIN LÓGICA -> Eliminar item
-
-    Modal.cerrar('eliminar-item');
-    
-    // MOSTRANDO -> El item modificado al usuario
-    ManejadorDOM.eliminarFila($fila);
-
-    if(pizarra.estaVacia()) {
-        setTimeout(() => ManejadorDOM.agregarInfoPizarraVacia(), 4000);
-    }
-
-    finishHandler_item(pizarra, 5000);
-}
-
-
 export function formRegistrarse(e) {
     try {
         e.preventDefault();
@@ -336,6 +308,32 @@ export function formRegistrarse(e) {
     } catch(e) {
         ManejadorExcepcion.generarLOG(e);
     }
+}
+
+
+export function modalEliminarItem() {
+    const modalEliminarItem = "#modal-eliminar-item";
+
+    const itemID = $(modalEliminarItem).data('item-id');
+    const $fila = $(modalEliminarItem).data('fila');
+
+    // LÓGICA -> Eliminar item
+    const usuarioLogeado = Usuario.obtenerUsuarioLogeado();
+    const pizarra = Pizarra.obtenerPizarraDeUsuario(usuarioLogeado);
+
+    Pizarra.existenteEliminarItem(pizarra, itemID);
+    // FIN LÓGICA -> Eliminar item
+
+    Modal.cerrar('eliminar-item');
+    
+    // MOSTRANDO -> El item modificado al usuario
+    ManejadorDOM.eliminarFila($fila);
+
+    if(pizarra.estaVacia()) {
+        setTimeout(() => ManejadorDOM.agregarInfoPizarraVacia(), 4000);
+    }
+
+    finishHandler_item(pizarra, 5000);
 }
 
 

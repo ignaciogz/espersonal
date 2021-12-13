@@ -1,6 +1,6 @@
 import { UtilidadesFormulario } from '../igzframework.js';
 import { Fecha, ManejadorDOM, Utilidades } from '../servicios.js';
-import { VistaFormAcceso, VistaFormConfiguracion, VistaFormEliminarItem, VistaFormError, VistaFormItem, VistaFormRegistrarse, VistaOpcionSelect } from '../vistas.js';
+import { VistaForm, VistaFormError, VistaOpcionSelect } from '../vistas.js';
 
 class Formulario extends UtilidadesFormulario {
     // Métodos públicos
@@ -13,23 +13,18 @@ class Formulario extends UtilidadesFormulario {
 
     static crearFormAcceso(identificador, nombreBtnPrincipal, nombreBtnSecundario) {
         identificador = Utilidades.obtenerIdentificador(identificador);
-        return VistaFormAcceso.crear(identificador, nombreBtnPrincipal, nombreBtnSecundario);
+
+        // Obtengo el nombre del método generador de la vista
+        const metodoGenerador = Utilidades.obtenerNombeDelMetodoGenerador(identificador);
+
+        return VistaForm[`crearForm${metodoGenerador}`](identificador, nombreBtnPrincipal, nombreBtnSecundario);
     }
 
-    static crearFormConfiguracion(identificador) {
-        return VistaFormConfiguracion.crear(identificador);
-    }
-
-    static crearFormEliminarItem(identificador) {
-        return VistaFormEliminarItem.crear(identificador);
-    }
-
-    static crearFormItem(identificador) {
-        return VistaFormItem.crear(identificador);
-    }
-
-    static crearFormRegistrarse(identificador) {
-        return VistaFormRegistrarse.crear(identificador);
+    static crearFormParaModal(identificador) {
+        // Obtengo el nombre del método generador de la vista
+        const metodoGenerador = Utilidades.obtenerNombeDelMetodoGenerador(identificador);
+        
+        return VistaForm[`crearForm${metodoGenerador}`](identificador);
     }
 
     static crearOpcionesSelectAnio(usuarioLogeado) {

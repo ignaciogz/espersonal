@@ -9,20 +9,6 @@ form {
     }
 }
 
-#form-eliminar-item {
-    .datos-del-item {
-        margin-bottom: calc(0.8 * var(--form-inputs-margin));
-
-        &:last-child {
-            margin-bottom: unset;
-        }
-
-        p {
-            margin: 0;
-        }
-    }
-}
-
 .input-field {
     margin: var(--form-inputs-margin) 0 var(--form-inputs-margin);
 
@@ -151,5 +137,9 @@ form {
         label {
             font-size: 0.8rem;
         }
+    }
+
+    .form-error {
+        font-size: 0.5rem;
     }
 }
