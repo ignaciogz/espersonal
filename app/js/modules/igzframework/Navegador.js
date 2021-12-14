@@ -13,6 +13,10 @@ class Navegador {
         Navegador.eliminarDeSesion("usuario_logeado");
         Navegador.guardarEnSesion("usuario_logeado", datosDeSesion);
     }
+
+    static cambiarHash(hash) {
+        window.location.hash  = `#${hash}`;
+    }
     
     static cerrarSesion() {
         Navegador.eliminarDeSesion("usuario_logeado");

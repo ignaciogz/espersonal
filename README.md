@@ -17,6 +17,7 @@
 
 - Se implementan los patrones de arquitectura web: MPA y SPA.
 - Se implementa el patrón de arquitectura de software: MVC.
+- Se implementa el patrón de diseño de software: Singleton.
 - Lógica de controlador frontal y de ruteador.
 - Módulos ES6. Importaciones estáticas y dinámicas.
 - Se incluyen las siguientes librerías de terceros: materialize, jquery y chart.js. También incluye mi librería personal de javascript.

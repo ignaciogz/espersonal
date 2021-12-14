@@ -4,12 +4,11 @@ import { JSON_usuarios } from '../json.js';
 import { DatosSesionDeUsuario } from '../clases.js';
 
 class Usuario {
-    constructor(nombre = null, contrasena = null, tipo = "invitado", anioDeRegistro = null, fechaSeleccionada = null) {
+    constructor(nombre = null, contrasena = null, tipo = "invitado", anioDeRegistro = null) {
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.tipo = tipo;
         this.anioDeRegistro = anioDeRegistro;
-        this.fechaSeleccionada = fechaSeleccionada;
     }
 
     static get() {

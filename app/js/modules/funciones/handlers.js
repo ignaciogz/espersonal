@@ -199,7 +199,7 @@ export function formAgregarItem(e) {
 
             // ASOCIANDO EVENTOS -> Al nuevo item
             ManejadorEventos.asociarAlUltimo('.btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
-            ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler("autocompletarFormEliminarItem"));
+            ManejadorEventos.asociarAlUltimo('.btn-delete', 'click', ManejadorEventos.getHandler("autocompletarModalEliminarItem"));
 
             finishHandler_item(pizarra, 4000);
         }
@@ -269,7 +269,7 @@ export function formEditarItem(e) {
             ManejadorDOM.reemplazarFila($fila, registroItemModificado);
 
             ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-edit', 'click', ManejadorEventos.getHandler("autocompletarFormEditarItem"));
-            ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-delete', 'click', ManejadorEventos.getHandler("autocompletarFormEliminarItem"));
+            ManejadorEventos.asociarAlSubElemento(registroItemModificado, '.btn-delete', 'click', ManejadorEventos.getHandler("autocompletarModalEliminarItem"));
 
             finishHandler_item(pizarra, 4000);
         }
