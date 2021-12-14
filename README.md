@@ -1,6 +1,6 @@
 <h1 align="center">Hola 👋, Soy Ignacio</h1>
 
-- 🔭 Actualmente estoy trabajando en la app [ESPERSONAL !](#!)
+- 🔭 Actualmente estoy trabajando en la app [ESPERSONAL !](https://ignaciogz.github.io/espersonal/)
 
 
 <h2 align="left">Descripción</h2>
