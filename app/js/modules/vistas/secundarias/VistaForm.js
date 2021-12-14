@@ -46,12 +46,12 @@ class VistaForm {
                                                 <div id="error-${identificador}"></div>
                                             </div>
                                             <div class="row">
-                                                <div class="input-field col s12 l6">
+                                                <div class="input-field col s12">
                                                     <input id="${identificador}-usuario" type="text" required>
                                                     <label for="${identificador}-usuario">Usuario</label>
                                                 </div>
                                             
-                                                <div class="input-field col s12 l6">
+                                                <div class="input-field col s12">
                                                     <input id="${identificador}-contrasena" type="password" required>
                                                     <label for="${identificador}-contrasena">Contraseña</label>
                                                 </div>
@@ -107,12 +107,12 @@ class VistaForm {
                                                 <div id="error-${identificador}"></div>
                                             </div>
                                             <div class="row">
-                                                <div class="input-field col s6">
+                                                <div class="input-field col s12 l6">
                                                     <input id="${identificador}-usuario" type="text" required>
                                                     <label for="${identificador}-usuario">Usuario</label>
                                                 </div>
                                             
-                                                <div class="input-field col s6">
+                                                <div class="input-field col s12 l6">
                                                     <input id="${identificador}-contrasena" type="password" minlength="5" required>
                                                     <label for="${identificador}-contrasena">Contraseña</label>
                                                 </div>
