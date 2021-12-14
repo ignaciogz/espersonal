@@ -1,6 +1,6 @@
 <h1 align="center">Hola 👋, Soy Ignacio</h1>
 
-- 🔭 Actualmente estoy trabajando en la app [ESPERSONAL !](#!)
+- 🔭 Actualmente estoy trabajando en la app [ESPERSONAL !](https://ignaciogz.github.io/espersonal/)
 
 
 <h2 align="left">Descripción</h2>
@@ -34,4 +34,5 @@
 - Creador dinámico de modales y formularios.
 - Lógica de autocompletado de formularios.
 - Validador automatizado de formularios, basado en el atributo pattern o data-pattern de los inputs que posean el atributo required.
+- Ordanamiento dinámico de los datos de la pizarra, de forma ascendente o descendente, al darle click a la cabecera de la columna.
 - Video en formato WebM. MP4 como alternativa.
