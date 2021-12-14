@@ -1,6 +1,6 @@
-import { MPA } from '/app/js/modules/igzframework.js';
+import { MPA } from '../app/js/modules/igzframework.js';
 
-import { ControladorFrontal } from '/app/js/modules/controladores/ControladorFrontal.js';
+import { ControladorFrontal } from '../app/js/modules/controladores/ControladorFrontal.js';
 
 /* ******************** ARCHIVO PRINCIPAL - MPA ******************** */
 $(document).ready(function() {

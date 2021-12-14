@@ -1,8 +1,8 @@
 {
     "modo_desarrollo":false,
     "rutas":{
-        "":"ControladorIndex",
-        "index":"ControladorIndex",
+        "espersonal/":"ControladorIndex",
+        "espersonal/index":"ControladorIndex",
         "/":"ControladorPizarra",
         "/pizarra":"ControladorPizarra",
         "/grafico":"ControladorGrafico",
